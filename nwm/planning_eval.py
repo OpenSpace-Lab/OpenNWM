@@ -160,7 +160,7 @@ def get_dataset_eval(config, dataset_name, predefined_index=True):
     loader_name = str(data_config.get("loader_name", dataset_name))
     if predefined_index:
         predefined_index = data_config.get(
-            "navigation_index", f"data_splits/{split_name}/test/navigation_eval.pkl"
+            "navigation_index", os.path.join(data_config.test, "navigation_eval.pkl")
         )
     else:
         predefined_index = None
@@ -353,16 +353,13 @@ class WM_Planning_Evaluator:
                 mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]
             )
         elif self.cost_fn == "dino":
+            if not os.environ.get("DINO_REPO_PATH") or not os.environ.get("DINO_PLANNING_WEIGHTS"):
+                raise ValueError("DINO planning requires DINO_REPO_PATH and DINO_PLANNING_WEIGHTS (dinov3_vitb16)")
             self.dino = torch.hub.load(
-                repo_or_dir=os.path.join(
-                    os.path.dirname(os.path.abspath(__file__)), "dinov3"
-                ),
+                repo_or_dir=os.environ["DINO_REPO_PATH"],
                 model="dinov3_vitb16",
                 source="local",
-                weights=os.path.join(
-                    os.environ.get("BASE_TOKENIZER_CKPT"),
-                    "/dinov3/dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth",
-                ),
+                weights=os.environ["DINO_PLANNING_WEIGHTS"],
             ).to(self.device)
             self.dino_normalize = get_normalize(
                 mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]

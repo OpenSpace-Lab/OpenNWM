@@ -12,11 +12,11 @@ import os
 from pathlib import Path
 import pickle
 import sys
+import warnings
 import numpy as np
 import torch
 from PIL import Image
 from checkpoint_io import atomic_save
-from misc import get_transform
 from navanywhere_recipe import load_sampling_recipe, scan_trajectory_frames, frame_indices_sha256
 
 DATASETS = {'recon': 'recon', 'sacson': 'sacson', 'scand': 'scand', 'tartan_drive': 'tartan'}
@@ -40,6 +40,9 @@ def tasks(args):
                         continue
                     seen.add(trajectory)
                     root = args.data_root/DATASETS[source]/trajectory
+                    if not (root/'traj_data.pkl').is_file():
+                        warnings.warn(f'Skipping unavailable trajectory: {root}')
+                        continue
                     with (root/'traj_data.pkl').open('rb') as stream:
                         count = len(pickle.load(stream)['position'])
                     yield source, trajectory, [(i, str(root/f'{i}.jpg')) for i in range(count)], False
@@ -55,6 +58,8 @@ def local_pairs(indices, navanywhere):
 
 
 def encode_vae(vae, frame_paths, args, device):
+    from misc import get_transform
+
     transform = get_transform(224)
     means, logvars = [], []
     for start in range(0, len(frame_paths), args.batch_size):

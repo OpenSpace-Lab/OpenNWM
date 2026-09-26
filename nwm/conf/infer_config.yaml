@@ -42,6 +42,10 @@ evaluation_datasets:
     split_name: sacson
     loader_name: sacson
     metric_waypoint_spacing: 0.255
+  sacson:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/sacson
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/
+    metric_waypoint_spacing: 0.255
   tartan_drive:
     data_folder: ${oc.env:NWM_DATA_ROOT}/tartan
     test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/test/

@@ -83,6 +83,7 @@ def setup_model(config: DictConfig, device: torch.device):
         **model_kwargs,
         _recursive_=False,  # Don't recursively instantiate nested configs
     ).to(device)
+    model.original_nwm = bool(config.get("original_nwm", False))
 
     return model
 

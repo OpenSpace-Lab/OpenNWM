@@ -49,7 +49,9 @@ def prune_periodic(checkpoint_dir, keep=3):
     protected = {p.resolve() for p in root.iterdir() if p.is_symlink()}
     numbered = [p for p in root.iterdir()
                 if re.fullmatch(r"(?:(?:pretrain|warmup|joint)_)?[0-9]{7,}\.pth\.tar", p.name)]
-    numbered.sort(key=lambda p: p.stat().st_mtime_ns, reverse=True)
+    phases = {"pretrain": 0, "warmup": 1, "joint": 2}
+    numbered.sort(key=lambda p: (p.stat().st_mtime_ns, phases.get(p.name.split("_")[0], 0),
+                                int(re.search(r"([0-9]+)\.pth", p.name).group(1))), reverse=True)
     for path in numbered[int(keep):]:
         if path.resolve() not in protected:
             path.unlink()

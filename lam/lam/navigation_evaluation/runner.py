@@ -238,8 +238,8 @@ def _process_batch(
             row["rgb_status"] = "N/A: checkpoint has no RGB decoder"
 
     if "feature" in adapter.capabilities:
-        if pca is None:
-            raise RuntimeError("DINO feature evaluation requires a fixed GT PCA asset")
+        if pca is None and any(record["is_visual"] for record in records):
+            raise RuntimeError("DINO feature visualization requires a fixed GT PCA asset")
         target_features = adapter.extract_features(recipient_target)
         anchor_features = adapter.extract_features(recipient_anchor)
         with _autocast(device, precision):

@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import torch
 import torch.nn as nn
@@ -59,10 +60,10 @@ class TokenizerWrapper(nn.Module):
 class VAEWrapper(TokenizerWrapper):
     def __init__(self, model_path: str, normalize_mean=None, normalize_std=None):
         super().__init__(normalize_mean=normalize_mean, normalize_std=normalize_std)
-        # stabilityai/sd-vae-ft-ema publishes Diffusers weights as a .bin file.
-        # Avoid probing for a non-existent safetensors file on every DDP rank.
+        # Public SD-VAE uses .bin; existing local caches may contain safetensors.
+        local_safetensors = (Path(model_path)/"diffusion_pytorch_model.safetensors").is_file()
         self.vae = AutoencoderKL.from_pretrained(
-            model_path, use_safetensors=False
+            model_path, use_safetensors=local_safetensors
         ).eval()
         self.scaling_factor = 0.18215
 
@@ -81,5 +82,4 @@ class VAEWrapper(TokenizerWrapper):
     @torch.no_grad()
     def get_code_from_latent(self, latent):
         return latent
-
 

@@ -53,7 +53,17 @@ def get_loss_fn(loss_fn_type, secs, device):
 
             return dist_avg
     elif loss_fn_type == "dreamsim":
-        dreamsim_loss_fn, preprocess = dreamsim(pretrained=True, device=device)
+        # DreamSim changes torch.hub's process-wide cache directory. Keep
+        # torchvision's LPIPS/FID weights in the user's TORCH_HOME on later
+        # datasets and evaluation modes too.
+        hub_dir = torch.hub.get_dir()
+        try:
+            dreamsim_loss_fn, preprocess = dreamsim(
+                pretrained=True, device=device,
+                cache_dir=os.environ.get("NWM_MODEL_CACHE", os.path.join(get_original_cwd(), "models")),
+            )
+        finally:
+            torch.hub.set_dir(hub_dir)
 
         def loss_fn(img0_paths, img1_paths):
             img0_list = []
@@ -294,8 +304,18 @@ def main(config: DictConfig):
         raise ValueError("datasets_to_eval must be specified")
 
     # Process config values
-    rollout_fps_values = [int(fps) for fps in config.rollout_fps_values.split(",")]
-    eval_types = config.eval_types.split(",")
+    def values(value):
+        if isinstance(value, str):
+            return [part.strip() for part in value.split(",") if part.strip()]
+        if isinstance(value, (int, float)):
+            return [value]
+        return list(value)
+
+    rollout_fps_values = [int(fps) for fps in values(config.rollout_fps_values)]
+    eval_types = values(config.eval_types)
+    if not eval_types or set(eval_types) - {"time", "rollout"}:
+        raise ValueError("eval_types must contain time and/or rollout")
+    dataset_names = values(config.datasets_to_eval)
 
     logger.info("Evaluation configuration:")
     logger.info(f"  Datasets: {config.datasets_to_eval}")
@@ -315,22 +335,20 @@ def main(config: DictConfig):
         raise ValueError(f"Ground truth directory {config.gt_dir} does not exist")
 
     results_summary = {}
-    for dataset_name in config.datasets_to_eval:
+    for dataset_name in dataset_names:
         gt_dataset_dir = os.path.join(config.gt_dir, dataset_name)
         exp_dataset_dir = os.path.join(config.exp_dir, dataset_name)
 
         # Validate dataset directories
         if not os.path.exists(gt_dataset_dir):
-            logger.warning(
+            raise FileNotFoundError(
                 f"Ground truth directory for dataset {dataset_name} does not exist: {gt_dataset_dir}"
             )
-            continue
 
         if not os.path.exists(exp_dataset_dir):
-            logger.warning(
+            raise FileNotFoundError(
                 f"Experiment directory for dataset {dataset_name} does not exist: {exp_dataset_dir}"
             )
-            continue
 
         dataset_results = {}
 

@@ -37,14 +37,14 @@ from scripts.benchmark_reproducibility import (
 )
 
 
-def _uses_motion_condition(model):
+def _model_flag(model, name):
     """Read the flag through optional DDP and torch.compile wrappers."""
     current = model
     visited = set()
     while id(current) not in visited:
         visited.add(id(current))
-        if hasattr(current, "motion_condition_enabled"):
-            return bool(current.motion_condition_enabled)
+        if hasattr(current, name):
+            return bool(getattr(current, name))
         if hasattr(current, "module"):
             current = current.module
         elif hasattr(current, "_orig_mod"):
@@ -52,6 +52,10 @@ def _uses_motion_condition(model):
         else:
             break
     return False
+
+
+def _uses_motion_condition(model):
+    return _model_flag(model, "motion_condition_enabled")
 
 
 def save_image(output_file, img):
@@ -105,7 +109,7 @@ def get_dataset_eval(config, dataset_name, eval_type, predefined_index=True):
     split_name = str(data_config.get("split_name", dataset_name))
     loader_name = str(data_config.get("loader_name", dataset_name))
     if predefined_index and bool(data_config.get("use_predefined_index", True)):
-        predefined_index = f"data_splits/{split_name}/test/{eval_type}.pkl"
+        predefined_index = os.path.join(data_config.test, f"{eval_type}.pkl")
     else:
         predefined_index = None
 
@@ -188,6 +192,7 @@ def model_forward_wrapper(
     noise_stream="nwm",
 ):
     model, diffusion, tokenizer = all_models
+    original_nwm = _model_flag(model, "original_nwm")
     x = curr_obs.to(device)
     y = curr_delta.to(device) if curr_delta is not None else None
 
@@ -222,7 +227,9 @@ def model_forward_wrapper(
         if sample_keys is None:
             # Keep the historical global RNG position for training/planning
             # callers that have not opted into the benchmark noise contract.
-            torch.randn(*latent_shape, device=device)
+            first_noise = torch.randn(*latent_shape, device=device)
+            if original_nwm:
+                initial_noise = first_noise
         else:
             expanded_keys = expand_sample_keys(sample_keys, num_goals)
             if len(expanded_keys) != model_batch:
@@ -286,6 +293,7 @@ def model_forward_wrapper(
             progress=progress,
             device=device,
             step_noises=step_noises,
+            clip_denoised=False,
         )
 
         if not skip_tokenizer:
@@ -719,7 +727,7 @@ def main(config: DictConfig):
                         selected = select_missing(
                             curr_rollout_output_dir,
                             idxs,
-                            range(16 * int(rollout_fps)),
+                            range(gt_image.shape[1] // (int(config.input_fps) // int(rollout_fps))),
                             obs_image,
                             gt_image,
                             delta,

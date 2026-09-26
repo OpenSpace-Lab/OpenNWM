@@ -45,6 +45,10 @@ def build_train_config(args):
     else:
         overlay = build_profile(**kwargs, navanywhere_datasets=(NAVANYWHERE15_DATASETS if profile == 'navanywhere15' else NAVANYWHERE_DATASETS))
     merge(config, overlay)
+    if args.navanywhere_root:
+        for source in config['data']['source_specs']:
+            if source.get('format') == 'frame_only':
+                source['root'] = str(args.navanywhere_root.resolve() / Path(source['root']).name)
     if args.variant == 4:
         suffix = '' if profile == 'legacy' else f'_{profile}'
         merge(config, read_config(args.calibration or ROOT / f'config/generated/navigation_4{suffix}_action_weight.yaml'))
@@ -113,6 +117,7 @@ def train(argv):
     parser.add_argument('--profile', choices=('legacy', 'navanywhere', 'navanywhere15'))
     parser.add_argument('--data-root', type=Path, default=Path(os.environ.get('NWM_DATA_ROOT', os.environ.get('OPENNWM_DATA_ROOT', 'data'))))
     parser.add_argument('--split-root', type=Path, default=Path(os.environ.get('NWM_SPLIT_ROOT', str(ROOT.parent / 'nwm/data_splits'))))
+    parser.add_argument('--navanywhere-root', type=Path, default=Path(os.environ['NWM_NAVANYWHERE_ROOT']) if os.environ.get('NWM_NAVANYWHERE_ROOT') else None)
     parser.add_argument('--run-dir', type=Path, required=True)
     parser.add_argument('--index-cache', type=Path)
     parser.add_argument('--dino-repo', type=Path, default=Path(os.environ.get('DINO_REPO_PATH', 'third_party/dinov3')))
@@ -170,7 +175,7 @@ def train(argv):
             parser.error(f"Validation list missing: {source['split_manifest']}. Supply --eval-config with independent held-out trajectories; see lam/README.md.")
     if checkpoint and not checkpoint.is_file():
         parser.error(f'Checkpoint not found: {checkpoint}')
-    return subprocess.call(command, cwd=ROOT)
+    return subprocess.call(command)
 
 
 def main(argv=None):

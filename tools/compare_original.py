@@ -243,14 +243,24 @@ def worker(args):
     torch.set_num_interop_threads(1)
     torch.use_deterministic_algorithms(True)
     reference = None if args.reference is None else torch.load(args.reference, map_location="cpu", weights_only=False)
-    result = (lam_cases if args.project == "lam" else nwm_cases)(None if reference is None else reference["cases"])
+    prior = None if reference is None else reference["cases"]
+    if args.project == 'nwm_original':
+        from original_nwm_parity import original_nwm_cases
+        result = original_nwm_cases(prior, Path(args.artifact).parent)
+    else:
+        result = (lam_cases if args.project == "lam" else nwm_cases)(prior)
     module_names = ("lam.navigation_variants", "lam.model") if args.project == "lam" else ("models", "two_stage_training", "two_stage_nwm", "isolated_nwm_infer")
+    if args.project == 'nwm_original':
+        module_names = ('models', 'datasets', 'diffusion', 'isolated_nwm_infer')
     source_files = {}
     for module_name in module_names:
         path = Path(sys.modules[module_name].__file__).resolve()
         if root not in path.parents:
             raise RuntimeError(f"Imported {module_name} from outside selected checkout: {path}")
         source_files[str(path.relative_to(root))] = hashlib.sha256(path.read_bytes()).hexdigest()
+    if args.project == 'nwm_original':
+        training_path = root / ('train.py' if prior is None else 'train_utils.py')
+        source_files[training_path.name] = hashlib.sha256(training_path.read_bytes()).hexdigest()
     torch.save({"cases": result, "environment": {"python": sys.version, "torch": torch.__version__,
                                                  "device": "cpu", "threads": 1},
                 "root": str(root), "source_files": source_files}, args.artifact)
@@ -293,7 +303,7 @@ def compare_tree(reference, candidate, *, rtol, atol):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--project", choices=("lam", "nwm"), required=True)
+    parser.add_argument("--project", choices=("lam", "nwm", "nwm_original"), required=True)
     parser.add_argument("--original", help="Original project root (contains lam/ or models.py)")
     parser.add_argument("--candidate", help="New project root; defaults to this repository's project subdirectory")
     parser.add_argument("--output-dir", help="Directory for CPU artifacts, subprocess logs and report.json")
@@ -313,7 +323,8 @@ def main():
         parser.error("tolerances must be nonnegative")
     import torch
 
-    candidate = Path(args.candidate or Path(__file__).resolve().parents[1] / args.project).resolve()
+    directory = 'nwm' if args.project == 'nwm_original' else args.project
+    candidate = Path(args.candidate or Path(__file__).resolve().parents[1] / directory).resolve()
     original = Path(args.original).resolve()
     for root in (original, candidate):
         entry = root / ("lam/model.py" if args.project == "lam" else "models.py")

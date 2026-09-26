@@ -1,0 +1,44 @@
+# Original NWM order and four training sources. Use NWM_MONITOR_SPLIT=test
+# with the original manifests to reproduce its online test-set monitoring.
+image_size: 224
+context_size: 4
+normalize: true
+precomputed_latents:
+  enabled: false
+  root: null
+  cache_size: 8
+  vae_identifier: stabilityai/sd-vae-ft-ema
+  scaling_factor: 0.18215
+  vae_encode_batch_size: 128
+distance:
+  min_dist_cat: -64
+  max_dist_cat: 64
+len_traj_pred: 64
+action_stats:
+  min: [-2.5, -4]
+  max: [5, 4]
+datasets:
+  recon:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/recon
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/${oc.env:NWM_MONITOR_SPLIT,val}/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.25
+  tartan_drive:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/tartan
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/${oc.env:NWM_MONITOR_SPLIT,val}/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.72
+  sacson:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/sacson
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/${oc.env:NWM_MONITOR_SPLIT,val}/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.255
+  scand:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/scand
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/${oc.env:NWM_MONITOR_SPLIT,val}/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.38

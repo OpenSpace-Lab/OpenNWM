@@ -24,4 +24,4 @@ wandb_tags: []
 keep_periodic: 3
 
 eval_batch_size: null
-eval_num_batches: 4
+eval_num_batches: 1

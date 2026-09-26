@@ -183,8 +183,8 @@ def rgb_reconstruction_metrics(
     if lpips_model is None:
         if require_lpips:
             raise RuntimeError(
-                "LPIPS metric is required but unavailable; prepare and verify "
-                "offline assets before evaluation"
+                "LPIPS metric is required but unavailable; run "
+                "python run.py lam eval prepare-assets --asset-root /path/to/cache"
             )
         metrics["lpips"] = torch.full(
             (batch,), float("nan"), device=pred.device, dtype=pred.dtype

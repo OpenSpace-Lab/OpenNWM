@@ -16,6 +16,7 @@ hydra:
 
 # Base configuration
 seed: 42                         # Top-level stochastic planning evaluation seed
+planning_sample_seed: ${seed}    # Stable proposals when completed samples are skipped
 exp_dir: null                      # Experiment config file path
 ckp: "0100000"                 # Checkpoint ID to use
 datasets_to_eval: [recon,scand]                 # Comma-separated list of dataset names
@@ -46,6 +47,13 @@ evaluation_datasets:
     test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/
     split_name: sacson
     loader_name: sacson
+    metric_waypoint_spacing: 0.255
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  sacson:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/sacson
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/
     metric_waypoint_spacing: 0.255
     navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/navigation_eval.pkl
     navigation_traj_names: rollout_traj_names.txt
@@ -137,6 +145,9 @@ plan_datasets_hyperparams:
   go_stanford:
     metric_waypoint_spacing: 0.12
   huron:
+    mu: [-0.33, 0, 0]
+    var_scale: [0.03, 0.1, 0.1]
+  sacson:
     mu: [-0.33, 0, 0]
     var_scale: [0.03, 0.1, 0.1]
   planetary_rover: &ood_plan_distribution

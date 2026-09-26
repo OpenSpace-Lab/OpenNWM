@@ -1,48 +1,64 @@
 # OpenNWM
 
-LAM 与分阶段 NWM 的训练、评测和续跑。由本机实际实验实现精简而来，保留原模型、损失、动作语义及 checkpoint 格式。
+LAM 与多阶段 NWM 的训练、评测和断点续跑。保留原模型、损失、动作语义和权重格式；数据与权重放在仓库外，运行不依赖旧 DreamDojo / CompACT 仓库。
 
-| 任务 | 入口与使用说明 |
+| 要做的事 | 使用说明 |
 | --- | --- |
-| LAM：Action / Pixel / DINO / Pixel+Action | [lam/README.md](lam/README.md) |
-| NWM：直接训练、Stage 1、Stage 2 | [nwm/README.md](nwm/README.md) |
-| 原实现与新实现的数值对照 | [tools/](tools/) |
+| LAM：Action / Pixel / DINO / Pixel+Action | [LAM](lam/README.md) |
+| NWM：直接训练、Stage 1、Stage 2、预测与规划 | [NWM](nwm/README.md) |
+| 下载数据、权重，复用已有缓存 | [数据与权重](DATA.md) |
+| 查看与原实现的对照结果 | [测试记录](tests/VALIDATION.md) |
 
-```text
-OpenNWM/
-├── run.py              # 统一入口
-├── lam/                # LAM 模型、数据、训练、评测
-├── nwm/                # NWM 模型、数据、训练、预测及规划评测
-├── tests/              # 迁移验证
-└── tools/              # 开发时旧新数值对照
-```
+## 1. 安装
 
-## 使用
-
-LAM 和 NWM 使用各自的 Python 环境，避免依赖版本相互影响。安装方式见各自 README。
+两个环境分别安装，所有命令从仓库根目录执行：
 
 ```bash
-export LAM_PYTHON=/path/to/lam-env/bin/python
-export NWM_PYTHON=/path/to/nwm-env/bin/python
-python run.py lam --help
-python run.py nwm --help
+git clone git@github.com:B0B8K1ng/OpenNWM.git
+cd OpenNWM
+conda create -n open-lam python=3.10 -y
+conda create -n open-nwm python=3.10 -y
+conda run -n open-lam python -m pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+conda run -n open-lam python -m pip install -r lam/requirements.txt
+conda run -n open-nwm python -m pip install -r nwm/requirements.txt
 ```
 
-数据、预训练权重与输出目录在命令或配置中指定；不需要原 DreamDojo / CompACT 仓库。
-大数据、cache、checkpoint 放在仓库外。运行时不需要额外的扫描或校验命令。
+## 2. 设置路径
 
-## 训练与恢复
+已有数据直接复用；没有数据先按 [DATA.md](DATA.md) 下载。
 
-每种训练均使用固定验证集定期评测，保留最近、最佳及定期 checkpoint。
-验证集用于监控与最佳权重选择，测试集仅用于最终评测。
-训练恢复使用包含优化器与训练进度的完整 checkpoint；评测复用已完成的进度。
-具体参数、保存位置与恢复命令见对应目录的 README。
+```bash
+python setup_paths.py \
+  --data-root /data/navigation --work-root /data/opennwm \
+  --lam-python /path/to/envs/open-lam/bin/python \
+  --nwm-python /path/to/envs/open-nwm/bin/python
+source .env
+```
 
-## 来源
+只需修改这四个路径。`.env` 不提交 Git；每个人可使用自己的磁盘和环境。生成器同时解压仓库附带的 NavAnywhere 固定 train/val recipe，并从有标签数据的原 train 清单留出 5% 作为 val，原 test 不变。已有独立验证集时传 `--split-root /data/splits`；复现旧实验时须使用同一 split，重新留出 val 会改变训练配方。15 源 NavAnywhere 使用 `--nav-profile 15`。
 
-- 分阶段 NWM：CompACT `8367a5eb5bba9e8bdd2522a72b20557225f59db7`。
-- LAM：DreamDojo `8f3eeb73d944a0504b1df5a753975ea130f3e3d8` 的 `external/lam_project`。
-- 原始 NWM 配方与本机分阶段配方的参数不同，分别保留配置并注明。
-- 上游许可见 [licenses/](licenses/)，继承的文件继续遵循其上游许可。
+之后每个新终端执行 `source .env`。已有 VAE/DINO 用 `--vae`、`--dino-repo`、`--dino-weights` 指定；缓存路径可直接编辑 `.env`。示例见 [.env.example](.env.example)。
 
-完整训练收敛后的指标是否一致，需要同一数据、环境和随机种子的完整实验；短测验证模型计算、训练更新、阶段切换和续跑行为。实际验证结果见后续测试记录。
+## 3. 训练、评测、恢复
+
+```bash
+# LAM：--variant 1/2/3/4；DINO 先准备教师权重。
+python run.py lam train --variant 2 --run-dir "$OPENNWM_WORK_ROOT/runs/lam-pixel"
+python run.py lam train --variant 2 --run-dir "$OPENNWM_WORK_ROOT/runs/lam-pixel" --resume
+python run.py lam eval all \
+  --checkpoint "$OPENNWM_WORK_ROOT/runs/lam-pixel/checkpoints/best.ckpt" \
+  --output-dir "$OPENNWM_WORK_ROOT/eval/lam-pixel"
+
+# NWM 直接训练；Stage 1/2 所需缓存和模式见 NWM 使用说明。
+python run.py nwm train --mode baseline --gpus 1 --run-dir "$OPENNWM_WORK_ROOT/runs/baseline"
+python run.py nwm train --resume "$OPENNWM_WORK_ROOT/runs/baseline" --gpus 1
+# 原始 NWM 配方使用 --mode original（默认 CDiT-XL）。
+```
+
+所有训练定期验证并输出指标和效果图，结束时补做一次验证。`latest` 用于续训，`best` 按验证指标选择，默认只保留最近 3 个定期权重；NWM 另保留阶段切换权重及各阶段最佳权重。训练恢复模型、优化器、调度器、随机状态和数据进度；评测重跑同一命令接着已完成的部分。精确续训须保持数据、batch、GPU 数和配置一致。
+
+## 来源与复现范围
+
+LAM 来自 DreamDojo `8f3eeb7` 的 `external/lam_project`；多阶段 NWM 来自 CompACT `8367a5e`；`--mode original` 保留本机 Meta NWM `3f6cd8e` 的训练配方、四数据集顺序和采样行为，另有数值对照。上游许可见 [licenses/](licenses/)。日常运行不需要旧仓库或额外检查步骤。
+
+迁移测试覆盖计算、梯度、优化器更新、阶段切换和恢复；真实入口另做小规模训练与评测。完整训练的收敛指标仍须通过相同数据、环境和种子的完整实验确认，具体环境、结果与覆盖范围见 [测试记录](tests/VALIDATION.md)。

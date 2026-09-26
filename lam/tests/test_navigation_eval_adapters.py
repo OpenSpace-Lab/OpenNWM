@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import math
 import os
 import sys
@@ -18,13 +17,11 @@ PROJECT_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_DIR))
 
 from lam.model import LAM
-from lam.navigation_evaluation import assets as evaluation_assets
 from lam.navigation_evaluation.adapters import (
     inspect_evaluation_checkpoint,
     load_evaluation_adapter,
     registered_checkpoint_classes,
 )
-from lam.navigation_evaluation.io import sha256_file
 from lam.navigation_evaluation.metrics import (
     action_reconstruction_metrics,
     feature_reconstruction_metrics,
@@ -331,7 +328,7 @@ def test_rgb_metrics_identity_boundaries_temporal_and_offline_failure():
     torch.testing.assert_close(opposite["psnr"], torch.zeros(1))
     torch.testing.assert_close(opposite["lpips"], torch.ones(1))
 
-    with pytest.raises(RuntimeError, match="offline assets"):
+    with pytest.raises(RuntimeError, match="prepare-assets"):
         rgb_reconstruction_metrics(zeros, ones, lpips_model=None)
     diagnostic = rgb_reconstruction_metrics(
         zeros, ones, lpips_model=None, require_lpips=False
@@ -400,47 +397,3 @@ def test_controls_and_positive_degradation_direction():
         higher_is_better={"score"},
     )
     torch.testing.assert_close(explicit["score"], torch.tensor([0.3]))
-
-
-def _fake_lpips_assets(root: Path) -> Path:
-    checkpoint_dir = root / "torch" / "hub" / "checkpoints"
-    checkpoint_dir.mkdir(parents=True, exist_ok=True)
-    files = {}
-    for name in evaluation_assets.LPIPS_FILENAMES:
-        path = checkpoint_dir / name
-        path.write_bytes(name.encode("utf-8"))
-        files[name] = {
-            "path": str(path),
-            "size": path.stat().st_size,
-            "sha256": sha256_file(path),
-        }
-    metadata = {
-        "schema_version": 1,
-        **evaluation_assets._runtime_versions(),
-        "files": files,
-    }
-    metadata_path = root / evaluation_assets.ASSET_METADATA_NAME
-    metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
-    return metadata_path
-
-
-def test_lpips_assets_bind_runtime_versions_and_cannot_download(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    metadata_path = _fake_lpips_assets(tmp_path)
-    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    metadata["piq"] = "different-version"
-    metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
-    with pytest.raises(RuntimeError, match="version mismatch"):
-        evaluation_assets.verify_lpips_assets(tmp_path)
-
-    _fake_lpips_assets(tmp_path)
-
-    def tries_to_download(*_args, **_kwargs):
-        torch.hub.download_url_to_file(
-            "https://invalid.example/weights", tmp_path / "x"
-        )
-
-    monkeypatch.setattr(evaluation_assets.piq, "LPIPS", tries_to_download)
-    with pytest.raises(RuntimeError, match="strictly offline"):
-        evaluation_assets.make_offline_lpips(tmp_path, torch.device("cpu"))

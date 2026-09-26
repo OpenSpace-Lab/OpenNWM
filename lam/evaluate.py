@@ -14,10 +14,10 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from lam.navigation_evaluation.adapters import load_evaluation_adapter
+from lam.navigation_evaluation.adapters import load_evaluation_adapter, inspect_evaluation_checkpoint
 from lam.navigation_evaluation.assets import evaluation_torch_home
 from lam.navigation_evaluation.catalog import load_navigation_frame
-from lam.navigation_evaluation.config import load_evaluation_config
+from lam.navigation_evaluation.config import load_evaluation_config, parse_csv_protocols
 from lam.navigation_evaluation.io import atomic_write_json
 from lam.navigation_evaluation.manifest import build_evaluation_manifest
 from lam.navigation_evaluation.reporting import aggregate_rows, write_run_reports, write_gallery
@@ -60,6 +60,8 @@ def run(config, checkpoint, manifest, output, *, model_overrides=None):
     output.mkdir(parents=True, exist_ok=True)
     checkpoint = Path(checkpoint).resolve()
     records = read_records(manifest)
+    if model_overrides and inspect_evaluation_checkpoint(checkpoint)['class_path'] != 'lam.navigation_variants.DINOFeatureLAM':
+        model_overrides = {}
     # Resume identity is a small config/path/stat record, not a content scan.
     identity = {'checkpoint': str(checkpoint), 'checkpoint_mtime_ns': checkpoint.stat().st_mtime_ns,
                 'checkpoint_size': checkpoint.stat().st_size,
@@ -102,7 +104,7 @@ def run(config, checkpoint, manifest, output, *, model_overrides=None):
         for start in range(0, len(condition_records), batch_size):
             batch_path = directory / f'batch-{start:08d}.pt'
             if batch_path.exists():
-                saved = torch.load(batch_path, map_location='cpu', weights_only=True)
+                saved = torch.load(batch_path, map_location='cpu', weights_only=False)
                 rows, batch_visuals = saved['rows'], saved['visuals']
             else:
                 batch_records = condition_records[start:start + batch_size]
@@ -141,8 +143,8 @@ def main(argv=None):
     for name in ('prepare-manifest', 'run', 'all'):
         command = sub.add_parser(name)
         command.add_argument('--config', type=Path, default=ROOT / 'config/navigation_eval.yaml')
-        command.add_argument('--data-root', type=Path, default=Path(os.environ.get('NWM_DATA_ROOT', 'data')))
-        command.add_argument('--split-root', type=Path, default=Path(os.environ.get('NWM_SPLIT_ROOT', str(ROOT.parent / 'nwm/data_splits'))))
+        command.add_argument('--data-root', type=Path, default=os.environ.get('NWM_DATA_ROOT'))
+        command.add_argument('--split-root', type=Path, default=os.environ.get('NWM_SPLIT_ROOT'))
         command.add_argument('--manifest', type=Path)
         command.add_argument('--output-dir', type=Path, default=Path('runs/lam/eval'))
         command.add_argument('--num-metric', type=int)
@@ -150,12 +152,12 @@ def main(argv=None):
         command.add_argument('--protocols')
         if name != 'prepare-manifest':
             command.add_argument('--checkpoint', type=Path, required=True)
-            command.add_argument('--device', default='cuda:0')
-            command.add_argument('--precision', choices=('32', '16-mixed', 'bf16-mixed'), default='16-mixed')
-            command.add_argument('--batch-size', type=int, default=8)
-            command.add_argument('--num-workers', type=int, default=0)
+            command.add_argument('--device')
+            command.add_argument('--precision', choices=('32', '16-mixed', 'bf16-mixed'))
+            command.add_argument('--batch-size', type=int)
+            command.add_argument('--num-workers', type=int)
             command.add_argument('--disable-lpips', action='store_true')
-            command.add_argument('--asset-root', type=Path)
+            command.add_argument('--asset-root', type=Path, default=os.environ.get('LAM_EVAL_ASSET_ROOT'))
             command.add_argument('--dino-repo', type=Path, default=Path(os.environ['DINO_REPO_PATH']) if os.environ.get('DINO_REPO_PATH') else None)
             command.add_argument('--dino-weights', type=Path, default=Path(os.environ['DINO_WEIGHTS_PATH']) if os.environ.get('DINO_WEIGHTS_PATH') else None)
     assets = sub.add_parser('prepare-assets')
@@ -184,8 +186,13 @@ def main(argv=None):
     for field, argument in [('metric_count', args.num_metric), ('visual_count', args.num_visual)]:
         if argument is not None:
             config['sampling'][field] = argument
+            if 'evaluation' in config:
+                config['evaluation'].setdefault('sampling', {})[field] = argument
+                config['evaluation'][field] = argument
     if args.protocols:
-        config['protocols'] = args.protocols.split(',')
+        config['protocols'] = parse_csv_protocols(args.protocols)
+        if 'evaluation' in config:
+            config['evaluation']['protocols'] = config['protocols']
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
     manifest = args.manifest.resolve() if args.manifest else output / 'sample_manifest.jsonl'
@@ -201,8 +208,10 @@ def main(argv=None):
     if args.command == 'prepare-manifest':
         print(manifest)
         return 0
-    config['runtime'].update(device=args.device, precision=args.precision,
-                             batch_size=args.batch_size, num_workers=args.num_workers)
+    for field in ('device', 'precision', 'batch_size', 'num_workers'):
+        argument = getattr(args, field)
+        if argument is not None:
+            config['runtime'][field] = argument
     if args.disable_lpips:
         config['metrics']['lpips']['enabled'] = False
     if args.asset_root:

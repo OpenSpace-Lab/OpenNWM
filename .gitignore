@@ -20,3 +20,5 @@ artifacts/
 *.log
 *.pid
 dataset_dist*
+cache/
+*.partial

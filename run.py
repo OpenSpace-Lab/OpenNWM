@@ -19,12 +19,7 @@ def main():
         print(f"Unknown component: {component}", file=sys.stderr)
         return 2
     python = os.environ.get(f"{component.upper()}_PYTHON", sys.executable)
-    workdir = root / component
-    entry = workdir / "run.py"
-    if entry.exists():
-        command = [python, str(entry), *args]
-    else:
-        command = ["bash", str(workdir / "run.sh"), *args]
+    command = [python, str(root / component / "run.py"), *args]
     env = os.environ.copy()
     env["PYTHON"] = python
     # Inputs remain relative to the caller. Component launchers locate their
