@@ -1,0 +1,81 @@
+# Public navigation data used by the CompACT navigation world-model experiments.
+# NWM_DATA_ROOT must contain recon/, sacson/, scand/, and tartan/ when the
+# corresponding dataset is selected through motion_condition.dataset_motion_types.
+image_size: 224
+context_size: 4
+normalize: true
+
+# Safe library default: direct Hydra launches continue to read pixels unless
+# explicitly enabled. nwm_train.sh enables the validated NAS cache by default.
+precomputed_latents:
+  enabled: false
+  root: null
+  cache_size: 8
+  vae_identifier: stabilityai/sd-vae-ft-ema
+  scaling_factor: 0.18215
+  vae_encode_batch_size: 128
+
+distance:
+  min_dist_cat: -64
+  max_dist_cat: 64
+
+len_traj_pred: 64
+
+action_stats:
+  min: [-2.5, -4]
+  max: [5, 4]
+
+datasets:
+  recon:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/recon
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/val/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.25
+  sacson:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/sacson
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/val/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.255
+  scand:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/scand
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/val/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.38
+  tartan_drive:
+    # The processed directory is named `tartan`; keep the public dataset name in
+    # cache metadata and split paths so it cannot be confused with another source.
+    # Opt in explicitly so the historical three-dataset NWM baseline is unchanged.
+    enabled: false
+    data_folder: ${oc.env:NWM_DATA_ROOT}/tartan
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/train/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/val/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.72
+  go_stanford:
+    # Held-out, evaluation-only environment from NWM. It must never be added
+    # to the training motion-condition selection.
+    enabled: false
+    evaluation_only: true
+    data_folder: ${oc.env:NWM_DATA_ROOT}/go_stanford
+    train: data_splits/go_stanford/test/
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/go_stanford/val/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.12
+  planetary_rover:
+    # Real Chang'e-4/Yutu-2 and Tianwen-1/Zhurong native-colour imagery.
+    # This source is test-only and must remain disabled for every
+    # training/precompute selection.
+    enabled: false
+    evaluation_only: true
+    data_folder: ${oc.env:NWM_DATA_ROOT}/planetary_rover
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/planetary_rover/val/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 1.0  # normalized median-step units, NOT meters
+    wrap_delta_yaw: true
+    use_predefined_index: true
+    temporal_semantics: irregular_real_frame_index
+    position_units: sequence_median_step_units
+    metric_navigation_evaluation_allowed: false

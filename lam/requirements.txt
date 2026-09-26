@@ -1,0 +1,14 @@
+# Python 3.10; install torch/torchvision from the CUDA 12.4 index first.
+lightning==2.6.5
+jsonargparse[signatures]==4.49.0
+piq==0.8.0
+einops==0.8.2
+numpy==2.2.6
+Pillow==11.3.0
+PyYAML==6.0.3
+pandas==2.3.3
+pyarrow==24.0.0
+scipy==1.15.3
+tensorboard==2.20.0
+wandb==0.22.3
+pytest==9.1.1

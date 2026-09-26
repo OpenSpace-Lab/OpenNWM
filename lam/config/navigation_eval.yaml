@@ -1,0 +1,124 @@
+version: 1
+seed: 32
+domains:
+  train:
+  - recon
+  - huron
+  - scand
+  ood:
+  - tartan_drive
+datasets:
+  recon:
+    display_name: RECON
+    path_alias: recon
+    data_root: data/recon
+    waypoint_spacing: 0.25
+    splits:
+      train: nwm/data_splits/recon/train/traj_names.txt
+      test: nwm/data_splits/recon/test/traj_names.txt
+  huron:
+    display_name: HuRoN
+    path_alias: sacson
+    data_root: data/sacson
+    waypoint_spacing: 0.255
+    splits:
+      train: nwm/data_splits/sacson/train/traj_names.txt
+      test: nwm/data_splits/sacson/test/traj_names.txt
+  scand:
+    display_name: SCAND
+    path_alias: scand
+    data_root: data/scand
+    waypoint_spacing: 0.38
+    splits:
+      train: nwm/data_splits/scand/train/traj_names.txt
+      test: nwm/data_splits/scand/test/traj_names.txt
+  tartan_drive:
+    display_name: TartanDrive
+    path_alias: tartan
+    data_root: data/tartan
+    waypoint_spacing: 0.72
+    splits:
+      train: nwm/data_splits/tartan_drive/train/traj_names.txt
+      test: nwm/data_splits/tartan_drive/test/traj_names.txt
+protocols:
+- id
+- id_cd
+- ood
+- ood_cd
+splits:
+- test
+sampling:
+  offsets:
+  - -8
+  - -6
+  - -4
+  - -2
+  - 0
+  - 2
+  - 4
+  - 6
+  - 8
+  metric_count: 100
+  visual_count: 0
+  image_height: 240
+  image_width: 320
+  action_min:
+  - -2.5
+  - -4.0
+  action_max:
+  - 5.0
+  - 4.0
+matching:
+  translation_tolerance_waypoint: 1.0
+  yaw_tolerance_degrees: 15.0
+  nearest_candidates: 64
+  candidate_pool_multiplier: 20
+  recipient_pair_unique: true
+  cross_visual_distinct_trajectories: false
+metrics:
+  rgb:
+  - mse
+  - mae
+  - psnr
+  - ssim
+  - lpips
+  feature:
+  - mse
+  - mae
+  - cosine_similarity
+  action:
+  - normalized_mse
+  - normalized_mae
+  - translation_epe_waypoints
+  - translation_epe_meters
+  - yaw_mae_degrees
+  - yaw_rmse_degrees
+  bootstrap_samples: 10000
+  bootstrap_confidence: 0.95
+  primary_excludes_zero_offset: true
+  lpips:
+    enabled: true
+    asset_root: cache/lam_eval
+    offline: true
+runtime:
+  device: cuda:0
+  precision: 16-mixed
+  batch_size: 8
+  num_workers: 8
+  shard_index: 0
+  shard_count: 1
+  fused_sdpa: true
+  deterministic: true
+visualization:
+  thumbnail_width: 320
+  thumbnail_height: 240
+  row_label_width: 300
+  font_size: 20
+  pca_reference_frames_per_dataset_split: 100
+  pca_max_tokens: 50000
+  pca_lower_percentile: 1.0
+  pca_upper_percentile: 99.0
+output:
+  root: runs/lam/eval
+  save_parquet: true
+  save_visual_predictions_only: true

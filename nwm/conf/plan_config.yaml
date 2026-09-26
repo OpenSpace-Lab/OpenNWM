@@ -1,0 +1,151 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: ${output_dir}/planning_${datasets_to_eval}_step${opt_steps}
+  sweep:
+    dir: ${output_dir}/planning_${datasets_to_eval}_step${opt_steps}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+# Base configuration
+seed: 42                         # Top-level stochastic planning evaluation seed
+exp_dir: null                      # Experiment config file path
+ckp: "0100000"                 # Checkpoint ID to use
+datasets_to_eval: [recon,scand]                 # Comma-separated list of dataset names
+output_dir: ${exp_dir}/planning_${ckp}            # Output directory for saving results
+save_preds: false              # Whether to save prediction tensors
+num_workers: 12                 # Number of workers for data loading
+batch_size: 1                 # Batch size for planning evaluation
+
+# Evaluation-only datasets override any training dataset entry stored in the
+# checkpoint config. Each entry fixes the exact available navigation sample count.
+evaluation_datasets:
+  recon:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/recon
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/test/
+    metric_waypoint_spacing: 0.25
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  scand:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/scand
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/test/
+    metric_waypoint_spacing: 0.38
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  huron:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/sacson
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/
+    split_name: sacson
+    loader_name: sacson
+    metric_waypoint_spacing: 0.255
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  tartan_drive:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/tartan
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/test/
+    metric_waypoint_spacing: 0.72
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  go_stanford:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/go_stanford
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/go_stanford/test/
+    metric_waypoint_spacing: 0.12
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/go_stanford/test/navigation_eval.pkl
+    navigation_traj_names: traj_names.txt
+    navigation_sample_count: 100
+  planetary_rover:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/planetary_rover
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/planetary_rover/test/
+    metric_waypoint_spacing: 1.0  # normalized median-step units, NOT meters
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/planetary_rover/test/navigation_eval.pkl
+    navigation_traj_names: traj_names.txt
+    navigation_sample_count: 47
+    temporal_semantics: irregular_real_frame_index
+    position_units: sequence_median_step_units
+    metric_navigation_evaluation_allowed: false
+  unitree_go2:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/unitree_go2
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/unitree_go2/test/
+    metric_waypoint_spacing: 0.07610250112606785
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/unitree_go2/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  tum_rgbd:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/tum_rgbd
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tum_rgbd/test/
+    metric_waypoint_spacing: 0.05016063266653285
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tum_rgbd/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+  uzh_fpv:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/uzh_fpv
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/uzh_fpv/test/
+    metric_waypoint_spacing: 1.1438262345654386
+    navigation_index: ${oc.env:NWM_SPLIT_ROOT,data_splits}/uzh_fpv/test/navigation_eval.pkl
+    navigation_traj_names: rollout_traj_names.txt
+    navigation_sample_count: 100
+
+# Planning specific settings
+num_samples: 80                # Number of sampled trajectories
+planning_microbatch_size: null # Optional candidate chunk size; null evaluates all candidates together
+resume_planning_samples: true  # Persist each trajectory metric and resume after interruption
+exact_distributed_eval: true   # Shard without padding/duplicating samples
+rollout_stride: 1              # Rollout stride
+topk: 5                        # Top-k samples to take mean and var for CEM
+opt_steps: 1                  # Number of optimization steps for CEM
+num_repeat_eval: 3             # Number of evaluations per action
+plot: false                    # Whether to create plots
+cost_fn: lpips                  # Cost function to use
+compute_cost_with_recon: true
+
+# Trajectory evaluation settings
+trajectory_eval_distance:
+  min_dist_cat: 8
+  max_dist_cat: 8
+trajectory_eval_len_traj_pred: 8
+trajectory_eval_context_size: 4
+traj_stride: 8
+eval_context_size: 4 
+
+
+# Planning hyperparams
+action_stats:
+  min: [-2.5, -4] # [min_dx, min_dy]
+  max: [5, 4] # [max_dx, max_dy]
+
+plan_datasets_hyperparams:
+  recon:
+    mu: [-0.1, 0, 0]
+    var_scale: [0.02, 0.1, 0.1]
+  scand:
+    mu: [-0.25, 0, 0]
+    var_scale: [0.04, 0.1, 0.1]
+  tartan_drive:
+    mu: [0.5, 0, 0]
+    var_scale: [0.07, 0.1, 0.1]
+  go_stanford:
+    metric_waypoint_spacing: 0.12
+  huron:
+    mu: [-0.33, 0, 0]
+    var_scale: [0.03, 0.1, 0.1]
+  planetary_rover: &ood_plan_distribution
+    mu: [-0.1, 0, 0]
+    var_scale: [0.1, 0.15, 0.1]
+  unitree_go2: *ood_plan_distribution
+  tum_rgbd: *ood_plan_distribution
+  uzh_fpv: *ood_plan_distribution
+planning_sample_indices: null
+planning_write_aggregate: true
+
+torch_compile: false

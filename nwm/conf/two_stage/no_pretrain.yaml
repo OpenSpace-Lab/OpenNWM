@@ -1,0 +1,58 @@
+# @package _global_
+defaults:
+  - override /dataset: nwm_real
+  - _self_
+
+# Strict no-pretraining control: construct CDiT and its real-action adapter from
+# the repository's standard random initialization, then run the same stage-2
+# schedule used by the reset baselines. The frozen SD-VAE remains the shared
+# image tokenizer for every experiment.
+training_stage: real_finetune
+action_mode: real
+
+training:
+  notes: nwm_no_pretrain_cdit_b_sdvae
+  num_workers: 8
+
+proxy:
+  type: none
+  max_abs_frame_offset: 8
+  storage_path: null
+  dim: 0
+  strict_loading: false
+  normalization_path: null
+  use_precomputed_only: true
+
+finetune:
+  scheme: reset
+  random_init: true
+  stage1_checkpoint: null
+  # A fresh CDiT starts with zeroed output/adaLN layers.  Freezing that
+  # backbone would permanently block the diffusion gradient to E_real, so the
+  # strict scratch baseline trains the full model jointly from its first step.
+  warmup_steps: 0
+  joint_steps: 110000
+  adapter_lr: 1.0e-4
+  backbone_lr: 1.0e-5
+  align_cos_weight: 1.0
+  align_l1_weight: 0.1
+
+dataset_selection:
+  pretrain: []
+  finetune: [recon, sacson, scand, tartan_drive]
+  aliases: {sacson: HuRoN}
+  excluded_from_training: [navanywhere, go_stanford]
+
+dataset:
+  datasets:
+    recon: {enabled: true}
+    sacson: {enabled: true}
+    scand: {enabled: true}
+    tartan_drive: {enabled: true}
+    go_stanford: {enabled: false, evaluation_only: true}
+
+motion_condition:
+  enabled: true
+  train_types: [real]
+  dataset_motion_types: {recon: real, sacson: real, scand: real, tartan_drive: real}
+  eval_type: real

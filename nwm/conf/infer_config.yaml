@@ -1,0 +1,117 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: ${output_dir}/infer_${now:%Y-%m-%d_%H-%M-%S}
+  sweep:
+    dir: ${output_dir}/infer_${now:%Y-%m-%d_%H-%M-%S}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+# Input and output paths
+output_dir: ${exp_dir}/results                # Output directory for the results
+prediction_dir: null            # Optional prediction root outside a read-only exp_dir
+exp_dir: null                   # Experiment directory (containing the trained model)
+ckp: "0100000"                  # Checkpoint ID to use
+
+# Evaluation settings
+seed: 0                            # Reproducible diffusion noise across checkpoints
+num_sec_eval: 5                 # Number of seconds for evaluation intervals
+time_horizons_seconds: [1,2,4,8,16]  # Explicit one-shot horizons; OOD protocol overrides to [4]
+input_fps: 4                    # Input frames per second
+datasets_to_eval: [recon,scand,sacson]           # Comma-separated list of dataset names
+evaluation_datasets:
+  recon:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/recon
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/recon/test/
+    metric_waypoint_spacing: 0.25
+  scand:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/scand
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/scand/test/
+    metric_waypoint_spacing: 0.38
+  huron:
+    # HuRoN is stored under the repository's historical SACSoN key.
+    data_folder: ${oc.env:NWM_DATA_ROOT}/sacson
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/sacson/test/
+    split_name: sacson
+    loader_name: sacson
+    metric_waypoint_spacing: 0.255
+  tartan_drive:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/tartan
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tartan_drive/test/
+    metric_waypoint_spacing: 0.72
+  go_stanford:
+    data_folder: ${oc.env:NWM_DATA_ROOT}/go_stanford
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/go_stanford/test/
+    metric_waypoint_spacing: 0.12
+    rollout_traj_names: traj_names.txt
+  planetary_rover:
+    evaluation_only: true
+    data_folder: ${oc.env:NWM_DATA_ROOT}/planetary_rover
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/planetary_rover/test/
+    prediction_sample_count: 10
+    eval_len_traj_pred: 16
+    metric_waypoint_spacing: 1.0  # normalized median-step units, NOT meters
+    wrap_delta_yaw: true
+    use_predefined_index: true
+    temporal_semantics: irregular_real_frame_index
+    position_units: sequence_median_step_units
+    metric_navigation_evaluation_allowed: false
+  unitree_go2:
+    evaluation_only: true
+    data_folder: ${oc.env:NWM_DATA_ROOT}/unitree_go2
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/unitree_go2/test/
+    metric_waypoint_spacing: 0.07610250112606785
+    wrap_delta_yaw: true
+    use_predefined_index: true
+  tum_rgbd:
+    evaluation_only: true
+    data_folder: ${oc.env:NWM_DATA_ROOT}/tum_rgbd
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/tum_rgbd/test/
+    metric_waypoint_spacing: 0.05016063266653285
+    wrap_delta_yaw: true
+    use_predefined_index: true
+  uzh_fpv:
+    evaluation_only: true
+    data_folder: ${oc.env:NWM_DATA_ROOT}/uzh_fpv
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/uzh_fpv/test/
+    metric_waypoint_spacing: 1.1438262345654386
+    wrap_delta_yaw: true
+    use_predefined_index: true
+num_workers: 8                  # Number of workers for data loading
+batch_size: 64                  # Batch size for inference
+pin_memory: true               # Disable when several large evaluation jobs share host memory
+eval_diffusion_steps: null      # Optional explicit DDPM step count for pinned protocols
+eval_type: null                 # Type of evaluation: 'time' or 'rollout'
+eval_sample_indices: null       # Optional fixed subset of positions in the predefined split
+eval_expected_full_count: null  # Optional guard on the predefined split before subsetting
+
+# Trajectory evaluation settings
+trajectory_eval_distance:
+  min_dist_cat: 8
+  max_dist_cat: 8
+trajectory_eval_len_traj_pred: 8
+trajectory_eval_context_size: 4
+traj_stride: 8
+
+# distance bounds for distance and action and distance predictions 
+eval_distance:
+  eval_min_dist_cat: -64
+  eval_max_dist_cat: 64
+eval_len_traj_pred: 64
+eval_context_size: 4
+
+# Rollout settings
+rollout_fps_values: [1,4]      # Comma-separated list of fps values for rollout evaluation
+gt: 0                           # Set to 1 to produce ground truth evaluation set (no model prediction)
+use_efficient_rollout: true     # Use efficient rollout that operates in latent space (faster)
+single_image_context: false     # Repeat the last observed frame to cold-start the context window
+save_initial_image: false       # Save the single starting image for comparison videos
+
+torch_compile: false

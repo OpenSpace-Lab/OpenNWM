@@ -1,0 +1,71 @@
+# NavAnywhere-only dataset for stage-1 proxy-action pretraining.
+# Both paths are supplied by the launcher environment; this file intentionally
+# contains no machine-specific absolute path.
+image_size: 224
+context_size: 4
+normalize: true
+mean: [0.5, 0.5, 0.5]
+std: [0.5, 0.5, 0.5]
+
+# A single action-agnostic JSON recipe freezes the source/trajectory/frame
+# inventory and deterministic current/goal mapping for all four Stage-1 modes.
+sampling_recipe:
+  path: ${oc.env:NWM_NAVANYWHERE_RECIPE,null}
+  sha256: null
+
+# Trajectory-disjoint Stage-1 validation is enabled for periodic monitoring.
+validation:
+  enabled: ${oc.decode:${oc.env:NWM_NAVANYWHERE_VAL_ENABLED,true}}
+  batches: 1
+  sampling_recipe:
+    path: ${oc.env:NWM_NAVANYWHERE_VAL_RECIPE,null}
+    sha256: null
+  proxy_root: ${oc.env:NWM_NAVANYWHERE_VAL_PROXY_ROOT,null}
+
+precomputed_latents:
+  # Stage-1 launchers default to cached SD-VAE posterior statistics.  Tiny
+  # tests and legacy pixel-debug runs may explicitly override this to false.
+  enabled: true
+  root: ${oc.env:NWM_NAVANYWHERE_VAE_LATENT_ROOT,null}
+  cache_size: 8
+  vae_identifier: stabilityai/sd-vae-ft-ema
+  scaling_factor: 0.18215
+  vae_encode_batch_size: 128
+  # Compatibility field retained for old resolved configs.
+  allow_recipe_subset: false
+
+# The proxy cache covers only local pairs, but goal sampling must retain the
+# original complete signed frame-offset range.
+distance:
+  min_dist_cat: -64
+  max_dist_cat: 64
+
+len_traj_pred: 64
+
+# Required by the shared navigation dataset interface. NavAnywhere has no real
+# action labels and stage 1 never consumes these values.
+action_stats:
+  min: [-2.5, -4.0]
+  max: [5.0, 4.0]
+
+datasets:
+  navanywhere:
+    enabled: true
+    # The root contains multiple source directories (for example
+    # BotanicGarden/ and CASIA-Nav/). null enables deterministic auto-discovery
+    # rather than inventing a fixed "navanywhere" source directory.
+    source_ids: null
+    has_real_action: false
+    root: ${oc.env:NWM_NAVANYWHERE_ROOT}
+    data_folder: ${oc.env:NWM_NAVANYWHERE_ROOT}
+    # Optional JSON/JSONL/text trajectory manifest. When unset, all sources and
+    # trajectories immediately below root are discovered from the directory.
+    manifest: ${oc.env:NWM_NAVANYWHERE_MANIFEST,null}
+    goals_per_obs: 4
+    metric_waypoint_spacing: 1.0
+    frame_offset_range: [-64, 64]
+    min_frame_offset: -64
+    max_frame_offset: 64
+    distance:
+      min_dist_cat: -64
+      max_dist_cat: 64

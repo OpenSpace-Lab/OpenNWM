@@ -1,0 +1,29 @@
+# CompACT paper settings for the navigation world model. The default launcher
+# uses eight GPUs with per-GPU batch 16 for global observation batch 128.
+notes: "compact_nwm_cdit_b_sdvae"
+run_name: ${now:%Y%m%d_%H%M%S}_${training.notes}_bs${training.batch_size}
+results_dir: ${oc.env:NWM_OUTPUT_ROOT,outputs/nwm}
+batch_size: 16
+# Per-GPU evaluation batch; null preserves the training batch size.
+eval_batch_size: null
+# Consecutive batches per evaluation, per GPU.
+eval_num_batches: 4
+num_workers: 4
+grad_clip_val: 2.0
+
+from_checkpoint: null
+
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1e-4
+  betas: [0.9, 0.999]
+  weight_decay: 0.01
+
+wandb_enabled: false
+wandb_project: "compact-nwm"
+wandb_entity: null
+wandb_notes: ${training.notes}
+wandb_tags: ["CompACT", "CDiT-B", "SD-VAE", "navigation"]
+
+# Numbered weights retained in addition to latest/best/transition; 0 keeps all.
+keep_periodic: 3

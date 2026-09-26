@@ -1,0 +1,50 @@
+# @package _global_
+defaults:
+  - override /dataset: navanywhere
+  - _self_
+
+training_stage: proxy_pretrain
+action_mode: latent
+
+proxy:
+  type: latent
+  max_abs_frame_offset: 8
+  relative_time_mode: always
+  storage_path: ${oc.env:NWM_LATENT_PROXY_ROOT}
+  dim: 32
+  strict_loading: true
+  # The existing latent adapter uses parameter-free per-sample layer_norm, so
+  # there is no external statistics file. The mode is checkpoint metadata.
+  normalization_path: null
+  use_precomputed_only: true
+  # Suffixless patterns accept exactly one trajectory shard: .pt or .npz.
+  file_pattern: "{source_id}/{trajectory_id}"
+  pairs_key: frame_pairs
+  values_key: motion
+  cache_size: 8
+
+finetune:
+  scheme: null
+  stage1_checkpoint: null
+  warmup_steps: 0
+  joint_steps: 0
+  adapter_lr: 1.0e-4
+  backbone_lr: 1.0e-5
+  align_cos_weight: 1.0
+  align_l1_weight: 0.1
+
+dataset_selection:
+  pretrain: [navanywhere]
+  finetune: []
+  excluded_from_training: [recon, sacson, scand, tartan_drive, go_stanford]
+
+motion_condition:
+  enabled: true
+  train_types: [latent]
+  dataset_motion_types: {navanywhere: latent}
+  eval_type: latent
+  latent:
+    latent_dim: ${proxy.dim}
+    max_frame_offset: ${proxy.max_abs_frame_offset}
+    offline:
+      root: ${proxy.storage_path}

@@ -1,0 +1,32 @@
+# Converted LittleBoss/unitree-go2-data, 4 Hz using host receive timestamps.
+# Last two original episodes are held out, before splitting at stream gaps.
+# Opt in to adaptation with two_stage=go2_adapt and a complete init_checkpoint.
+image_size: 224
+context_size: 4
+normalize: true
+mean: [0.5, 0.5, 0.5]
+std: [0.5, 0.5, 0.5]
+precomputed_latents:
+  enabled: false
+  root: null
+  cache_size: 8
+  vae_identifier: stabilityai/sd-vae-ft-ema
+  scaling_factor: 0.18215
+  vae_encode_batch_size: 128
+distance:
+  min_dist_cat: -64
+  max_dist_cat: 64
+len_traj_pred: 64
+action_stats:
+  min: [-2.5, -4]
+  max: [5, 4]
+datasets:
+  go2:
+    enabled: true
+    data_folder: ${oc.env:NWM_GO2_ROOT,null}/go2
+    train: ${oc.env:NWM_SPLIT_ROOT,data_splits}/go2/train
+    test: ${oc.env:NWM_SPLIT_ROOT,data_splits}/go2/val
+    goals_per_obs: 4
+    # Fit only on train segments eligible for NWM; meters per 4-Hz step.
+    metric_waypoint_spacing: 0.07610250112606785
+    distance: {min_dist_cat: -64, max_dist_cat: 64}

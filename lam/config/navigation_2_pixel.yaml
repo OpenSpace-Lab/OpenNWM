@@ -1,0 +1,4 @@
+model:
+  class_path: lam.navigation_variants.PixelLAM
+  init_args:
+    log_path: runs/lam/images

@@ -1,0 +1,37 @@
+# @package _global_
+defaults:
+  - override /dataset: navanywhere
+  - _self_
+
+training_stage: proxy_pretrain
+action_mode: none
+
+proxy:
+  type: none
+  max_abs_frame_offset: 8
+  storage_path: null
+  dim: 0
+  strict_loading: false
+  normalization_path: null
+  use_precomputed_only: true
+
+finetune:
+  scheme: null
+  stage1_checkpoint: null
+  warmup_steps: 0
+  joint_steps: 0
+  adapter_lr: 1.0e-4
+  backbone_lr: 1.0e-5
+  align_cos_weight: 1.0
+  align_l1_weight: 0.1
+
+dataset_selection:
+  pretrain: [navanywhere]
+  finetune: []
+  excluded_from_training: [recon, sacson, scand, tartan_drive, go_stanford]
+
+motion_condition:
+  enabled: true
+  train_types: [none]
+  dataset_motion_types: {navanywhere: none}
+  eval_type: none

@@ -1,0 +1,5 @@
+tum_freiburg1_desk
+tum_freiburg1_desk2
+tum_freiburg1_room
+tum_freiburg2_xyz
+tum_freiburg3_long_office_household

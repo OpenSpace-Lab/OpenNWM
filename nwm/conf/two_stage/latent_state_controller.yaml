@@ -1,0 +1,67 @@
+# @package _global_
+defaults:
+  - override /dataset: nwm_real
+  - _self_
+
+training_stage: real_finetune
+action_mode: real
+
+training:
+  num_workers: 8
+  notes: "nwm_latentpt_state_controller_3k_joint_200k"
+
+# Stage-1 z_mu is the local teacher only.  Long-range samples retain their real
+# action and diffusion loss without querying this cache.
+proxy:
+  type: latent
+  max_abs_frame_offset: 8
+  storage_path: ${oc.env:NWM_FINETUNE_LATENT_ROOT,null}
+  dim: 32
+  strict_loading: true
+  normalization_path: null
+  use_precomputed_only: true
+  file_pattern: "{source_id}/{trajectory_id}"
+  pairs_key: frame_pairs
+  values_key: motion
+  cache_size: 8
+
+finetune:
+  scheme: state_conditioned_controller
+  stage1_checkpoint: null
+
+  # Paper-faithful controller-only pretraining.
+  warmup_steps: 3000
+  controller_pretrain_lr: 1.0e-3
+  controller_pretrain_weight_decay: 0.04
+  controller_lr_warmup_steps: 300
+  controller_eval_every: 1000
+
+  # CompACT extension: fixed nwm-real learning rate for both parameter groups.
+  joint_steps: 200000
+  joint_lr: 1.0e-4
+  adapter_lr: 1.0e-4
+  backbone_lr: 1.0e-4
+  latent_l2_weight: 1.0
+
+  controller_state_blocks: 2
+  controller_mlp_ratio: 4.0
+
+dataset_selection:
+  pretrain: []
+  finetune: [recon, sacson, scand, tartan_drive]
+  aliases: {sacson: HuRoN}
+  excluded_from_training: [navanywhere, go_stanford]
+
+dataset:
+  datasets:
+    recon: {enabled: true}
+    sacson: {enabled: true}
+    scand: {enabled: true}
+    tartan_drive: {enabled: true}
+    go_stanford: {enabled: false, evaluation_only: true}
+
+motion_condition:
+  enabled: true
+  train_types: [real]
+  dataset_motion_types: {recon: real, sacson: real, scand: real, tartan_drive: real}
+  eval_type: real

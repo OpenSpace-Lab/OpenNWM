@@ -1,0 +1,65 @@
+seed_everything: 32
+model:
+  class_path: lam.model.LAM
+  init_args:
+    image_channels: 3
+    lam_model_dim: 1024
+    lam_latent_dim: 32
+    lam_patch_size: 16
+    lam_enc_blocks: 24
+    lam_dec_blocks: 24
+    lam_num_heads: 16
+    lam_dropout: 0.0
+    beta: 1.0e-06
+    log_interval: 1000
+    optimizer:
+      class_path: torch.optim.AdamW
+      init_args:
+        lr: 2.5e-05
+        weight_decay: 1e-2
+data:
+  source_specs:
+  - data_root: data/recon
+    split_manifest: nwm/data_splits/recon/train/traj_names.txt
+    waypoint_spacing: 0.25
+    display_name: RECON
+  - data_root: data/sacson
+    split_manifest: nwm/data_splits/sacson/train/traj_names.txt
+    waypoint_spacing: 0.255
+    display_name: HuRoN
+  - data_root: data/scand
+    split_manifest: nwm/data_splits/scand/train/traj_names.txt
+    waypoint_spacing: 0.38
+    display_name: SCAND
+  batch_size: 20
+  num_workers: 32
+  train_shuffle: true
+  samples_per_epoch: 1500000
+  max_frame_offset: 8
+  max_frame_decode_retries: 128
+  data_seed: 32
+  color_aug: true
+  image_height: 240
+  image_width: 320
+  action_min:
+  - -2.5
+  - -4.0
+  action_max:
+  - 5.0
+  - 4.0
+  print_audit: true
+  index_cache_path: cache/navigation_lam_train_index_v2.pkl
+  rebuild_index_cache: false
+  pin_memory: false
+  persistent_workers: false
+trainer:
+  max_epochs: -1
+  max_steps: 100000
+  accelerator: gpu
+  num_nodes: 1
+  devices: 0,1,2,3,4,5,6,7
+  strategy: ddp_find_unused_parameters_false
+  precision: 16-mixed
+  log_every_n_steps: 100
+  accumulate_grad_batches: 1
+  gradient_clip_val: 0.3

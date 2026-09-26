@@ -1,0 +1,16 @@
+model:
+  class_path: lam.navigation_variants.DINOFeatureLAM
+  init_args:
+    dino_repo_path: third_party/dinov3
+    dino_weights_path: weights/dinov3.pth
+    dino_model_name: dinov3_vitl16
+    dino_repo_revision: 346f38fee679c56a6888f91c51670fae61d364e0
+    dino_weights_sha256: 8aa4cbddda325040fc78db2c272754af6ebe8ff2c55f6ec4f1964d8890f66035
+    use_precomputed_dino_features: true
+    log_path: runs/lam/images
+data:
+  dino_feature_cache_path: cache/dinov3_vitl16_navigation_train_fp16_v1
+  color_aug: false
+  num_workers: 64
+  pin_memory: true
+  persistent_workers: true

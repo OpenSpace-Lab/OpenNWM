@@ -1,0 +1,72 @@
+# Unified optional motion condition for the continuous NWM (CDiT) path.
+enabled: true
+available_types: [real, geometry, latent, none]
+train_types: [real]
+
+# Optional fixed dataset -> type assignment. When non-empty, it must cover every
+# training dataset and its values must match train_types. This is the preferred
+# mode for common real-action anchor datasets plus proxy-action datasets.
+dataset_motion_types: null
+
+# Null dataset_motion_types falls back to assigning eligible types deterministically
+# by sample index. Test and navigation evaluation use real navigation actions.
+sampling_strategy: round_robin
+eval_type: real
+
+# All adapters use Linear -> SiLU -> Linear -> LayerNorm. Their internal widths
+# are adjusted slightly so input dimension does not become a parameter-count
+# confound; every adapter still outputs the DiT condition dimension.
+balance_parameter_count: true
+parameter_count_reference_dim: 3
+
+real:
+  real_dim: 3
+  normalization:
+    mode: minmax
+    min: [-2.5, -4.0, -3.141592653589793]
+    max: [5.0, 4.0, 3.141592653589793]
+
+geometry:
+  geometry_dim: 3
+  normalization:
+    mode: minmax
+    min: [-2.5, -4.0, -3.141592653589793]
+    max: [5.0, 4.0, 3.141592653589793]
+  offline:
+    root: null
+    file_pattern: "{dataset_name}/{trajectory_name}.pt"
+    pairs_key: frame_pairs
+    values_key: motion
+    cache_size: 8
+    strict_metadata: true
+
+# Inverse-dynamics proxy vectors are produced offline.  The default adapter is
+# present only when a two-stage IDMPT overlay adds `idm` to available_types;
+# legacy configurations keep the historical available_types list above.
+idm:
+  idm_dim: 7
+  max_frame_offset: 8
+  normalization:
+    mode: identity
+  offline:
+    root: null
+    file_pattern: "{dataset_name}/{trajectory_name}.pt"
+    pairs_key: frame_pairs
+    values_key: motion
+    cache_size: 8
+    strict_metadata: true
+
+latent:
+  latent_dim: 32
+  # Optional per-goal cache/training range. Goals outside this inclusive frame
+  # offset keep their image loss but are omitted from the latent-action adapter.
+  max_frame_offset: null
+  normalization:
+    mode: layer_norm
+  offline:
+    root: null
+    file_pattern: "{dataset_name}/{trajectory_name}.pt"
+    pairs_key: frame_pairs
+    values_key: motion
+    cache_size: 8
+    strict_metadata: true

@@ -1,0 +1,42 @@
+# @package _global_
+
+# CDiT-B + SD-VAE reproduction of the NWM baseline reported by CompACT.
+defaults:
+  - _self_
+  - dataset: nwm
+  - model/generator: cdit_b
+  - model/tokenizer: sdvae
+  - model/diffusion: gaussian
+  - motion_condition: default
+  - training: nwm
+  - scheduler: default
+  # Load an optional stage overlay last so its stage-specific training defaults
+  # (for example Stage-2 worker count) override the shared baseline.
+  - optional two_stage: null
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: ${training.results_dir}/${training.run_name}
+  sweep:
+    dir: ${training.results_dir}/${training.run_name}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+seed: 0
+epochs: 100
+max_train_steps: 200000
+log_every: 100
+ckpt_every: 10000
+eval_every: 5000
+eval_at_first_step: true
+# Opt-in for infrequent, memory-heavy Stage-1 evaluation. The default preserves
+# legacy behavior; the XL launcher moves VAE/DreamSim back to CPU between evals.
+eval_offload_models: false
+log_cuda_memory: true
+bfloat16: 1
+torch_compile: 0
+
+resume_from_dir: null

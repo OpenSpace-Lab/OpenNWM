@@ -1,0 +1,3 @@
+_target_: diffusion.create_gaussian_diffusion
+timestep_respacing: ""
+eval_timestep_respacing: 250

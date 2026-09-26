@@ -1,0 +1,50 @@
+# @package _global_
+defaults:
+  - override /dataset: navanywhere
+  - _self_
+
+training_stage: proxy_pretrain
+action_mode: idm
+
+proxy:
+  type: idm
+  max_abs_frame_offset: 8
+  storage_path: ${oc.env:NWM_IDM_PROXY_ROOT}
+  dim: 7
+  strict_loading: true
+  normalization_path: null
+  use_precomputed_only: true
+  # Suffixless patterns accept exactly one trajectory shard: .pt or .npz.
+  file_pattern: "{source_id}/{trajectory_id}"
+  pairs_key: frame_pairs
+  values_key: motion
+  cache_size: 8
+
+finetune:
+  scheme: null
+  stage1_checkpoint: null
+  warmup_steps: 0
+  joint_steps: 0
+  adapter_lr: 1.0e-4
+  backbone_lr: 1.0e-5
+  align_cos_weight: 1.0
+  align_l1_weight: 0.1
+
+dataset_selection:
+  pretrain: [navanywhere]
+  finetune: []
+  excluded_from_training: [recon, sacson, scand, tartan_drive, go_stanford]
+
+motion_condition:
+  enabled: true
+  available_types: [real, geometry, idm, latent, none]
+  train_types: [idm]
+  dataset_motion_types: {navanywhere: idm}
+  eval_type: idm
+  idm:
+    idm_dim: ${proxy.dim}
+    max_frame_offset: ${proxy.max_abs_frame_offset}
+    normalization:
+      mode: identity
+    offline:
+      root: ${proxy.storage_path}

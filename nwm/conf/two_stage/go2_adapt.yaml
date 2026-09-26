@@ -1,0 +1,55 @@
+# @package _global_
+defaults:
+  - override /dataset: go2
+  - _self_
+
+training_stage: real_finetune
+action_mode: real
+seed: 0
+log_every: 10
+ckpt_every: 200
+eval_every: 200
+eval_at_first_step: true
+torch_compile: 0
+max_train_steps: 1000
+
+training:
+  batch_size: 8
+  num_workers: 4
+  ema_decay: 0.99
+  wandb_enabled: false
+  wandb_required: false
+  wandb_group: null
+  wandb_project: compact-nwm
+  wandb_tags: [Go2, adaptation, real-action]
+
+proxy:
+  type: none
+  dim: 0
+  max_abs_frame_offset: 8
+  storage_path: null
+  strict_loading: false
+  use_precomputed_only: true
+
+finetune:
+  scheme: reset
+  dataset_protocol: go2
+  init_checkpoint: null
+  init_sha256: null
+  stage1_checkpoint: null
+  random_init: false
+  warmup_steps: 200
+  joint_steps: 800
+  adapter_lr: 1.0e-5
+  backbone_lr: 1.0e-6
+
+dataset_selection:
+  pretrain: []
+  finetune: [go2]
+  excluded_from_training: []
+
+motion_condition:
+  enabled: true
+  train_types: [real]
+  eval_type: real
+  dataset_motion_types: {go2: real}

@@ -1,0 +1,49 @@
+# @package _global_
+defaults:
+  - override /dataset: nwm_real
+  - _self_
+
+training_stage: real_finetune
+action_mode: real
+
+training:
+  num_workers: 8
+
+proxy:
+  type: idm
+  max_abs_frame_offset: 8
+  storage_path: null
+  dim: 7
+  strict_loading: false
+  normalization_path: null
+  use_precomputed_only: true
+
+finetune:
+  scheme: reset
+  stage1_checkpoint: null
+  warmup_steps: 10000
+  joint_steps: 100000
+  adapter_lr: 1.0e-4
+  backbone_lr: 1.0e-5
+  align_cos_weight: 1.0
+  align_l1_weight: 0.1
+
+dataset_selection:
+  pretrain: []
+  finetune: [recon, sacson, scand, tartan_drive]
+  aliases: {sacson: HuRoN}
+  excluded_from_training: [navanywhere, go_stanford]
+
+dataset:
+  datasets:
+    recon: {enabled: true}
+    sacson: {enabled: true}
+    scand: {enabled: true}
+    tartan_drive: {enabled: true}
+    go_stanford: {enabled: false, evaluation_only: true}
+
+motion_condition:
+  enabled: true
+  train_types: [real]
+  dataset_motion_types: {recon: real, sacson: real, scand: real, tartan_drive: real}
+  eval_type: real
