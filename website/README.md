@@ -15,11 +15,13 @@ conda run --no-capture-output -n open-nwm python -m http.server 8000 --bind 127.
 
 ## GitHub Pages
 
-网站地址：<https://b0b8k1ng.github.io/OpenNWM/>（首次部署成功后可访问）。
+网站地址：<https://b0b8k1ng.github.io/OpenNWM-website/>（首次部署成功后可访问）。
 
-在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。随后进入 **Actions → Deploy website to GitHub Pages → Run workflow**，选择 `main` 运行一次。以后向 `main` 推送 `website/` 或部署工作流的修改时会自动更新网站，无需构建或安装前端依赖。
+网站通过独立公开仓库 [B0B8K1ng/OpenNWM-website](https://github.com/B0B8K1ng/OpenNWM-website) 免费部署；该仓库仅包含网站文件，原始 [OpenNWM](https://github.com/B0B8K1ng/OpenNWM) 代码仓库继续保持私有。
 
-部署由 `.github/workflows/pages.yml` 完成，只上传 `website/`。仓库可以继续保持私有，但私有仓库使用 Pages 需要支持此功能的 GitHub 套餐；公开网站的访问者无需获得代码仓库权限。部署状态和实际访问地址见该工作流的 `github-pages` 环境。
+在 **OpenNWM-website** 仓库的 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。随后进入 **Actions → Deploy website to GitHub Pages → Run workflow**，选择 `main` 运行一次。以后向该公开仓库的 `main` 推送修改时会自动更新网站，无需构建或安装前端依赖；部署状态和实际地址见工作流的 `github-pages` 环境。
+
+独立仓库的根目录就是网站目录，本地预览时将上方命令中的目录改为 `/path/to/OpenNWM-website`。在私有仓库修改 `website/` 后，将更新的网站文件同步到公开仓库并提交、推送，即可发布。
 
 ## 修改内容
 
