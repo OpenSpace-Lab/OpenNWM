@@ -13,6 +13,14 @@ conda run --no-capture-output -n open-nwm python -m http.server 8000 --bind 127.
 
 打开 <http://127.0.0.1:8000>，按 `Ctrl+C` 停止。也可用已有 Python 3 的绝对路径替换 `conda run --no-capture-output -n open-nwm python`，无需安装训练依赖。页面通过 HTTP 读取 JSON，请使用服务器预览。
 
+## GitHub Pages
+
+网站地址：<https://b0b8k1ng.github.io/OpenNWM/>（首次部署成功后可访问）。
+
+在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。随后进入 **Actions → Deploy website to GitHub Pages → Run workflow**，选择 `main` 运行一次。以后向 `main` 推送 `website/` 或部署工作流的修改时会自动更新网站，无需构建或安装前端依赖。
+
+部署由 `.github/workflows/pages.yml` 完成，只上传 `website/`。仓库可以继续保持私有，但私有仓库使用 Pages 需要支持此功能的 GitHub 套餐；公开网站的访问者无需获得代码仓库权限。部署状态和实际访问地址见该工作流的 `github-pages` 环境。
+
 ## 修改内容
 
 | 文件 | 内容 |
