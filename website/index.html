@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f5ef" />
+    <meta
+      name="description"
+      content="OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining. Explore real prediction videos, NavAnywhere's 15 diverse sources, and the research behind the model."
+    />
+    <meta
+      property="og:title"
+      content="OpenNWM — A Generalist Navigation World Model"
+    />
+    <meta
+      property="og:description"
+      content="Latent action pretraining. Real-world imagination. Explore navigation predictions and the diversity of NavAnywhere."
+    />
+    <meta property="og:image" content="assets/datasets/overview.webp" />
+    <meta property="og:type" content="website" />
+    <title>OpenNWM — A world beyond the familiar</title>
+    <link rel="icon" type="image/svg+xml" href="assets/mark.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" type="module"></script>
+  </head>
+  <body>
+    <svg class="svg-definitions" aria-hidden="true">
+      <defs>
+        <symbol id="arrow" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </symbol>
+        <symbol id="arrow-up" viewBox="0 0 24 24">
+          <path d="M6 18 18 6M6 6h12v12" />
+        </symbol>
+        <symbol id="play" viewBox="0 0 24 24">
+          <path d="m9 5 11 7-11 7Z" />
+        </symbol>
+        <symbol id="pause" viewBox="0 0 24 24">
+          <path d="M8 5v14M16 5v14" />
+        </symbol>
+        <symbol id="close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="copy" viewBox="0 0 24 24">
+          <rect x="8" y="8" width="12" height="12" rx="2" />
+          <path d="M15 8V4H4v11h4" />
+        </symbol>
+        <symbol id="expand" viewBox="0 0 24 24">
+          <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" />
+        </symbol>
+      </defs>
+    </svg>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a href="#" class="brand" aria-label="OpenNWM home"
+        ><img src="assets/mark.svg" alt="" width="28" height="28" />OpenNWM<span
+          class="brand-dot"
+          >.</span
+        ></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#in-motion" data-en="In motion" data-zh="效果演示"
+          >In motion</a
+        >
+        <a href="#dataset" data-en="Dataset" data-zh="数据集">Dataset</a>
+        <a href="#method" data-en="Method" data-zh="方法">Method</a>
+        <a href="#results" data-en="Results" data-zh="研究结果">Results</a>
+      </nav>
+      <div class="header-actions">
+        <button
+          id="language"
+          class="language-button"
+          type="button"
+          aria-label="Switch to Chinese"
+        >
+          中文</button
+        ><a
+          class="header-paper"
+          href="assets/paper/OpenNWM.pdf"
+          target="_blank"
+          rel="noopener"
+          ><span data-en="Read paper" data-zh="阅读论文">Read paper</span
+          ><svg><use href="#arrow-up" /></svg></a
+        ><button
+          class="mobile-menu"
+          id="mobile-menu"
+          aria-expanded="false"
+          aria-label="Open navigation"
+        >
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero section-shell" aria-labelledby="hero-title">
+        <div class="hero-eyebrow">
+          <span class="eyebrow"
+            ><i class="status-dot"></i
+            ><span
+              data-en="A GENERALIST NAVIGATION WORLD MODEL"
+              data-zh="通用导航世界模型"
+              >A GENERALIST NAVIGATION WORLD MODEL</span
+            ></span
+          ><span
+            class="manuscript-tag"
+            data-en="ANONYMOUS · UNDER REVIEW"
+            data-zh="匿名投稿 · 审稿中"
+            >ANONYMOUS · UNDER REVIEW</span
+          >
+        </div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 id="hero-title">OpenNWM<span>.</span></h1>
+            <p
+              class="hero-statement"
+              data-en="A world beyond&#10;the familiar."
+              data-zh="看见更广的世界，&#10;想象下一步。"
+            >
+              A world beyond<br />the familiar.
+            </p>
+            <p
+              class="hero-description"
+              data-en="Learning to imagine the way ahead — from diverse, action-free videos to controllable navigation."
+              data-zh="从多样的无动作标注视频中学习，预测前方世界，走向可控的导航。"
+            >
+              Learning to imagine the way ahead — from diverse, action-free
+              videos to controllable navigation.
+            </p>
+            <div class="hero-links">
+              <a class="button button-dark" href="#in-motion"
+                ><span data-en="See it in motion" data-zh="观看效果演示"
+                  >See it in motion</span
+                ><svg><use href="#arrow" /></svg></a
+              ><a
+                class="text-link"
+                href="assets/paper/OpenNWM.pdf"
+                target="_blank"
+                rel="noopener"
+                ><span data-en="The paper" data-zh="阅读论文">The paper</span
+                ><svg><use href="#arrow-up" /></svg
+              ></a>
+            </div>
+            <div class="hero-footnote">
+              <span class="tiny-cross">+</span
+              ><span
+                data-en="Latent action pretraining. Real-world imagination."
+                data-zh="潜在动作预训练，连接视觉经验与真实运动。"
+                >Latent action pretraining. Real-world imagination.</span
+              >
+            </div>
+          </div>
+          <div class="hero-visual" id="hero-visual">
+            <video
+              id="hero-video"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Real navigation video from NavAnywhere"
+            ></video>
+            <div class="hero-shade"></div>
+            <div class="viewfinder top-left"></div>
+            <div class="viewfinder top-right"></div>
+            <div class="viewfinder bottom-left"></div>
+            <div class="viewfinder bottom-right"></div>
+            <div class="hero-video-top">
+              <span
+                ><i class="live-dot"></i
+                ><span
+                  data-en="THE WORLD IS THE TRAINING GROUND"
+                  data-zh="世界，就是训练场"
+                  >THE WORLD IS THE TRAINING GROUND</span
+                ></span
+              ><span class="mono">01 / 15</span>
+            </div>
+
+            <div class="hero-video-bottom">
+              <div>
+                <span
+                  class="mono"
+                  data-en="OBSERVE. LEARN. IMAGINE."
+                  data-zh="观察 · 学习 · 想象"
+                  >OBSERVE. LEARN. IMAGINE.</span
+                >
+                <p data-en="Motion is everywhere." data-zh="运动，无处不在。">
+                  Motion is everywhere.
+                </p>
+                <span id="hero-source" class="hero-source"
+                  >NavAnywhere / real video</span
+                >
+              </div>
+              <button
+                class="round-button"
+                id="hero-pause"
+                aria-label="Pause background video"
+              >
+                <svg><use href="#pause" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="stats-strip">
+          <div>
+            <span class="stat-value">17.5<span>M</span></span
+            ><span
+              class="stat-label"
+              data-en="visual observations"
+              data-zh="视觉观测"
+              >visual observations</span
+            >
+          </div>
+          <div>
+            <span class="stat-value">15</span
+            ><span
+              class="stat-label"
+              data-en="heterogeneous sources"
+              data-zh="异构数据来源"
+              >heterogeneous sources</span
+            >
+          </div>
+          <div>
+            <span class="stat-value">70.8<span>K</span></span
+            ><span
+              class="stat-label"
+              data-en="navigation sequences"
+              data-zh="导航序列"
+              >navigation sequences</span
+            >
+          </div>
+          <div>
+            <span class="stat-value">280<span>M</span></span
+            ><span
+              class="stat-label"
+              data-en="world model parameters"
+              data-zh="世界模型参数"
+              >world model parameters</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="motion-section section-shell section-space"
+        id="in-motion"
+        aria-labelledby="motion-title"
+      >
+        <div class="section-heading reveal">
+          <div>
+            <span
+              class="eyebrow section-number"
+              data-en="01 / IN MOTION"
+              data-zh="01 / 效果演示"
+              >01 / IN MOTION</span
+            >
+            <h2
+              id="motion-title"
+              data-en="One observation.&#10;Many steps ahead."
+              data-zh="从一个观测，&#10;看见未来多步。"
+            >
+              One observation.<br />Many steps ahead.
+            </h2>
+          </div>
+          <p
+            data-en="An imagined future, next to the real one. Explore autoregressive rollouts, driven by physical actions."
+            data-zh="让预测与真实画面对照。探索由真实动作驱动、逐帧回灌的自回归未来预测。"
+          >
+            An imagined future, next to the real one. Explore autoregressive
+            rollouts, driven by physical actions.
+          </p>
+        </div>
+        <div class="demo-toolbar">
+          <div
+            class="demo-tabs"
+            id="demo-tabs"
+            role="tablist"
+            aria-label="Navigation scenes"
+          ></div>
+          <div class="model-selector">
+            <label for="model-select" data-en="Compare with" data-zh="对照模型"
+              >Compare with</label
+            ><select id="model-select">
+              <option value="prediction">OpenNWM</option>
+              <option value="baseline">NWM</option>
+            </select>
+          </div>
+        </div>
+        <div class="demo-studio">
+          <aside class="studio-note">
+            <span
+              class="eyebrow"
+              data-en="THE ROLLOUT LAB"
+              data-zh="未来预测实验室"
+              >THE ROLLOUT LAB</span
+            >
+            <h3
+              data-en="Look ahead.&#10;Look closer."
+              data-zh="看向未来。&#10;走近细节。"
+            >
+              Look ahead.<br />Look closer.
+            </h3>
+            <p
+              data-en="Move the divider to reveal what the model imagined, and what really happened."
+              data-zh="移动分界线，看模型想象的未来与真实发生的世界。"
+            >
+              Move the divider to reveal what the model imagined, and what
+              really happened.
+            </p>
+            <div class="studio-specs">
+              <div>
+                <span data-en="Conditioning" data-zh="条件信号"
+                  >Conditioning</span
+                ><strong data-en="Physical actions" data-zh="真实动作"
+                  >Physical actions</strong
+                >
+              </div>
+              <div>
+                <span data-en="Generation" data-zh="生成方式">Generation</span
+                ><strong data-en="Autoregressive" data-zh="自回归预测"
+                  >Autoregressive</strong
+                >
+              </div>
+              <div>
+                <span data-en="Sampling" data-zh="采样步数">Sampling</span
+                ><strong>250-step DDPM</strong>
+              </div>
+            </div>
+            <span class="studio-instruction"
+              ><span>↔</span
+              ><span
+                data-en="Slide to compare. Scrub to explore."
+                data-zh="滑动对照，拖动时间轴探索。"
+                >Slide to compare. Scrub to explore.</span
+              ></span
+            >
+          </aside>
+          <div class="demo-player" id="demo-player">
+            <div class="comparison-stage" id="comparison-stage">
+              <video
+                id="truth-video"
+                muted
+                playsinline
+                preload="metadata"
+                aria-label="Ground truth navigation sequence"
+              ></video>
+              <div class="prediction-layer" id="prediction-layer">
+                <video
+                  id="prediction-video"
+                  muted
+                  playsinline
+                  preload="metadata"
+                  aria-label="Predicted navigation sequence"
+                ></video>
+              </div>
+              <span
+                class="frame-label label-truth"
+                data-en="GROUND TRUTH"
+                data-zh="真实未来"
+                >GROUND TRUTH</span
+              ><span class="frame-label label-prediction" id="prediction-label"
+                >OPENNWM</span
+              >
+              <div class="wipe-line" id="wipe-line">
+                <span
+                  ><svg viewBox="0 0 24 24">
+                    <path d="m8 8-4 4 4 4m8-8 4 4-4 4M12 6v12" /></svg
+                ></span>
+              </div>
+              <input
+                id="comparison-slider"
+                class="comparison-slider"
+                type="range"
+                min="4"
+                max="96"
+                value="50"
+                aria-label="Reveal ground truth or prediction"
+              />
+              <span
+                class="comparison-hint"
+                data-en="DRAG TO COMPARE"
+                data-zh="拖动分界线，对照预测"
+                >DRAG TO COMPARE</span
+              >
+              <div class="video-loading" id="video-loading" aria-live="polite">
+                <span data-en="Loading scene…" data-zh="正在加载场景…"
+                  >Loading scene…</span
+                >
+              </div>
+            </div>
+            <div class="player-controls">
+              <button
+                id="play-toggle"
+                class="icon-button"
+                aria-label="Play comparison"
+              >
+                <svg><use href="#play" /></svg></button
+              ><span class="player-time mono" id="player-time"
+                >00:00 / 00:00</span
+              ><input
+                id="timeline"
+                type="range"
+                min="0"
+                max="1000"
+                value="0"
+                step="1"
+                aria-label="Video timeline"
+              /><select id="playback-speed" aria-label="Playback speed">
+                <option value="0.5">0.5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option></select
+              ><button
+                class="icon-button"
+                id="fullscreen"
+                aria-label="Enter full screen"
+              >
+                <svg><use href="#expand" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-caption">
+          <div>
+            <span class="caption-dot"></span>
+            <p id="demo-description"></p>
+          </div>
+          <span class="mono" id="demo-format"></span>
+        </div>
+        <details class="demo-details">
+          <summary
+            data-en="About these visualizations"
+            data-zh="关于这些可视化"
+          >
+            About these visualizations
+          </summary>
+          <p id="demo-provenance"></p>
+          <p
+            data-en="Curated qualitative examples from recorded model rollouts; playback is not live inference. Numerical comparisons below use the paper’s benchmark tables."
+            data-zh="这些是归档模型预测中精选的定性样例；播放并非实时推理。下方定量结果来自论文基准表格。"
+          >
+            Curated qualitative examples from recorded model rollouts; playback
+            is not live inference. Numerical comparisons below use the paper’s
+            benchmark tables.
+          </p>
+        </details>
+      </section>
+
+      <section
+        class="dataset-section section-space"
+        id="dataset"
+        aria-labelledby="dataset-title"
+      >
+        <div class="section-shell">
+          <div class="section-heading reveal">
+            <div>
+              <span
+                class="eyebrow section-number"
+                data-en="02 / NAVANYWHERE"
+                data-zh="02 / NAVANYWHERE 数据集"
+                >02 / NAVANYWHERE</span
+              >
+              <h2
+                id="dataset-title"
+                data-en="Different worlds.&#10;A common language."
+                data-zh="各不相同的世界，&#10;共通的运动语言。"
+              >
+                Different worlds.<br />A common language.
+              </h2>
+            </div>
+            <div class="heading-aside">
+              <p
+                data-en="Streets, homes, gardens, and paths less traveled. Navigation experience across people, robots, and drones."
+                data-zh="街道、住宅、花园与人迹罕至的小径。汇集人类、机器人和无人机的导航经验。"
+              >
+                Streets, homes, gardens, and paths less traveled. Navigation
+                experience across people, robots, and drones.
+              </p>
+              <a
+                class="text-link"
+                href="https://modelscope.cn/datasets/LittleBoss/LAM-Data"
+                target="_blank"
+                rel="noopener"
+                ><span data-en="Explore the dataset" data-zh="获取数据集"
+                  >Explore the dataset</span
+                ><svg><use href="#arrow-up" /></svg
+              ></a>
+            </div>
+          </div>
+          <div class="dataset-overview">
+            <div class="dataset-note">
+              <span class="big-serif">1,188.65<span>h</span></span
+              ><span data-en="of source-video experience" data-zh="源视频时长"
+                >of source-video experience</span
+              >
+            </div>
+            <div class="distribution">
+              <div class="distribution-label">
+                <span data-en="A spectrum of places" data-zh="丰富的环境分布"
+                  >A spectrum of places</span
+                ><span id="distribution-value" class="mono">5 SCENE TYPES</span>
+              </div>
+              <div
+                class="distribution-bar"
+                id="distribution-bar"
+                aria-label="NavAnywhere scene composition"
+              ></div>
+              <div class="distribution-legend" id="distribution-legend"></div>
+            </div>
+          </div>
+          <div class="dataset-controls">
+            <div
+              class="filter-tabs"
+              id="dataset-filters"
+              role="group"
+              aria-label="Filter dataset examples"
+            >
+              <button
+                class="active"
+                data-filter="all"
+                aria-pressed="true"
+                data-en="All environments"
+                data-zh="全部环境"
+              >
+                All environments</button
+              ><button
+                data-filter="urban"
+                aria-pressed="false"
+                data-en="Urban"
+                data-zh="城市街道"
+              >
+                Urban</button
+              ><button
+                data-filter="indoor"
+                aria-pressed="false"
+                data-en="Indoor"
+                data-zh="室内空间"
+              >
+                Indoor</button
+              ><button
+                data-filter="nature"
+                aria-pressed="false"
+                data-en="Nature"
+                data-zh="自然地形"
+              >
+                Nature</button
+              ><button
+                data-filter="robot"
+                aria-pressed="false"
+                data-en="Robot view"
+                data-zh="机器人视角"
+              >
+                Robot view
+              </button>
+            </div>
+            <span class="dataset-count mono" id="dataset-count"></span>
+          </div>
+          <div id="dataset-grid" class="dataset-grid"></div>
+          <div class="dataset-footer">
+            <p
+              data-en="15 NavAnywhere sources + 4 NWM post-training sources. The latter are excluded from NavAnywhere totals. Scene percentages are rounded."
+              data-zh="15 个 NavAnywhere 来源 + 4 个 NWM 后训练来源；后者不计入 NavAnywhere 统计。环境占比采用论文的四舍五入值。"
+            >
+              15 NavAnywhere sources + 4 NWM post-training sources. The latter
+              are excluded from NavAnywhere totals. Scene percentages are
+              rounded.
+            </p>
+            <button class="text-link" id="dataset-expand">
+              <span data-en="Show all sources" data-zh="展开全部来源"
+                >Show all sources</span
+              ><span>＋</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="method-section section-shell section-space"
+        id="method"
+        aria-labelledby="method-title"
+      >
+        <div class="section-heading reveal">
+          <div>
+            <span
+              class="eyebrow section-number"
+              data-en="03 / THE METHOD"
+              data-zh="03 / 方法"
+              >03 / THE METHOD</span
+            >
+            <h2
+              id="method-title"
+              data-en="From seeing motion&#10;to understanding it."
+              data-zh="从看见运动，&#10;到理解运动。"
+            >
+              From seeing motion<br />to understanding it.
+            </h2>
+          </div>
+          <p
+            data-en="A shared latent-action space connects broad visual experience with executable navigation actions."
+            data-zh="共享潜在动作空间，将广泛的视觉经验与可执行的导航动作相连接。"
+          >
+            A shared latent-action space connects broad visual experience with
+            executable navigation actions.
+          </p>
+        </div>
+        <div class="method-layout">
+          <div
+            class="method-steps"
+            id="method-steps"
+            role="tablist"
+            aria-label="Training stages"
+          ></div>
+          <div
+            class="method-panel"
+            role="tabpanel"
+            id="method-panel"
+            aria-live="polite"
+          >
+            <div class="method-diagram" id="method-diagram"></div>
+            <div class="method-explanation">
+              <span class="eyebrow" id="method-kicker"></span>
+              <h3 id="method-subtitle"></h3>
+              <p id="method-description"></p>
+              <div class="method-equation" id="method-equation"></div>
+            </div>
+          </div>
+        </div>
+        <p
+          class="method-note"
+          data-en="The latent action model is trained first. World-model training then proceeds through latent pretraining, physical-action adapter warmup, and joint post-training. At inference, planning optimizes real waypoint actions."
+          data-zh="先训练潜在动作模型，再依次进行世界模型潜在动作预训练、真实动作适配器预热与联合后训练。推理时，规划直接优化真实路点动作。"
+        >
+          The latent action model is trained first. World-model training then
+          proceeds through latent pretraining, physical-action adapter warmup,
+          and joint post-training. At inference, planning optimizes real
+          waypoint actions.
+        </p>
+      </section>
+
+      <section
+        class="results-section section-space"
+        id="results"
+        aria-labelledby="results-title"
+      >
+        <div class="section-shell">
+          <div class="section-heading reveal">
+            <div>
+              <span
+                class="eyebrow section-number"
+                data-en="04 / MEASURED, NOT JUST IMAGINED"
+                data-zh="04 / 用结果说话"
+                >04 / MEASURED, NOT JUST IMAGINED</span
+              >
+              <h2
+                id="results-title"
+                data-en="Broader experience.&#10;Better prediction."
+                data-zh="更广泛的经验，&#10;更出色的预测。"
+              >
+                Broader experience.<br />Better prediction.
+              </h2>
+            </div>
+            <p
+              data-en="A 280M-parameter model with improved perceptual prediction on the evaluated navigation benchmarks."
+              data-zh="280M 参数世界模型，在论文所评估的导航基准上实现更好的感知预测。"
+            >
+              A 280M-parameter model with improved perceptual prediction on the
+              evaluated navigation benchmarks.
+            </p>
+          </div>
+          <div class="results-layout">
+            <div class="result-highlights">
+              <div>
+                <span class="result-improvement">−9.1<span>%</span></span>
+                <p data-en="LPIPS, in-domain" data-zh="域内 LPIPS">
+                  LPIPS, in-domain
+                </p>
+              </div>
+              <div>
+                <span class="result-improvement">−13.7<span>%</span></span>
+                <p data-en="DreamSim, in-domain" data-zh="域内 DreamSim">
+                  DreamSim, in-domain
+                </p>
+              </div>
+              <span
+                class="result-note"
+                data-en="Relative to the strongest baseline for each metric. Lower is better."
+                data-zh="相对各指标的最强基线，数值越低越好。"
+                >Relative to the strongest baseline for each metric. Lower is
+                better.</span
+              >
+            </div>
+            <div class="chart-panel">
+              <div class="chart-header">
+                <span
+                  data-en="Visual prediction benchmark"
+                  data-zh="视觉预测基准"
+                  >Visual prediction benchmark</span
+                ><select id="result-domain" aria-label="Benchmark domain">
+                  <option value="id">In-domain</option>
+                  <option value="ood">Out-of-domain</option>
+                </select>
+              </div>
+              <div
+                class="chart-metric-tabs"
+                id="metric-tabs"
+                role="group"
+                aria-label="Evaluation metric"
+              >
+                <button data-metric="lpips" class="active" aria-pressed="true">
+                  LPIPS ↓</button
+                ><button data-metric="dreamsim" aria-pressed="false">
+                  DreamSim ↓</button
+                ><button data-metric="psnr" aria-pressed="false">PSNR ↑</button>
+              </div>
+              <div
+                id="result-chart"
+                class="result-chart"
+                aria-live="polite"
+              ></div>
+              <div class="chart-footnote">
+                <span id="chart-footnote"></span
+                ><span id="chart-direction" class="mono"></span>
+              </div>
+            </div>
+          </div>
+          <p
+            class="results-source"
+            data-en="Reported manuscript results · Table 1. The video examples above are qualitative selections, not a substitute for aggregate evaluation."
+            data-zh="数据来自论文表 1。上方视频为精选定性样例，不替代完整基准评估。"
+          >
+            Reported manuscript results · Table 1. The video examples above are
+            qualitative selections, not a substitute for aggregate evaluation.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="closing-section section-shell section-space"
+        id="resources"
+      >
+        <div class="closing-copy">
+          <span class="eyebrow" data-en="KEEP EXPLORING" data-zh="继续探索"
+            >KEEP EXPLORING</span
+          >
+          <h2
+            data-en="The next step&#10;starts here."
+            data-zh="下一步，&#10;从这里出发。"
+          >
+            The next step<br />starts here.
+          </h2>
+          <p
+            data-en="A Generalist Navigation World Model with Latent Action Pretraining"
+            data-zh="通过潜在动作预训练构建通用导航世界模型"
+          >
+            A Generalist Navigation World Model with Latent Action Pretraining
+          </p>
+          <div class="resource-links">
+            <a
+              class="button button-dark"
+              href="assets/paper/OpenNWM.pdf"
+              target="_blank"
+              rel="noopener"
+              ><span data-en="Read the paper" data-zh="阅读论文"
+                >Read the paper</span
+              ><svg><use href="#arrow-up" /></svg></a
+            ><a
+              class="button button-outline"
+              href="https://github.com/B0B8K1ng/OpenNWM"
+              target="_blank"
+              rel="noopener"
+              ><span data-en="Project code" data-zh="项目代码"
+                >Project code</span
+              ><svg><use href="#arrow-up" /></svg
+            ></a>
+          </div>
+          <span
+            class="resource-access"
+            data-en="The code repository currently requires collaborator access."
+            data-zh="代码仓库目前需要协作者访问权限。"
+            >The code repository currently requires collaborator access.</span
+          >
+        </div>
+        <div class="citation-card">
+          <div>
+            <span
+              class="eyebrow"
+              data-en="REFERENCE THIS WORK"
+              data-zh="引用本研究"
+              >REFERENCE THIS WORK</span
+            ><button
+              id="copy-citation"
+              class="icon-button"
+              aria-label="Copy BibTeX"
+            >
+              <svg><use href="#copy" /></svg>
+            </button>
+          </div>
+          <pre id="citation">
+@unpublished{opennwm,
+  title = {OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},
+  author = {Anonymous Authors},
+  note = {Under review as a conference paper at ICLR 2027}
+}</pre
+          >
+          <span
+            class="citation-status"
+            id="citation-status"
+            role="status"
+          ></span>
+          <p
+            data-en="Anonymous manuscript · Under review at ICLR 2027. Citation is provisional."
+            data-zh="匿名稿件 · ICLR 2027 审稿中。引用信息为临时版本。"
+          >
+            Anonymous manuscript · Under review at ICLR 2027. Citation is
+            provisional.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer section-shell">
+      <a class="brand" href="#"
+        ><img src="assets/mark.svg" alt="" width="24" height="24" />OpenNWM<span
+          class="brand-dot"
+          >.</span
+        ></a
+      ><span
+        data-en="Learning the world, one motion at a time."
+        data-zh="从每一次运动中，学习这个世界。"
+        >Learning the world, one motion at a time.</span
+      ><a href="#" class="back-top" aria-label="Back to top">↑</a>
+    </footer>
+
+    <dialog
+      id="dataset-dialog"
+      class="dataset-dialog"
+      aria-labelledby="dialog-title"
+    >
+      <div class="dialog-top">
+        <span class="eyebrow" id="dialog-source"></span
+        ><button
+          class="icon-button"
+          id="dialog-close"
+          aria-label="Close dataset preview"
+        >
+          <svg><use href="#close" /></svg>
+        </button>
+      </div>
+      <div class="dialog-media">
+        <img id="dialog-image" alt="" /><video
+          id="dialog-video"
+          controls
+          playsinline
+          muted
+          preload="none"
+          hidden
+        ></video>
+      </div>
+      <div class="dialog-copy">
+        <h3 id="dialog-title"></h3>
+        <p id="dialog-description"></p>
+        <div class="dialog-facts" id="dialog-facts"></div>
+      </div>
+    </dialog>
+    <div id="page-status" role="status" class="sr-only"></div>
+    <noscript
+      ><p class="no-script">
+        Enable JavaScript to explore interactive videos and datasets. The paper
+        remains available using the links above.
+      </p></noscript
+    >
+  </body>
+</html>

@@ -1,0 +1,526 @@
+{
+  "version": 1,
+  "description": "Selected frames from 15 NavAnywhere sources and 4 action-labeled navigation sources. These are dataset examples, not model predictions.",
+  "overview": "assets/datasets/overview.webp",
+  "hero_video": "assets/datasets/walking-tours.mp4",
+  "hero_poster": "assets/datasets/walking-tours.webp",
+  "asset_processing": "Original dataset frames were center-cropped to 16:9 and resized. No generated imagery, content replacement, or color grading. Video has no audio.",
+  "datasets": [
+    {
+      "id": "botanic-garden",
+      "name": "BotanicGarden",
+      "group": "pretraining",
+      "environments": [
+        "nature",
+        "robot"
+      ],
+      "image": "assets/datasets/botanic-garden.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Through the garden",
+      "description": "A winding stone path under dense tree cover.",
+      "source": {
+        "dataset": "BotanicGarden",
+        "collection": "NavAnywhere",
+        "trajectory": "1005_00_VLIO",
+        "image_frame": 1128,
+        "trajectory_frame_count": 2258,
+        "relative_path": "NavAnywhere/BotanicGarden/1005_00_VLIO/1128.jpg",
+        "original_image_size": [
+          960,
+          600
+        ],
+        "video": {
+          "first_frame": 1080,
+          "last_frame": 1175,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames; playback speed is for display, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/botanic-garden.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
+    },
+    {
+      "id": "casia-nav",
+      "name": "In-house (CASIA-Nav)",
+      "group": "pretraining",
+      "environments": [
+        "urban"
+      ],
+      "image": "assets/datasets/casia-nav.webp",
+      "width": 480,
+      "height": 270,
+      "title": "City after dark",
+      "description": "An illuminated stadium and a broad urban walkway at night.",
+      "source": {
+        "dataset": "CASIA-Nav",
+        "collection": "NavAnywhere",
+        "trajectory": "birds_nest_museum",
+        "image_frame": 238,
+        "trajectory_frame_count": 477,
+        "relative_path": "NavAnywhere/CASIA-Nav/birds_nest_museum/238.jpg",
+        "original_image_size": [
+          2208,
+          1242
+        ]
+      }
+    },
+    {
+      "id": "citywalker",
+      "name": "CityWalker",
+      "group": "pretraining",
+      "environments": [
+        "urban"
+      ],
+      "image": "assets/datasets/citywalker.webp",
+      "width": 480,
+      "height": 270,
+      "title": "At sidewalk level",
+      "description": "A low camera view between parked cars and city buildings.",
+      "source": {
+        "dataset": "CityWalker",
+        "collection": "NavAnywhere",
+        "trajectory": "traj_nav_07",
+        "image_frame": 1757,
+        "trajectory_frame_count": 3516,
+        "relative_path": "NavAnywhere/CityWalker/traj_nav_07/1757.jpg",
+        "original_image_size": [
+          400,
+          400
+        ]
+      }
+    },
+    {
+      "id": "dl3dv",
+      "name": "DL3DV-10K",
+      "group": "pretraining",
+      "environments": [
+        "indoor"
+      ],
+      "image": "assets/datasets/dl3dv.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Inside a neighborhood shop",
+      "description": "A commercial interior with a counter, products, and overhead signs.",
+      "source": {
+        "dataset": "DL3DV-10K",
+        "collection": "NavAnywhere",
+        "trajectory": "54c498d0cbb51e0656764a764b0376b43080845c07db7d9af1ecf5c926a65dee_0",
+        "image_frame": 32,
+        "trajectory_frame_count": 65,
+        "relative_path": "NavAnywhere/DL3DV-10K/54c498d0cbb51e0656764a764b0376b43080845c07db7d9af1ecf5c926a65dee_0/32.jpg",
+        "original_image_size": [
+          960,
+          540
+        ]
+      }
+    },
+    {
+      "id": "egowalk",
+      "name": "EgoWalk",
+      "group": "pretraining",
+      "environments": [
+        "nature"
+      ],
+      "image": "assets/datasets/egowalk.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Along a narrow trail",
+      "description": "A footpath bordered by dense vegetation.",
+      "source": {
+        "dataset": "EgoWalk",
+        "collection": "NavAnywhere",
+        "trajectory": "2024_09_17__17_09_22",
+        "image_frame": 1676,
+        "trajectory_frame_count": 3354,
+        "relative_path": "NavAnywhere/EgoWalk/2024_09_17__17_09_22/1676.jpg",
+        "original_image_size": [
+          960,
+          600
+        ]
+      }
+    },
+    {
+      "id": "krishnacam",
+      "name": "KrishnaCam",
+      "group": "pretraining",
+      "environments": [
+        "urban"
+      ],
+      "image": "assets/datasets/krishnacam.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Across the intersection",
+      "description": "A street crossing with storefronts, traffic, and an uphill road.",
+      "source": {
+        "dataset": "KrishnaCam",
+        "collection": "NavAnywhere",
+        "trajectory": "20140912_115117_694.mp4_cropped",
+        "image_frame": 852,
+        "trajectory_frame_count": 1705,
+        "relative_path": "NavAnywhere/KrishnaCam/20140912_115117_694.mp4_cropped/852.jpg",
+        "original_image_size": [
+          1152,
+          648
+        ]
+      }
+    },
+    {
+      "id": "lavn",
+      "name": "LAVN",
+      "group": "pretraining",
+      "environments": [
+        "nature"
+      ],
+      "image": "assets/datasets/lavn.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Around the campus",
+      "description": "A shaded campus path beside a bicycle shelter.",
+      "source": {
+        "dataset": "LAVN",
+        "collection": "NavAnywhere",
+        "trajectory": "Campus_traj_480p_scene00",
+        "image_frame": 3361,
+        "trajectory_frame_count": 6724,
+        "relative_path": "NavAnywhere/LAVN/Campus_traj_480p_scene00/3361.jpg",
+        "original_image_size": [
+          640,
+          480
+        ]
+      }
+    },
+    {
+      "id": "rover",
+      "name": "ROVER",
+      "group": "pretraining",
+      "environments": [
+        "nature",
+        "robot"
+      ],
+      "image": "assets/datasets/rover.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Close to the ground",
+      "description": "Grass and flowering shrubs from a low robot viewpoint.",
+      "source": {
+        "dataset": "ROVER",
+        "collection": "NavAnywhere",
+        "trajectory": "garden_small_day_2024-05-29_1",
+        "image_frame": 652,
+        "trajectory_frame_count": 1306,
+        "relative_path": "NavAnywhere/ROVER/garden_small_day_2024-05-29_1/652.jpg",
+        "original_image_size": [
+          640,
+          480
+        ]
+      }
+    },
+    {
+      "id": "realestate10k",
+      "name": "RealEstate10K",
+      "group": "pretraining",
+      "environments": [
+        "indoor"
+      ],
+      "image": "assets/datasets/realestate10k.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Inside the home",
+      "description": "A residential living room with furniture and an open doorway.",
+      "source": {
+        "dataset": "RealEstate10K",
+        "collection": "NavAnywhere",
+        "trajectory": "a74c9ba55587177a",
+        "image_frame": 15,
+        "trajectory_frame_count": 32,
+        "relative_path": "NavAnywhere/RealEstate10K/a74c9ba55587177a/15.jpg",
+        "original_image_size": [
+          1280,
+          720
+        ]
+      }
+    },
+    {
+      "id": "sanpo",
+      "name": "SANPO",
+      "group": "pretraining",
+      "environments": [
+        "urban"
+      ],
+      "image": "assets/datasets/sanpo.webp",
+      "width": 480,
+      "height": 270,
+      "title": "A busy city block",
+      "description": "A city street framed by tall buildings and passing vehicles.",
+      "source": {
+        "dataset": "SANPO",
+        "collection": "NavAnywhere",
+        "trajectory": "-5OCPnbrwJdu3jH70ieU7pUiFsOJQoeG",
+        "image_frame": 71,
+        "trajectory_frame_count": 144,
+        "relative_path": "NavAnywhere/SANPO/-5OCPnbrwJdu3jH70ieU7pUiFsOJQoeG/71.jpg",
+        "original_image_size": [
+          2208,
+          1242
+        ]
+      }
+    },
+    {
+      "id": "great-outdoors",
+      "name": "The Great Outdoors",
+      "group": "pretraining",
+      "environments": [
+        "nature",
+        "robot"
+      ],
+      "image": "assets/datasets/great-outdoors.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Across winter terrain",
+      "description": "Snow-covered ground and tall trees in an open forest.",
+      "source": {
+        "dataset": "The_Great_Outdoors",
+        "collection": "NavAnywhere",
+        "trajectory": "2025-01-24-09-44-24_newcal",
+        "image_frame": 1582,
+        "trajectory_frame_count": 3166,
+        "relative_path": "NavAnywhere/The_Great_Outdoors/2025-01-24-09-44-24_newcal/1582.jpg",
+        "original_image_size": [
+          1440,
+          1080
+        ]
+      }
+    },
+    {
+      "id": "walking-tours",
+      "name": "Walking Tours",
+      "group": "pretraining",
+      "environments": [
+        "urban"
+      ],
+      "image": "assets/datasets/walking-tours.webp",
+      "width": 480,
+      "height": 270,
+      "title": "The city at dusk",
+      "description": "An evening pedestrian street with storefront lighting and moving crowds.",
+      "source": {
+        "dataset": "Walking_Tours",
+        "collection": "NavAnywhere",
+        "trajectory": "Walking Tour Stockholm",
+        "image_frame": 7978,
+        "trajectory_frame_count": 15958,
+        "relative_path": "NavAnywhere/Walking_Tours/Walking Tour Stockholm/7978.jpg",
+        "original_image_size": [
+          3840,
+          2160
+        ],
+        "video": {
+          "first_frame": 7930,
+          "last_frame": 8025,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames; playback speed is for display, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/walking-tours.mp4",
+      "video_width": 768,
+      "video_height": 432,
+      "video_duration_seconds": 8.0
+    },
+    {
+      "id": "ego4d",
+      "name": "Ego4D",
+      "group": "pretraining",
+      "environments": [
+        "indoor"
+      ],
+      "image": "assets/datasets/ego4d.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Everyday egocentric scenes",
+      "description": "A first-person view toward a refrigerator shelf.",
+      "source": {
+        "dataset": "ego4d",
+        "collection": "NavAnywhere",
+        "trajectory": "0049fdd8-0044-4ef5-9c34-b3469416ebe5",
+        "image_frame": 2723,
+        "trajectory_frame_count": 5448,
+        "relative_path": "NavAnywhere/ego4d/0049fdd8-0044-4ef5-9c34-b3469416ebe5/2723.jpg",
+        "original_image_size": [
+          960,
+          540
+        ]
+      }
+    },
+    {
+      "id": "i2nav-robot",
+      "name": "i2Nav-Robot",
+      "group": "pretraining",
+      "environments": [
+        "indoor",
+        "robot"
+      ],
+      "image": "assets/datasets/i2nav-robot.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Navigating a parking garage",
+      "description": "A robot-height view along an indoor parking aisle.",
+      "source": {
+        "dataset": "i2Nav-Robot",
+        "collection": "NavAnywhere",
+        "trajectory": "parking00",
+        "image_frame": 2448,
+        "trajectory_frame_count": 4897,
+        "relative_path": "NavAnywhere/i2Nav-Robot/parking00/2448.jpg",
+        "original_image_size": [
+          1600,
+          1200
+        ],
+        "video": {
+          "first_frame": 2400,
+          "last_frame": 2495,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames; playback speed is for display, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/i2nav-robot.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
+    },
+    {
+      "id": "ub-visiogeoloc",
+      "name": "uB-VisioGeoloc",
+      "group": "pretraining",
+      "environments": [
+        "urban"
+      ],
+      "image": "assets/datasets/ub-visiogeoloc.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Across a public square",
+      "description": "A paved city plaza with pedestrians, planters, and buildings.",
+      "source": {
+        "dataset": "uB-VisioGeoloc",
+        "collection": "NavAnywhere",
+        "trajectory": "1",
+        "image_frame": 109,
+        "trajectory_frame_count": 219,
+        "relative_path": "NavAnywhere/uB-VisioGeoloc/1/109.jpg",
+        "original_image_size": [
+          1280,
+          720
+        ]
+      }
+    },
+    {
+      "id": "recon",
+      "name": "RECON",
+      "group": "finetuning",
+      "environments": [
+        "nature",
+        "robot"
+      ],
+      "image": "assets/datasets/recon.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Ground-level exploration",
+      "description": "An outdoor robot view across grass toward trees and buildings.",
+      "source": {
+        "dataset": "recon",
+        "collection": "NWM",
+        "trajectory": "jackal_2019-09-09-18-46-15_12_r01",
+        "image_frame": 54,
+        "trajectory_frame_count": 108,
+        "relative_path": "recon/jackal_2019-09-09-18-46-15_12_r01/54.jpg",
+        "original_image_size": [
+          640,
+          480
+        ]
+      }
+    },
+    {
+      "id": "sacson",
+      "name": "HuRoN / SACSoN",
+      "group": "finetuning",
+      "environments": [
+        "indoor",
+        "robot"
+      ],
+      "image": "assets/datasets/sacson.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Down the corridor",
+      "description": "A low robot view along a carpeted indoor corridor.",
+      "source": {
+        "dataset": "sacson",
+        "collection": "NWM",
+        "trajectory": "Jan-12-2023-bww8_00000006_4",
+        "image_frame": 1,
+        "trajectory_frame_count": 3,
+        "relative_path": "sacson/Jan-12-2023-bww8_00000006_4/1.jpg",
+        "original_image_size": [
+          160,
+          120
+        ]
+      }
+    },
+    {
+      "id": "scand",
+      "name": "SCAND",
+      "group": "finetuning",
+      "environments": [
+        "indoor",
+        "robot"
+      ],
+      "image": "assets/datasets/scand.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Moving through shared spaces",
+      "description": "A public indoor walkway with pedestrians and open sightlines.",
+      "source": {
+        "dataset": "scand",
+        "collection": "NWM",
+        "trajectory": "random_mdps_B_Spot_JCL_JCL_Mon_Nov_15_108_58",
+        "image_frame": 1,
+        "trajectory_frame_count": 2,
+        "relative_path": "scand/random_mdps_B_Spot_JCL_JCL_Mon_Nov_15_108_58/1.jpg",
+        "original_image_size": [
+          320,
+          240
+        ]
+      }
+    },
+    {
+      "id": "tartan-drive",
+      "name": "TartanDrive",
+      "group": "finetuning",
+      "environments": [
+        "nature",
+        "robot"
+      ],
+      "image": "assets/datasets/tartan-drive.webp",
+      "width": 480,
+      "height": 270,
+      "title": "Beyond paved roads",
+      "description": "A muddy off-road track, puddles, and surrounding vegetation.",
+      "source": {
+        "dataset": "tartan",
+        "collection": "NWM",
+        "trajectory": "20210826_heightmaps_1_20210826_47_bigpuddle_21",
+        "image_frame": 1,
+        "trajectory_frame_count": 3,
+        "relative_path": "tartan/20210826_heightmaps_1_20210826_47_bigpuddle_21/1.jpg",
+        "original_image_size": [
+          320,
+          240
+        ]
+      }
+    }
+  ]
+}

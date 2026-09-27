@@ -8,6 +8,7 @@ LAM 与多阶段 NWM 的训练、评测和断点续跑。保留原模型、损�
 | NWM：直接训练、Stage 1、Stage 2、预测与规划 | [NWM](nwm/README.md) |
 | 下载数据、权重，复用已有缓存 | [数据与权重](DATA.md) |
 | 查看与原实现的对照结果 | [测试记录](tests/VALIDATION.md) |
+| 浏览论文、预测视频和数据集交互演示 | [项目网页](website/README.md) |
 
 ## 1. 安装
 

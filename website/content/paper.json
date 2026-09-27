@@ -1,0 +1,1043 @@
+{
+  "version": 1,
+  "metadata": {
+    "short_title": "OpenNWM",
+    "title": "OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining",
+    "authors": [
+      "Anonymous authors"
+    ],
+    "publication_status": "Under review as a conference paper at ICLR 2027",
+    "review_status": "Paper under double-blind review",
+    "publication_year": null,
+    "venue": null,
+    "doi": null,
+    "arxiv_url": null,
+    "source": {
+      "page": 1
+    },
+    "note": "The supplied manuscript does not identify authors or affiliations and does not state an accepted venue, DOI, arXiv URL, or publication year."
+  },
+  "overview": {
+    "tagline": "Learn navigation dynamics from action-free video. Adapt them to physical actions.",
+    "summary": "OpenNWM learns a shared latent action interface from diverse navigation videos, uses it to pretrain a navigation world model, and adapts that model to real waypoint actions for prediction and planning.",
+    "abstract": "Navigation world models predict future observations conditioned on navigation actions to support planning, but their generalization across real-world environments remains constrained by the limited coverage of action-labeled data. Action-free navigation videos provide diverse visual experience, yet lack the recorded actions required for action-conditioned training. We introduce OpenNWM, a generalist navigation world model with latent action pretraining. It learns universal latent actions from large-scale action-free videos through visual prediction pretraining, and further aligns them with physical motions via action-conditioned post-training. To support video pretraining, we curate NavAnywhere, a large-scale action-free navigation video dataset comprising 17.5 million visual observations from 15 heterogeneous sources. It captures navigation by ground robots, humans, and drones, with diverse viewpoints and motion patterns across five broad scene types: residential areas, public and commercial spaces, urban settings, parks, and natural landscapes. Experiments demonstrate improved visual prediction on in-domain and out-of-domain benchmarks, together with improved navigation performance. These results show that latent-action pretraining enables diverse, action-free videos to improve dynamics learning and generalization for open-world navigation.",
+    "source": {
+      "page": 1,
+      "section": "Abstract"
+    }
+  },
+  "contributions": [
+    {
+      "title": "A shared latent action interface",
+      "text": "Learn Universal Navigation Latent Actions through visual prediction, with physical motion supervision on annotated samples.",
+      "source": {
+        "pages": [
+          2,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "title": "Action-free video pretraining",
+      "text": "Pretrain navigation dynamics with inferred latent actions, then adapt the model to physical waypoint actions.",
+      "source": {
+        "pages": [
+          2,
+          5,
+          6,
+          7
+        ],
+        "figure": 3
+      }
+    },
+    {
+      "title": "NavAnywhere",
+      "text": "Bring together 17.5 million sampled observations from 15 sources spanning humans, ground robots, and drones.",
+      "source": {
+        "pages": [
+          2,
+          15,
+          16,
+          17
+        ],
+        "table": 6
+      }
+    },
+    {
+      "title": "Prediction and navigation evaluation",
+      "text": "Evaluate direct visual prediction, autoregressive rollouts, LAM reconstruction, and navigation on in-domain and held-out datasets.",
+      "source": {
+        "pages": [
+          7,
+          8,
+          9
+        ]
+      }
+    }
+  ],
+  "method": {
+    "latent_action_dimension": 32,
+    "latent_action_name": "Universal Navigation Latent Actions",
+    "latent_action_abbreviation": "UNLA",
+    "lam": {
+      "inputs": [
+        "Current RGB frame",
+        "Target RGB frame"
+      ],
+      "posterior": "q_phi(z | x_current, x_target)",
+      "posterior_family": "Diagonal Gaussian",
+      "prior": "Standard normal",
+      "objectives": [
+        {
+          "id": "visual",
+          "label": "Visual prediction",
+          "description": "Reconstruct the target observation from the current frame and inferred latent action."
+        },
+        {
+          "id": "physical",
+          "label": "Physical grounding",
+          "description": "Predict physical motion from the latent action on motion-annotated trajectories."
+        },
+        {
+          "id": "kl",
+          "label": "Latent regularization",
+          "description": "Regularize the latent posterior toward a standard normal prior."
+        }
+      ],
+      "cache": "Use the deterministic posterior mean from the 60K-step LAM checkpoint."
+    },
+    "world_model": {
+      "backbone": "CDiT-B/2",
+      "tokenizer": "Frozen Stable Diffusion VAE",
+      "conditioning": "Combine latent-action, temporal-horizon, and diffusion-timestep embeddings through adaptive layer normalization; attend to historical visual context through cross-attention.",
+      "stages": [
+        {
+          "id": "pretrain",
+          "number": 1,
+          "title": "Latent-action pretraining",
+          "data": "NavAnywhere",
+          "conditioning": "Inferred latent actions and relative time",
+          "trainable": "World-model backbone",
+          "steps": 60000,
+          "description": "Learn navigation dynamics from action-free video using the LAM interface."
+        },
+        {
+          "id": "warmup",
+          "number": 2,
+          "title": "Physical-action warmup",
+          "data": "Action-labeled navigation videos",
+          "conditioning": "Physical waypoint actions",
+          "trainable": "New physical-action encoder; backbone frozen",
+          "steps": 3000,
+          "description": "Align a newly initialized physical-action encoder with the pretrained dynamics model."
+        },
+        {
+          "id": "joint",
+          "number": 3,
+          "title": "Joint post-training",
+          "data": "Action-labeled navigation videos",
+          "conditioning": "Physical waypoint actions",
+          "trainable": "Physical-action encoder and world-model backbone",
+          "steps": 100000,
+          "description": "Jointly adapt physical action conditioning and visual dynamics."
+        }
+      ]
+    },
+    "source": {
+      "pages": [
+        4,
+        5,
+        6,
+        7,
+        19,
+        20
+      ],
+      "figure": 3,
+      "table": 8
+    }
+  },
+  "training": {
+    "lam": {
+      "architecture": "Pixel+Action spatiotemporal Transformer",
+      "parameters_millions_approx": 709,
+      "encoder_blocks": 24,
+      "decoder_blocks": 24,
+      "hidden_width": 1024,
+      "attention_heads": 16,
+      "latent_dimension": 32,
+      "input_frames": 2,
+      "resolution_hw": [
+        240,
+        320
+      ],
+      "patch_hw": [
+        16,
+        16
+      ],
+      "image_preprocessing": "Center crop to 4:3, then resize.",
+      "temporal_offset_range": [
+        -8,
+        8
+      ],
+      "labeled_batch_fraction": 0.25,
+      "loss_weights": {
+        "rgb": 1,
+        "action": 0.171244,
+        "kl": 1e-06
+      },
+      "checkpoint_step": 60000,
+      "schedule_steps": 100000,
+      "warmup_steps": 12800,
+      "global_batch_size": 160,
+      "optimizer": "AdamW",
+      "peak_learning_rate": 2.5e-05,
+      "weight_decay": 0.01,
+      "lr_schedule": "Cosine",
+      "minimum_lr_ratio": 0.1,
+      "precision": "BF16",
+      "hardware": "8 × NVIDIA L20"
+    },
+    "nwm": {
+      "backbone": "CDiT-B/2",
+      "backbone_parameters_millions_approx": 197,
+      "benchmark_model_parameters_millions": 280,
+      "tokenizer": "Frozen SD-VAE",
+      "resolution_hw": [
+        224,
+        224
+      ],
+      "context_frames": 4,
+      "prediction_targets_per_observation": 4,
+      "temporal_offset_range": [
+        -64,
+        64
+      ],
+      "latent_conditioning_max_absolute_offset": 8,
+      "conditioning_note": "Relative time is always used; layer-normalized latent actions are used only for valid local offsets with absolute value at most 8.",
+      "pretraining_steps": 60000,
+      "pretraining_learning_rate": 0.0002,
+      "adapter_warmup_steps": 3000,
+      "joint_posttraining_steps": 100000,
+      "posttraining_learning_rates": {
+        "adapter": 0.0001,
+        "backbone": 0.0001
+      },
+      "global_observation_batch": 384,
+      "global_prediction_pair_batch": 1536,
+      "optimizer": "AdamW",
+      "weight_decay": 0.01,
+      "gradient_clip": 2.0,
+      "precision": "BF16",
+      "hardware": "8 × NVIDIA L20"
+    },
+    "ablation_differences": {
+      "data": "Smaller NavAnywhere subset for LAM training",
+      "pretraining_steps": 200000,
+      "pretraining_learning_rate": 0.0001,
+      "global_observation_batch": 128,
+      "adapter_warmup_steps": 10000,
+      "joint_posttraining_steps": 100000,
+      "posttraining_learning_rates": {
+        "adapter": 0.0001,
+        "backbone": 1e-05
+      },
+      "note": "These settings belong to the ablation experiments, not the main reported training pipeline."
+    },
+    "source": {
+      "pages": [
+        19,
+        20
+      ],
+      "table": 8
+    }
+  },
+  "planning": {
+    "action_representation": [
+      "delta_x",
+      "delta_y",
+      "delta_yaw"
+    ],
+    "action_label": "(Δx, Δy, Δψ)",
+    "summary": "Optimize physical waypoint actions with the cross-entropy method, predict candidate futures, score them against the goal, execute the first action, and replan.",
+    "steps": [
+      "Sample physical action sequences",
+      "Predict candidate futures",
+      "Score with LPIPS-Alex",
+      "Select elites and update the proposal",
+      "Execute the first action and replan"
+    ],
+    "sampler": "DDPM",
+    "sampling_steps": 250,
+    "horizon_seconds": 2,
+    "action_interval_seconds": 0.25,
+    "sequence_length": 8,
+    "cem_candidates": 80,
+    "cem_elites": 5,
+    "cem_updates": 1,
+    "stochastic_evaluations_per_candidate": 3,
+    "cost": "LPIPS-Alex",
+    "note": "Planning takes place in physical action space. The LAM auxiliary physical predictor is used for grounding during training, not for online planning.",
+    "source": {
+      "pages": [
+        6,
+        20
+      ],
+      "table": 8
+    }
+  },
+  "datasets": {
+    "navanywhere": {
+      "name": "NavAnywhere",
+      "source_count": 15,
+      "sequences": 70756,
+      "frames": 17496570,
+      "source_video_hours": 1188.65,
+      "real_world_percent": 97.3,
+      "countries_label": "17+",
+      "embodiments": [
+        "Humans",
+        "Ground robots",
+        "Drones"
+      ],
+      "modalities_used": [
+        "RGB"
+      ],
+      "action_annotations_used": false,
+      "source": {
+        "page": 17,
+        "table": 6
+      },
+      "diversity_source": {
+        "page": 15,
+        "figure": 6
+      },
+      "statistics_note": "Sequences are processed clips or trajectories; frames are sampled RGB observations; hours measure source-video duration. Action-annotated and held-out evaluation datasets are excluded.",
+      "sources": [
+        {
+          "id": "ego4d",
+          "name": "Ego4D",
+          "sequences": 1619,
+          "frames": 13088098,
+          "source_video_hours": 908.95,
+          "description": "Egocentric everyday movement and navigation."
+        },
+        {
+          "id": "dl3dv",
+          "name": "DL3DV-10K",
+          "sequences": 20352,
+          "frames": 1180382,
+          "source_video_hours": 81.36,
+          "description": "Indoor and outdoor scene exploration with varied viewpoints and motion."
+        },
+        {
+          "id": "krishnacam",
+          "name": "KrishnaCam",
+          "sequences": 436,
+          "frames": 996666,
+          "source_video_hours": 69.21,
+          "description": "Daily walking, commuting, and transitions between indoor and outdoor spaces."
+        },
+        {
+          "id": "realestate10k",
+          "name": "RealEstate10K",
+          "sequences": 45010,
+          "frames": 712145,
+          "source_video_hours": 49.44,
+          "description": "Residential interiors, exteriors, surrounding areas, and aerial views."
+        },
+        {
+          "id": "lavn",
+          "name": "LAVN",
+          "sequences": 312,
+          "frames": 443244,
+          "source_video_hours": 30.78,
+          "description": "Real and simulated navigation scenes."
+        },
+        {
+          "id": "walking-tours",
+          "name": "Walking Tours",
+          "sequences": 10,
+          "frames": 198097,
+          "source_video_hours": 14.4,
+          "description": "Long-form internet walking tours and outdoor exploration."
+        },
+        {
+          "id": "sanpo",
+          "name": "SANPO",
+          "sequences": 2662,
+          "frames": 128233,
+          "source_video_hours": 8.91,
+          "description": "Real and synthetic egocentric navigation on sidewalks, roads, parks, and outdoor paths."
+        },
+        {
+          "id": "citywalker",
+          "name": "CityWalker",
+          "sequences": 18,
+          "frames": 102083,
+          "source_video_hours": 7.09,
+          "description": "Urban sidewalks, intersections, pedestrians, and vehicles."
+        },
+        {
+          "id": "rover",
+          "name": "ROVER",
+          "sequences": 39,
+          "frames": 76442,
+          "source_video_hours": 5.31,
+          "description": "Robot navigation in gardens, parks, and campuses across seasons and lighting conditions."
+        },
+        {
+          "id": "great-outdoors",
+          "name": "The Great Outdoors",
+          "sequences": 17,
+          "frames": 69162,
+          "source_video_hours": 4.8,
+          "description": "Robot navigation through forests, unpaved trails, and uneven terrain."
+        },
+        {
+          "id": "i2nav-robot",
+          "name": "i2Nav-Robot",
+          "sequences": 10,
+          "frames": 55202,
+          "source_video_hours": 3.83,
+          "description": "Campus buildings, streets, parking areas, and indoor-outdoor transitions."
+        },
+        {
+          "id": "egowalk",
+          "name": "EgoWalk",
+          "sequences": 239,
+          "frames": 423389,
+          "source_video_hours": 2.94,
+          "description": "First-person walking in urban, residential, public, and recreational spaces."
+        },
+        {
+          "id": "botanic-garden",
+          "name": "BotanicGarden",
+          "sequences": 7,
+          "frames": 12272,
+          "source_video_hours": 0.85,
+          "description": "Robot navigation among garden vegetation and pathways."
+        },
+        {
+          "id": "ub-visiogeoloc",
+          "name": "uB-VisioGeoloc",
+          "sequences": 16,
+          "frames": 6382,
+          "source_video_hours": 0.44,
+          "description": "Pedestrian navigation in urban spaces, public areas, and parks, with synthetic scenes."
+        },
+        {
+          "id": "casia-nav",
+          "name": "In-house Collected",
+          "sequences": 9,
+          "frames": 4773,
+          "source_video_hours": 0.33,
+          "description": "Office, residential, and public landmark videos collected during day and night."
+        }
+      ],
+      "scene_categories": [
+        {
+          "id": "residential",
+          "label": "Residential",
+          "percent": 12.4
+        },
+        {
+          "id": "public-commercial",
+          "label": "Public & Commercial",
+          "percent": 31.8
+        },
+        {
+          "id": "urban-transport",
+          "label": "Urban & Transport",
+          "percent": 29.2
+        },
+        {
+          "id": "parks-gardens",
+          "label": "Parks & Gardens",
+          "percent": 12.2
+        },
+        {
+          "id": "natural-offroad",
+          "label": "Natural & Off-road",
+          "percent": 14.5
+        }
+      ],
+      "scene_note": "Published percentages are rounded and sum to 100.1%.",
+      "sampling": {
+        "typical_hz": 4,
+        "egowalk_effective_hz_approx": 40,
+        "note": "EgoWalk is sampled from 100 Hz source video. Frame counts and source-video hours cannot be converted with one uniform frame rate.",
+        "source": {
+          "page": 18,
+          "section": "B.3"
+        }
+      },
+      "rounding_note": "The rounded source-hour rows sum to 1,188.64 h; the published total is 1,188.65 h. Scene percentages sum to 100.1% after rounding."
+    },
+    "action_annotated": {
+      "modalities": [
+        "RGB",
+        "Planar position",
+        "Yaw"
+      ],
+      "rows": [
+        {
+          "id": "recon",
+          "name": "RECON",
+          "sequences": 11835,
+          "frames": 610911,
+          "lam_grounding": true,
+          "nwm_posttraining": true
+        },
+        {
+          "id": "sacson",
+          "name": "HuRoN / SACSoN",
+          "sequences": 2839,
+          "frames": 230911,
+          "lam_grounding": true,
+          "nwm_posttraining": true
+        },
+        {
+          "id": "go-stanford",
+          "name": "Go Stanford",
+          "sequences": 3696,
+          "frames": 198126,
+          "lam_grounding": false,
+          "nwm_posttraining": false
+        },
+        {
+          "id": "scand",
+          "name": "SCAND",
+          "sequences": 604,
+          "frames": 103457,
+          "lam_grounding": true,
+          "nwm_posttraining": true
+        },
+        {
+          "id": "tartan-drive",
+          "name": "TartanDrive",
+          "sequences": 1251,
+          "frames": 62884,
+          "lam_grounding": false,
+          "nwm_posttraining": true
+        }
+      ],
+      "note": "Go Stanford is held out for evaluation. TartanDrive is out of domain for the LAM and in domain for the post-trained NWM.",
+      "source": {
+        "page": 18,
+        "table": 7
+      }
+    },
+    "additional_ood": {
+      "rows": [
+        {
+          "id": "tum",
+          "name": "TUM RGB-D",
+          "sequences": 5,
+          "frames": 1189,
+          "description": "Held-out RGB-D trajectories evaluated with supplied camera poses."
+        },
+        {
+          "id": "planetary-rover",
+          "name": "Planetary Rover",
+          "sequences": 28,
+          "frames": 239,
+          "adjacent_transitions": 211,
+          "lunar_images": 66,
+          "martian_images": 173,
+          "description": "Lunar and Martian imagery from Chang’e-4 / Yutu-2 and Tianwen-1 / Zhurong with official pose metadata."
+        },
+        {
+          "id": "office-go2",
+          "name": "Office-Go2",
+          "recordings": 7,
+          "sequences": 15,
+          "frames": 2292,
+          "description": "In-house Unitree Go2 office recordings with synchronized camera poses."
+        }
+      ],
+      "source": {
+        "page": 18,
+        "section": "B.2"
+      }
+    }
+  },
+  "results": {
+    "metric_directions": {
+      "lpips": "lower",
+      "dreamsim": "lower",
+      "psnr": "higher",
+      "ate": "lower",
+      "rpe": "lower",
+      "macro_6_recall_percent": "higher"
+    },
+    "direct_prediction": {
+      "title": "Direct visual prediction",
+      "horizon_seconds": 4,
+      "id_datasets": [
+        "RECON",
+        "SCAND",
+        "HuRoN",
+        "TartanDrive"
+      ],
+      "ood_datasets": [
+        "Go Stanford",
+        "TUM RGB-D",
+        "Planetary Rover",
+        "Office-Go2"
+      ],
+      "rows": [
+        {
+          "id": "nwm",
+          "model": "NWM",
+          "parameters_millions": 279,
+          "id_lpips": 0.405,
+          "id_dreamsim": 0.23,
+          "id_psnr": 13.811,
+          "go_stanford_psnr": 11.323,
+          "tum_psnr": 8.957,
+          "planetary_rover_psnr": 11.739,
+          "office_go2_psnr": 10.75
+        },
+        {
+          "id": "nwm-xl-ego4d",
+          "model": "NWM†",
+          "parameters_millions": 1099,
+          "id_lpips": 0.419,
+          "id_dreamsim": 0.227,
+          "id_psnr": 13.523,
+          "go_stanford_psnr": 11.444,
+          "tum_psnr": 8.884,
+          "planetary_rover_psnr": 11.906,
+          "office_go2_psnr": 11.083
+        },
+        {
+          "id": "rae-nwm",
+          "model": "RAE-NWM",
+          "parameters_millions": 867,
+          "id_lpips": 0.442,
+          "id_dreamsim": 0.254,
+          "id_psnr": 13.957,
+          "go_stanford_psnr": 11.528,
+          "tum_psnr": 9.007,
+          "planetary_rover_psnr": 9.449,
+          "office_go2_psnr": 10.5
+        },
+        {
+          "id": "opennwm",
+          "model": "OpenNWM",
+          "parameters_millions": 280,
+          "id_lpips": 0.368,
+          "id_dreamsim": 0.196,
+          "id_psnr": 14.299,
+          "go_stanford_psnr": 11.591,
+          "tum_psnr": 9.135,
+          "planetary_rover_psnr": 12.574,
+          "office_go2_psnr": 11.047
+        }
+      ],
+      "baseline_note": "NWM† denotes CDiT-XL + Ego4D.",
+      "highlights": [
+        {
+          "label": "Lower ID LPIPS",
+          "value": 9.1,
+          "unit": "%",
+          "comparison": "Strongest baseline per metric"
+        },
+        {
+          "label": "Lower ID DreamSim",
+          "value": 13.7,
+          "unit": "%",
+          "comparison": "Strongest baseline per metric"
+        },
+        {
+          "label": "Higher ID PSNR",
+          "value": 0.342,
+          "unit": "dB",
+          "comparison": "Strongest baseline per metric"
+        }
+      ],
+      "summary": "OpenNWM leads all three ID aggregate metrics and PSNR on three of four OOD datasets. On Office-Go2, its PSNR is second, 0.036 dB below NWM†.",
+      "source": {
+        "page": 7,
+        "table": 1
+      },
+      "interpretation_source": {
+        "page": 8,
+        "section": "4.2"
+      }
+    },
+    "navigation": {
+      "title": "Navigation performance",
+      "metrics": [
+        "ATE",
+        "RPE"
+      ],
+      "direction": "lower",
+      "rows": [
+        {
+          "id": "gnm",
+          "model": "GNM",
+          "parameters_millions": 9,
+          "recon_ate": 1.87,
+          "recon_rpe": 0.73,
+          "scand_ate": 2.12,
+          "scand_rpe": 0.61,
+          "office_go2_ate": null,
+          "office_go2_rpe": null,
+          "tartan_drive_ate": 6.65,
+          "tartan_drive_rpe": 1.62
+        },
+        {
+          "id": "nomad",
+          "model": "NoMaD",
+          "parameters_millions": 19,
+          "recon_ate": 1.95,
+          "recon_rpe": 0.53,
+          "scand_ate": 2.24,
+          "scand_rpe": 0.49,
+          "office_go2_ate": null,
+          "office_go2_rpe": null,
+          "tartan_drive_ate": 6.32,
+          "tartan_drive_rpe": 1.31
+        },
+        {
+          "id": "nwm",
+          "model": "NWM",
+          "parameters_millions": 279,
+          "recon_ate": 1.13,
+          "recon_rpe": 0.35,
+          "scand_ate": 1.01,
+          "scand_rpe": 0.28,
+          "office_go2_ate": 3.03,
+          "office_go2_rpe": 0.68,
+          "tartan_drive_ate": 5.72,
+          "tartan_drive_rpe": 1.19
+        },
+        {
+          "id": "rae-nwm",
+          "model": "RAE-NWM",
+          "parameters_millions": 867,
+          "recon_ate": 1.36,
+          "recon_rpe": 0.37,
+          "scand_ate": 1.14,
+          "scand_rpe": 0.28,
+          "office_go2_ate": 3.01,
+          "office_go2_rpe": 0.67,
+          "tartan_drive_ate": 5.99,
+          "tartan_drive_rpe": 1.25
+        },
+        {
+          "id": "garrido",
+          "model": "Garrido et al. (2026)",
+          "parameters_millions": null,
+          "recon_ate": 1.4,
+          "recon_rpe": 0.4,
+          "scand_ate": null,
+          "scand_rpe": null,
+          "office_go2_ate": null,
+          "office_go2_rpe": null,
+          "tartan_drive_ate": null,
+          "tartan_drive_rpe": null
+        },
+        {
+          "id": "compact",
+          "model": "CompACT",
+          "parameters_millions": null,
+          "recon_ate": 1.33,
+          "recon_rpe": 0.39,
+          "scand_ate": 1.36,
+          "scand_rpe": 0.34,
+          "office_go2_ate": null,
+          "office_go2_rpe": null,
+          "tartan_drive_ate": null,
+          "tartan_drive_rpe": null
+        },
+        {
+          "id": "opennwm",
+          "model": "OpenNWM",
+          "parameters_millions": 280,
+          "recon_ate": 1.12,
+          "recon_rpe": 0.35,
+          "scand_ate": 0.98,
+          "scand_rpe": 0.27,
+          "office_go2_ate": 2.89,
+          "office_go2_rpe": 0.65,
+          "tartan_drive_ate": 5.53,
+          "tartan_drive_rpe": 1.16
+        }
+      ],
+      "summary": "OpenNWM has the lowest reported ATE and best or tied-best RPE across RECON, SCAND, and Office-Go2 in Table 2.",
+      "missing_value_note": "null means not reported.",
+      "source": {
+        "page": 7,
+        "table": 2
+      },
+      "tartan_drive_source": {
+        "page": 22,
+        "table": 10
+      }
+    },
+    "lam_reconstruction": {
+      "title": "Latent action model reconstruction",
+      "id_datasets": [
+        "RECON",
+        "SCAND",
+        "HuRoN"
+      ],
+      "ood_datasets": [
+        "Go Stanford"
+      ],
+      "rows": [
+        {
+          "id": "villa-x",
+          "model": "villa-X",
+          "id_psnr": 15.327,
+          "id_lpips": 0.516,
+          "ood_psnr": 17.56,
+          "ood_lpips": 0.55
+        },
+        {
+          "id": "lara",
+          "model": "LARA",
+          "id_psnr": 15.752,
+          "id_lpips": 0.538,
+          "ood_psnr": 17.742,
+          "ood_lpips": 0.527
+        },
+        {
+          "id": "olaf-world",
+          "model": "Olaf-World",
+          "id_psnr": 14.764,
+          "id_lpips": 0.635,
+          "ood_psnr": 16.599,
+          "ood_lpips": 0.614
+        },
+        {
+          "id": "dila",
+          "model": "DiLA",
+          "id_psnr": 13.18,
+          "id_lpips": 0.597,
+          "ood_psnr": 14.078,
+          "ood_lpips": 0.621
+        },
+        {
+          "id": "dreamdojo",
+          "model": "DreamDojo",
+          "id_psnr": 18.95,
+          "id_lpips": 0.529,
+          "ood_psnr": 20.713,
+          "ood_lpips": 0.485
+        },
+        {
+          "id": "opennwm",
+          "model": "Ours",
+          "id_psnr": 21.071,
+          "id_lpips": 0.505,
+          "ood_psnr": 21.912,
+          "ood_lpips": 0.472
+        }
+      ],
+      "summary": "The proposed LAM has the best reported PSNR and LPIPS in both ID and OOD reconstruction.",
+      "source": {
+        "page": 8,
+        "table": 3
+      }
+    },
+    "conditioning_ablation": {
+      "title": "Time and latent action conditioning",
+      "rows": [
+        {
+          "time": false,
+          "latent": false,
+          "direct_lpips": 0.628,
+          "autoregressive_lpips": 0.667,
+          "recon_ate": 1.198,
+          "recon_rpe": 0.367,
+          "scand_ate": 1.252,
+          "scand_rpe": 0.316
+        },
+        {
+          "time": true,
+          "latent": false,
+          "direct_lpips": 0.595,
+          "autoregressive_lpips": 0.678,
+          "recon_ate": 1.174,
+          "recon_rpe": 0.365,
+          "scand_ate": 1.045,
+          "scand_rpe": 0.286
+        },
+        {
+          "time": false,
+          "latent": true,
+          "direct_lpips": 0.609,
+          "autoregressive_lpips": 0.667,
+          "recon_ate": 1.198,
+          "recon_rpe": 0.359,
+          "scand_ate": 1.067,
+          "scand_rpe": 0.289
+        },
+        {
+          "time": true,
+          "latent": true,
+          "direct_lpips": 0.587,
+          "autoregressive_lpips": 0.658,
+          "recon_ate": 1.117,
+          "recon_rpe": 0.356,
+          "scand_ate": 0.95,
+          "scand_rpe": 0.267
+        }
+      ],
+      "summary": "Combining time and latent action conditioning performs best on all six reported metrics in this ablation.",
+      "evaluation_note": "Direct LPIPS: Office-Go2 at 4 s. Autoregressive LPIPS: Go Stanford at 4 FPS up to 4 s. Lower is better for every metric.",
+      "source": {
+        "page": 9,
+        "table": 4
+      }
+    },
+    "lam_supervision_ablation": {
+      "title": "Visual and physical LAM supervision",
+      "rows": [
+        {
+          "label": "Action only",
+          "pixel": false,
+          "action": true,
+          "direct_lpips": 0.598,
+          "autoregressive_lpips": 0.67,
+          "recon_ate": 1.138,
+          "recon_rpe": 0.365,
+          "scand_ate": 0.981,
+          "scand_rpe": 0.274
+        },
+        {
+          "label": "Pixel only",
+          "pixel": true,
+          "action": false,
+          "direct_lpips": 0.605,
+          "autoregressive_lpips": 0.674,
+          "recon_ate": 1.176,
+          "recon_rpe": 0.352,
+          "scand_ate": 0.982,
+          "scand_rpe": 0.274
+        },
+        {
+          "label": "Pixel + Action",
+          "pixel": true,
+          "action": true,
+          "direct_lpips": 0.587,
+          "autoregressive_lpips": 0.658,
+          "recon_ate": 1.117,
+          "recon_rpe": 0.356,
+          "scand_ate": 0.95,
+          "scand_rpe": 0.267
+        }
+      ],
+      "summary": "Joint pixel and action supervision leads on five of six reported metrics; pixel-only has the lowest RECON RPE.",
+      "evaluation_note": "Direct LPIPS: Office-Go2 at 4 s. Autoregressive LPIPS: Go Stanford at 4 FPS up to 4 s. Lower is better for every metric.",
+      "source": {
+        "page": 9,
+        "table": 5
+      }
+    },
+    "semantic_consistency": {
+      "title": "Latent action semantic consistency",
+      "metric": "Macro-6 Recall",
+      "unit": "%",
+      "direction": "higher",
+      "id_datasets": [
+        "RECON",
+        "SACSoN",
+        "SCAND"
+      ],
+      "ood_datasets": [
+        "TartanDrive",
+        "Go Stanford"
+      ],
+      "rows": [
+        {
+          "label": "Action only",
+          "recon": 70,
+          "sacson": 63,
+          "scand": 45,
+          "tartan_drive": 26,
+          "go_stanford": 27
+        },
+        {
+          "label": "Pixel only",
+          "recon": 61,
+          "sacson": 45,
+          "scand": 64,
+          "tartan_drive": 54,
+          "go_stanford": 46
+        },
+        {
+          "label": "DINO feature",
+          "recon": 60,
+          "sacson": 51,
+          "scand": 65,
+          "tartan_drive": 57,
+          "go_stanford": 44
+        },
+        {
+          "label": "Pixel + Action",
+          "recon": 84,
+          "sacson": 70,
+          "scand": 70,
+          "tartan_drive": 39,
+          "go_stanford": 48
+        }
+      ],
+      "metric_definition": "The unweighted mean recall over forward, backward, forward-left, forward-right, backward-left, and backward-right motions. Clusters and their majority motion labels are learned on in-domain data and transferred without reclustering.",
+      "source": {
+        "page": 8,
+        "figure": 4
+      },
+      "metric_source": {
+        "page": 24,
+        "section": "F.3"
+      }
+    },
+    "scaling": {
+      "title": "Scaling action-free pretraining data",
+      "metric": "DreamSim",
+      "direction": "lower",
+      "dataset": "RECON",
+      "evaluation_windows": 500,
+      "horizon_seconds": 4,
+      "points": [
+        {
+          "unlabeled_data_percent": 25,
+          "dreamsim": 0.20059
+        },
+        {
+          "unlabeled_data_percent": 50,
+          "dreamsim": 0.19686
+        },
+        {
+          "unlabeled_data_percent": 75,
+          "dreamsim": 0.19078
+        },
+        {
+          "unlabeled_data_percent": 100,
+          "dreamsim": 0.1884
+        }
+      ],
+      "relative_reduction_percent": 6.08,
+      "note": "Four measured configurations with fixed labeled-data availability and the same fine-tuning protocol. Do not interpret interpolated values as experiments.",
+      "source": {
+        "pages": [
+          22,
+          23
+        ],
+        "figure": 8
+      }
+    }
+  },
+  "citation": {
+    "bibtex": "@unpublished{opennwm,\n  title = {OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},\n  author = {Anonymous Authors},\n  note = {Under review as a conference paper at ICLR 2027}\n}",
+    "note": "Provisional citation preserving the supplied manuscript’s anonymous review status; no publication year or permanent identifier is stated.",
+    "source": {
+      "page": 1
+    }
+  }
+}
