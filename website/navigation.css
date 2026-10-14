@@ -1,0 +1,205 @@
+.navigation-gallery-heading {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+.navigation-gallery-heading > span {
+  font-weight: 600;
+}
+.navigation-legend {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+}
+.navigation-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.navigation-legend i {
+  width: 20px;
+  border-top: 2px solid var(--accent);
+}
+.navigation-legend .navigation-legend-reference {
+  border-top: 2px dashed #858b90;
+}
+.navigation-play-toggle {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+}
+.navigation-play-toggle:hover {
+  background: var(--surface-raised);
+}
+.navigation-examples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.navigation-example {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--surface);
+}
+.navigation-example header {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.navigation-example h3 {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 0;
+}
+.navigation-example header > span {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.navigation-media {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.navigation-media figure {
+  min-width: 0;
+  margin: 0;
+}
+.navigation-media img,
+.navigation-media video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--surface-raised);
+}
+.navigation-media figcaption {
+  text-align: center;
+  font-size: 11px;
+  margin-top: 5px;
+  color: var(--muted);
+}
+.navigation-media figure:nth-child(2) figcaption {
+  color: var(--accent);
+  font-weight: 600;
+}
+.navigation-path-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+.navigation-path-row > span {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 10px;
+  text-align: right;
+}
+.navigation-path-row strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+svg.navigation-path {
+  min-width: 0;
+  width: 100%;
+  height: auto;
+  max-height: 166px;
+  stroke-linejoin: round;
+}
+.navigation-path polyline {
+  fill: none;
+}
+.navigation-path .navigation-reference {
+  stroke: #858b90;
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.navigation-path .navigation-planned {
+  stroke: var(--accent);
+  stroke-width: 2;
+  opacity: 0.4;
+}
+.navigation-path .navigation-progress {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+.navigation-path .navigation-start {
+  fill: var(--surface);
+  stroke: #c0c5c9;
+  stroke-width: 1.5;
+}
+.navigation-path .navigation-goal {
+  fill: var(--surface);
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.navigation-path .navigation-cursor {
+  fill: var(--accent);
+  stroke: var(--surface);
+  stroke-width: 1;
+}
+.navigation-path .navigation-scale {
+  stroke: #70787d;
+  stroke-width: 1;
+}
+.navigation-path text {
+  fill: var(--muted);
+  font: 10px var(--sans);
+  stroke: none;
+}
+#navigation-benchmarks {
+  min-width: 0;
+  margin-top: 24px;
+}
+.navigation-chart-panel .chart-footnote {
+  justify-content: flex-end;
+}
+.navigation-chart-panel .chart-model-label {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+  .navigation-examples {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 650px) {
+  .navigation-gallery-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .navigation-gallery-heading > span {
+    flex-basis: 100%;
+  }
+  .navigation-legend {
+    margin-left: 0;
+    font-size: 11px;
+    gap: 12px;
+  }
+  .navigation-play-toggle {
+    margin-left: auto;
+    font-size: 11px;
+  }
+  .navigation-examples {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .navigation-example {
+    padding: 14px;
+  }
+}

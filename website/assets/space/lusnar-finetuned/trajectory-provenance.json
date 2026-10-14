@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "trajectory_type": "recorded LuSNAR simulated rover-body planar trajectory",
+  "display_source": "Each scene manifest.json direct.metric_actions in meters; prepend anchor [0, 0].",
+  "projection": "x = -left, y = -forward; center the bounding box and apply one common pixels-per-meter scale to both axes. No smoothing or synthetic controls.",
+  "video_mapping": "16 video frames at 4 FPS; frame index floor(mediaTime * 4) corresponds to trajectory point index frame + 1. Origin is the last observed context pose, not an encoded prediction frame.",
+  "timing": "Playback uses encoded frame order, not the irregular original capture intervals. Original timestamps and offsets remain in each manifest.",
+  "coordinate_limitations": "Rover body XY after the documented world-Y reflection and anchor-yaw rotation; not a calibrated optical-camera trajectory. Height, roll, and pitch are omitted.",
+  "scenes": [
+    {
+      "scene": "Moon_7",
+      "pose_source": "LuSNAR/Moon_7/gt.txt",
+      "pose_source_sha256": "3f889e9fd480afbdcad92e533cffb0655e21739037d3d4e05d4c21f4fbbea187",
+      "manifest": "moon-7/manifest.json",
+      "manifest_sha256": "f3f95ae1aeba71de6c97a701d59b11381ecf4ad613a70af1c1be8ebad8361b94",
+      "anchor_timestamp_ns": 1693385215978392320,
+      "recorded_target_points": 16,
+      "displayed_points_including_anchor": 17,
+      "maximum_nearest_pose_alignment_ns": 120,
+      "maximum_recomputed_action_absolute_error": 8.673617379884035e-19,
+      "playback_fps": 4
+    },
+    {
+      "scene": "Moon_8",
+      "pose_source": "LuSNAR/Moon_8/gt.txt",
+      "pose_source_sha256": "3adf8e3ca4bd8ab3a84c19963bea1ea043d80b6d145993942d1296c538abbd44",
+      "manifest": "moon-8/manifest.json",
+      "manifest_sha256": "ac40176e951281e10a346a4da86feb800644d1ef66aec2304ad9c97f8c23eb7c",
+      "anchor_timestamp_ns": 1693502012301776896,
+      "recorded_target_points": 16,
+      "displayed_points_including_anchor": 17,
+      "maximum_nearest_pose_alignment_ns": 128,
+      "maximum_recomputed_action_absolute_error": 1.0842021724855044e-19,
+      "playback_fps": 4
+    },
+    {
+      "scene": "Moon_9",
+      "pose_source": "LuSNAR/Moon_9/gt.txt",
+      "pose_source_sha256": "7b6f47fbc69a55c282154bc1979ced200982f7ceffcf6e60924dc61cf17d9688",
+      "manifest": "moon-9/manifest.json",
+      "manifest_sha256": "4b624c795b022a4548a58d52c3211486e0a7f991a9e7bd5a6e0e3feb6a8e40e2",
+      "anchor_timestamp_ns": 1692601816170046976,
+      "recorded_target_points": 16,
+      "displayed_points_including_anchor": 17,
+      "maximum_nearest_pose_alignment_ns": 128,
+      "maximum_recomputed_action_absolute_error": 1.3877787807814457e-17,
+      "playback_fps": 4
+    }
+  ]
+}

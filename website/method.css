@@ -1,0 +1,32 @@
+/* Keep the paper architecture figure intact and readable. */
+.method-layout.method-overview {
+  display: block;
+  padding-top: 0;
+  border-top: 0;
+}
+.method-paper-figure {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.method-figure-link {
+  display: block;
+  padding: 20px;
+  background: #fff;
+  cursor: zoom-in;
+}
+.method-figure-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.method-figure-link:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -5px;
+}
+@media (max-width: 760px) {
+  .method-figure-link { padding: 10px; }
+}

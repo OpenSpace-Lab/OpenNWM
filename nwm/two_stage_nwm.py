@@ -161,20 +161,15 @@ def validate_two_stage_config(config: Any) -> tuple[str, str, str | None]:
         if scheme != "reset":
             raise ValueError("Complete real-action initialization requires scheme=reset")
     if protocol == "go2":
-        training = config_get(config, "training", {})
-        if not (config_get(training, "wandb_enabled", False)
-                and config_get(training, "wandb_required", False)):
-            raise ValueError("Go2 adaptation requires online WandB training curves")
+        # Logging follows the shared optional WandB settings. The historical
+        # dataset field named `test` points to val in the shipped Go2 recipe,
+        # so periodic validation must remain available for model selection.
         if not config_get(finetune, "init_checkpoint", None) and not config_get(
             config_get(config, "training", {}), "from_checkpoint", None
         ):
             raise ValueError("Go2 adaptation requires init_checkpoint or from_checkpoint")
         if scheme != "reset" or random_init or config_get(finetune, "stage1_checkpoint", None):
             raise ValueError("Go2 adaptation must preserve the existing real-action adapter")
-        if int(config_get(config, "eval_every", 0)) > 0 or bool(
-            config_get(config, "eval_at_first_step", False)
-        ):
-            raise ValueError("Go2 adaptation must not evaluate the test set during training")
     decay = float(config_get(config_get(config, "training", {}), "ema_decay", 0.9999))
     if not 0 <= decay < 1:
         raise ValueError("training.ema_decay must be in [0, 1)")

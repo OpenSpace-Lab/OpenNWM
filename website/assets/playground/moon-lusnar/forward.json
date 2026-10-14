@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "sceneId": "moon-lusnar",
+  "source": {
+    "dataset": "LuSNAR",
+    "trajectory": "Moon_1/image0/color",
+    "frame": "1693274724086398208",
+    "sha256": "31248f634debbd0118cb529a8a1c79f4904b3e46d320ae1016d467234ca7a2e0"
+  },
+  "checkpoint": {
+    "id": "joint_0100000",
+    "bytes": 3137820686,
+    "mtimeNs": 1790066759455754000,
+    "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4"
+  },
+  "seed": 0,
+  "points": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0
+    ]
+  ],
+  "actions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "mode": "autoregressive",
+  "modelConditions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "fps": 4,
+  "frames": 16,
+  "duration": 4.0,
+  "diffusionSteps": 250,
+  "protocol": "Single initial RGB repeated to four context frames; deterministic VAE posterior means; DDPM; real planar action adapter. Autoregressive RGB re-encoding.",
+  "canvasUnitsToWaypointUnits": 12.0,
+  "waypointSpacingMeters": null,
+  "simulatedSource": true,
+  "planetaryTimingNote": null,
+  "elapsedBatchSeconds": 52.8177298232913
+}

@@ -9,6 +9,7 @@ LAM 与多阶段 NWM 的训练、评测和断点续跑。保留原模型、损�
 | 下载数据、权重，复用已有缓存 | [数据与权重](DATA.md) |
 | 查看与原实现的对照结果 | [测试记录](tests/VALIDATION.md) |
 | 浏览论文、预测视频和数据集交互演示 | [项目网页](website/README.md) |
+| Go2 EDU + Jetson 室内导航、数据采集与微调实施方案 | [Go2 部署方案](GO2_DEPLOYMENT.md) |
 
 ## 1. 安装
 

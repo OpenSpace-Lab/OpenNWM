@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "sample_id": "website_ft_moon-yutu2_forward_autoregressive",
+  "source_scene_id": "moon-yutu2",
+  "dataset": "Planetary Rover",
+  "source": {
+    "dataset": "Planetary Rover",
+    "trajectory": "moon_yutu2_pcam_color_0000",
+    "frame": 1,
+    "sha256": "4e4aa37e71f531a2ba1ea579c31807e71cb1934ad6c5f4cb3c3801a7799ceeae"
+  },
+  "context_source_paths": [
+    "planetary_rover/moon_yutu2_pcam_color_0000/1.jpg",
+    "planetary_rover/moon_yutu2_pcam_color_0000/1.jpg",
+    "planetary_rover/moon_yutu2_pcam_color_0000/1.jpg",
+    "planetary_rover/moon_yutu2_pcam_color_0000/1.jpg"
+  ],
+  "source_sha256": {
+    "planetary_rover/moon_yutu2_pcam_color_0000/1.jpg": "4e4aa37e71f531a2ba1ea579c31807e71cb1934ad6c5f4cb3c3801a7799ceeae"
+  },
+  "split": "qualitative_real_moon",
+  "scene_seen_in_training": false,
+  "source_used_in_fine_tuning": false,
+  "protocol": "Single source image repeated into four context frames; autoregressive RGB feedback with VAE posterior means; synthetic straight-path controls.",
+  "prediction_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "playback_fps": 4,
+  "frame_interpolation": false,
+  "sampling": {
+    "seed": 0,
+    "diffusion_steps": 250,
+    "vae_encoding": "posterior_mean",
+    "image_size": 224,
+    "context_size": 4
+  },
+  "noise_key": "website_ft_moon-yutu2_forward",
+  "points": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "actions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "action_reference": "Incremental synthetic controls expressed in the immediately preceding body frame.",
+  "action_translation_units": "Synthetic waypoint units; no calibrated metric distance for these single-image controls.",
+  "action_yaw_units": "radians",
+  "coordinate_convention": "Body +X forward, +Y left, positive-left yaw.",
+  "waypoint_spacing_meters": null,
+  "timing": "16 model steps displayed at 4 FPS; no measured future capture times.",
+  "paired_future_ground_truth": false,
+  "model_comparison": {
+    "opennwm": {
+      "name": "OpenNWM Nav15 Stage 2, LuSNAR fine-tuned EMA",
+      "checkpoint_sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56",
+      "source_checkpoint_sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+      "training": {
+        "settings": {
+          "steps": 1000,
+          "effective_batch_size": 8,
+          "microbatch": 2,
+          "learning_rate": 1e-05,
+          "optimizer": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "weight_decay": 0.01,
+          "ema_decay": 0.99,
+          "grad_clip": 2.0,
+          "seed": 0,
+          "diffusion_training_steps": 1000,
+          "precision": "BF16 autocast; FP32 weights",
+          "posterior": "cached mean",
+          "validation_every": 100,
+          "selection": "fixed final step; validation monitored but no test-based selection",
+          "sampling": "shuffled exhaustive (window, horizon) rows; repeat after each epoch",
+          "resume": "no optimizer checkpoint; an interrupted run must restart in a fresh output directory"
+        },
+        "windows": 30,
+        "target_pairs": 480,
+        "data_manifest_sha256": "8e14a6d7b65a277bce97869dd739316f34fe3d2a850682271956d24a1b8108b3"
+      }
+    },
+    "nwm_release": {
+      "name": "NWM-release, LuSNAR fine-tuned EMA",
+      "checkpoint_sha256": "fbd04a71b05440b1cc6a57b402c51c29fc4e9f77506e23447dff5b00a1a1289b",
+      "source_checkpoint_sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261",
+      "training": {
+        "settings": {
+          "steps": 1000,
+          "effective_batch_size": 8,
+          "microbatch": 2,
+          "learning_rate": 1e-05,
+          "optimizer": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "weight_decay": 0.01,
+          "ema_decay": 0.99,
+          "grad_clip": 2.0,
+          "seed": 0,
+          "diffusion_training_steps": 1000,
+          "precision": "BF16 autocast; FP32 weights",
+          "posterior": "cached mean",
+          "validation_every": 100,
+          "selection": "fixed final step; validation monitored but no test-based selection",
+          "sampling": "shuffled exhaustive (window, horizon) rows; repeat after each epoch",
+          "resume": "no optimizer checkpoint; an interrupted run must restart in a fresh output directory"
+        },
+        "windows": 30,
+        "target_pairs": 480,
+        "data_manifest_sha256": "8e14a6d7b65a277bce97869dd739316f34fe3d2a850682271956d24a1b8108b3"
+      }
+    },
+    "opennwm_manifest_sha256": "ff840a632973926b8fbdc118493b2630315f586e9223fd6074fcbb813d15635a",
+    "nwm_manifest_sha256": "cdf8253e0802b1efa944980e8ab1dc6b42fb9f0b008735f1f01eaf0f5fa720e6",
+    "conditions": "Identical initial image, raw controls, horizons, seed and diffusion noise keys; native model action interfaces. The noise and RGB-feedback protocol differs from archived pre-fine-tuning website demos; no pixel-identical reproduction of those older demos is claimed."
+  },
+  "limitations": [
+    "Single image repeated to four context frames; no observed temporal context.",
+    "Synthetic straight path; no paired future ground truth.",
+    "Real lunar appearance transfer from a model adapted only on simulated LuSNAR."
+  ]
+}

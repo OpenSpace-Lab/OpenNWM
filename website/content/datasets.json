@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "description": "Selected frames from 15 NavAnywhere sources and 4 action-labeled navigation sources. These are dataset examples, not model predictions.",
+  "version": 2,
+  "description": "Continuous video examples from 15 NavAnywhere sources and 4 action-labeled navigation sources. These are source-data videos, not model predictions.",
   "overview": "assets/datasets/overview.webp",
   "hero_video": "assets/datasets/walking-tours.mp4",
   "hero_poster": "assets/datasets/walking-tours.webp",
@@ -65,8 +65,19 @@
         "original_image_size": [
           2208,
           1242
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 190,
+          "last_frame": 285,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/casia-nav.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "citywalker",
@@ -90,8 +101,19 @@
         "original_image_size": [
           400,
           400
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 1709,
+          "last_frame": 1804,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/citywalker.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "dl3dv",
@@ -115,8 +137,19 @@
         "original_image_size": [
           960,
           540
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 0,
+          "last_frame": 64,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/dl3dv.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 5.416666666666667
     },
     {
       "id": "egowalk",
@@ -140,8 +173,19 @@
         "original_image_size": [
           960,
           600
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 1628,
+          "last_frame": 1723,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/egowalk.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "krishnacam",
@@ -165,8 +209,19 @@
         "original_image_size": [
           1152,
           648
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 804,
+          "last_frame": 899,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/krishnacam.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "lavn",
@@ -190,8 +245,19 @@
         "original_image_size": [
           640,
           480
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 3313,
+          "last_frame": 3408,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/lavn.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "rover",
@@ -216,8 +282,19 @@
         "original_image_size": [
           640,
           480
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 604,
+          "last_frame": 699,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/rover.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "realestate10k",
@@ -235,14 +312,25 @@
         "dataset": "RealEstate10K",
         "collection": "NavAnywhere",
         "trajectory": "a74c9ba55587177a",
-        "image_frame": 15,
+        "image_frame": 16,
         "trajectory_frame_count": 32,
-        "relative_path": "NavAnywhere/RealEstate10K/a74c9ba55587177a/15.jpg",
+        "relative_path": "NavAnywhere/RealEstate10K/a74c9ba55587177a/16.jpg",
         "original_image_size": [
           1280,
           720
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 0,
+          "last_frame": 31,
+          "frame_step": 1,
+          "playback_fps": 8,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/realestate10k.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 4.0
     },
     {
       "id": "sanpo",
@@ -266,8 +354,19 @@
         "original_image_size": [
           2208,
           1242
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 23,
+          "last_frame": 118,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/sanpo.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "great-outdoors",
@@ -292,8 +391,19 @@
         "original_image_size": [
           1440,
           1080
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 1534,
+          "last_frame": 1629,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/great-outdoors.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "walking-tours",
@@ -353,8 +463,19 @@
         "original_image_size": [
           960,
           540
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 2675,
+          "last_frame": 2770,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/ego4d.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "i2nav-robot",
@@ -415,8 +536,19 @@
         "original_image_size": [
           1280,
           720
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 61,
+          "last_frame": 156,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/ub-visiogeoloc.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "recon",
@@ -441,8 +573,19 @@
         "original_image_size": [
           640,
           480
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 6,
+          "last_frame": 101,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/recon.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "sacson",
@@ -455,46 +598,68 @@
       "image": "assets/datasets/sacson.webp",
       "width": 480,
       "height": 270,
-      "title": "Down the corridor",
-      "description": "A low robot view along a carpeted indoor corridor.",
+      "title": "Through an indoor passage",
+      "description": "A wheeled robot moves through a carpeted indoor passage.",
       "source": {
         "dataset": "sacson",
         "collection": "NWM",
-        "trajectory": "Jan-12-2023-bww8_00000006_4",
-        "image_frame": 1,
-        "trajectory_frame_count": 3,
-        "relative_path": "sacson/Jan-12-2023-bww8_00000006_4/1.jpg",
+        "trajectory": "Dec-06-2022-bww8_00000000_0",
+        "image_frame": 48,
+        "trajectory_frame_count": 387,
+        "relative_path": "sacson/Dec-06-2022-bww8_00000000_0/48.jpg",
         "original_image_size": [
           160,
           120
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 0,
+          "last_frame": 95,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/sacson.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "scand",
       "name": "SCAND",
       "group": "finetuning",
       "environments": [
-        "indoor",
+        "urban",
         "robot"
       ],
       "image": "assets/datasets/scand.webp",
       "width": 480,
       "height": 270,
-      "title": "Moving through shared spaces",
-      "description": "A public indoor walkway with pedestrians and open sightlines.",
+      "title": "Sharing the campus path",
+      "description": "An outdoor robot navigates a campus walkway with people and bicycle racks.",
       "source": {
         "dataset": "scand",
         "collection": "NWM",
-        "trajectory": "random_mdps_B_Spot_JCL_JCL_Mon_Nov_15_108_58",
-        "image_frame": 1,
-        "trajectory_frame_count": 2,
-        "relative_path": "scand/random_mdps_B_Spot_JCL_JCL_Mon_Nov_15_108_58/1.jpg",
+        "trajectory": "Bags_A_Jackal_Brackenridge_Greg_Sat_Nov_13_94_0",
+        "image_frame": 48,
+        "trajectory_frame_count": 406,
+        "relative_path": "scand/Bags_A_Jackal_Brackenridge_Greg_Sat_Nov_13_94_0/48.jpg",
         "original_image_size": [
           320,
           240
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 0,
+          "last_frame": 95,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/scand.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     },
     {
       "id": "tartan-drive",
@@ -508,19 +673,30 @@
       "width": 480,
       "height": 270,
       "title": "Beyond paved roads",
-      "description": "A muddy off-road track, puddles, and surrounding vegetation.",
+      "description": "An off-road vehicle travels along a wooded gravel and mud track.",
       "source": {
         "dataset": "tartan",
         "collection": "NWM",
-        "trajectory": "20210826_heightmaps_1_20210826_47_bigpuddle_21",
-        "image_frame": 1,
-        "trajectory_frame_count": 3,
-        "relative_path": "tartan/20210826_heightmaps_1_20210826_47_bigpuddle_21/1.jpg",
+        "trajectory": "20210826_heightmaps_1_20210826_42_2",
+        "image_frame": 48,
+        "trajectory_frame_count": 350,
+        "relative_path": "tartan/20210826_heightmaps_1_20210826_42_2/48.jpg",
         "original_image_size": [
           320,
           240
-        ]
-      }
+        ],
+        "video": {
+          "first_frame": 0,
+          "last_frame": 95,
+          "frame_step": 1,
+          "playback_fps": 12,
+          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+        }
+      },
+      "video": "assets/datasets/tartan-drive.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 8.0
     }
   ]
 }

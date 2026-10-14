@@ -1,58 +1,9 @@
 {
   "schemaVersion": 1,
-  "defaultDemo": "huron-41",
+  "defaultDemo": "tartan-drive-36",
   "note": "Precomputed model outputs, not live generation. Videos contain the shared initial frame followed by every predicted frame, without interpolation. Curated qualitative examples do not replace aggregate test results.",
-  "timingNote": "A frame at t=0 and all future frames are shown at 4 FPS. Thus 16 s and 4 s prediction horizons produce 16.25 s and 4.25 s media files.",
+  "timingNote": "A shared initial frame and all future frames are encoded at 4 FPS. 16 s and nominal 4 s prediction horizons produce 16.25 s and 4.25 s media. LuSNAR uses nearest-source sampling; its original nonuniform capture offsets are retained in each sample.",
   "demos": [
-    {
-      "id": "huron-41",
-      "title": "Glass corridor",
-      "dataset": "HuRoN",
-      "datasetId": "huron",
-      "domain": "ID",
-      "sampleId": 41,
-      "description": "A 16-second rollout through a glass-lined indoor corridor.",
-      "gt": "assets/demos/huron-41-gt.mp4",
-      "gtPoster": "assets/demos/huron-41-gt.webp",
-      "prediction": "assets/demos/huron-41-prediction.mp4",
-      "predictionPoster": "assets/demos/huron-41-prediction.webp",
-      "baseline": "assets/demos/huron-41-baseline.mp4",
-      "baselinePoster": "assets/demos/huron-41-baseline.webp",
-      "poster": "assets/demos/huron-41-gt.webp",
-      "posterTime": 1,
-      "fps": 4,
-      "duration": 16.25,
-      "horizon": 16,
-      "frameCount": 65,
-      "width": 224,
-      "height": 224,
-      "includesInitialFrame": true,
-      "labels": {
-        "gt": "Ground truth",
-        "prediction": "OpenNWM",
-        "baseline": "NWM"
-      },
-      "model": "OpenNWM · Stage 2 joint100k",
-      "checkpoint": {
-        "id": "joint_0100000",
-        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
-        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
-      },
-      "baselineModel": "NWM · CDiT-B/2 release100k",
-      "baselineCheckpoint": {
-        "id": "0100000",
-        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
-      },
-      "source": "Archived model inference · 24 September 2026",
-      "sourceArchive": "opennwm_pixel_corrected_20260924",
-      "sourceExample": "examples/huron/id_41",
-      "trajectory": "Feb-06-2023-bww8-intloss_00000010_3",
-      "initialSourceFrame": 51,
-      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
-      "selection": "Qualitative example selected from the archived candidate set after visual review; not a representative aggregate evaluation.",
-      "scope": "Extended 16-second qualitative rollout.",
-      "limitations": "Long-horizon appearance and motion remain approximate; fine details and people can differ from the recording."
-    },
     {
       "id": "tartan-drive-36",
       "title": "Gravel trail",
@@ -100,7 +51,344 @@
       "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
       "selection": "Qualitative example selected from the archived candidate set after visual review; not a representative aggregate evaluation.",
       "scope": "Extended 16-second qualitative rollout.",
-      "limitations": "The generated view retains the outdoor scene but terrain geometry and the precise path drift over time."
+      "limitations": "The generated view retains the outdoor scene but terrain geometry and the precise path drift over time.",
+      "titleZh": "碎石小径",
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.6300135157181154,
+            -0.05441623928050874
+          ],
+          [
+            1.307191474846838,
+            -0.07013129932733368
+          ],
+          [
+            1.9024310987199597,
+            0.0029196491391199255
+          ],
+          [
+            2.3505625219750184,
+            0.01758102918619515
+          ],
+          [
+            2.981642199521794,
+            0.09202558652618377
+          ],
+          [
+            3.524177601906597,
+            0.18563747172808662
+          ],
+          [
+            4.0396482844504975,
+            0.22213835501885507
+          ],
+          [
+            4.517262248777753,
+            0.25166800598907685
+          ],
+          [
+            5.153624995774237,
+            0.3453491200222577
+          ],
+          [
+            5.722158649454851,
+            0.35819397874211645
+          ],
+          [
+            6.3496771276976665,
+            0.45296596805362754
+          ],
+          [
+            7.084968832375111,
+            0.6957873528090253
+          ],
+          [
+            7.873826729380033,
+            0.8426576799205454
+          ],
+          [
+            8.613236763756797,
+            1.0774383974647412
+          ],
+          [
+            9.321028783784703,
+            1.3865250984813062
+          ],
+          [
+            10.231351613035386,
+            1.7269666771571057
+          ],
+          [
+            10.810707129076922,
+            2.0466202083855087
+          ],
+          [
+            11.459275594905636,
+            2.4427076885649273
+          ],
+          [
+            11.994361756179435,
+            2.755457833856129
+          ],
+          [
+            12.675951622392486,
+            3.032591164697368
+          ],
+          [
+            13.36698096362553,
+            3.489337553224337
+          ],
+          [
+            14.007640800503244,
+            3.9732479606600735
+          ],
+          [
+            14.488238719111456,
+            4.304235923262377
+          ],
+          [
+            15.274706825897011,
+            4.858219679777656
+          ],
+          [
+            16.03938234025485,
+            5.361032299707501
+          ],
+          [
+            16.752374584701062,
+            5.890481392329035
+          ],
+          [
+            17.39477793124438,
+            6.37807956072171
+          ],
+          [
+            18.164701122474494,
+            6.905270844229462
+          ],
+          [
+            18.898523009409242,
+            7.476794143775354
+          ],
+          [
+            19.53719887488683,
+            8.079964122274095
+          ],
+          [
+            20.130857912462425,
+            8.667690329602022
+          ],
+          [
+            20.785086035542474,
+            9.341959067055454
+          ],
+          [
+            21.37236822747586,
+            9.900229100174538
+          ],
+          [
+            21.908743434034943,
+            10.493605675807403
+          ],
+          [
+            22.478473564291072,
+            11.271760742542051
+          ],
+          [
+            22.9777669973543,
+            12.028089898208776
+          ],
+          [
+            23.472891716583643,
+            12.694440818031559
+          ],
+          [
+            23.894462305259218,
+            13.298092782295184
+          ],
+          [
+            24.400960926962462,
+            13.985215654778486
+          ],
+          [
+            25.031089933922665,
+            14.834873299975037
+          ],
+          [
+            25.392597454917563,
+            15.489331669232916
+          ],
+          [
+            25.756421441178393,
+            16.328877569594898
+          ],
+          [
+            26.268515165925105,
+            17.307924220900574
+          ],
+          [
+            26.691337104556897,
+            18.17413432466104
+          ],
+          [
+            27.066168084300163,
+            19.126721039077925
+          ],
+          [
+            27.384369183193108,
+            19.949145127403163
+          ],
+          [
+            27.796495772292786,
+            21.127977470641852
+          ],
+          [
+            28.193045843947164,
+            22.152428508866322
+          ],
+          [
+            28.595082988300824,
+            23.213841068640914
+          ],
+          [
+            28.904265150621033,
+            24.246495428665273
+          ],
+          [
+            29.25034512487762,
+            25.493258432352373
+          ],
+          [
+            29.552509645408918,
+            26.77220143162281
+          ],
+          [
+            29.854434833244888,
+            28.102485082333363
+          ],
+          [
+            30.068439532226098,
+            29.5475991676871
+          ],
+          [
+            30.294565963049035,
+            30.67965483417984
+          ],
+          [
+            30.367744846361106,
+            31.800889667266446
+          ],
+          [
+            30.536009808292775,
+            32.9341302282071
+          ],
+          [
+            30.67206300036469,
+            34.117120398737036
+          ],
+          [
+            30.743089214219008,
+            35.14515078367673
+          ],
+          [
+            30.872675859003664,
+            36.12651552627403
+          ],
+          [
+            30.91278510384105,
+            37.00843455759838
+          ],
+          [
+            30.88534988138474,
+            38.076679210483555
+          ],
+          [
+            31.039305591154687,
+            39.10827923509245
+          ],
+          [
+            31.147736965666873,
+            40.074525615268406
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/tartan_drive/id_36/trajectory.json",
+        "sourceSha256": "e6c564a1b892ddddca9b4bf5ca3b49fc28e8727bc247c3029edf303f2d68c459"
+      }
     },
     {
       "id": "unitree-go2-81",
@@ -149,7 +437,3466 @@
       "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
       "selection": "Qualitative example selected from the archived candidate set after visual review; not a representative aggregate evaluation.",
       "scope": "4-second qualitative rollout.",
-      "limitations": "Door, window and wall details differ from the real office corridor."
+      "limitations": "Door, window and wall details differ from the real office corridor.",
+      "titleZh": "办公室漫步",
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.1111097303471379,
+            -0.0015029876332476018
+          ],
+          [
+            0.19908137509250412,
+            0.005211947727626687
+          ],
+          [
+            0.31999392207695415,
+            0.010823464851148561
+          ],
+          [
+            0.4325019762461583,
+            0.009800772188912302
+          ],
+          [
+            0.5203046828439288,
+            0.020217290190902182
+          ],
+          [
+            0.6451616138275462,
+            0.03380919562412697
+          ],
+          [
+            0.7209307044224297,
+            0.05120717420727702
+          ],
+          [
+            0.827410746126982,
+            0.09041930599732101
+          ],
+          [
+            0.9164757364973144,
+            0.13015529262498207
+          ],
+          [
+            1.013372826528022,
+            0.17999358902620705
+          ],
+          [
+            1.108545109218792,
+            0.24114279191643515
+          ],
+          [
+            1.1913647083401218,
+            0.2902243118189738
+          ],
+          [
+            1.2888643482925848,
+            0.34176062308770555
+          ],
+          [
+            1.366788275685911,
+            0.3774454230131957
+          ],
+          [
+            1.4793055605579102,
+            0.41599225720722677
+          ],
+          [
+            1.556442473465811,
+            0.439511368137319
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/unitree_go2/id_81/trajectory.json",
+        "sourceSha256": "24a202c0e9f26f23b5fd2dd7e724911c7b16e8089bd2dab9f6f1ce0bd9f29df4"
+      }
+    },
+    {
+      "id": "recon-25",
+      "title": "Open meadow",
+      "dataset": "RECON",
+      "datasetId": "recon",
+      "domain": "ID",
+      "sampleId": 25,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/recon-25-gt.mp4",
+      "gtPoster": "assets/demos/recon-25-gt.webp",
+      "prediction": "assets/demos/recon-25-prediction.mp4",
+      "predictionPoster": "assets/demos/recon-25-prediction.webp",
+      "baseline": "assets/demos/recon-25-baseline.mp4",
+      "baselinePoster": "assets/demos/recon-25-baseline.webp",
+      "poster": "assets/demos/recon-25-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/recon/id_25",
+      "trajectory": "jackal_2020-01-04-14-10-45_1_r01",
+      "initialSourceFrame": 115,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Grass and sky remain coherent during the turn; tree positions and terrain details drift.",
+      "titleZh": "开阔草地",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "4909efd8300f3001be2bc815457a701a5b0cfdc8acdd33eabafbb789eed1df8d",
+          "sourceFramesSha256": "c26f4542ee41cfdf21766e990197b1a3b6122f829f50f92b8f5f5f3341348fd0",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "ad54a839b8228dbb151b6282d71cd11b7959a9d74ddfd4cd698e154b18155cb2",
+          "sourceFramesSha256": "5232ac76b7c1901263d165018c44f4246b4f26f7b1c6a75c833ba1d098dc56be",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "a78867d413f5a8da8b6fa317c30724448158399f43e1ccf48f5ab1d78c66909c",
+          "sourceFramesSha256": "f24ddbd0ef510932e471dfce0142c3b0a6d963a28f70e7adf6c303d256f1cad3",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.1943813939481878,
+            -0.012487668312030638
+          ],
+          [
+            0.4091656394781317,
+            -0.058496220709976156
+          ],
+          [
+            0.6028553175153878,
+            -0.12236907439384721
+          ],
+          [
+            0.7681534020694896,
+            -0.19736905948028063
+          ],
+          [
+            0.935306181260891,
+            -0.30041181351610335
+          ],
+          [
+            1.1248819820617395,
+            -0.4356196764965538
+          ],
+          [
+            1.2898425776466798,
+            -0.5636727317073398
+          ],
+          [
+            1.4590665131970002,
+            -0.6990547597718757
+          ],
+          [
+            1.6179809277567663,
+            -0.8264939630243473
+          ],
+          [
+            1.7786058003644287,
+            -0.9615850073791702
+          ],
+          [
+            1.9454294614016325,
+            -1.0767174375525066
+          ],
+          [
+            2.118628347341704,
+            -1.1611596154867168
+          ],
+          [
+            2.326182736713579,
+            -1.2269624447084244
+          ],
+          [
+            2.546470857910112,
+            -1.2562425450406782
+          ],
+          [
+            2.760501415893031,
+            -1.2388665387741964
+          ],
+          [
+            2.9843836245700284,
+            -1.19574124142979
+          ],
+          [
+            3.221166400684486,
+            -1.1367409114411895
+          ],
+          [
+            3.422924313671377,
+            -1.0774612000349066
+          ],
+          [
+            3.624970575348151,
+            -1.0188187625841971
+          ],
+          [
+            3.8554884042456874,
+            -0.9568535386261782
+          ],
+          [
+            4.066721120825612,
+            -0.8961331742175235
+          ],
+          [
+            4.263164365634536,
+            -0.8269577077751612
+          ],
+          [
+            4.462662844088187,
+            -0.7331399163746634
+          ],
+          [
+            4.633727025820967,
+            -0.631776679681747
+          ],
+          [
+            4.795308912233909,
+            -0.5102752878333868
+          ],
+          [
+            4.959896020180281,
+            -0.34583393996368333
+          ],
+          [
+            5.086238982981217,
+            -0.1753945329963367
+          ],
+          [
+            5.188757265645219,
+            0.019653385605852922
+          ],
+          [
+            5.258789040197206,
+            0.23278426986367776
+          ],
+          [
+            5.294425074243773,
+            0.42757827602494686
+          ],
+          [
+            5.308420579255968,
+            0.6114425476074934
+          ],
+          [
+            5.29482353111328,
+            0.8251231030131976
+          ],
+          [
+            5.245167320110669,
+            1.0459177149651515
+          ],
+          [
+            5.149591652185209,
+            1.2751627903716902
+          ],
+          [
+            5.0134829446447835,
+            1.4848829851555854
+          ],
+          [
+            4.859345513618751,
+            1.654438945384627
+          ],
+          [
+            4.713063953023654,
+            1.812961159259919
+          ],
+          [
+            4.59312923144785,
+            1.9565340261338624
+          ],
+          [
+            4.463032061239677,
+            2.1344997032808153
+          ],
+          [
+            4.31537999477492,
+            2.300516192254792
+          ],
+          [
+            4.157111529404988,
+            2.4378131048572267
+          ],
+          [
+            3.9793190744994154,
+            2.543942179375336
+          ],
+          [
+            3.773743275191772,
+            2.6109644578447644
+          ],
+          [
+            3.592632730200078,
+            2.62852908503231
+          ],
+          [
+            3.3701061059694317,
+            2.622552226425478
+          ],
+          [
+            3.13251364105179,
+            2.6008000987193918
+          ],
+          [
+            2.932298128847242,
+            2.575154290146287
+          ],
+          [
+            2.743509752784918,
+            2.5503117443033863
+          ],
+          [
+            2.5369250559439025,
+            2.49216062683835
+          ],
+          [
+            2.2935990205047156,
+            2.37197941453974
+          ],
+          [
+            2.095243824342031,
+            2.2173209179036952
+          ],
+          [
+            1.9557674900704087,
+            2.0520111446464555
+          ],
+          [
+            1.829418806444064,
+            1.8802086715016826
+          ],
+          [
+            1.703771445483872,
+            1.6930506729351849
+          ],
+          [
+            1.5842483040246749,
+            1.5279148928410622
+          ],
+          [
+            1.4481587304520709,
+            1.3891506287661763
+          ],
+          [
+            1.2844457936061109,
+            1.2730337194917452
+          ],
+          [
+            1.07074693302376,
+            1.185149843996844
+          ],
+          [
+            0.8455523951841443,
+            1.145723583030467
+          ],
+          [
+            0.6559041794392527,
+            1.1394698677762563
+          ],
+          [
+            0.445435179638493,
+            1.1465458438571867
+          ],
+          [
+            0.22839172304086214,
+            1.1652451831889792
+          ],
+          [
+            0.047497801073670236,
+            1.1827569967334375
+          ],
+          [
+            -0.13731468245267997,
+            1.2140347318119133
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/recon/id_25/trajectory.json",
+        "sourceSha256": "09c4d4bcb08cb97cce1f26fdb245cc9af73ef9913acbac3cf6f5aa5b61322bc7"
+      }
+    },
+    {
+      "id": "scand-133",
+      "title": "Campus path",
+      "dataset": "SCAND",
+      "datasetId": "scand",
+      "domain": "ID",
+      "sampleId": 133,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/scand-133-gt.mp4",
+      "gtPoster": "assets/demos/scand-133-gt.webp",
+      "prediction": "assets/demos/scand-133-prediction.mp4",
+      "predictionPoster": "assets/demos/scand-133-prediction.webp",
+      "baseline": "assets/demos/scand-133-baseline.mp4",
+      "baselinePoster": "assets/demos/scand-133-baseline.webp",
+      "poster": "assets/demos/scand-133-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/scand/id_133",
+      "trajectory": "random_mdps_A_Spot_Library_AHG_Fri_Nov_12_86_1",
+      "initialSourceFrame": 19,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Preserves the tree-lined paved setting; the recorded pedestrians and canopy are not reconstructed precisely.",
+      "titleZh": "校园步道",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "d464dc8cc6b3e5e0c89408b1697fc9c9c4cfb24160fe7ad4b179386fe234faee",
+          "sourceFramesSha256": "f31cae0769d238b1415d66fdcadd81a4a95b335cdb307b93a6b723637052778c",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "df4e79a3f3b3882719af3047f34fca770e48dfca405d6186b2b4569b001ec8f5",
+          "sourceFramesSha256": "aa5051bf64c5f49ca3dc874c2e8e68a6db802b6fc820a84a1bc338464e7a8816",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "e81064775ecfd5b7557fc7c1630bbc460bc7193dcaf2a0dd6fc0bc6265aa9ae1",
+          "sourceFramesSha256": "085c9c47bfba1ed4ef2006a1dcb52fac503e256a407578751ad1a6a08261a1d1",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.4382693464548317,
+            -0.01011069725675702
+          ],
+          [
+            0.6667258433893598,
+            -0.017217736962890452
+          ],
+          [
+            1.0828748520358773,
+            -0.04293793910463307
+          ],
+          [
+            1.5213266527492362,
+            -0.054976863092696115
+          ],
+          [
+            1.8361362008441606,
+            -0.06947912151223334
+          ],
+          [
+            2.2464408488323673,
+            -0.0798280513755054
+          ],
+          [
+            2.6019369215815824,
+            -0.10528734131912547
+          ],
+          [
+            2.938570405266485,
+            -0.11891096894851647
+          ],
+          [
+            3.368162354818425,
+            -0.13896752946992158
+          ],
+          [
+            3.736096903601281,
+            -0.1566180667081853
+          ],
+          [
+            4.0493899109895395,
+            -0.17015410010822335
+          ],
+          [
+            4.471599725048197,
+            -0.19366656569038568
+          ],
+          [
+            4.797142664498021,
+            -0.19468930768598458
+          ],
+          [
+            5.217452025805126,
+            -0.20267668747537448
+          ],
+          [
+            5.58657002592507,
+            -0.19939450738109016
+          ],
+          [
+            5.932219791537815,
+            -0.19994110688471045
+          ],
+          [
+            6.353144036176719,
+            -0.18796194857209284
+          ],
+          [
+            6.692943174782975,
+            -0.18128095539680317
+          ],
+          [
+            7.031413585506587,
+            -0.18219845870174545
+          ],
+          [
+            7.381480668104614,
+            -0.17512579077681392
+          ],
+          [
+            7.744389032727473,
+            -0.17604687037840921
+          ],
+          [
+            8.155545247168439,
+            -0.16774842408101315
+          ],
+          [
+            8.49947555973516,
+            -0.17104050826031467
+          ],
+          [
+            8.91840864137169,
+            -0.1614019007660356
+          ],
+          [
+            9.26740423775467,
+            -0.16039874285776418
+          ],
+          [
+            9.687892868737569,
+            -0.1494999804713033
+          ],
+          [
+            10.030121186244758,
+            -0.139713607753119
+          ],
+          [
+            10.356337294678436,
+            -0.1349003033278869
+          ],
+          [
+            10.716757995409951,
+            -0.12348358891573004
+          ],
+          [
+            11.085521198358435,
+            -0.12260255059471407
+          ],
+          [
+            11.528303005517595,
+            -0.11141777074856041
+          ],
+          [
+            11.878555916706539,
+            -0.11118905631179561
+          ],
+          [
+            12.289614498654041,
+            -0.10471606400566356
+          ],
+          [
+            12.626440019047465,
+            -0.10935023664255668
+          ],
+          [
+            12.97226670525042,
+            -0.10499224169183728
+          ],
+          [
+            13.403635033644512,
+            -0.09303817166663618
+          ],
+          [
+            13.742825882803817,
+            -0.08849183448670425
+          ],
+          [
+            14.078415001028777,
+            -0.07853089738312913
+          ],
+          [
+            14.487960337363337,
+            -0.08444648399727357
+          ],
+          [
+            14.838197602674713,
+            -0.07700190285411816
+          ],
+          [
+            15.17534078379763,
+            -0.07820314348635819
+          ],
+          [
+            15.622589908271197,
+            -0.06751785503218105
+          ],
+          [
+            15.96493299134837,
+            -0.06410134513929669
+          ],
+          [
+            16.38326100365154,
+            -0.056064486063547254
+          ],
+          [
+            16.720775771427643,
+            -0.054242756176554954
+          ],
+          [
+            17.04076236800452,
+            -0.05638298934499394
+          ],
+          [
+            17.499733593974575,
+            -0.040359110962422035
+          ],
+          [
+            17.833999451369433,
+            -0.03182214714504873
+          ],
+          [
+            18.269316456934355,
+            -0.011636799857880756
+          ],
+          [
+            18.58398691681632,
+            -0.008290594846545938
+          ],
+          [
+            18.933560767092747,
+            0.014896843602533062
+          ],
+          [
+            19.23676732483231,
+            0.03990196433444656
+          ],
+          [
+            19.684484479824743,
+            0.07539332629042839
+          ],
+          [
+            20.016530711596477,
+            0.1026914682156446
+          ],
+          [
+            20.426454694158974,
+            0.12526762178458192
+          ],
+          [
+            20.765474975459384,
+            0.15845255967897012
+          ],
+          [
+            21.100626375513297,
+            0.1825969385345432
+          ],
+          [
+            21.549852461180503,
+            0.22626218529511766
+          ],
+          [
+            21.896887437048942,
+            0.24841607504784483
+          ],
+          [
+            22.30417530396191,
+            0.2774754535125959
+          ],
+          [
+            22.643068913153666,
+            0.2954168166701156
+          ],
+          [
+            22.972017608090642,
+            0.31582580153750994
+          ],
+          [
+            23.424699194709206,
+            0.356560613944289
+          ],
+          [
+            23.757088617056844,
+            0.37864547549196276
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/scand/id_133/trajectory.json",
+        "sourceSha256": "bc8cf897b4f4ef149b9c1c30577c85f6b2e54f022c0529530c4e737263de613b"
+      }
+    },
+    {
+      "id": "tartan-drive-99",
+      "title": "Hillside trail",
+      "dataset": "TartanDrive",
+      "datasetId": "tartan_drive",
+      "domain": "ID",
+      "sampleId": 99,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/tartan-drive-99-gt.mp4",
+      "gtPoster": "assets/demos/tartan-drive-99-gt.webp",
+      "prediction": "assets/demos/tartan-drive-99-prediction.mp4",
+      "predictionPoster": "assets/demos/tartan-drive-99-prediction.webp",
+      "baseline": "assets/demos/tartan-drive-99-baseline.mp4",
+      "baselinePoster": "assets/demos/tartan-drive-99-baseline.webp",
+      "poster": "assets/demos/tartan-drive-99-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/tartan_drive/id_99",
+      "trajectory": "20210903_heightmaps_9_20210903_229_0",
+      "initialSourceFrame": 267,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Preserves a vegetated hillside and visible motion; the path and camera pitch diverge over the long rollout.",
+      "titleZh": "山坡小径",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "e20bd03823788775867041a656008ebca6392a375daf5527944f727031cabc2c",
+          "sourceFramesSha256": "e2bedae9da0f0769a7da7d5f6a4df364355ce9afb97ba001b6fb3315ea67ae2f",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "c276e551eec6a92039b89b9e49425ab9cfb8e2317500d6d15261357503b0cdb9",
+          "sourceFramesSha256": "0f6019b6213dde0b31fed17160ea67b30c44247f7fd50c9c7a4114a366032657",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "9d8fef85e999908953a453c8a667dcbab121a86a99fa2504eab9614edbdaace0",
+          "sourceFramesSha256": "65e6e62124d174f0ee0bd2f3206af2e0b860da39f6d98a91cc8b8691cb7e5992",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.30517865209826484,
+            -0.05610213860046781
+          ],
+          [
+            0.7008500965494512,
+            -0.18331106018228532
+          ],
+          [
+            1.0527211979645241,
+            -0.39823615613040264
+          ],
+          [
+            1.34137948633275,
+            -0.5651012348062139
+          ],
+          [
+            1.6533585265883506,
+            -0.6270853647340727
+          ],
+          [
+            2.0490999285641354,
+            -0.7184615433466047
+          ],
+          [
+            2.3896761063702683,
+            -0.7793866873235349
+          ],
+          [
+            2.6864142205130195,
+            -0.8422334527918494
+          ],
+          [
+            2.9982815155517555,
+            -0.9777311475210809
+          ],
+          [
+            3.309590408915326,
+            -1.1292955118503076
+          ],
+          [
+            3.6624301909425965,
+            -1.3704852085663142
+          ],
+          [
+            3.889713436520486,
+            -1.6372512236962156
+          ],
+          [
+            4.202296682115344,
+            -1.892670704695892
+          ],
+          [
+            4.475173865730816,
+            -2.09993650190631
+          ],
+          [
+            4.788974740180537,
+            -2.3652466080096115
+          ],
+          [
+            5.014049126240219,
+            -2.6111412552482194
+          ],
+          [
+            5.350931177751072,
+            -2.853091255568006
+          ],
+          [
+            5.648038873228522,
+            -3.054553983068921
+          ],
+          [
+            5.907508938908062,
+            -3.306436257744004
+          ],
+          [
+            6.218279188880085,
+            -3.566988652122309
+          ],
+          [
+            6.521914776950264,
+            -3.9094994981897613
+          ],
+          [
+            6.850311690006261,
+            -4.188654345301329
+          ],
+          [
+            7.093825706743067,
+            -4.473312669896769
+          ],
+          [
+            7.513999339960806,
+            -4.756592283743287
+          ],
+          [
+            7.863636528425393,
+            -5.037203997088844
+          ],
+          [
+            8.155849506836635,
+            -5.349845353269622
+          ],
+          [
+            8.406064300024067,
+            -5.692680342399242
+          ],
+          [
+            8.765060719068552,
+            -6.0658128952013515
+          ],
+          [
+            9.121273048835722,
+            -6.437053976013012
+          ],
+          [
+            9.565202957544672,
+            -6.833737267150133
+          ],
+          [
+            9.929990641508766,
+            -7.158207798682187
+          ],
+          [
+            10.29604087633709,
+            -7.585855211687123
+          ],
+          [
+            10.71434710444866,
+            -8.031918817891398
+          ],
+          [
+            11.088901516917547,
+            -8.430886615160967
+          ],
+          [
+            11.56219521256914,
+            -8.888398789493552
+          ],
+          [
+            11.980698289478974,
+            -9.379360508417456
+          ],
+          [
+            12.499319120106428,
+            -9.900170946161435
+          ],
+          [
+            12.911314401717407,
+            -10.380792492768654
+          ],
+          [
+            13.493817261938464,
+            -10.94435587423601
+          ],
+          [
+            14.06147781960402,
+            -11.480925616269351
+          ],
+          [
+            14.595936247998095,
+            -12.012038175888822
+          ],
+          [
+            15.029230696826863,
+            -12.494901020967767
+          ],
+          [
+            15.623036216662614,
+            -13.085980251235444
+          ],
+          [
+            16.263047980288057,
+            -13.541366622687395
+          ],
+          [
+            16.992649051383523,
+            -14.12885723050528
+          ],
+          [
+            17.53608998505959,
+            -14.612983486154167
+          ],
+          [
+            18.3415098954496,
+            -15.276217147987587
+          ],
+          [
+            19.05951250281453,
+            -15.891835516252025
+          ],
+          [
+            19.710230584493107,
+            -16.48725325515579
+          ],
+          [
+            20.442048586234613,
+            -17.056473828160257
+          ],
+          [
+            21.236191494120785,
+            -17.719907673601494
+          ],
+          [
+            22.024089358874747,
+            -18.349549396159208
+          ],
+          [
+            22.7327386334352,
+            -18.905612993608067
+          ],
+          [
+            23.513715432223023,
+            -19.615771369743758
+          ],
+          [
+            24.37554797441683,
+            -20.243026743158985
+          ],
+          [
+            25.204101643711905,
+            -20.86127571433551
+          ],
+          [
+            25.839353154037635,
+            -21.407629183187066
+          ],
+          [
+            26.673722933894872,
+            -22.102519254648858
+          ],
+          [
+            27.471229336632867,
+            -22.700320252119646
+          ],
+          [
+            28.128278255611793,
+            -23.240125555196894
+          ],
+          [
+            28.82319346930418,
+            -23.991362053288455
+          ],
+          [
+            29.570088203016503,
+            -24.81766705879168
+          ],
+          [
+            30.26041678741407,
+            -25.498692412422418
+          ],
+          [
+            31.06692618844495,
+            -26.322410591850037
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/tartan_drive/id_99/trajectory.json",
+        "sourceSha256": "77619e4acd045dd3835b3d3bcff278da6cee2cc9e13de09115d14df8cb76bb21"
+      }
+    },
+    {
+      "id": "recon-55",
+      "title": "Garden path",
+      "dataset": "RECON",
+      "datasetId": "recon",
+      "domain": "ID",
+      "sampleId": 55,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/recon-55-gt.mp4",
+      "gtPoster": "assets/demos/recon-55-gt.webp",
+      "prediction": "assets/demos/recon-55-prediction.mp4",
+      "predictionPoster": "assets/demos/recon-55-prediction.webp",
+      "baseline": "assets/demos/recon-55-baseline.mp4",
+      "baselinePoster": "assets/demos/recon-55-baseline.webp",
+      "poster": "assets/demos/recon-55-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/recon/id_55",
+      "trajectory": "jackal_2019-08-20-15-36-44_4_r01",
+      "initialSourceFrame": 11,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Retains the grass, path and small buildings; exact building geometry and motion differ.",
+      "titleZh": "花园小径",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "b55f51715594a0204055bfd162dc8383a4a513a422481aeb15b44feb9cec448a",
+          "sourceFramesSha256": "9b9d0c9213347483107104bab2f525f4acc910345507a3922a61f2f03ca12717",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "6175a58b78ac1f7a659a599e3886e4c5ad3433ad867acf3383b36bfeecad876a",
+          "sourceFramesSha256": "4e3cb75c3711f960f62b1cdce90c2111b8db421736e39e79dada4bf166d433d5",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "44bd1220a9e5c8a188a44b8c26a4b5f130139b4cc21dbbcae35da659f521a049",
+          "sourceFramesSha256": "5ddca297d5d6bac5b4d76d21f8fdc48cc2aa24b1920777c54a6c1502f56c5d7b",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.17743965519756108,
+            0.02005860021492945
+          ],
+          [
+            0.4023778574629087,
+            0.07377939548839207
+          ],
+          [
+            0.6354839198587451,
+            0.17677871683159177
+          ],
+          [
+            0.8407885686842002,
+            0.2849411344573084
+          ],
+          [
+            1.031824975684575,
+            0.3928229875227584
+          ],
+          [
+            1.207001509161194,
+            0.49140609338928615
+          ],
+          [
+            1.3961667173957013,
+            0.5918166503862407
+          ],
+          [
+            1.6219921432660296,
+            0.7040538572507945
+          ],
+          [
+            1.8309416829617098,
+            0.7991155916000746
+          ],
+          [
+            2.0399040175292162,
+            0.8810268265159714
+          ],
+          [
+            2.2577698180349053,
+            0.9357183468256169
+          ],
+          [
+            2.4917870040068117,
+            0.9519371660270374
+          ],
+          [
+            2.7175042156717626,
+            0.9403894899934083
+          ],
+          [
+            2.9175468608532817,
+            0.8979517567408013
+          ],
+          [
+            3.140739749288526,
+            0.797301313456335
+          ],
+          [
+            3.3422045731648153,
+            0.646267288727446
+          ],
+          [
+            3.493554083930494,
+            0.4670259847906992
+          ],
+          [
+            3.6227502578267132,
+            0.26287142035212746
+          ],
+          [
+            3.740416864971759,
+            0.0496147508189043
+          ],
+          [
+            3.8412999067017117,
+            -0.1587190694948617
+          ],
+          [
+            3.924977788399222,
+            -0.35784821276858075
+          ],
+          [
+            3.994064474410281,
+            -0.5688432870527709
+          ],
+          [
+            4.046578553076339,
+            -0.7831371359811136
+          ],
+          [
+            4.0883860755007495,
+            -1.0551388974097922
+          ],
+          [
+            4.123865417126501,
+            -1.5334559291359997
+          ],
+          [
+            4.261756207567134,
+            -1.9618972150222984
+          ],
+          [
+            4.398529852943694,
+            -2.149707010002846
+          ],
+          [
+            4.551983204707882,
+            -2.3492418335986303
+          ],
+          [
+            4.677943607578544,
+            -2.535272798515237
+          ],
+          [
+            4.793930568134649,
+            -2.736602670342205
+          ],
+          [
+            4.878982674904807,
+            -2.9538838909327003
+          ],
+          [
+            4.937552752804686,
+            -3.2006929062667435
+          ],
+          [
+            4.9594122430344,
+            -3.4339572777005745
+          ],
+          [
+            4.954791155440148,
+            -3.6625146010619836
+          ],
+          [
+            4.913609243871779,
+            -3.878862303081187
+          ],
+          [
+            4.82560280687506,
+            -4.088593400139127
+          ],
+          [
+            4.709031494300665,
+            -4.2679129730950836
+          ],
+          [
+            4.538763155419121,
+            -4.4401288424546745
+          ],
+          [
+            4.356193661375989,
+            -4.568395165894627
+          ],
+          [
+            4.160470959990698,
+            -4.661855224281474
+          ],
+          [
+            3.9496625070577904,
+            -4.7644627755926106
+          ],
+          [
+            3.7425318458804884,
+            -4.88007243860417
+          ],
+          [
+            3.525184543164821,
+            -5.002861710211195
+          ],
+          [
+            3.3597399838736584,
+            -5.103860411745703
+          ],
+          [
+            3.2008453658637626,
+            -5.2077293997087954
+          ],
+          [
+            3.0180280776034203,
+            -5.347000191426648
+          ],
+          [
+            2.8544091617638268,
+            -5.492867476790149
+          ],
+          [
+            2.702024519162249,
+            -5.66326374386462
+          ],
+          [
+            2.566909867965533,
+            -5.849559200793106
+          ],
+          [
+            2.42578869841143,
+            -6.04157906514937
+          ],
+          [
+            2.3020317512386184,
+            -6.197524119087154
+          ],
+          [
+            2.1768889598653605,
+            -6.376390346218499
+          ],
+          [
+            2.0798106018229583,
+            -6.561937107855126
+          ],
+          [
+            2.010720564233627,
+            -6.758296486513494
+          ],
+          [
+            1.9740705339246796,
+            -6.964673237460838
+          ],
+          [
+            1.9720488150071878,
+            -7.195812458627194
+          ],
+          [
+            1.9802235263865502,
+            -7.4213232070857345
+          ],
+          [
+            1.985085546230651,
+            -7.637591647422432
+          ],
+          [
+            1.988105967726621,
+            -7.83338439498287
+          ],
+          [
+            1.9819138982686233,
+            -8.02756629391039
+          ],
+          [
+            1.9534536760764036,
+            -8.27278437826135
+          ],
+          [
+            1.9033515707836863,
+            -8.532048949457018
+          ],
+          [
+            1.8369642217828837,
+            -8.762771813696547
+          ],
+          [
+            1.7781151951471175,
+            -8.994400656889821
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/recon/id_55/trajectory.json",
+        "sourceSha256": "b2a5811f1c10543870343e5ee9d3857bc3d1d736e61e8c12c0e173a228d65910"
+      }
+    },
+    {
+      "id": "scand-5",
+      "title": "Shaded plaza",
+      "dataset": "SCAND",
+      "datasetId": "scand",
+      "domain": "ID",
+      "sampleId": 5,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/scand-5-gt.mp4",
+      "gtPoster": "assets/demos/scand-5-gt.webp",
+      "prediction": "assets/demos/scand-5-prediction.mp4",
+      "predictionPoster": "assets/demos/scand-5-prediction.webp",
+      "baseline": "assets/demos/scand-5-baseline.mp4",
+      "baselinePoster": "assets/demos/scand-5-baseline.webp",
+      "poster": "assets/demos/scand-5-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/scand/id_5",
+      "trajectory": "random_mdps_A_Jackal_AHG_Library_Thu_Oct_28_7_0",
+      "initialSourceFrame": 147,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Preserves brick paving and tree cover with continuous motion; shadows and scene details change.",
+      "titleZh": "林荫广场",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "f581dc722ed041bbb3be9a45ecf5b76f2dc2c2dfd36fc34577a33861928e3a37",
+          "sourceFramesSha256": "0b3fdfacf1b9947abf61c09a7646200237ec6fc6610d2de3188d5725c1166512",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "68c1a716b28449562d151fc979cb388345a425592a1de0f7f0d074b53b4de623",
+          "sourceFramesSha256": "906450dbeeb3e94f790b71da1d94a4c13c09772e5cdd818a1ac264c7f58132c3",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "112d73bbd9b8f84cea6e03e637aa7b6a5b1b907a93d55ccf4c2a9a8bc34fdaf6",
+          "sourceFramesSha256": "cd7aaad2df9893060ec911a5947ac07d548c9a907fb15e27c4558374a17bc7f7",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15107928480630137,
+            -0.00010614581500708552
+          ],
+          [
+            0.3142524022753171,
+            -0.0019090156983842441
+          ],
+          [
+            0.655945223750607,
+            -0.010092280070739588
+          ],
+          [
+            1.141578070251704,
+            -0.025335316162813374
+          ],
+          [
+            1.6427984736889807,
+            -0.04232374751916752
+          ],
+          [
+            2.24261927080255,
+            -0.06337480688110214
+          ],
+          [
+            2.7483815279429837,
+            -0.08191654493505646
+          ],
+          [
+            3.248548252994689,
+            -0.099397174477578
+          ],
+          [
+            3.7441585091764416,
+            -0.10256638672073426
+          ],
+          [
+            4.345159558528991,
+            -0.09699135424553615
+          ],
+          [
+            4.841935974176191,
+            -0.07658403098177216
+          ],
+          [
+            5.336039851493219,
+            -0.04869049819313859
+          ],
+          [
+            5.832172098447859,
+            -0.019363336129225785
+          ],
+          [
+            6.329280334945432,
+            0.009254292321967053
+          ],
+          [
+            6.828710174892033,
+            0.03729332070421004
+          ],
+          [
+            7.326908127325058,
+            0.06464461181822513
+          ],
+          [
+            7.922973729614462,
+            0.09619691235464281
+          ],
+          [
+            8.323078366125861,
+            0.1166138738152148
+          ],
+          [
+            8.918207343181638,
+            0.14582854222608085
+          ],
+          [
+            9.51564680130081,
+            0.15968662033912642
+          ],
+          [
+            9.91327655225856,
+            0.16330680594290142
+          ],
+          [
+            10.519238699958242,
+            0.16798109546130224
+          ],
+          [
+            11.11975352637941,
+            0.1714847854405855
+          ],
+          [
+            11.517684334433408,
+            0.17461712214505962
+          ],
+          [
+            12.017720201287458,
+            0.20206512693301956
+          ],
+          [
+            12.611602041545494,
+            0.2601871278432419
+          ],
+          [
+            13.114316851074479,
+            0.3120515322146047
+          ],
+          [
+            13.608857735273867,
+            0.36891265829757414
+          ],
+          [
+            14.103615370547855,
+            0.4254648765467549
+          ],
+          [
+            14.699560244409081,
+            0.48441562343629335
+          ],
+          [
+            15.098257823261866,
+            0.5050285248691088
+          ],
+          [
+            15.543971920816528,
+            0.5264304808420525
+          ],
+          [
+            15.80904998454439,
+            0.5396735300098547
+          ],
+          [
+            15.966701296178607,
+            0.5475975195602419
+          ],
+          [
+            16.118244259589382,
+            0.5550343648267527
+          ],
+          [
+            16.21889990363215,
+            0.5599456243338996
+          ],
+          [
+            16.38531607193652,
+            0.5679208590911834
+          ],
+          [
+            16.767376474094526,
+            0.585519993521176
+          ],
+          [
+            17.15248674220656,
+            0.6024031904894417
+          ],
+          [
+            17.748869727843676,
+            0.6275356378505911
+          ],
+          [
+            18.14568103263012,
+            0.6446276222996004
+          ],
+          [
+            18.64316219660976,
+            0.6829723276228913
+          ],
+          [
+            19.23661980596389,
+            0.7615229464907144
+          ],
+          [
+            19.73118989266268,
+            0.8364228095261635
+          ],
+          [
+            20.122277803471196,
+            0.9058529952701343
+          ],
+          [
+            20.70972701368273,
+            1.0116495378673702
+          ],
+          [
+            21.19935383472639,
+            1.1044680580680144
+          ],
+          [
+            21.68952122619802,
+            1.2016700166045695
+          ],
+          [
+            22.17989127417471,
+            1.3008534304310255
+          ],
+          [
+            22.667489976208294,
+            1.399436942810485
+          ],
+          [
+            23.25280437771801,
+            1.516776143285596
+          ],
+          [
+            23.74134923657537,
+            1.6139268411622694
+          ],
+          [
+            24.130951789339232,
+            1.6908308216993961
+          ],
+          [
+            24.718122808032177,
+            1.8048558173740548
+          ],
+          [
+            25.213003531123167,
+            1.8763073079071593
+          ],
+          [
+            25.709322698873414,
+            1.9177122913192697
+          ],
+          [
+            26.203386067839524,
+            1.9595594342145533
+          ],
+          [
+            26.80045083150769,
+            2.0334828487872803
+          ],
+          [
+            27.293656946388825,
+            2.103039709925181
+          ],
+          [
+            27.79258191771747,
+            2.1721258032093327
+          ],
+          [
+            28.18584195794386,
+            2.2260553300392645
+          ],
+          [
+            28.678789740593057,
+            2.292762555897672
+          ],
+          [
+            29.169522233898416,
+            2.3650324547338775
+          ],
+          [
+            29.757907751273304,
+            2.4628921144572025
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/scand/id_5/trajectory.json",
+        "sourceSha256": "79b859bcef4b57741a0891b6faaef01127f92aad0ca789b3587d5b09e7ba0fab"
+      }
+    },
+    {
+      "id": "recon-100",
+      "title": "Country buildings",
+      "dataset": "RECON",
+      "datasetId": "recon",
+      "domain": "ID",
+      "sampleId": 100,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/recon-100-gt.mp4",
+      "gtPoster": "assets/demos/recon-100-gt.webp",
+      "prediction": "assets/demos/recon-100-prediction.mp4",
+      "predictionPoster": "assets/demos/recon-100-prediction.webp",
+      "baseline": "assets/demos/recon-100-baseline.mp4",
+      "baselinePoster": "assets/demos/recon-100-baseline.webp",
+      "poster": "assets/demos/recon-100-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/recon/id_100",
+      "trajectory": "jackal_2019-10-24-13-35-07_2_r02",
+      "initialSourceFrame": 99,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Maintains an outdoor building scene through the turn; view timing and building positions drift.",
+      "titleZh": "乡间建筑",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "5daa4e7465eccd88be2ad70f6e00cdf5a0b0be915cd3c46286394f4f0bf5bf3e",
+          "sourceFramesSha256": "dd5ab7490637a18120abe72142f36a9a9c93e4e7d1f966bb1a69c9508da39cf6",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "4fc0f0c927bc307253a86cb8afeda46e7641794094ec88942defce302fd181d3",
+          "sourceFramesSha256": "c833643e266817b10ba5177849ee252d5b0e7ec4ce9284890c500ae0da1edb83",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "024a3a509a6e7301fe616e450ff98e3182de988f21c8102cb8b22674f73e198d",
+          "sourceFramesSha256": "8c4ab75753606b47f3b2de5c667a0043c14c78741a943835004f25190f76333c",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.20049391548303086,
+            0.004501167785198534
+          ],
+          [
+            0.4377910644957545,
+            0.007125379934602925
+          ],
+          [
+            0.6674248822387188,
+            0.00746274817529935
+          ],
+          [
+            0.8440147879467149,
+            0.010624509185865322
+          ],
+          [
+            1.1687748343910906,
+            -0.029559386708153102
+          ],
+          [
+            1.4912321287111665,
+            -0.15758852056249759
+          ],
+          [
+            1.6791846844336078,
+            -0.3127532924586346
+          ],
+          [
+            1.8089129128604926,
+            -0.47620569884320857
+          ],
+          [
+            1.955512722090785,
+            -0.6690195462261941
+          ],
+          [
+            2.1209171328560057,
+            -0.858494855064005
+          ],
+          [
+            2.267077472848646,
+            -0.9985875941038506
+          ],
+          [
+            2.4487841022194887,
+            -1.1312630341651455
+          ],
+          [
+            2.6719421019650125,
+            -1.2871294382917242
+          ],
+          [
+            2.8613774196508337,
+            -1.4452919446800054
+          ],
+          [
+            3.0365082057450437,
+            -1.6168544085798497
+          ],
+          [
+            3.188167175796399,
+            -1.7906977654610088
+          ],
+          [
+            3.304063580627914,
+            -1.964372261181704
+          ],
+          [
+            3.401147877647418,
+            -2.1793795158167653
+          ],
+          [
+            3.4605210008968847,
+            -2.3807210470413147
+          ],
+          [
+            3.4866188236249815,
+            -2.6026494739830426
+          ],
+          [
+            3.4982016664881668,
+            -2.8578988391647524
+          ],
+          [
+            3.5112303364704895,
+            -3.101751160472656
+          ],
+          [
+            3.502721469620554,
+            -3.3318143502884934
+          ],
+          [
+            3.4777520768957886,
+            -3.5469652167410746
+          ],
+          [
+            3.430285965998892,
+            -3.7665733834875406
+          ],
+          [
+            3.363071336701368,
+            -4.0047542535409075
+          ],
+          [
+            3.2890334227507827,
+            -4.20260775650197
+          ],
+          [
+            3.1943968726693854,
+            -4.408325325005803
+          ],
+          [
+            3.094393071767925,
+            -4.650041062238508
+          ],
+          [
+            3.0094098940937877,
+            -4.891227998813279
+          ],
+          [
+            2.9550534343501935,
+            -5.100407055801096
+          ],
+          [
+            2.906773074655018,
+            -5.340775101855162
+          ],
+          [
+            2.8713468297329077,
+            -5.595763677473582
+          ],
+          [
+            2.850558504359986,
+            -5.808794295625876
+          ],
+          [
+            2.8353401791707147,
+            -6.007887816049817
+          ],
+          [
+            2.7958905246461203,
+            -6.239461965333033
+          ],
+          [
+            2.722926619929076,
+            -6.4597047553587
+          ],
+          [
+            2.613013869758869,
+            -6.666553406882787
+          ],
+          [
+            2.4544102398439227,
+            -6.854907342207742
+          ],
+          [
+            2.251986101603052,
+            -7.005340545727949
+          ],
+          [
+            2.022857372658384,
+            -7.146772907812381
+          ],
+          [
+            1.82382260245595,
+            -7.273759723575955
+          ],
+          [
+            1.6065498618430114,
+            -7.419587773494502
+          ],
+          [
+            1.4216849024283036,
+            -7.560566029838001
+          ],
+          [
+            1.237169220717041,
+            -7.695521717707551
+          ],
+          [
+            1.0363163471243513,
+            -7.824479449367406
+          ],
+          [
+            0.83041481246384,
+            -7.934445995055289
+          ],
+          [
+            0.5765426313894707,
+            -8.041013292582422
+          ],
+          [
+            0.334334774158803,
+            -8.109136202460606
+          ],
+          [
+            0.1077404490257072,
+            -8.138870447626088
+          ],
+          [
+            -0.14850552423192775,
+            -8.143916776123797
+          ],
+          [
+            -0.4116958115006184,
+            -8.10856687556056
+          ],
+          [
+            -0.613775920619556,
+            -8.049197084273246
+          ],
+          [
+            -0.8100874574431687,
+            -7.9571438296035355
+          ],
+          [
+            -1.0255333106108107,
+            -7.8033132823226685
+          ],
+          [
+            -1.1918738692978588,
+            -7.620053907044143
+          ],
+          [
+            -1.3043286987483307,
+            -7.4067695677435434
+          ],
+          [
+            -1.3580170128055469,
+            -7.19272051945557
+          ],
+          [
+            -1.3635495584170907,
+            -6.943194669178745
+          ],
+          [
+            -1.3394579030448626,
+            -6.667470735621216
+          ],
+          [
+            -1.294428345163602,
+            -6.450054588220574
+          ],
+          [
+            -1.234991210709185,
+            -6.226491343487476
+          ],
+          [
+            -1.1818540140004041,
+            -5.991626620703097
+          ],
+          [
+            -1.145789183168932,
+            -5.742625540623244
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/recon/id_100/trajectory.json",
+        "sourceSha256": "cad3a9dc5e8451d85252b4630e4f5d160b7fd16e305fc43c414cb3590b34a084"
+      }
+    },
+    {
+      "id": "recon-10",
+      "title": "Overcast field",
+      "dataset": "RECON",
+      "datasetId": "recon",
+      "domain": "ID",
+      "sampleId": 10,
+      "description": "A 16-second action-conditioned rollout.",
+      "gt": "assets/demos/recon-10-gt.mp4",
+      "gtPoster": "assets/demos/recon-10-gt.webp",
+      "prediction": "assets/demos/recon-10-prediction.mp4",
+      "predictionPoster": "assets/demos/recon-10-prediction.webp",
+      "baseline": "assets/demos/recon-10-baseline.mp4",
+      "baselinePoster": "assets/demos/recon-10-baseline.webp",
+      "poster": "assets/demos/recon-10-gt.webp",
+      "posterTime": 1,
+      "fps": 4,
+      "duration": 16.25,
+      "horizon": 16,
+      "frameCount": 65,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM",
+        "baseline": "NWM"
+      },
+      "model": "OpenNWM · Stage 2 joint100k",
+      "checkpoint": {
+        "id": "joint_0100000",
+        "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+        "run": "nav15_pa_step60000_latentpt_reset_ft/nwm-latentpt-pixel-action-finalLAM-ft-reset"
+      },
+      "baselineModel": "NWM · CDiT-B/2 release100k",
+      "baselineCheckpoint": {
+        "id": "0100000",
+        "sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261"
+      },
+      "source": "Archived model inference · 24 September 2026",
+      "sourceArchive": "opennwm_pixel_corrected_20260924",
+      "sourceExample": "examples/recon/id_10",
+      "trajectory": "jackal_2019-12-21-12-16-24_9_r01",
+      "initialSourceFrame": 27,
+      "protocol": "One real initial image repeated into a four-frame context; each predicted RGB image is re-encoded for the next step. Conditioned on the recorded trajectory. Seed 0; DDPM 250 steps for both models.",
+      "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
+      "scope": "Full 16-second qualitative rollout.",
+      "limitations": "Maintains the overcast field and tree silhouettes; the final building and plant geometry differ.",
+      "titleZh": "阴天田野",
+      "visualReviewDate": "2026-10-08",
+      "assetProvenance": {
+        "gt": {
+          "sha256": "2a2959c11ddb0b9422013f56528746957b0d36bf854496f6719da3dc87ae031b",
+          "sourceFramesSha256": "c2a862c671983a97e83a0d052d94ee10976990c438121d00b9ac3706759b60c4",
+          "frameCount": 65
+        },
+        "prediction": {
+          "sha256": "2cf540d61af840e2846e2b4084e55a12ffb29ee524773e944b979695a61c48bb",
+          "sourceFramesSha256": "7cf80d1a40e872e5d62e55cc0be496f2f46dedd5928263fca024346d1f63118a",
+          "frameCount": 65
+        },
+        "baseline": {
+          "sha256": "5a9a219620d08677852a3b68140c71be5f5d46bf49f9e14074c8fdd7112289cd",
+          "sourceFramesSha256": "a18ff91c5f9ef0e60f913c34a28b2e1e250cba252f06b722872df3e0ed9b9f60",
+          "frameCount": 65
+        }
+      },
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.2635948931274087,
+            -0.024194545071637635
+          ],
+          [
+            0.5603365745735535,
+            -0.08108632170738157
+          ],
+          [
+            0.8792427168085972,
+            -0.13435534828645404
+          ],
+          [
+            1.163567807626558,
+            -0.1740541478844549
+          ],
+          [
+            1.7438858716949122,
+            -0.2627547314971128
+          ],
+          [
+            2.25841296182321,
+            -0.48996139169269526
+          ],
+          [
+            2.4946154464846946,
+            -0.6628106555573728
+          ],
+          [
+            2.7171837007702,
+            -0.833498575284247
+          ],
+          [
+            2.917030637753222,
+            -0.9999989952758443
+          ],
+          [
+            3.129989544809989,
+            -1.1742741690139864
+          ],
+          [
+            3.3523164571172535,
+            -1.3345271762731834
+          ],
+          [
+            3.5948625051515783,
+            -1.4882803393620978
+          ],
+          [
+            3.896853954583496,
+            -1.6088511582630731
+          ],
+          [
+            4.193463134119803,
+            -1.6605571937820245
+          ],
+          [
+            4.454129132516288,
+            -1.6584136800519498
+          ],
+          [
+            4.723094014641487,
+            -1.6292870455426312
+          ],
+          [
+            4.979940413072149,
+            -1.585399594497072
+          ],
+          [
+            5.228332913649942,
+            -1.5307569921023783
+          ],
+          [
+            5.494172850968622,
+            -1.4553919023307482
+          ],
+          [
+            5.760695530270997,
+            -1.4028957733320087
+          ],
+          [
+            6.0498521187459415,
+            -1.392157251575062
+          ],
+          [
+            6.370319945359281,
+            -1.4378493214828634
+          ],
+          [
+            6.6435121827419605,
+            -1.5434011151031035
+          ],
+          [
+            6.878253422054347,
+            -1.7083811329091403
+          ],
+          [
+            7.103500029765182,
+            -1.9414663164273518
+          ],
+          [
+            7.24853293837885,
+            -2.1449744696283592
+          ],
+          [
+            7.394679845994002,
+            -2.4182042673001485
+          ],
+          [
+            7.50503940499986,
+            -2.6721553744336792
+          ],
+          [
+            7.5857017305033345,
+            -2.9166959700648536
+          ],
+          [
+            7.657415902106127,
+            -3.2001013005846985
+          ],
+          [
+            7.7172980289927,
+            -3.473254623739314
+          ],
+          [
+            7.769290860458333,
+            -3.734096466194434
+          ],
+          [
+            7.808303301421721,
+            -3.9792289762314437
+          ],
+          [
+            7.842506632022606,
+            -4.210173605298255
+          ],
+          [
+            7.895881167171222,
+            -4.5126527319838186
+          ],
+          [
+            7.9797522919873165,
+            -4.776552320552463
+          ],
+          [
+            8.092414891861676,
+            -5.00950597373497
+          ],
+          [
+            8.254206269047314,
+            -5.236170839084818
+          ],
+          [
+            8.421666880304109,
+            -5.4564864247974105
+          ],
+          [
+            8.56851807706087,
+            -5.649124675790324
+          ],
+          [
+            8.713124054171773,
+            -5.8376455777047145
+          ],
+          [
+            8.873437602157493,
+            -6.070385912182757
+          ],
+          [
+            9.006614987818187,
+            -6.287151757305978
+          ],
+          [
+            9.10783323817275,
+            -6.5031327435525785
+          ],
+          [
+            9.191617838459667,
+            -6.754447668567549
+          ],
+          [
+            9.292962818318761,
+            -7.00603260954886
+          ],
+          [
+            9.404391956399191,
+            -7.222932544848507
+          ],
+          [
+            9.544934876907059,
+            -7.446037746123973
+          ],
+          [
+            9.72771364628821,
+            -7.68175625496818
+          ],
+          [
+            9.911047808721442,
+            -7.879163679412645
+          ],
+          [
+            10.10672340781095,
+            -8.059482388239399
+          ],
+          [
+            10.307203468313922,
+            -8.19449255453207
+          ],
+          [
+            10.624584633697978,
+            -8.333206920758244
+          ],
+          [
+            10.919612890139971,
+            -8.397144759553722
+          ],
+          [
+            11.18503658105228,
+            -8.393786728306315
+          ],
+          [
+            11.4728092633187,
+            -8.331669703231762
+          ],
+          [
+            11.690498192345283,
+            -8.22745931270561
+          ],
+          [
+            11.90640024837002,
+            -8.06156905025966
+          ],
+          [
+            12.101080654195814,
+            -7.814644830285718
+          ],
+          [
+            12.232293903745267,
+            -7.541745027079404
+          ],
+          [
+            12.32963091485912,
+            -7.303982551162604
+          ],
+          [
+            12.410073506800511,
+            -7.087402447825675
+          ],
+          [
+            12.546209599303362,
+            -6.6653745224456955
+          ],
+          [
+            12.579437737476505,
+            -6.189156697174785
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0,
+          4.25,
+          4.5,
+          4.75,
+          5.0,
+          5.25,
+          5.5,
+          5.75,
+          6.0,
+          6.25,
+          6.5,
+          6.75,
+          7.0,
+          7.25,
+          7.5,
+          7.75,
+          8.0,
+          8.25,
+          8.5,
+          8.75,
+          9.0,
+          9.25,
+          9.5,
+          9.75,
+          10.0,
+          10.25,
+          10.5,
+          10.75,
+          11.0,
+          11.25,
+          11.5,
+          11.75,
+          12.0,
+          12.25,
+          12.5,
+          12.75,
+          13.0,
+          13.25,
+          13.5,
+          13.75,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15.0,
+          15.25,
+          15.5,
+          15.75,
+          16.0
+        ],
+        "axes": "local +x forward, +y left; display up forward, right negative local y",
+        "timeSemantics": "4fps_source_samples",
+        "sourceArchive": "opennwm_pixel_corrected_20260924",
+        "sourceFile": "examples/recon/id_10/trajectory.json",
+        "sourceSha256": "16e9fb8f62a2b6a00805361fb25ec5bb242e1a593740b0c197a72a8389351e10"
+      }
+    },
+    {
+      "id": "lusnar-finetuned-moon-7",
+      "title": "Moon 7",
+      "titleZh": "月面 7",
+      "dataset": "LuSNAR",
+      "datasetId": "lusnar",
+      "domain": "held-out scene",
+      "environment": "lunar",
+      "fineTuned": true,
+      "sampleId": "lusnar_ft_Moon_7_cross_scene_test_window00_direct",
+      "fps": 4,
+      "duration": 4.25,
+      "horizon": 4,
+      "frameCount": 17,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "posterTime": 1,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM"
+      },
+      "model": "OpenNWM Nav15 Stage 2, LuSNAR fine-tuned EMA",
+      "checkpoint": {
+        "sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56"
+      },
+      "sourceManifest": "assets/space/lusnar-finetuned/moon-7/manifest.json",
+      "sourceManifestSha256": "f3f95ae1aeba71de6c97a701d59b11381ecf4ad613a70af1c1be8ebad8361b94",
+      "sourceInferenceManifestSha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+      "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
+      "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+      "training": {
+        "steps": 1000,
+        "windows": 30,
+        "targetPairs": 480,
+        "scenes": [
+          "Moon_1",
+          "Moon_2",
+          "Moon_3",
+          "Moon_4",
+          "Moon_5"
+        ]
+      },
+      "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0,
+            0
+          ],
+          [
+            3.275800064218861e-06,
+            2.008953119681929e-08
+          ],
+          [
+            5.331000026817501e-06,
+            8.382963187805092e-09
+          ],
+          [
+            5.1021000523850735e-06,
+            1.638369470648943e-08
+          ],
+          [
+            4.715900084664629e-06,
+            2.648492892457041e-08
+          ],
+          [
+            4.715900084664629e-06,
+            2.648492892457041e-08
+          ],
+          [
+            4.882800031613491e-06,
+            9.884395545552098e-09
+          ],
+          [
+            0.05070039359521329,
+            -1.57882834027468e-06
+          ],
+          [
+            0.2688526941071908,
+            0.00015827580044211858
+          ],
+          [
+            0.49192869459900096,
+            0.0003118119940619072
+          ],
+          [
+            0.765389695314349,
+            0.0005352150672760626
+          ],
+          [
+            1.0451066960181796,
+            0.0007550041475626705
+          ],
+          [
+            1.4671866970838274,
+            0.0010877822641103595
+          ],
+          [
+            1.7659966978635468,
+            0.0013312873269790049
+          ],
+          [
+            2.071426698635627,
+            0.0015723912336487356
+          ],
+          [
+            2.380756699449008,
+            0.0018264126766966763
+          ],
+          [
+            2.8563267066407736,
+            0.004076032849868927
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0
+        ],
+        "captureOffsetsSeconds": [
+          0,
+          0.3333568,
+          0.558418432,
+          0.775082752,
+          1.108415232,
+          1.333415168,
+          1.550198784,
+          1.766799616,
+          2.1001216,
+          2.325136896,
+          2.541809664,
+          2.766796288,
+          3.100177664,
+          3.325141504,
+          3.550172416,
+          3.766811392,
+          4.100147968
+        ],
+        "axes": "Forward and left in meters relative to the last observed rover-body pose.",
+        "timeSemantics": "Frame 0 is the shared context anchor; frames 1–16 use the paired target pose. Playback is 4 FPS; nonuniform source capture offsets are retained separately.",
+        "sourceFile": "assets/space/lusnar-finetuned/moon-7/manifest.json",
+        "sourceSha256": "f3f95ae1aeba71de6c97a701d59b11381ecf4ad613a70af1c1be8ebad8361b94",
+        "poseSource": "LuSNAR/Moon_7/gt.txt",
+        "poseSourceSha256": "3f889e9fd480afbdcad92e533cffb0655e21739037d3d4e05d4c21f4fbbea187"
+      },
+      "assetProvenance": {
+        "gt": {
+          "sha256": "c580e0762bfde76fd5a2416460fda51e137e9fe8b1ea495eb6324e1c770f868e",
+          "sourceFramesSha256": "73cd6c2ebdb3ca284d81dfcce7db0d2963b0f5aa1b9c9b0714e06e8741389200",
+          "frameCount": 17
+        },
+        "prediction": {
+          "sha256": "cce9633d2d5ddc28a62179247581e4b3fe98c1c0819ea9364aadf67792212133",
+          "sourceFramesSha256": "7c106769b0902b5c540bb272e6e4216d93ab77cbb59ec9376f969403bdec9c00",
+          "frameCount": 17
+        }
+      },
+      "gt": "assets/space/lusnar-finetuned/moon-7/slider-gt.mp4",
+      "gtPoster": "assets/space/lusnar-finetuned/moon-7/slider-gt.webp",
+      "prediction": "assets/space/lusnar-finetuned/moon-7/slider-prediction.mp4",
+      "predictionPoster": "assets/space/lusnar-finetuned/moon-7/slider-prediction.webp",
+      "poster": "assets/space/lusnar-finetuned/moon-7/slider-gt.webp"
+    },
+    {
+      "id": "lusnar-finetuned-moon-8",
+      "title": "Moon 8",
+      "titleZh": "月面 8",
+      "dataset": "LuSNAR",
+      "datasetId": "lusnar",
+      "domain": "held-out scene",
+      "environment": "lunar",
+      "fineTuned": true,
+      "sampleId": "lusnar_ft_Moon_8_cross_scene_test_window00_direct",
+      "fps": 4,
+      "duration": 4.25,
+      "horizon": 4,
+      "frameCount": 17,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "posterTime": 1,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM"
+      },
+      "model": "OpenNWM Nav15 Stage 2, LuSNAR fine-tuned EMA",
+      "checkpoint": {
+        "sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56"
+      },
+      "sourceManifest": "assets/space/lusnar-finetuned/moon-8/manifest.json",
+      "sourceManifestSha256": "ac40176e951281e10a346a4da86feb800644d1ef66aec2304ad9c97f8c23eb7c",
+      "sourceInferenceManifestSha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+      "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
+      "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+      "training": {
+        "steps": 1000,
+        "windows": 30,
+        "targetPairs": 480,
+        "scenes": [
+          "Moon_1",
+          "Moon_2",
+          "Moon_3",
+          "Moon_4",
+          "Moon_5"
+        ]
+      },
+      "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0,
+            0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            -6.293999203228299e-07,
+            -1.1604322368027575e-08
+          ],
+          [
+            -7.777199515661916e-06,
+            -7.055340947206428e-08
+          ],
+          [
+            0.0013543774008285528,
+            -1.1599889109369577e-07
+          ],
+          [
+            0.0937173674088075,
+            -9.607013690913866e-07
+          ],
+          [
+            0.39349386732805564,
+            1.1827296504057837e-05
+          ],
+          [
+            0.9271968670383917,
+            5.583918316198859e-05
+          ],
+          [
+            1.4271378664484229,
+            0.0001434638872255607
+          ],
+          [
+            1.9134778658374298,
+            0.00023410339920376221
+          ],
+          [
+            2.460457865003069,
+            0.0003574767528937545
+          ],
+          [
+            3.294067863670597,
+            0.0005543665216227759
+          ],
+          [
+            3.835607862798105,
+            0.0006832735164254949
+          ],
+          [
+            4.4095878618176005,
+            0.0008280202910621995
+          ],
+          [
+            5.289947860223352,
+            0.001063189112726702
+          ],
+          [
+            5.9132978567896135,
+            0.001565331932990685
+          ],
+          [
+            6.560417851732759,
+            0.002303905992357068
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0
+        ],
+        "captureOffsetsSeconds": [
+          0,
+          0.224954112,
+          0.441630464,
+          0.774980096,
+          0.991627776,
+          1.208292096,
+          1.433312512,
+          1.76683392,
+          1.991669504,
+          2.208342016,
+          2.433357824,
+          2.766725376,
+          2.983375104,
+          3.208361984,
+          3.533385472,
+          3.758395136,
+          3.9751232
+        ],
+        "axes": "Forward and left in meters relative to the last observed rover-body pose.",
+        "timeSemantics": "Frame 0 is the shared context anchor; frames 1–16 use the paired target pose. Playback is 4 FPS; nonuniform source capture offsets are retained separately.",
+        "sourceFile": "assets/space/lusnar-finetuned/moon-8/manifest.json",
+        "sourceSha256": "ac40176e951281e10a346a4da86feb800644d1ef66aec2304ad9c97f8c23eb7c",
+        "poseSource": "LuSNAR/Moon_8/gt.txt",
+        "poseSourceSha256": "3adf8e3ca4bd8ab3a84c19963bea1ea043d80b6d145993942d1296c538abbd44"
+      },
+      "assetProvenance": {
+        "gt": {
+          "sha256": "4a7f43d615f0c48304af6e0f7f18841b8bf16c7ef74a3cd633ec76e209f2b74f",
+          "sourceFramesSha256": "d38467dce9c48b34abcd688c5de051655dfb48fe95e53f149fc763d9d03b07f9",
+          "frameCount": 17
+        },
+        "prediction": {
+          "sha256": "41428f6587bfdebcb15478134b1fa85a2f4db7ccc06083e3fff769a51ea56c8b",
+          "sourceFramesSha256": "1e17657d95c12935b9aa6df530e3fb47430c557fdaaad93f8b619989ba164d3c",
+          "frameCount": 17
+        }
+      },
+      "gt": "assets/space/lusnar-finetuned/moon-8/slider-gt.mp4",
+      "gtPoster": "assets/space/lusnar-finetuned/moon-8/slider-gt.webp",
+      "prediction": "assets/space/lusnar-finetuned/moon-8/slider-prediction.mp4",
+      "predictionPoster": "assets/space/lusnar-finetuned/moon-8/slider-prediction.webp",
+      "poster": "assets/space/lusnar-finetuned/moon-8/slider-gt.webp"
+    },
+    {
+      "id": "lusnar-finetuned-moon-9",
+      "title": "Moon 9",
+      "titleZh": "月面 9",
+      "dataset": "LuSNAR",
+      "datasetId": "lusnar",
+      "domain": "held-out scene",
+      "environment": "lunar",
+      "fineTuned": true,
+      "sampleId": "lusnar_ft_Moon_9_cross_scene_test_window00_direct",
+      "fps": 4,
+      "duration": 4.25,
+      "horizon": 4,
+      "frameCount": 17,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "posterTime": 1,
+      "labels": {
+        "gt": "Ground truth",
+        "prediction": "OpenNWM"
+      },
+      "model": "OpenNWM Nav15 Stage 2, LuSNAR fine-tuned EMA",
+      "checkpoint": {
+        "sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56"
+      },
+      "sourceManifest": "assets/space/lusnar-finetuned/moon-9/manifest.json",
+      "sourceManifestSha256": "4b624c795b022a4548a58d52c3211486e0a7f991a9e7bd5a6e0e3feb6a8e40e2",
+      "sourceInferenceManifestSha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+      "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
+      "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+      "training": {
+        "steps": 1000,
+        "windows": 30,
+        "targetPairs": 480,
+        "scenes": [
+          "Moon_1",
+          "Moon_2",
+          "Moon_3",
+          "Moon_4",
+          "Moon_5"
+        ]
+      },
+      "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+      "conditioningTrajectory": {
+        "positions": [
+          [
+            0,
+            0
+          ],
+          [
+            1.6690266609665735e-05,
+            2.2069038262518107e-06
+          ],
+          [
+            3.7102633905644927e-05,
+            4.407390618340654e-05
+          ],
+          [
+            5.1460503897286444e-05,
+            5.349641823185493e-05
+          ],
+          [
+            6.372445185889508e-05,
+            6.155952212520459e-05
+          ],
+          [
+            7.92635694789529e-05,
+            7.51643759866043e-05
+          ],
+          [
+            8.984132169991906e-05,
+            8.014688368372174e-05
+          ],
+          [
+            0.12343374887276266,
+            0.0003328702893632843
+          ],
+          [
+            0.29046681153003373,
+            0.0004707184533682587
+          ],
+          [
+            0.745392619888715,
+            0.0008652944575450829
+          ],
+          [
+            1.0827914078346097,
+            0.001223662554976598
+          ],
+          [
+            1.4126052987573081,
+            0.0010962857897392582
+          ],
+          [
+            1.6943021825942108,
+            0.0001938821571695771
+          ],
+          [
+            2.214618585046209,
+            -0.04910145157289114
+          ],
+          [
+            2.529647466175429,
+            -0.0682053529252794
+          ],
+          [
+            2.833681600333348,
+            -0.08627587229260239
+          ],
+          [
+            3.1749160655317206,
+            -0.10656561307533034
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0,
+          2.25,
+          2.5,
+          2.75,
+          3.0,
+          3.25,
+          3.5,
+          3.75,
+          4.0
+        ],
+        "captureOffsetsSeconds": [
+          0,
+          0.216687872,
+          0.547759104,
+          0.769749248,
+          0.989025024,
+          1.321155328,
+          1.542519296,
+          1.765391872,
+          1.97954944,
+          2.316112896,
+          2.53808896,
+          2.76042752,
+          2.975789568,
+          3.314718208,
+          3.535064576,
+          3.7543424,
+          3.977644544
+        ],
+        "axes": "Forward and left in meters relative to the last observed rover-body pose.",
+        "timeSemantics": "Frame 0 is the shared context anchor; frames 1–16 use the paired target pose. Playback is 4 FPS; nonuniform source capture offsets are retained separately.",
+        "sourceFile": "assets/space/lusnar-finetuned/moon-9/manifest.json",
+        "sourceSha256": "4b624c795b022a4548a58d52c3211486e0a7f991a9e7bd5a6e0e3feb6a8e40e2",
+        "poseSource": "LuSNAR/Moon_9/gt.txt",
+        "poseSourceSha256": "7b6f47fbc69a55c282154bc1979ced200982f7ceffcf6e60924dc61cf17d9688"
+      },
+      "assetProvenance": {
+        "gt": {
+          "sha256": "0c429e59ff669bfe07df4f0cde32ee7b734fbd0d4b8f0c189bb2c45541e87646",
+          "sourceFramesSha256": "dbb29bb0d334db25cfbdb7968131bdf0b936285290c8d514c918f0858600622a",
+          "frameCount": 17
+        },
+        "prediction": {
+          "sha256": "a916c2f3847e7985569f7f2f74b9792b9eaf1a28dac06dc537cf5e75a136a965",
+          "sourceFramesSha256": "61ce65d25b4936239ef5a0b555951c629b1b01c331e4340668f8b0abf9a878db",
+          "frameCount": 17
+        }
+      },
+      "gt": "assets/space/lusnar-finetuned/moon-9/slider-gt.mp4",
+      "gtPoster": "assets/space/lusnar-finetuned/moon-9/slider-gt.webp",
+      "prediction": "assets/space/lusnar-finetuned/moon-9/slider-prediction.mp4",
+      "predictionPoster": "assets/space/lusnar-finetuned/moon-9/slider-prediction.webp",
+      "poster": "assets/space/lusnar-finetuned/moon-9/slider-gt.webp"
     }
   ]
 }

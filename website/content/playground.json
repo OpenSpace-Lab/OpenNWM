@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "model": "OpenNWM · Nav15 Stage 2 joint100k",
+  "defaultScene": "outdoor-tartan",
+  "fps": 4,
+  "duration": 4,
+  "coordinateSystem": {
+    "x": "right",
+    "y": "forward",
+    "origin": [
+      0,
+      0
+    ],
+    "bounds": {
+      "x": [
+        -1,
+        1
+      ],
+      "y": [
+        -0.25,
+        1.5
+      ]
+    },
+    "canvasUnitsToWaypointUnits": 12
+  },
+  "note": "Presets are genuine OpenNWM predictions conditioned on the displayed path. Draw a new path with the local GPU service to generate a new prediction.",
+  "noteZh": "预设视频由 OpenNWM 根据所示轨迹真实预测；连接本地 GPU 服务后可绘制任意轨迹进行新预测。",
+  "planetaryNote": "Moon and Mars start from real mission images. The 4-second horizon describes 16 model steps at 4 FPS; mission capture intervals are irregular.",
+  "planetaryNoteZh": "月球和火星使用真实任务影像作为起始帧。4 秒表示按 4 FPS 展示 16 个模型预测步；原任务拍摄间隔不规则。",
+  "scenes": [
+    {
+      "id": "outdoor-tartan",
+      "title": "Gravel trail",
+      "titleZh": "野外小径",
+      "dataset": "TartanDrive",
+      "domain": "ID",
+      "description": "An off-road view across uneven terrain.",
+      "descriptionZh": "在崎岖的户外地形中前进。",
+      "planetary": false,
+      "simulated": false,
+      "qualityNote": "",
+      "qualityNoteZh": "",
+      "predictionMode": "autoregressive",
+      "protocol": "Autoregressive prediction; each generated view becomes the next observation.",
+      "protocolZh": "自回归预测，每次生成的图像作为下一步观测。",
+      "presets": [
+        {
+          "id": "forward",
+          "label": "Forward",
+          "labelZh": "直行",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "video": "assets/playground/outdoor-tartan/forward.mp4",
+          "poster": "assets/playground/outdoor-tartan/forward.webp",
+          "manifest": "assets/playground/outdoor-tartan/forward.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        },
+        {
+          "id": "left",
+          "label": "Turn left",
+          "labelZh": "左转",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0.2
+            ],
+            [
+              -0.03,
+              0.4
+            ],
+            [
+              -0.12,
+              0.6
+            ],
+            [
+              -0.28,
+              0.8
+            ],
+            [
+              -0.5,
+              1
+            ]
+          ],
+          "video": "assets/playground/outdoor-tartan/left.mp4",
+          "poster": "assets/playground/outdoor-tartan/left.webp",
+          "manifest": "assets/playground/outdoor-tartan/left.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        },
+        {
+          "id": "right",
+          "label": "Turn right",
+          "labelZh": "右转",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0.2
+            ],
+            [
+              0.03,
+              0.4
+            ],
+            [
+              0.12,
+              0.6
+            ],
+            [
+              0.28,
+              0.8
+            ],
+            [
+              0.5,
+              1
+            ]
+          ],
+          "video": "assets/playground/outdoor-tartan/right.mp4",
+          "poster": "assets/playground/outdoor-tartan/right.webp",
+          "manifest": "assets/playground/outdoor-tartan/right.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        }
+      ],
+      "poster": "assets/playground/outdoor-tartan/initial.webp",
+      "image": "assets/playground/outdoor-tartan/initial.webp"
+    },
+    {
+      "id": "garden-recon",
+      "title": "Garden path",
+      "titleZh": "花园小径",
+      "dataset": "RECON",
+      "domain": "ID",
+      "description": "A ground robot moving through a sunlit garden.",
+      "descriptionZh": "地面机器人穿行于阳光下的花园。",
+      "planetary": false,
+      "simulated": false,
+      "qualityNote": "",
+      "qualityNoteZh": "",
+      "predictionMode": "autoregressive",
+      "protocol": "Autoregressive prediction; each generated view becomes the next observation.",
+      "protocolZh": "自回归预测，每次生成的图像作为下一步观测。",
+      "presets": [
+        {
+          "id": "forward",
+          "label": "Forward",
+          "labelZh": "直行",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "video": "assets/playground/garden-recon/forward.mp4",
+          "poster": "assets/playground/garden-recon/forward.webp",
+          "manifest": "assets/playground/garden-recon/forward.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        },
+        {
+          "id": "left",
+          "label": "Turn left",
+          "labelZh": "左转",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0.2
+            ],
+            [
+              -0.03,
+              0.4
+            ],
+            [
+              -0.12,
+              0.6
+            ],
+            [
+              -0.28,
+              0.8
+            ],
+            [
+              -0.5,
+              1
+            ]
+          ],
+          "video": "assets/playground/garden-recon/left.mp4",
+          "poster": "assets/playground/garden-recon/left.webp",
+          "manifest": "assets/playground/garden-recon/left.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        },
+        {
+          "id": "right",
+          "label": "Turn right",
+          "labelZh": "右转",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0.2
+            ],
+            [
+              0.03,
+              0.4
+            ],
+            [
+              0.12,
+              0.6
+            ],
+            [
+              0.28,
+              0.8
+            ],
+            [
+              0.5,
+              1
+            ]
+          ],
+          "video": "assets/playground/garden-recon/right.mp4",
+          "poster": "assets/playground/garden-recon/right.webp",
+          "manifest": "assets/playground/garden-recon/right.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        }
+      ],
+      "poster": "assets/playground/garden-recon/initial.webp",
+      "image": "assets/playground/garden-recon/initial.webp"
+    },
+    {
+      "id": "hall-huron",
+      "title": "Coral hallway",
+      "titleZh": "珊瑚色走廊",
+      "dataset": "HuRoN",
+      "domain": "ID",
+      "description": "A wheeled robot approaching a colorful hallway.",
+      "descriptionZh": "轮式机器人驶向彩色廊道。",
+      "planetary": false,
+      "simulated": false,
+      "qualityNote": "",
+      "qualityNoteZh": "",
+      "predictionMode": "autoregressive",
+      "protocol": "Autoregressive prediction; each generated view becomes the next observation.",
+      "protocolZh": "自回归预测，每次生成的图像作为下一步观测。",
+      "presets": [
+        {
+          "id": "forward",
+          "label": "Forward",
+          "labelZh": "直行",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "video": "assets/playground/hall-huron/forward.mp4",
+          "poster": "assets/playground/hall-huron/forward.webp",
+          "manifest": "assets/playground/hall-huron/forward.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        },
+        {
+          "id": "left",
+          "label": "Turn left",
+          "labelZh": "左转",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0.2
+            ],
+            [
+              -0.03,
+              0.4
+            ],
+            [
+              -0.12,
+              0.6
+            ],
+            [
+              -0.28,
+              0.8
+            ],
+            [
+              -0.5,
+              1
+            ]
+          ],
+          "video": "assets/playground/hall-huron/left.mp4",
+          "poster": "assets/playground/hall-huron/left.webp",
+          "manifest": "assets/playground/hall-huron/left.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        },
+        {
+          "id": "right",
+          "label": "Turn right",
+          "labelZh": "右转",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0.2
+            ],
+            [
+              0.03,
+              0.4
+            ],
+            [
+              0.12,
+              0.6
+            ],
+            [
+              0.28,
+              0.8
+            ],
+            [
+              0.5,
+              1
+            ]
+          ],
+          "video": "assets/playground/hall-huron/right.mp4",
+          "poster": "assets/playground/hall-huron/right.webp",
+          "manifest": "assets/playground/hall-huron/right.json",
+          "duration": 4,
+          "seed": 0,
+          "diffusionSteps": 250
+        }
+      ],
+      "poster": "assets/playground/hall-huron/initial.webp",
+      "image": "assets/playground/hall-huron/initial.webp"
+    }
+  ]
+}

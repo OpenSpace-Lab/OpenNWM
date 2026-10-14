@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "sceneId": "mars-zhurong",
+  "source": {
+    "dataset": "Planetary Rover",
+    "trajectory": "mars_zhurong_natecam_color_0000",
+    "frame": 3,
+    "sha256": "663e608169b6f4c7893d20c6376d6b94f6826623942b93f107e4ad819ba0e691"
+  },
+  "checkpoint": {
+    "id": "joint_0100000",
+    "bytes": 3137820686,
+    "mtimeNs": 1790066759455754000,
+    "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4"
+  },
+  "seed": 0,
+  "points": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "actions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "fps": 4,
+  "frames": 16,
+  "duration": 4.0,
+  "diffusionSteps": 250,
+  "protocol": "Single initial RGB repeated to four context frames; autoregressive RGB re-encoding with deterministic VAE posterior means; DDPM; real planar action adapter.",
+  "canvasUnitsToWaypointUnits": 12.0,
+  "waypointSpacingMeters": null,
+  "planetaryTimingNote": "Four seconds is a model-step convention, not the irregular mission capture interval.",
+  "elapsedBatchSeconds": 90.16990630328655,
+  "mode": "autoregressive",
+  "modelConditions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "simulatedSource": false
+}

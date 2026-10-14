@@ -1,0 +1,50 @@
+.motion-gallery-toolbar { display: flex; justify-content: flex-end; margin: -4px 0 18px; }
+.motion-gallery-toggle,
+.motion-card-toggle { border: 1px solid var(--line,#303638); color: var(--ink,#eee); background: var(--surface-raised,#1d2224); cursor: pointer; transition: color .18s ease, background-color .18s ease, border-color .18s ease; }
+.motion-gallery-toggle { min-height: 38px; padding: 7px 16px; border-radius: 999px; font: 600 13px/1.4 var(--sans,Arial,Helvetica,sans-serif); }
+.motion-gallery-toggle:hover,
+.motion-card-toggle:hover { color: var(--accent,#b6ee65); border-color: var(--accent,#b6ee65); background: #242d24; }
+.motion-gallery-toggle:focus-visible,
+.motion-card-toggle:focus-visible { outline: 2px solid var(--accent,#b6ee65); outline-offset: 3px; }
+.motion-gallery-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.motion-card { min-width: 0; padding: 12px; border: 1px solid var(--line,#303638); border-radius: 12px; background: var(--surface,#161a1c); }
+.motion-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.motion-card-heading h3 { margin: 0; color: var(--ink,#eee); font: 600 15px/1.35 var(--sans,Arial,Helvetica,sans-serif); letter-spacing: 0; }
+.motion-card-title { min-width: 0; }
+.motion-card-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 9px; }
+.motion-adaptation-label { display: block; margin-top: 3px; color: #b4b8bf; font: 500 11px/1.4 var(--sans,Arial,Helvetica,sans-serif); }
+.motion-moon-mark { width: 19px; height: 19px; fill: #b9bdc5; stroke: #d4d6da; stroke-width: 1; }
+.motion-card-lunar { --accent: #d5d8df; --line: #555b65; border-color: #626974; background: #20232a; }
+.motion-card-lunar .motion-trajectory { background: #1a1d23; }
+.motion-card-lunar .motion-path-grid { stroke: #353942; }
+.motion-card-lunar .motion-path-full { stroke: #737a87; }
+.motion-card-lunar .motion-path-start { fill: #1a1d23; stroke: #adb3bf; }
+.motion-card-lunar .motion-path-cursor { stroke: #1a1d23; }
+.motion-card-lunar .motion-card-toggle:hover { background: #30343e; }
+.motion-card-toggle { flex: 0 0 36px; width: 36px; height: 36px; display: grid; place-items: center; padding: 9px; border-radius: 50%; }
+.motion-card-toggle[aria-pressed="true"] { color: var(--accent,#b6ee65); }
+.motion-card-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.motion-card-media { display: grid; grid-template-columns: minmax(0,1fr) minmax(76px,.4fr); gap: 10px; align-items: stretch; }
+.motion-comparison { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: #0d0e10; isolation: isolate; }
+.motion-video-layer { position: absolute; inset: 0; }
+.motion-truth-layer { clip-path: inset(0 calc(100% - var(--wipe)) 0 0); }
+.motion-video-layer video { display: block; width: 100%; height: 100%; object-fit: contain; }
+.motion-video-label { position: absolute; top: 8px; max-width: calc(100% - 16px); padding: 3px 6px; border-radius: 4px; color: #fff; background: #0d0e10d9; font: 600 10px/1.4 var(--sans,Arial,Helvetica,sans-serif); white-space: nowrap; }
+.motion-label-gt { left: 8px; }
+.motion-label-prediction { right: 8px; }
+.motion-wipe-handle { position: absolute; inset: 0 auto 0 var(--wipe); width: 2px; background: #fff; transform: translateX(-50%); pointer-events: none; box-shadow: 0 0 4px #0005; }
+.motion-wipe-handle span { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #f0f0f0; color: #171c19; box-shadow: 0 1px 9px #0005; font: 600 20px/1 var(--sans,Arial,Helvetica,sans-serif); letter-spacing: 1px; white-space: nowrap; }
+.motion-wipe-input { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
+.motion-comparison:focus-within { outline: 2px solid var(--accent,#b6ee65); outline-offset: 3px; }
+.motion-trajectory { position: relative; min-width: 0; margin: 0; border: 1px solid var(--line,#303638); border-radius: 8px; background: #121719; overflow: hidden; }
+.motion-trajectory svg { position: absolute; inset: 7px 0 29px; width: 100%; height: calc(100% - 36px); fill: none; }
+.motion-path-grid { stroke: #293235; stroke-width: .7; }
+.motion-path-full { stroke: #637b6c; stroke-width: 2.5; stroke-linejoin: round; }
+.motion-path-progress { stroke: var(--accent,#b6ee65); stroke-width: 3.2; stroke-linejoin: round; }
+.motion-path-start { fill: #121719; stroke: #91af82; stroke-width: 2; }
+.motion-path-cursor { fill: var(--accent,#b6ee65); stroke: #121719; stroke-width: 2; }
+.motion-trajectory figcaption { position: absolute; inset: auto 0 9px; text-align: center; color: var(--muted,#a4a7ac); font: 500 10px/1.3 var(--sans,Arial,Helvetica,sans-serif); white-space: nowrap; }
+@media (max-width:1050px) { .motion-gallery-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width:620px) { .motion-gallery-grid { grid-template-columns: minmax(0,1fr); gap: 16px; } .motion-gallery-toolbar { margin-bottom: 12px; } }
+@media (pointer:coarse) { .motion-card-toggle { flex-basis: 44px; width: 44px; height: 44px; } .motion-gallery-toggle { min-height: 44px; } }
+@media (prefers-reduced-motion:reduce) { .motion-gallery-toggle,.motion-card-toggle { transition: none; } }

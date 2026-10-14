@@ -1,0 +1,575 @@
+{
+  "schema_version": 1,
+  "model": "OpenNWM Nav15 Stage 2, LuSNAR fine-tuned EMA",
+  "checkpoint_sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56",
+  "source_checkpoint_sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+  "training": {
+    "settings": {
+      "steps": 1000,
+      "effective_batch_size": 8,
+      "microbatch": 2,
+      "learning_rate": 1e-05,
+      "optimizer": "AdamW",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "weight_decay": 0.01,
+      "ema_decay": 0.99,
+      "grad_clip": 2.0,
+      "seed": 0,
+      "diffusion_training_steps": 1000,
+      "precision": "BF16 autocast; FP32 weights",
+      "posterior": "cached mean",
+      "validation_every": 100,
+      "selection": "fixed final step; validation monitored but no test-based selection",
+      "sampling": "shuffled exhaustive (window, horizon) rows; repeat after each epoch",
+      "resume": "no optimizer checkpoint; an interrupted run must restart in a fresh output directory"
+    },
+    "windows": 30,
+    "target_pairs": 480,
+    "scenes": [
+      "Moon_1",
+      "Moon_2",
+      "Moon_3",
+      "Moon_4",
+      "Moon_5"
+    ],
+    "data_manifest_sha256": "8e14a6d7b65a277bce97869dd739316f34fe3d2a850682271956d24a1b8108b3"
+  },
+  "sample_id": "lusnar_ft_Moon_7_cross_scene_test_window00_direct",
+  "dataset": "LuSNAR",
+  "scene": "Moon_7",
+  "split": "cross_scene_test",
+  "window": 0,
+  "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+  "context_source_paths": [
+    "LuSNAR/Moon_7/image0/color/1693385215200697088.png",
+    "LuSNAR/Moon_7/image0/color/1693385215536425984.png",
+    "LuSNAR/Moon_7/image0/color/1693385215761916928.png",
+    "LuSNAR/Moon_7/image0/color/1693385215978392320.png"
+  ],
+  "gt_source_paths": [
+    "LuSNAR/Moon_7/image0/color/1693385216311749120.png",
+    "LuSNAR/Moon_7/image0/color/1693385216536810752.png",
+    "LuSNAR/Moon_7/image0/color/1693385216753475072.png",
+    "LuSNAR/Moon_7/image0/color/1693385217086807552.png",
+    "LuSNAR/Moon_7/image0/color/1693385217311807488.png",
+    "LuSNAR/Moon_7/image0/color/1693385217528591104.png",
+    "LuSNAR/Moon_7/image0/color/1693385217745191936.png",
+    "LuSNAR/Moon_7/image0/color/1693385218078513920.png",
+    "LuSNAR/Moon_7/image0/color/1693385218303529216.png",
+    "LuSNAR/Moon_7/image0/color/1693385218520201984.png",
+    "LuSNAR/Moon_7/image0/color/1693385218745188608.png",
+    "LuSNAR/Moon_7/image0/color/1693385219078569984.png",
+    "LuSNAR/Moon_7/image0/color/1693385219303533824.png",
+    "LuSNAR/Moon_7/image0/color/1693385219528564736.png",
+    "LuSNAR/Moon_7/image0/color/1693385219745203712.png",
+    "LuSNAR/Moon_7/image0/color/1693385220078540288.png"
+  ],
+  "pose_source": "LuSNAR/Moon_7/gt.txt",
+  "source_sha256": {
+    "LuSNAR/Moon_7/image0/color/1693385215200697088.png": "57501b7cc251b92336458b65770467641ddc27bdcf16fcc85579fcce3cfd2e4c",
+    "LuSNAR/Moon_7/image0/color/1693385215536425984.png": "ef40635d1c9914ccacbde9aea7e2a8c05849df8aa2ee10ab3a4b1d2e738c69aa",
+    "LuSNAR/Moon_7/image0/color/1693385215761916928.png": "904f5b5f9abc7063e4890cf375e50575fe1b3157b65227dae6cf7415f7679311",
+    "LuSNAR/Moon_7/image0/color/1693385215978392320.png": "d1a8a2bc7a15335808b933b4c5cfc0fd507019bc6290f7311bd4a3d4b22176f2",
+    "LuSNAR/Moon_7/image0/color/1693385216311749120.png": "fba289e2d8cdb57951f056be558a6d5a234f2f771231f1a3a1360e28bb4b3100",
+    "LuSNAR/Moon_7/image0/color/1693385216536810752.png": "5e1609f8259f0c1ec3d717b50fd4e8b92c7fc10096453d1e89b5cf711029ebee",
+    "LuSNAR/Moon_7/image0/color/1693385216753475072.png": "766f2f6da076e58df84fa3c9bb0c2d3ee5a64cc96f91de09605589ca832df968",
+    "LuSNAR/Moon_7/image0/color/1693385217086807552.png": "e5ebe880888e6a7d14379a2cbd3dcbbebc64aca5cd90034be4bc3a4b5a912359",
+    "LuSNAR/Moon_7/image0/color/1693385217311807488.png": "311fdaadc6b2b6ca8aa41e32885c97854fc95a9ae6afffbeadb3119a8c664b10",
+    "LuSNAR/Moon_7/image0/color/1693385217528591104.png": "a98dc70671e4dc18d8d98e83374a77cd4bbffc3b5db2395d40bed39cf5113abe",
+    "LuSNAR/Moon_7/image0/color/1693385217745191936.png": "aea5e8e469bdb0d9e69cdfb15b197c8855d3d6c41c514bbc49a520b2e22a8554",
+    "LuSNAR/Moon_7/image0/color/1693385218078513920.png": "31797cd810f1765ccffd9053bf49245d6addc622179bba8a6652a6626c877cfe",
+    "LuSNAR/Moon_7/image0/color/1693385218303529216.png": "540cd6dcd228c3b170be4b91e42eef6324cca77fa068f960a4fb86cd7ca4c8c5",
+    "LuSNAR/Moon_7/image0/color/1693385218520201984.png": "e8a4a341e0deaa63fcaa428f2eeb622ba727d3632cd4625d0aac1ed3587823cf",
+    "LuSNAR/Moon_7/image0/color/1693385218745188608.png": "c5d8b6224353db39ce9fd1c43c5aef2aa5b5d0c739ea1f220896e97acbcf415d",
+    "LuSNAR/Moon_7/image0/color/1693385219078569984.png": "55f88e2343b9fe166da951954359e1d703c0f886b2be1b14a69b10ead442eba1",
+    "LuSNAR/Moon_7/image0/color/1693385219303533824.png": "79f72e760cbf7398935d8c8d42d2f2a952edfcb91fa0eb877bad279e69af29dd",
+    "LuSNAR/Moon_7/image0/color/1693385219528564736.png": "14966c8ab3935729875fcfe204c1b22b620398966d9703af92487af8e6290775",
+    "LuSNAR/Moon_7/image0/color/1693385219745203712.png": "bce41ba1508057e0505ef46468aacd81675e1bc4c0e84293c06d582c108a8b3e",
+    "LuSNAR/Moon_7/image0/color/1693385220078540288.png": "7d20a23825bc2281b819a3b33525f0fef2c2381f5cbd06a201d22dffb0f31e43"
+  },
+  "context_timestamps_ns": [
+    1693385215200697088,
+    1693385215536425984,
+    1693385215761916928,
+    1693385215978392320
+  ],
+  "gt_timestamps_ns": [
+    1693385216311749120,
+    1693385216536810752,
+    1693385216753475072,
+    1693385217086807552,
+    1693385217311807488,
+    1693385217528591104,
+    1693385217745191936,
+    1693385218078513920,
+    1693385218303529216,
+    1693385218520201984,
+    1693385218745188608,
+    1693385219078569984,
+    1693385219303533824,
+    1693385219528564736,
+    1693385219745203712,
+    1693385220078540288
+  ],
+  "actual_prediction_offsets_seconds": [
+    0.3333568,
+    0.558418432,
+    0.775082752,
+    1.108415232,
+    1.333415168,
+    1.550198784,
+    1.766799616,
+    2.1001216,
+    2.325136896,
+    2.541809664,
+    2.766796288,
+    3.100177664,
+    3.325141504,
+    3.550172416,
+    3.766811392,
+    4.100147968
+  ],
+  "prediction_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "playback_fps": 4,
+  "frame_interpolation": false,
+  "timing": "Nearest-source sampling on a nominal 4 Hz grid; actual offsets above retain nonuniform capture times.",
+  "sampling": {
+    "seed": 0,
+    "diffusion_steps": 250,
+    "vae_encoding": "posterior_mean",
+    "image_size": 224,
+    "context_size": 4
+  },
+  "direct": {
+    "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
+    "actions": [
+      [
+        6.735760188655245e-06,
+        4.130846260195999e-08,
+        -2.281473815952755e-13
+      ],
+      [
+        1.0961700055683948e-05,
+        1.7237202697486563e-08,
+        -4.966626407560716e-13
+      ],
+      [
+        1.0491031728942277e-05,
+        3.3688453624647126e-08,
+        -4.1167066407320663e-13
+      ],
+      [
+        9.69692027023467e-06,
+        5.445879673734759e-08,
+        -4.037619161741438e-13
+      ],
+      [
+        9.69692027023467e-06,
+        5.445879673734759e-08,
+        -4.037619161741438e-13
+      ],
+      [
+        1.0040103003035211e-05,
+        2.032447545620502e-08,
+        -4.037619161741438e-13
+      ],
+      [
+        0.1042510794410231,
+        -3.246415797869742e-06,
+        0.0007190530598370721
+      ],
+      [
+        0.5528198418946401,
+        0.00032544960453799427,
+        0.000717455703473611
+      ],
+      [
+        1.0115128065751555,
+        0.0006411535425768515,
+        0.0007920244583618389
+      ],
+      [
+        1.5738083330597659,
+        0.0011005190401894077,
+        0.0007744481830685206
+      ],
+      [
+        2.1489675614909407,
+        0.001552453379243372,
+        0.0008021437096256477
+      ],
+      [
+        3.0168562030046884,
+        0.0022367178475121655,
+        0.0007989481942630052
+      ],
+      [
+        3.631274808464977,
+        0.0027374174250359025,
+        0.0007866972572301638
+      ],
+      [
+        4.259305579357613,
+        0.0032331797011327136,
+        0.0008197202614656498
+      ],
+      [
+        4.895355601883121,
+        0.003755503252510713,
+        0.0008159927790985701
+      ],
+      [
+        5.87323137530113,
+        0.008381213523281677,
+        0.004242406280491151
+      ]
+    ],
+    "metric_actions": [
+      [
+        3.275800064218861e-06,
+        2.008953119681929e-08,
+        -2.281473815952755e-13
+      ],
+      [
+        5.331000026817501e-06,
+        8.382963187805092e-09,
+        -4.966626407560716e-13
+      ],
+      [
+        5.1021000523850735e-06,
+        1.638369470648943e-08,
+        -4.1167066407320663e-13
+      ],
+      [
+        4.715900084664629e-06,
+        2.648492892457041e-08,
+        -4.037619161741438e-13
+      ],
+      [
+        4.715900084664629e-06,
+        2.648492892457041e-08,
+        -4.037619161741438e-13
+      ],
+      [
+        4.882800031613491e-06,
+        9.884395545552098e-09,
+        -4.037619161741438e-13
+      ],
+      [
+        0.05070039359521329,
+        -1.57882834027468e-06,
+        0.0007190530598370721
+      ],
+      [
+        0.2688526941071908,
+        0.00015827580044211858,
+        0.000717455703473611
+      ],
+      [
+        0.49192869459900096,
+        0.0003118119940619072,
+        0.0007920244583618389
+      ],
+      [
+        0.765389695314349,
+        0.0005352150672760626,
+        0.0007744481830685206
+      ],
+      [
+        1.0451066960181796,
+        0.0007550041475626705,
+        0.0008021437096256477
+      ],
+      [
+        1.4671866970838274,
+        0.0010877822641103595,
+        0.0007989481942630052
+      ],
+      [
+        1.7659966978635468,
+        0.0013312873269790049,
+        0.0007866972572301638
+      ],
+      [
+        2.071426698635627,
+        0.0015723912336487356,
+        0.0008197202614656498
+      ],
+      [
+        2.380756699449008,
+        0.0018264126766966763,
+        0.0008159927790985701
+      ],
+      [
+        2.8563267066407736,
+        0.004076032849868927,
+        0.004242406280491151
+      ]
+    ],
+    "inference_manifest_sha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12"
+  },
+  "autoregressive": {
+    "protocol": "Generated RGB frames are re-encoded and fed back; actions refer to the immediately preceding body pose.",
+    "actions": [
+      [
+        6.735760188655245e-06,
+        4.130846260195999e-08,
+        -2.281473815952755e-13
+      ],
+      [
+        4.225939867028707e-06,
+        -2.4071259903509287e-08,
+        -2.685152591607961e-13
+      ],
+      [
+        -4.706683267416799e-07,
+        1.6451250926926795e-08,
+        8.499197668286498e-14
+      ],
+      [
+        -7.941114587076123e-07,
+        2.077034311237356e-08,
+        7.908747899062823e-15
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        3.4318273280055174e-07,
+        -3.4134321281004014e-08,
+        0.0
+      ],
+      [
+        0.10424103933802005,
+        -3.266740231237385e-06,
+        0.000719053060240834
+      ],
+      [
+        0.4485688828400892,
+        6.151221966823467e-06,
+        -1.5973563634609758e-06
+      ],
+      [
+        0.4586930731296678,
+        -1.3387998634602147e-05,
+        7.456875488822778e-05
+      ],
+      [
+        0.5622957139485282,
+        1.4013590290420833e-05,
+        -1.7576275293318465e-05
+      ],
+      [
+        0.5751594059492542,
+        6.5032286180541696e-06,
+        2.7695526557127217e-05
+      ],
+      [
+        0.867888911177382,
+        -1.1907091659904225e-05,
+        -3.195515362642426e-06
+      ],
+      [
+        0.6144188093959856,
+        9.810834590680917e-06,
+        -1.225093703284151e-05
+      ],
+      [
+        0.6280309665656376,
+        1.6920887303579191e-06,
+        3.3023004235486065e-05
+      ],
+      [
+        0.6360502369905284,
+        9.403435125866436e-07,
+        -3.7274823670796833e-06
+      ],
+      [
+        0.9778792224073248,
+        0.003827769249355881,
+        0.003426413501392582
+      ]
+    ],
+    "metric_actions": [
+      [
+        3.275800064218861e-06,
+        2.008953119681929e-08,
+        -2.281473815952755e-13
+      ],
+      [
+        2.0551999625986425e-06,
+        -1.170656800854531e-08,
+        -2.685152591607961e-13
+      ],
+      [
+        -2.28899974432432e-07,
+        8.000731518570649e-09,
+        8.499197668286498e-14
+      ],
+      [
+        -3.861999677204473e-07,
+        1.0101234217921995e-08,
+        7.908747899062823e-15
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.6689994694886712e-07,
+        -1.6600533378950925e-08,
+        0.0
+      ],
+      [
+        0.05069551079518167,
+        -1.5887127153513154e-06,
+        0.000719053060240834
+      ],
+      [
+        0.21815235905949146,
+        2.9915217807015846e-06,
+        -1.5973563634609758e-06
+      ],
+      [
+        0.2230760532338511,
+        -6.5109810264411165e-06,
+        7.456875488822778e-05
+      ],
+      [
+        0.2734610918846143,
+        6.8152248131717085e-06,
+        -1.7576275293318465e-05
+      ],
+      [
+        0.2797170870361404,
+        3.1627130610338517e-06,
+        2.7695526557127217e-05
+      ],
+      [
+        0.4220801322110756,
+        -5.790772018556868e-06,
+        -3.195515362642426e-06
+      ],
+      [
+        0.29881009995970065,
+        4.771299999118496e-06,
+        -1.225093703284151e-05
+      ],
+      [
+        0.3054300959336674,
+        8.229129625051421e-07,
+        3.3023004235486065e-05
+      ],
+      [
+        0.3093301051140848,
+        4.57316954975218e-07,
+        -3.7274823670796833e-06
+      ],
+      [
+        0.4755716845376189,
+        0.0018615577754644373,
+        0.003426413501392582
+      ]
+    ],
+    "inference_manifest_sha256": "b3be65deb5e567246a26192bbbebfb8b72951d2ec0e469525b859550865676a6"
+  },
+  "waypoint_spacing_meters": 0.4863296751176136,
+  "action_translation_units": "meters divided by fixed training-only waypoint spacing",
+  "action_yaw_units": "radians, positive left",
+  "coordinate_convention": "GT is rover body-to-world, quaternion wxyz. Assume AirSim-style body +X forward, +Y right, +Z down, supported by the published left camera translation [1,-0.155,-1.5] and forward-motion audit. Reflect world Y and negate yaw to obtain OpenNWM +X forward/+Y left, positive-left yaw. Actions use rover-body XY/yaw, not a calibrated optical-camera trajectory; height, roll and pitch are not conditioned on.",
+  "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+  "model_comparison": {
+    "opennwm": {
+      "name": "OpenNWM Nav15 Stage 2, LuSNAR fine-tuned EMA",
+      "checkpoint_sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56",
+      "source_checkpoint_sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+      "training": {
+        "settings": {
+          "steps": 1000,
+          "effective_batch_size": 8,
+          "microbatch": 2,
+          "learning_rate": 1e-05,
+          "optimizer": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "weight_decay": 0.01,
+          "ema_decay": 0.99,
+          "grad_clip": 2.0,
+          "seed": 0,
+          "diffusion_training_steps": 1000,
+          "precision": "BF16 autocast; FP32 weights",
+          "posterior": "cached mean",
+          "validation_every": 100,
+          "selection": "fixed final step; validation monitored but no test-based selection",
+          "sampling": "shuffled exhaustive (window, horizon) rows; repeat after each epoch",
+          "resume": "no optimizer checkpoint; an interrupted run must restart in a fresh output directory"
+        },
+        "windows": 30,
+        "target_pairs": 480,
+        "data_manifest_sha256": "8e14a6d7b65a277bce97869dd739316f34fe3d2a850682271956d24a1b8108b3"
+      }
+    },
+    "nwm_release": {
+      "name": "NWM-release, LuSNAR fine-tuned EMA",
+      "checkpoint_sha256": "fbd04a71b05440b1cc6a57b402c51c29fc4e9f77506e23447dff5b00a1a1289b",
+      "source_checkpoint_sha256": "2a41c71eabd20946f61bb5d1d2490264246bff59b9ffca177eee672e855d5261",
+      "training": {
+        "settings": {
+          "steps": 1000,
+          "effective_batch_size": 8,
+          "microbatch": 2,
+          "learning_rate": 1e-05,
+          "optimizer": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "weight_decay": 0.01,
+          "ema_decay": 0.99,
+          "grad_clip": 2.0,
+          "seed": 0,
+          "diffusion_training_steps": 1000,
+          "precision": "BF16 autocast; FP32 weights",
+          "posterior": "cached mean",
+          "validation_every": 100,
+          "selection": "fixed final step; validation monitored but no test-based selection",
+          "sampling": "shuffled exhaustive (window, horizon) rows; repeat after each epoch",
+          "resume": "no optimizer checkpoint; an interrupted run must restart in a fresh output directory"
+        },
+        "windows": 30,
+        "target_pairs": 480,
+        "data_manifest_sha256": "8e14a6d7b65a277bce97869dd739316f34fe3d2a850682271956d24a1b8108b3"
+      }
+    },
+    "direct_manifest_sha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+    "nwm_direct_manifest_sha256": "cdf8253e0802b1efa944980e8ab1dc6b42fb9f0b008735f1f01eaf0f5fa720e6",
+    "autoregressive_manifest_sha256": "b3be65deb5e567246a26192bbbebfb8b72951d2ec0e469525b859550865676a6",
+    "nwm_autoregressive_manifest_sha256": "bdfe1b98f7ed11acf110cdc5d6b96d0e87833e1584c07b9cfa35ccf718dc7ed1",
+    "conditions": "Identical observed frames, raw body actions, horizons, seed and diffusion noise keys. Each model uses its native action interface."
+  }
+}

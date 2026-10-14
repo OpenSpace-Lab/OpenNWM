@@ -160,7 +160,6 @@
   "training": {
     "lam": {
       "architecture": "Pixel+Action spatiotemporal Transformer",
-      "parameters_millions_approx": 709,
       "encoder_blocks": 24,
       "decoder_blocks": 24,
       "hidden_width": 1024,
@@ -200,8 +199,6 @@
     },
     "nwm": {
       "backbone": "CDiT-B/2",
-      "backbone_parameters_millions_approx": 197,
-      "benchmark_model_parameters_millions": 280,
       "tokenizer": "Frozen SD-VAE",
       "resolution_hw": [
         224,
@@ -590,7 +587,6 @@
         {
           "id": "nwm",
           "model": "NWM",
-          "parameters_millions": 279,
           "id_lpips": 0.405,
           "id_dreamsim": 0.23,
           "id_psnr": 13.811,
@@ -602,7 +598,6 @@
         {
           "id": "nwm-xl-ego4d",
           "model": "NWM†",
-          "parameters_millions": 1099,
           "id_lpips": 0.419,
           "id_dreamsim": 0.227,
           "id_psnr": 13.523,
@@ -614,7 +609,6 @@
         {
           "id": "rae-nwm",
           "model": "RAE-NWM",
-          "parameters_millions": 867,
           "id_lpips": 0.442,
           "id_dreamsim": 0.254,
           "id_psnr": 13.957,
@@ -626,7 +620,6 @@
         {
           "id": "opennwm",
           "model": "OpenNWM",
-          "parameters_millions": 280,
           "id_lpips": 0.368,
           "id_dreamsim": 0.196,
           "id_psnr": 14.299,
@@ -678,7 +671,6 @@
         {
           "id": "gnm",
           "model": "GNM",
-          "parameters_millions": 9,
           "recon_ate": 1.87,
           "recon_rpe": 0.73,
           "scand_ate": 2.12,
@@ -691,7 +683,6 @@
         {
           "id": "nomad",
           "model": "NoMaD",
-          "parameters_millions": 19,
           "recon_ate": 1.95,
           "recon_rpe": 0.53,
           "scand_ate": 2.24,
@@ -704,7 +695,6 @@
         {
           "id": "nwm",
           "model": "NWM",
-          "parameters_millions": 279,
           "recon_ate": 1.13,
           "recon_rpe": 0.35,
           "scand_ate": 1.01,
@@ -717,7 +707,6 @@
         {
           "id": "rae-nwm",
           "model": "RAE-NWM",
-          "parameters_millions": 867,
           "recon_ate": 1.36,
           "recon_rpe": 0.37,
           "scand_ate": 1.14,
@@ -730,7 +719,6 @@
         {
           "id": "garrido",
           "model": "Garrido et al. (2026)",
-          "parameters_millions": null,
           "recon_ate": 1.4,
           "recon_rpe": 0.4,
           "scand_ate": null,
@@ -743,7 +731,6 @@
         {
           "id": "compact",
           "model": "CompACT",
-          "parameters_millions": null,
           "recon_ate": 1.33,
           "recon_rpe": 0.39,
           "scand_ate": 1.36,
@@ -756,7 +743,6 @@
         {
           "id": "opennwm",
           "model": "OpenNWM",
-          "parameters_millions": 280,
           "recon_ate": 1.12,
           "recon_rpe": 0.35,
           "scand_ate": 0.98,
@@ -767,7 +753,7 @@
           "tartan_drive_rpe": 1.16
         }
       ],
-      "summary": "OpenNWM has the lowest reported ATE and best or tied-best RPE across RECON, SCAND, and Office-Go2 in Table 2.",
+      "summary": "OpenNWM has the lowest reported ATE and best or tied-best RPE across RECON, SCAND, and Office-Go2.",
       "missing_value_note": "null means not reported.",
       "source": {
         "page": 7,

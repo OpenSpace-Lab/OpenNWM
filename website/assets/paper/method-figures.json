@@ -1,0 +1,41 @@
+{
+  "source": "OpenNWM.pdf",
+  "sourceSha256": "91b306f869f96d0890d83f1a7125b4476291d0e93f36c27524b68334e6ee7292",
+  "method": "PyMuPDF full-page composite rendering, clipped to original figure artwork. No redraw, relabeling, recoloring, or content removal. Page caption excluded.",
+  "figures": [
+    {
+      "figure": 2,
+      "page": 3,
+      "clipPoints": [
+        110,
+        77,
+        502,
+        197
+      ],
+      "scale": 6,
+      "dpi": 432,
+      "file": "figure-2-framework.png",
+      "width": 2352,
+      "height": 720,
+      "bytes": 675401,
+      "sha256": "06feb9ee8a10c096120d1d51ddab38d1561831df089ea2887754b912c8036392"
+    },
+    {
+      "figure": 3,
+      "page": 7,
+      "clipPoints": [
+        130,
+        78,
+        484,
+        174
+      ],
+      "scale": 6,
+      "dpi": 432,
+      "file": "figure-3-training.png",
+      "width": 2124,
+      "height": 576,
+      "bytes": 725851,
+      "sha256": "06f34ed26c6a7f39238449660cf767de54e6fd16e922425abe2053f2cd4f81eb"
+    }
+  ]
+}

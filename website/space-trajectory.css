@@ -1,0 +1,13 @@
+.space-recorded-trajectory { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+.space-recorded-trajectory figcaption { margin-bottom: 6px; font: 500 12px/1.5 var(--sans); color: var(--muted); }
+.space-recorded-trajectory svg { display: block; width: 100%; height: auto; max-height: 166px; overflow: visible; }
+.space-recorded-trajectory img { display: block; width: 100%; height: 166px; object-fit: contain; }
+.space-trajectory-grid { fill: none; stroke: #2b3134; stroke-width: .7; }
+.space-trajectory-full, .space-trajectory-progress { fill: none; stroke: var(--accent); stroke-linecap: round; stroke-linejoin: round; }
+.space-trajectory-full { stroke-width: 2; opacity: .3; }
+.space-trajectory-progress { stroke-width: 3; }
+.space-trajectory-start { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5; }
+.space-trajectory-end { fill: var(--surface); stroke: var(--accent); stroke-width: 1.5; }
+.space-trajectory-cursor { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+.space-trajectory-scale { fill: none; stroke: var(--muted); stroke-width: 1; }
+.space-recorded-trajectory text { fill: var(--muted); font: 10px var(--sans); }

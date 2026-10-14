@@ -1,0 +1,103 @@
+{
+  "archive": "opennwm_pixel_corrected_20260924",
+  "sampleId": 4,
+  "trajectory": {
+    "trajectory": "mars_zhurong_natecam_color_0003",
+    "initial_frame": 3,
+    "positions_local": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.9668618699346258,
+        -0.2473854564157827
+      ],
+      [
+        1.9368467013880664,
+        -0.5651409046863193
+      ],
+      [
+        2.9009238761148595,
+        -0.2921176605363967
+      ],
+      [
+        3.4345075508495855,
+        -0.08072479874920868
+      ],
+      [
+        4.4790069069514615,
+        0.2815240159964326
+      ],
+      [
+        5.1000467961588205,
+        -0.46562951290575316
+      ],
+      [
+        5.7373963858465755,
+        -1.4275374078322363
+      ],
+      [
+        6.426989843463675,
+        -2.7566240368414334
+      ],
+      [
+        7.040062108735174,
+        -3.501329694014517
+      ],
+      [
+        7.562714824166908,
+        -3.5369724650179246
+      ],
+      [
+        8.509739547720974,
+        -3.2711738469240554
+      ],
+      [
+        9.24121204802281,
+        -2.449323399815487
+      ],
+      [
+        9.513577945090441,
+        -1.4230946277964964
+      ],
+      [
+        9.65681915724813,
+        -1.0313550593825946
+      ],
+      [
+        9.228742987736616,
+        -0.05785856989637351
+      ],
+      [
+        9.799475905983591,
+        0.722823414574796
+      ]
+    ],
+    "source_pose_file": "planetary_rover/mars_zhurong_natecam_color_0003/traj_data.pkl",
+    "axes": "local +x forward, +y left; display up forward, right negative local y",
+    "time_semantics": "playback_time_4fps_irregular_source",
+    "sample_times_seconds": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.25,
+      1.5,
+      1.75,
+      2.0,
+      2.25,
+      2.5,
+      2.75,
+      3.0,
+      3.25,
+      3.5,
+      3.75,
+      4.0
+    ]
+  },
+  "protocol": "Single real image repeated to four context frames; autoregressive RGB re-encoding; DDPM 250, seed 0; OpenNWM Nav15 Stage2 joint100k.",
+  "assessment": "Severe appearance drift into indoor scenes; this is a failure example, not evidence of successful planetary navigation.",
+  "timing": "16 successive source observations displayed at 4 FPS, not regular real mission capture intervals."
+}

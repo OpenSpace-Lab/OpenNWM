@@ -1,0 +1,3502 @@
+{
+  "version": 3,
+  "model": "OpenNWM Nav15 finalLAM joint100k",
+  "checkpoint_sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+  "archive": "curved_navigation_20261009",
+  "inference_source_sha256": "0253e3158b1afabcf6f4d173e992d6126b6f3930ae1eb1d6241e2fbc309d326d",
+  "inference_sources": {
+    "inference_source_reserve_20261010.py": "9ecea6eae43ece6cc4aa78d387f279249d494a9d131419b6b8a9ed074be5537d",
+    "inference_source.py": "0253e3158b1afabcf6f4d173e992d6126b6f3930ae1eb1d6241e2fbc309d326d",
+    "inference_source_20261010.py": "48451a293fd0149684445e1e8138f6cf14516f7fd5e4fb01af493721da02dffc"
+  },
+  "export_source_sha256": "bb15d27287c92ee7dc76a00685f64c2238961558c62b1963a94d0115d4eeeeaf",
+  "scope": "Selected offline goal-image-conditioned sequence plans; independently generated qualitative demonstrations, separate from paper benchmarks. No closed-loop execution or success rate measured.",
+  "protocol": {
+    "planner": "independent piecewise SE(2) goal-image CEM demo",
+    "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+    "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+    "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+    "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+    "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+    "seed": 42,
+    "population": 32,
+    "elites": 6,
+    "iterations": 2,
+    "diffusion_steps": 50,
+    "batch_size": 32,
+    "horizon": 16,
+    "fps": 4,
+    "shared_candidate_noise": true,
+    "ground_truth_usage": "scene selection and post-hoc errors only",
+    "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+  },
+  "media": {
+    "fps": 4,
+    "resolution": [
+      224,
+      224
+    ],
+    "frame_zero": "Recorded start",
+    "interpolation": false
+  },
+  "selection": {
+    "completed_candidate_count": 23,
+    "website_selected_count": 8,
+    "criterion": "At least two turning segments of six degrees, total turn >=25 degrees, endpoint error <=1.5 m and <=0.35 normalized, ATE <=1 m and <=0.25 normalized, and manual visual review of the full prediction.",
+    "note": "Curves are exact SE(2) integrations of the optimized model controls; no trajectory smoothing or ground-truth path substitution."
+  },
+  "samples": [
+    {
+      "sample_id": 59,
+      "trajectory": "jackal_2019-08-06-15-48-05_13_r01",
+      "start_frame": 27,
+      "goal_frame": 43,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.24075113484968738,
+          0.010412840648645292
+        ],
+        [
+          0.49096379070515633,
+          0.053308566417832985
+        ],
+        [
+          0.7540040402253202,
+          0.11233852197327206
+        ],
+        [
+          1.0013970111350892,
+          0.19122099778044
+        ],
+        [
+          1.2067802002553907,
+          0.2511532957067703
+        ],
+        [
+          1.4448596837450676,
+          0.3259652949863609
+        ],
+        [
+          1.7153372895835268,
+          0.406335990584514
+        ],
+        [
+          1.9814909402909267,
+          0.4809071397525894
+        ],
+        [
+          2.2374481492212173,
+          0.5564256069149032
+        ],
+        [
+          2.503670231466291,
+          0.6010339743615835
+        ],
+        [
+          2.79546722963983,
+          0.6038594810675875
+        ],
+        [
+          3.0953192200826263,
+          0.557835968976526
+        ],
+        [
+          3.3370887761946295,
+          0.5088290616311151
+        ],
+        [
+          3.564099360839121,
+          0.47391067068435294
+        ],
+        [
+          3.8013534809980047,
+          0.4403065871791368
+        ],
+        [
+          4.059442419533126,
+          0.39834105524560653
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.28080329298973083,
+          0.010029113851487637
+        ],
+        [
+          0.560175619986423,
+          0.04006534841869145
+        ],
+        [
+          0.836693307121722,
+          0.08995563985768394
+        ],
+        [
+          1.1089472276952697,
+          0.15944574858443103
+        ],
+        [
+          1.3755499830464888,
+          0.2481815548728779
+        ],
+        [
+          1.6403240475751832,
+          0.34223342419853864
+        ],
+        [
+          1.9079190744932026,
+          0.42793033744190395
+        ],
+        [
+          2.178071495150054,
+          0.5051878871308503
+        ],
+        [
+          2.4505152219814055,
+          0.5739299781736772
+        ],
+        [
+          2.7249819105929562,
+          0.634088902809232
+        ],
+        [
+          3.0014610472259537,
+          0.6841923791537513
+        ],
+        [
+          3.279785139653615,
+          0.722751047562455
+        ],
+        [
+          3.5594723307953324,
+          0.7496981521636921
+        ],
+        [
+          3.840038403664243,
+          0.7649870399600855
+        ],
+        [
+          4.120997619682666,
+          0.7685912415979583
+        ],
+        [
+          4.4018635596318445,
+          0.76050451719321
+        ]
+      ],
+      "ate_m": 0.26253817607528096,
+      "goal_error_m": 0.49841208889470096,
+      "normalized_goal_error": 0.12219158319884342,
+      "reference_curvature": {
+        "total_turn_deg": 52.849730159103665,
+        "net_turn_deg": -11.7121100299891,
+        "max_step_turn_deg": 9.28086800695289,
+        "segment_turns_deg": [
+          14.967761983949748,
+          -16.889560338680617,
+          -9.790311675258232
+        ],
+        "turning_segments": 3,
+        "max_chord_deviation_m": 0.35365764304717395,
+        "length_m": 4.155601552812419,
+        "chord_length_m": 4.078939611443046,
+        "deviation_ratio": 0.08510383841006756
+      },
+      "planned_curvature": {
+        "total_turn_deg": 38.71537658052565,
+        "net_turn_deg": -3.694706100481266,
+        "max_step_turn_deg": 4.090990343879558,
+        "segment_turns_deg": [
+          17.51033524002219,
+          -9.284178474009137,
+          -11.92086286649432
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 1,
+        "max_chord_deviation_m": 0.16321566540360458,
+        "length_m": 4.495717228219578,
+        "chord_length_m": 4.467076215858199,
+        "deviation_ratio": 0.03630470003297833
+      },
+      "actions_body_waypoint_units": [
+        [
+          1.1232131719589233,
+          0.040116455405950546,
+          0.07140125334262848
+        ],
+        [
+          1.1232131719589233,
+          0.040116455405950546,
+          0.07140125334262848
+        ],
+        [
+          1.1232131719589233,
+          0.040116455405950546,
+          0.07140125334262848
+        ],
+        [
+          1.1232131719589233,
+          0.040116455405950546,
+          0.07140125334262848
+        ],
+        [
+          1.1232131719589233,
+          0.040116455405950546,
+          0.07140125334262848
+        ],
+        [
+          1.1237908601760864,
+          -0.017636680975556374,
+          -0.031385257840156555
+        ],
+        [
+          1.1237908601760864,
+          -0.017636680975556374,
+          -0.031385257840156555
+        ],
+        [
+          1.1237908601760864,
+          -0.017636680975556374,
+          -0.031385257840156555
+        ],
+        [
+          1.1237908601760864,
+          -0.017636680975556374,
+          -0.031385257840156555
+        ],
+        [
+          1.1237908601760864,
+          -0.017636680975556374,
+          -0.031385257840156555
+        ],
+        [
+          1.1236860752105713,
+          -0.02338259480893612,
+          -0.04161166027188301
+        ],
+        [
+          1.1236860752105713,
+          -0.02338259480893612,
+          -0.04161166027188301
+        ],
+        [
+          1.1236860752105713,
+          -0.02338259480893612,
+          -0.04161166027188301
+        ],
+        [
+          1.1236860752105713,
+          -0.02338259480893612,
+          -0.04161166027188301
+        ],
+        [
+          1.1236860752105713,
+          -0.02338259480893612,
+          -0.04161166027188301
+        ],
+        [
+          1.1236860752105713,
+          -0.02338259480893612,
+          -0.04161166027188301
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.1232131719589233,
+          0.040116455405950546,
+          0.07140125116799327
+        ],
+        [
+          2.240702479945692,
+          0.1602613936747658,
+          0.14280250233598654
+        ],
+        [
+          3.346773228486888,
+          0.35982255943073577,
+          0.2142037535039798
+        ],
+        [
+          4.435788910781079,
+          0.6377829943377241,
+          0.2856050046719731
+        ],
+        [
+          5.502199932185955,
+          0.9927262194915116,
+          0.35700625583996637
+        ],
+        [
+          6.561296190300733,
+          1.3689336967941546,
+          0.32562099933760696
+        ],
+        [
+          7.6316762979728106,
+          1.7117213497676158,
+          0.29423574283524756
+        ],
+        [
+          8.712285980600216,
+          2.020751548523401,
+          0.26285048633288816
+        ],
+        [
+          9.802060887925622,
+          2.2957199126947088,
+          0.23146522983052878
+        ],
+        [
+          10.899927642371825,
+          2.536355611236928,
+          0.2000799733281694
+        ],
+        [
+          12.005844188903815,
+          2.7367695166150052,
+          0.15846831198835837
+        ],
+        [
+          13.11914055861446,
+          2.89100419024982,
+          0.11685665064854733
+        ],
+        [
+          14.23788932318133,
+          2.9987926086547683,
+          0.0752449893087363
+        ],
+        [
+          15.360153614656973,
+          3.059948159840342,
+          0.03363332796892526
+        ],
+        [
+          16.483990478730664,
+          3.0743649663918333,
+          -0.007978333370885785
+        ],
+        [
+          17.607454238527378,
+          3.04201806877284,
+          -0.049589994710696826
+        ]
+      ],
+      "parameters": [
+        1.1239293029274993,
+        0.07140125116799327,
+        -0.031385256502359384,
+        -0.04161166133981104
+      ],
+      "search_goal_loss": 0.3178924322128296,
+      "final_goal_loss": 0.30883824825286865,
+      "search_to_final_loss_delta": -0.009054183959960938,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-059",
+      "dataset": "RECON",
+      "title": {
+        "en": "Across the courtyard",
+        "zh": "穿过庭院"
+      },
+      "start": "assets/navigation/curved-recon-059/start.webp",
+      "goal": "assets/navigation/curved-recon-059/goal.webp",
+      "poster": "assets/navigation/curved-recon-059/poster.webp",
+      "video": "assets/navigation/curved-recon-059/prediction.mp4",
+      "normalized_ate": 0.06436432040787196,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Evaluated on the final retained single-candidate rollout RGB, separately from search-batch predictions; deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source_reserve_20261010.py",
+      "inference_source_sha256": "9ecea6eae43ece6cc4aa78d387f279249d494a9d131419b6b8a9ed074be5537d",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-059",
+      "source_frame_sha256": {
+        "prediction/000.png": "b080ee36461b3815118658fc341c6d19202bed25a877d3e59b34ff5f0c77d095",
+        "prediction/001.png": "2eaa6c8f595a1b8e25b573b584a78ea98f771070b023f7ef0d653020c3eb858b",
+        "prediction/002.png": "87498872d2f260669bf99399be3465fa36b6cca1669a0e8680646d824912acbe",
+        "prediction/003.png": "22bfdf31942a0212d5bcf875ad8fed10169c7f836a8feb2619b1831ee8dd68aa",
+        "prediction/004.png": "9176411cd45465255012107abab9f3ff02e4fc4e6f43e7586b198eace1594f95",
+        "prediction/005.png": "f46b3fc75557f8d01b0fecb4c2ded5d9545ea05d9001301fa4e73d94e3fd5838",
+        "prediction/006.png": "55d9592879b1dd2680d4ace69ea62cf11dbcef2f097e5e9f1d1f0595273e7eb7",
+        "prediction/007.png": "96bba72c8f856b5b2a29fb26bb6a068e195d8dd73c1582ad3d9b57869355acc1",
+        "prediction/008.png": "42f87f1b8de5945255e2adb18486c426ba0611176f8c476360d77f26fc2ed138",
+        "prediction/009.png": "7e3b95f2c842ff8997fa73bbdf92a256362ad5dd04931f18610c14f15b087c64",
+        "prediction/010.png": "ab9dc13b64dca298c32a7927fc945d8ff5f9a1e939a058c05268c2a1a6c85348",
+        "prediction/011.png": "49921505a3b997d45f3879374fff2ab9ac9bd81c4afd3c82a7ef9a8f82b92309",
+        "prediction/012.png": "cb9dae2360bb35d1056945b739382771462dcaf42fc170741a9c11b9bbe7ca5c",
+        "prediction/013.png": "e7ebf502eed525a7f1acef35492127d088da91b04b5cc516e779d365696c83d6",
+        "prediction/014.png": "fc558dc9687e0d6d5e0ea4f68a5208ab5b137f77f55f5e4676c7e7b0a6b7aa13",
+        "prediction/015.png": "02e7a9077ef561a01ea6edd41fd3e6638f9ed3b0756838261b60f41ef7510d0b",
+        "prediction/016.png": "bee68842226f2497e4c94aab758c875819f32d8a4e1322cf42eb1a65b2f9fa6d"
+      },
+      "source_observation_sha256": {
+        "start": "521f7ed07a32afaf66d85dba664fdff6e3d1ac2a68df52aeb003b35a8fde0b0b",
+        "goal": "852fefd0a6477b799974db614393dd91e8248c62165d23f78e1a1fbe18681c09"
+      },
+      "source_result_sha256": "62a9a670e2ef7094a09e031f508c625b73afa1569c78b8d7580f04bb73d00768",
+      "source_optimization_sha256": "3f850244ba92038e29ccbecce8aafefc608d10ce31c3efbf338a666846206505",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "b71d6dc07f68e8bf1cc8af71ddccae03d1e4edad8c48b06293c71973713137fd",
+      "asset_sha256": {
+        "goal.webp": "713ece0f56c15b8dc0b4ece25394fbb55cc3f506fda53594eaed5343eee3fcfc",
+        "poster.webp": "c08b558446e8e5100c3a5de2788dca85bf92d4f45f3f3dcdeff6f0da4b17e5b7",
+        "prediction.mp4": "621072c8cb6a869cc0401b89c346cea906ff6be710b414be8976247062f0ff7a",
+        "start.webp": "92f767787d945b8f158d68821deabfa091bdf97e1cab9a55aaeef18c8e561b21"
+      }
+    },
+    {
+      "sample_id": 88,
+      "trajectory": "jackal_2019-08-13-17-02-54_1_r04",
+      "start_frame": 3,
+      "goal_frame": 19,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.24732460579013973,
+          -0.042593762482484955
+        ],
+        [
+          0.46693290874506016,
+          -0.11449700800630686
+        ],
+        [
+          0.6597357776317472,
+          -0.22620682771958556
+        ],
+        [
+          0.8656944446007419,
+          -0.4037117186621719
+        ],
+        [
+          1.0463480845194066,
+          -0.6630539069814618
+        ],
+        [
+          1.2007175152715337,
+          -0.9053046108466885
+        ],
+        [
+          1.356379201743425,
+          -1.0878881835680048
+        ],
+        [
+          1.5287588702494916,
+          -1.2520972283845404
+        ],
+        [
+          1.7406226714891788,
+          -1.394844129318909
+        ],
+        [
+          1.9981755674731976,
+          -1.5237509676744883
+        ],
+        [
+          2.227382463649518,
+          -1.6158103030119304
+        ],
+        [
+          2.5463852880637243,
+          -1.718459391814313
+        ],
+        [
+          2.794302108549574,
+          -1.7809866073038405
+        ],
+        [
+          3.0247014181687493,
+          -1.8253409592156389
+        ],
+        [
+          3.3131883662631156,
+          -1.864332868251777
+        ],
+        [
+          3.5544528920242944,
+          -1.8955428674336559
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.20863039791584015,
+          -0.007891458459198475
+        ],
+        [
+          0.41606852194081684,
+          -0.03152073589490178
+        ],
+        [
+          0.6211289117541963,
+          -0.07075279651781467
+        ],
+        [
+          0.822639695229673,
+          -0.1253634382850982
+        ],
+        [
+          1.0194492854102546,
+          -0.19504057416256215
+        ],
+        [
+          1.2104924091060958,
+          -0.27925127680613543
+        ],
+        [
+          1.3947668398131223,
+          -0.3773932746398358
+        ],
+        [
+          1.5712584038282988,
+          -0.4889264328604547
+        ],
+        [
+          1.738995761273678,
+          -0.6132369170057184
+        ],
+        [
+          1.8970557519675402,
+          -0.7496405712567865
+        ],
+        [
+          2.054043558590241,
+          -0.8872768525233847
+        ],
+        [
+          2.2188167873313924,
+          -1.0154903480662514
+        ],
+        [
+          2.3908106754011107,
+          -1.133841604146471
+        ],
+        [
+          2.5694357110879893,
+          -1.241924970003414
+        ],
+        [
+          2.754079654319607,
+          -1.339369988228995
+        ],
+        [
+          2.9441096351248435,
+          -1.4258426645161661
+        ]
+      ],
+      "ate_m": 0.6379997992424394,
+      "goal_error_m": 0.7701539923050196,
+      "normalized_goal_error": 0.1911857566067753,
+      "reference_curvature": {
+        "total_turn_deg": 97.84460619753516,
+        "net_turn_deg": 2.4006614498329184,
+        "max_step_turn_deg": 14.383231189116065,
+        "segment_turns_deg": [
+          -47.72197237385112,
+          35.61097394966726,
+          14.511659874016779
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 1,
+        "max_chord_deviation_m": 0.41170766299956557,
+        "length_m": 4.208376334120125,
+        "chord_length_m": 4.028302139102587,
+        "deviation_ratio": 0.09783052424793284
+      },
+      "planned_curvature": {
+        "total_turn_deg": 55.85020688142772,
+        "net_turn_deg": -22.301608049822736,
+        "max_step_turn_deg": 4.332367823447981,
+        "segment_turns_deg": [
+          -21.621423429762597,
+          -17.45448403586263,
+          16.77429941580249
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 1,
+        "max_chord_deviation_m": 0.2762970281325937,
+        "length_m": 3.3404734565177945,
+        "chord_length_m": 3.2712090803844225,
+        "deviation_ratio": 0.08271193641532888
+      },
+      "actions_body_waypoint_units": [
+        [
+          0.8345215916633606,
+          -0.0315658338367939,
+          -0.0756140798330307
+        ],
+        [
+          0.8345215916633606,
+          -0.0315658338367939,
+          -0.0756140798330307
+        ],
+        [
+          0.8345215916633606,
+          -0.0315658338367939,
+          -0.0756140798330307
+        ],
+        [
+          0.8345215916633606,
+          -0.0315658338367939,
+          -0.0756140798330307
+        ],
+        [
+          0.8345215916633606,
+          -0.0315658338367939,
+          -0.0756140798330307
+        ],
+        [
+          0.8345436453819275,
+          -0.030977165326476097,
+          -0.07420331239700317
+        ],
+        [
+          0.8345436453819275,
+          -0.030977165326476097,
+          -0.07420331239700317
+        ],
+        [
+          0.8345436453819275,
+          -0.030977165326476097,
+          -0.07420331239700317
+        ],
+        [
+          0.8345436453819275,
+          -0.030977165326476097,
+          -0.07420331239700317
+        ],
+        [
+          0.8345436453819275,
+          -0.030977165326476097,
+          -0.07420331239700317
+        ],
+        [
+          0.8347604870796204,
+          0.024445997551083565,
+          0.05855334922671318
+        ],
+        [
+          0.8347604870796204,
+          0.024445997551083565,
+          0.05855334922671318
+        ],
+        [
+          0.8347604870796204,
+          0.024445997551083565,
+          0.05855334922671318
+        ],
+        [
+          0.8347604870796204,
+          0.024445997551083565,
+          0.05855334922671318
+        ],
+        [
+          0.8347604870796204,
+          0.024445997551083565,
+          0.05855334922671318
+        ],
+        [
+          0.8347604870796204,
+          0.024445997551083565,
+          0.05855334922671318
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.8345215916633606,
+          -0.0315658338367939,
+          -0.07561408292662752
+        ],
+        [
+          1.6642740877632674,
+          -0.12608294357960712,
+          -0.15122816585325505
+        ],
+        [
+          2.484515647016785,
+          -0.2830111860712587,
+          -0.22684224877988257
+        ],
+        [
+          3.290558780918692,
+          -0.5014537531403928,
+          -0.3024563317065101
+        ],
+        [
+          4.077797141641018,
+          -0.7801622966502486,
+          -0.3780704146331376
+        ],
+        [
+          4.841969636424383,
+          -1.1170051072245417,
+          -0.45227372404534916
+        ],
+        [
+          5.579067359252489,
+          -1.5095730985593432,
+          -0.5264770334575607
+        ],
+        [
+          6.285033615313195,
+          -1.9557057314418187,
+          -0.6006803428697722
+        ],
+        [
+          6.955983045094712,
+          -2.4529476680228735,
+          -0.6748836522819838
+        ],
+        [
+          7.588223007870161,
+          -2.998562285027146,
+          -0.7490869616941953
+        ],
+        [
+          8.216174234360963,
+          -3.549107410093539,
+          -0.6905336107899722
+        ],
+        [
+          8.87526714932557,
+          -4.0619613922650055,
+          -0.6319802598857491
+        ],
+        [
+          9.563242701604443,
+          -4.535366416585884,
+          -0.573426908981526
+        ],
+        [
+          10.277742844351957,
+          -4.967699880013656,
+          -0.514873558077303
+        ],
+        [
+          11.016318617278428,
+          -5.35747995291598,
+          -0.45632020717307986
+        ],
+        [
+          11.776438540499374,
+          -5.703370658064665,
+          -0.39776685626885677
+        ]
+      ],
+      "parameters": [
+        0.8351183898207937,
+        -0.07561408292662752,
+        -0.07420330941221155,
+        0.058553350904223096
+      ],
+      "search_goal_loss": 0.3468468487262726,
+      "final_goal_loss": 0.38272982835769653,
+      "search_to_final_loss_delta": 0.03588297963142395,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-088",
+      "dataset": "RECON",
+      "title": {
+        "en": "Across the garden",
+        "zh": "花园曲径"
+      },
+      "start": "assets/navigation/curved-recon-088/start.webp",
+      "goal": "assets/navigation/curved-recon-088/goal.webp",
+      "poster": "assets/navigation/curved-recon-088/poster.webp",
+      "video": "assets/navigation/curved-recon-088/prediction.mp4",
+      "normalized_ate": 0.1583793313439421,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Recomputed from the archived raw float32 final RGB, not the search batch; same deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source.py",
+      "inference_source_sha256": "0253e3158b1afabcf6f4d173e992d6126b6f3930ae1eb1d6241e2fbc309d326d",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-088",
+      "source_frame_sha256": {
+        "prediction/000.png": "f45e8922752a2bb284622427451f9d5df4186044b504d35144581805bc17c9ee",
+        "prediction/001.png": "61f2575ad122c25e23d2fba983c745749f6d814fa5de87fde5b9fd4f4b5d01cb",
+        "prediction/002.png": "c3e239cb78a594be8edaf7d394c6bb9bc55c98c77f3d5435126c3e0f7f1b5e2c",
+        "prediction/003.png": "0eb71f0cdfefa5461f102840d296f7a358e72df53eba3882c07b31c1701d00fa",
+        "prediction/004.png": "9d49f119f25a3dfba4ba826e7d637234bc069508793d3a407f3d25b69a85feab",
+        "prediction/005.png": "3e45aa6ecb9e8d01d83a6de113dc1f47d0b1b8308be813e1c1d798c5f9e1f40b",
+        "prediction/006.png": "d6526b839c533e6235a09bb40337bd61516e86eef7289108432f1faaf76a640b",
+        "prediction/007.png": "725186e5ed9fa8f22c264d8e230c7394ad1ddbd0381ef6c2ff9140c5484dac79",
+        "prediction/008.png": "1cfc37650e2df66f0ebdc36ee169745a3ff8577263faac2b6c3740870540ec62",
+        "prediction/009.png": "10c84b3c1d4a95ed4b29aec1f9f1a4c195e740fbd5e86ea9068190dd7ac371b9",
+        "prediction/010.png": "195dc06d4f34a93ab16cdf80984c97d2de8c8b35f333beb09f848afe88247a57",
+        "prediction/011.png": "8f77f6d3876068f50d33fad334be12a7c3f17070a7ac8d58638e52bfecaccdbc",
+        "prediction/012.png": "e985710cd81e9b1395efeb24bfdcfc1f2ffa68e45ba6c637e32fdc37c36f10bf",
+        "prediction/013.png": "1ea131caa003c6b47f82493403d059c2f66a4467858e21bab9cc73fe0b4beb68",
+        "prediction/014.png": "16db37628fd52316a7f77d2b25c8d5c3682f8128962f7bb278732f9c013b1563",
+        "prediction/015.png": "f164c00e46f62cdeea759b66f6f810adda08a2efb7888e839965a4e84775296d",
+        "prediction/016.png": "fdbe5d27cf015b0ba7bcf856e85dc0fbffb1349ed608a1fc44c9ef81d287637e"
+      },
+      "source_observation_sha256": {
+        "start": "11f88c71910c67dc55f85a9362562740dfff6f9033bcd355f09bb5ed3d7f9d1c",
+        "goal": "73baa0e8e434caa82cd56a48345c48f4ec9af61c0f61ece0773ef811d6b90a67"
+      },
+      "source_result_sha256": "12bb7e9184fba84966f937988fc4eb2b692dc7a86ec5f1ce99bbb40d8a2c1ddb",
+      "source_optimization_sha256": "ba11627dde3525209d8f25e3cb8f51a74b1351b658702405c649957185137d10",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "16c0d24a74aec58b31c4923238722e7a90782858cfbe401fbd9b0a895ae5e359",
+      "asset_sha256": {
+        "goal.webp": "2ab1b8bf77df08746a19233a47cb69080f175e582f55d2afe86b66d9051719c6",
+        "poster.webp": "a50ba9512a4d6f3225fa4178c1e760428f166871f539429843d3c222f84f890b",
+        "prediction.mp4": "81377806188add98fed7d84718f3bf24250737ef9072c1623c34c0db7c77e5d4",
+        "start.webp": "2600878d95c87f4fa897f6862722f2fb2d698b0324d6d65bee954516acb48b5e"
+      }
+    },
+    {
+      "sample_id": 46,
+      "trajectory": "jackal_2019-10-20-16-29-40_11_r02",
+      "start_frame": 3,
+      "goal_frame": 19,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2759399579066549,
+          -0.017641847043210524
+        ],
+        [
+          0.533531424979275,
+          -0.06858352224582853
+        ],
+        [
+          0.7713309152626063,
+          -0.1378109662149914
+        ],
+        [
+          1.0107833184018193,
+          -0.23603274915796257
+        ],
+        [
+          1.2592805178914317,
+          -0.38074899661229034
+        ],
+        [
+          1.5001134396141491,
+          -0.5645551557579074
+        ],
+        [
+          1.7284095837827702,
+          -0.7195480601354178
+        ],
+        [
+          1.979841695489556,
+          -0.8522430713158626
+        ],
+        [
+          2.263500177362551,
+          -0.9501625646428502
+        ],
+        [
+          2.549815440056719,
+          -0.9988767993466706
+        ],
+        [
+          2.7987001735490358,
+          -0.9969743800444025
+        ],
+        [
+          3.0947062364121445,
+          -0.9421702649678221
+        ],
+        [
+          3.361699632780846,
+          -0.8395450844677934
+        ],
+        [
+          3.566121647162737,
+          -0.7189280425361141
+        ],
+        [
+          3.7608046265473303,
+          -0.5512993957768937
+        ],
+        [
+          3.9291313921551283,
+          -0.3733969446349503
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2340206354856491,
+          -0.004153773188591003
+        ],
+        [
+          0.4677464525756889,
+          -0.016609859668804634
+        ],
+        [
+          0.7008830042888424,
+          -0.03735256730569282
+        ],
+        [
+          0.9331365859983296,
+          -0.06635576450744754
+        ],
+        [
+          1.1642146054399474,
+          -0.10358291314589038
+        ],
+        [
+          1.3957660285861095,
+          -0.13774212393709756
+        ],
+        [
+          1.628989485202647,
+          -0.15748376841584796
+        ],
+        [
+          1.8629881390878644,
+          -0.1627319321706738
+        ],
+        [
+          2.0968621731007393,
+          -0.15346643394143925
+        ],
+        [
+          2.3297122493128226,
+          -0.1297229032242476
+        ],
+        [
+          2.5602868825990646,
+          -0.08949544141118748
+        ],
+        [
+          2.7868977057020756,
+          -0.030925440117162195
+        ],
+        [
+          3.008087998070618,
+          0.045610595584492805
+        ],
+        [
+          3.222435883908049,
+          0.13962066970439724
+        ],
+        [
+          3.4285634724051914,
+          0.25050045803103027
+        ],
+        [
+          3.6251457152248605,
+          0.37753719290325133
+        ]
+      ],
+      "ate_m": 0.6891037022546016,
+      "goal_error_m": 0.8101292308631975,
+      "normalized_goal_error": 0.2052605270257246,
+      "reference_curvature": {
+        "total_turn_deg": 117.62857113001434,
+        "net_turn_deg": 50.24237866123206,
+        "max_step_turn_deg": 10.536171479268356,
+        "segment_turns_deg": [
+          -33.693096234391135,
+          37.78919299571281,
+          46.146281899910385
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 1,
+        "max_chord_deviation_m": 0.7531669383740406,
+        "length_m": 4.361987313733004,
+        "chord_length_m": 3.946834019195843,
+        "deviation_ratio": 0.17266600845051006
+      },
+      "planned_curvature": {
+        "total_turn_deg": 50.15843039408261,
+        "net_turn_deg": 33.888502486966374,
+        "max_step_turn_deg": 4.5950138456232565,
+        "segment_turns_deg": [
+          -7.375058391854926,
+          18.28849165070511,
+          22.975069228116187
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 1,
+        "max_chord_deviation_m": 0.3703455045502542,
+        "length_m": 3.744919941964133,
+        "chord_length_m": 3.644751814409101,
+        "deviation_ratio": 0.0988927694822805
+      },
+      "actions_body_waypoint_units": [
+        [
+          0.9360825419425964,
+          -0.016615092754364014,
+          -0.03549547493457794
+        ],
+        [
+          0.9360825419425964,
+          -0.016615092754364014,
+          -0.03549547493457794
+        ],
+        [
+          0.9360825419425964,
+          -0.016615092754364014,
+          -0.03549547493457794
+        ],
+        [
+          0.9360825419425964,
+          -0.016615092754364014,
+          -0.03549547493457794
+        ],
+        [
+          0.9360825419425964,
+          -0.016615092754364014,
+          -0.03549547493457794
+        ],
+        [
+          0.935779869556427,
+          0.02902839332818985,
+          0.06202118471264839
+        ],
+        [
+          0.935779869556427,
+          0.02902839332818985,
+          0.06202118471264839
+        ],
+        [
+          0.935779869556427,
+          0.02902839332818985,
+          0.06202118471264839
+        ],
+        [
+          0.935779869556427,
+          0.02902839332818985,
+          0.06202118471264839
+        ],
+        [
+          0.935779869556427,
+          0.02902839332818985,
+          0.06202118471264839
+        ],
+        [
+          0.9354773759841919,
+          0.037531882524490356,
+          0.08019812405109406
+        ],
+        [
+          0.9354773759841919,
+          0.037531882524490356,
+          0.08019812405109406
+        ],
+        [
+          0.9354773759841919,
+          0.037531882524490356,
+          0.08019812405109406
+        ],
+        [
+          0.9354773759841919,
+          0.037531882524490356,
+          0.08019812405109406
+        ],
+        [
+          0.9354773759841919,
+          0.037531882524490356,
+          0.08019812405109406
+        ],
+        [
+          0.9354773759841919,
+          0.037531882524490356,
+          0.08019812405109406
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.9360825419425964,
+          -0.016615092754364014,
+          -0.03549547638016108
+        ],
+        [
+          1.8709858103027557,
+          -0.06643943867521854,
+          -0.07099095276032216
+        ],
+        [
+          2.8035320171553697,
+          -0.14941026922277129,
+          -0.10648642914048324
+        ],
+        [
+          3.7325463439933184,
+          -0.26542305802979016,
+          -0.14198190552064432
+        ],
+        [
+          4.6568584217597895,
+          -0.4143316525835615,
+          -0.17747738190080542
+        ],
+        [
+          5.583064114344438,
+          -0.5509684957483902,
+          -0.11545619676408667
+        ],
+        [
+          6.515957940810588,
+          -0.6299350736633919,
+          -0.05343501162736791
+        ],
+        [
+          7.451952556351458,
+          -0.6509277286826952,
+          0.008586173509350842
+        ],
+        [
+          8.387448692402957,
+          -0.613865735765757,
+          0.0706073586460696
+        ],
+        [
+          9.31884899725129,
+          -0.5188916128969904,
+          0.13262854378278835
+        ],
+        [
+          10.241147530396258,
+          -0.3579817656447499,
+          0.2128266645636403
+        ],
+        [
+          11.147590822808302,
+          -0.12370176046864878,
+          0.2930247853444923
+        ],
+        [
+          12.032351992282472,
+          0.18244238233797122,
+          0.37322290612534426
+        ],
+        [
+          12.889743535632196,
+          0.558482678817589,
+          0.45342102690619623
+        ],
+        [
+          13.714253889620766,
+          1.002001832124121,
+          0.5336191476870482
+        ],
+        [
+          14.500582860899442,
+          1.5101487716130053,
+          0.6138172684679002
+        ]
+      ],
+      "parameters": [
+        0.9362300010531668,
+        -0.03549547638016108,
+        0.062021185136718754,
+        0.08019812078085195
+      ],
+      "search_goal_loss": 0.42549657821655273,
+      "final_goal_loss": 0.4219297170639038,
+      "search_to_final_loss_delta": -0.0035668611526489258,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-046",
+      "dataset": "RECON",
+      "title": {
+        "en": "Between the buildings",
+        "zh": "楼间小径"
+      },
+      "start": "assets/navigation/curved-recon-046/start.webp",
+      "goal": "assets/navigation/curved-recon-046/goal.webp",
+      "poster": "assets/navigation/curved-recon-046/poster.webp",
+      "video": "assets/navigation/curved-recon-046/prediction.mp4",
+      "normalized_ate": 0.17459657510375992,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Recomputed from the archived raw float32 final RGB, not the search batch; same deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source.py",
+      "inference_source_sha256": "0253e3158b1afabcf6f4d173e992d6126b6f3930ae1eb1d6241e2fbc309d326d",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-046",
+      "source_frame_sha256": {
+        "prediction/000.png": "57a9ab64d61660ae4443cd91f09797dca04ac99a605c571f156f34c291fafcce",
+        "prediction/001.png": "239824806f4c7025e4693fc58e792d257f6d6936de7dc67c482f671fa35b735b",
+        "prediction/002.png": "0049b3265098eba2c68e8ce0b93aefe1e3eb2dd627aa7f97c8b2f2b07841e26f",
+        "prediction/003.png": "468ea16f6b2abae516917372acdd2c640b5af05c6d9377dcdcd2591dd7758819",
+        "prediction/004.png": "a9facd2c3a1c919b02708f44e10da56018aa9b722ecd332aaa31a8a28a4a0d1d",
+        "prediction/005.png": "53ea98b99caf6307fb7b6e90a8c299b4adeb977532f10f1d2c3875127c07e8cb",
+        "prediction/006.png": "df7ed8edd72ae5269062541c137e5c91b89c1caba83c3dc39f5ff609188a4fa8",
+        "prediction/007.png": "a31599ffd8dad1535993c0322666196dd81b9a02452db3ecb43820f42c901e92",
+        "prediction/008.png": "e9e0a505e9ee8954d70912d06ff65fd9d37a8841e15368f9b2b6ad87b4dfa44b",
+        "prediction/009.png": "cf3eec23a7cea2f22709fabfdfe98cbe63d0db8f24e2509b4433c4fbe54f6474",
+        "prediction/010.png": "a6ac3d54b8f934fcb02f086772aa6d9d62c192bca3264e195a9d7087e8f81d01",
+        "prediction/011.png": "de03dd54c94757205dfc1cae1ac5eb7b14a4d6b388eb9c201ab6cc25f3295db2",
+        "prediction/012.png": "bf6c39fa9ee60a1f1b1049fe816d36cc64d9ef6c7833ea7137741729efddf937",
+        "prediction/013.png": "adbb5d786e0ccae9ed69a951f1c9036c30c32a1869c55f9961c93b4003575432",
+        "prediction/014.png": "477670040df409d96d41741efe1c62874ede084dbc986403fc40f30505d3a941",
+        "prediction/015.png": "399cf899e25927898c4b1195c1a5b3b237d7cbc7a493756045b6137914650bcb",
+        "prediction/016.png": "4e63fdaf7a58f9aabafced71658b70f0c2f9fc9505ad1b8112640f0c014aff0d"
+      },
+      "source_observation_sha256": {
+        "start": "3af864dbabb890e6e1c6ecf3f6f96d601f79c2dbc543ae89f1fb5a69b155eff3",
+        "goal": "29e4aaf1839b715063c0f8be1219a6fe92510f40757c6d7bed14c20fd7296d95"
+      },
+      "source_result_sha256": "bae5c063cfa5ed87924b7095d6114cbeb03be54eb2502011a6bdd8d40db4208d",
+      "source_optimization_sha256": "3be4b5705de67508392c0c950ca78945de31153db434ccc368c2caf2f4bf1fb0",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "9333ae67d43156ec972ad12c6dc3bc21c1c5660f994541fba6145f296a308169",
+      "asset_sha256": {
+        "goal.webp": "059f3f5fe1719de3f629ba54474361efc17f4010973a185aecea87bc8bf1c77c",
+        "poster.webp": "7336e6f0e484c236112eaeb570bd2893529bab5e4a2b9d3a5804d7c4f72e6b91",
+        "prediction.mp4": "7baf77e5dfb67285e2eea5ee3944c3f3d6c89b64cbf74868612ef6ead1502923",
+        "start.webp": "84e7adb50d9d92cba03273f2252b978eec788d24e8a623549e91d3b0680b5184"
+      }
+    },
+    {
+      "sample_id": 25,
+      "trajectory": "jackal_2019-08-13-16-22-26_10_r02",
+      "start_frame": 59,
+      "goal_frame": 75,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2874651366974431,
+          -0.013934962613795105
+        ],
+        [
+          0.5786179363905284,
+          -0.05664306214356995
+        ],
+        [
+          0.8397025336325483,
+          -0.1101926229006121
+        ],
+        [
+          1.0776317494606407,
+          -0.17955017573308907
+        ],
+        [
+          1.3096106130445349,
+          -0.27060543115973923
+        ],
+        [
+          1.5411775982075475,
+          -0.37595070432455135
+        ],
+        [
+          1.7856890906849219,
+          -0.4829700477873599
+        ],
+        [
+          2.0149505997791115,
+          -0.5807896980534448
+        ],
+        [
+          2.264739941821943,
+          -0.6782608605613559
+        ],
+        [
+          2.537475137668901,
+          -0.7609409694488672
+        ],
+        [
+          2.79054968142022,
+          -0.8158909836366878
+        ],
+        [
+          3.0552690765661867,
+          -0.8515566704864594
+        ],
+        [
+          3.341774161620735,
+          -0.8581619173589919
+        ],
+        [
+          3.65521707295676,
+          -0.8161465492854668
+        ],
+        [
+          3.986145929673897,
+          -0.7566832476140364
+        ],
+        [
+          4.261908732174137,
+          -0.7091749429762197
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2724384069442749,
+          -0.007747477851808071
+        ],
+        [
+          0.5439962491508752,
+          -0.030964870631656746
+        ],
+        [
+          0.8137958079999099,
+          -0.06957713599209399
+        ],
+        [
+          1.0809650479260797,
+          -0.1234594728815735
+        ],
+        [
+          1.3446404349778702,
+          -0.19243772492152475
+        ],
+        [
+          1.6099665795629334,
+          -0.25476540977498174
+        ],
+        [
+          1.8804365241375576,
+          -0.2883617247717996
+        ],
+        [
+          2.152948241741648,
+          -0.29284135288518687
+        ],
+        [
+          2.42437628826614,
+          -0.2681529171416288
+        ],
+        [
+          2.6916076482542923,
+          -0.21457956986475807
+        ],
+        [
+          2.955228726004969,
+          -0.14539411162676175
+        ],
+        [
+          3.218111760634481,
+          -0.07345517661929522
+        ],
+        [
+          3.4802279933951055,
+          0.0012293652177410464
+        ],
+        [
+          3.7415487494253292,
+          0.07865134358191367
+        ],
+        [
+          4.002045440886807,
+          0.15880228870206692
+        ],
+        [
+          4.2616895700918,
+          0.24167343226489466
+        ]
+      ],
+      "ate_m": 0.5654680390250265,
+      "goal_error_m": 0.9508484004985682,
+      "normalized_goal_error": 0.22007788290618094,
+      "reference_curvature": {
+        "total_turn_deg": 56.746712350482724,
+        "net_turn_deg": 12.55019840398637,
+        "max_step_turn_deg": 8.955381940628511,
+        "segment_turns_deg": [
+          -21.68664725165256,
+          12.211442029691337,
+          22.02540362594759
+        ],
+        "turning_segments": 3,
+        "max_chord_deviation_m": 0.3467797687650613,
+        "length_m": 4.414288982687884,
+        "chord_length_m": 4.320508666942758,
+        "deviation_ratio": 0.07855846550261539
+      },
+      "planned_curvature": {
+        "total_turn_deg": 45.39313259570701,
+        "net_turn_deg": 19.330540566025878,
+        "max_step_turn_deg": 6.138943945750007,
+        "segment_turns_deg": [
+          -11.59073605127143,
+          27.92488673322159,
+          2.996389884075717
+        ],
+        "turning_segments": 2,
+        "turn_direction_changes": 1,
+        "max_chord_deviation_m": 0.41426594834945374,
+        "length_m": 4.360776560294738,
+        "chord_length_m": 4.268536522005162,
+        "deviation_ratio": 0.09499820562268252
+      },
+      "actions_body_waypoint_units": [
+        [
+          1.0897536277770996,
+          -0.030989911407232285,
+          -0.05685975402593613
+        ],
+        [
+          1.0897536277770996,
+          -0.030989911407232285,
+          -0.05685975402593613
+        ],
+        [
+          1.0897536277770996,
+          -0.030989911407232285,
+          -0.05685975402593613
+        ],
+        [
+          1.0897536277770996,
+          -0.030989911407232285,
+          -0.05685975402593613
+        ],
+        [
+          1.0897536277770996,
+          -0.030989911407232285,
+          -0.05685975402593613
+        ],
+        [
+          1.0886300802230835,
+          0.05837637558579445,
+          0.1071447879076004
+        ],
+        [
+          1.0886300802230835,
+          0.05837637558579445,
+          0.1071447879076004
+        ],
+        [
+          1.0886300802230835,
+          0.05837637558579445,
+          0.1071447879076004
+        ],
+        [
+          1.0886300802230835,
+          0.05837637558579445,
+          0.1071447879076004
+        ],
+        [
+          1.0886300802230835,
+          0.05837637558579445,
+          0.1071447879076004
+        ],
+        [
+          1.090179204940796,
+          0.005701348185539246,
+          0.010459373705089092
+        ],
+        [
+          1.090179204940796,
+          0.005701348185539246,
+          0.010459373705089092
+        ],
+        [
+          1.090179204940796,
+          0.005701348185539246,
+          0.010459373705089092
+        ],
+        [
+          1.090179204940796,
+          0.005701348185539246,
+          0.010459373705089092
+        ],
+        [
+          1.090179204940796,
+          0.005701348185539246,
+          0.010459373705089092
+        ],
+        [
+          1.090179204940796,
+          0.005701348185539246,
+          0.010459373705089092
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0897536277770996,
+          -0.030989911407232285,
+          -0.05685975531524588
+        ],
+        [
+          2.1759849966035008,
+          -0.12385948252662698,
+          -0.11371951063049177
+        ],
+        [
+          3.2551832319996397,
+          -0.27830854396837595,
+          -0.17057926594573763
+        ],
+        [
+          4.323860191704319,
+          -0.493837891526294,
+          -0.22743902126098353
+        ],
+        [
+          5.378561739911481,
+          -0.769750899686099,
+          -0.28429877657622943
+        ],
+        [
+          6.439866318251734,
+          -1.019061639099927,
+          -0.17715399212751978
+        ],
+        [
+          7.52174609655023,
+          -1.1534468990871984,
+          -0.07000920767881014
+        ],
+        [
+          8.611792966966592,
+          -1.1713654115407475,
+          0.03713557676989951
+        ],
+        [
+          9.69750515306456,
+          -1.0726116685665152,
+          0.14428036121860915
+        ],
+        [
+          10.76643059301717,
+          -0.8583182794590323,
+          0.2514251456673188
+        ],
+        [
+          11.820914904019876,
+          -0.581576446507047,
+          0.2618845194974333
+        ],
+        [
+          12.872447042537924,
+          -0.2938207064771809,
+          0.2723438933275478
+        ],
+        [
+          13.920911973580422,
+          0.0049174608709641856,
+          0.28280326715766235
+        ],
+        [
+          14.966194997701317,
+          0.3146053743276547,
+          0.2932626409877769
+        ],
+        [
+          16.008181763547228,
+          0.6352091548082677,
+          0.3037220148178914
+        ],
+        [
+          17.0467582803672,
+          0.9666937290595786,
+          0.31418138864800593
+        ]
+      ],
+      "parameters": [
+        1.0901941694190467,
+        -0.05685975531524588,
+        0.10714478444870965,
+        0.010459373830114532
+      ],
+      "search_goal_loss": 0.33631354570388794,
+      "final_goal_loss": 0.35208889842033386,
+      "search_to_final_loss_delta": 0.015775352716445923,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-025",
+      "dataset": "RECON",
+      "title": {
+        "en": "Past the garden sheds",
+        "zh": "绕过花园棚屋"
+      },
+      "start": "assets/navigation/curved-recon-025/start.webp",
+      "goal": "assets/navigation/curved-recon-025/goal.webp",
+      "poster": "assets/navigation/curved-recon-025/poster.webp",
+      "video": "assets/navigation/curved-recon-025/prediction.mp4",
+      "normalized_ate": 0.13087996868321486,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Evaluated on the final retained single-candidate rollout RGB, separately from search-batch predictions; deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source_reserve_20261010.py",
+      "inference_source_sha256": "9ecea6eae43ece6cc4aa78d387f279249d494a9d131419b6b8a9ed074be5537d",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-025",
+      "source_frame_sha256": {
+        "prediction/000.png": "b4c9cf218fbdd4565a302309afc1c81862e49f91019f28453026e0f98f2b020b",
+        "prediction/001.png": "4a0b9a1635422fb2b31ab6f8bdf163765429632905020f1ec0ddb9fbfddd17e6",
+        "prediction/002.png": "a3332827b9b6c3b13b79a441b0b9ce9e89b60360a89678978450586b8f81a550",
+        "prediction/003.png": "de684f36c9b05dd198f4916346961b49f16d4134f88da82b3afb3958bca0c7e1",
+        "prediction/004.png": "27b12dcece515706b7db6cf2d1c38af3339df7eeccae832f4005981cc2cd94ef",
+        "prediction/005.png": "ed08b6482eee1733e0d112acdc03151a692e5d1787e3ff854841e6ce438eace3",
+        "prediction/006.png": "c4e45bb75e77900e8220cd3217a13b49a4277ecaa349f101f509306ffb1319d4",
+        "prediction/007.png": "5bb624fee3212007dd749436a1c9515f4815ff0acc001557441dfddf54e15be8",
+        "prediction/008.png": "0635b1a58ef6ebf476eb2a10ff1dfc6d8382a0742b2873776857b5a6308c81e0",
+        "prediction/009.png": "ee77139c42e36e8f372b198192c70c05d1d0c7de7a82c8d3bc343f81c5861d53",
+        "prediction/010.png": "c1270c9e3e04c169874a90e875724eacdf5409fa0d4c39b0d593466ad7fa8252",
+        "prediction/011.png": "36f028e204c540443e47e3616c1bb6a429dd919763ce56393762316390f46dc2",
+        "prediction/012.png": "379588e0c74054687134cc4a752a2200b6aeb6a0c2f11bca4dd4d4e6a15eb2c7",
+        "prediction/013.png": "4cbe96616ff926524152219cb90bdb1d4b6350eb785ac0b00ccf631e8f096ed1",
+        "prediction/014.png": "79c6b1835a3156bfb3e543b0fd2712befb792b91d356e69be5a73d0f9335961b",
+        "prediction/015.png": "524b82a3e16d571c97bec2528605ecf97eee15451fdf47b77bbb0b85b2f0baa2",
+        "prediction/016.png": "3fe634d80780e48d7956a0b076e5895497b88969bc14e4a88145607d7a21c784"
+      },
+      "source_observation_sha256": {
+        "start": "49ec0b1af9519d60250f8dd408d9b1bfc81b9db46ead08d7862c4884c9769eb6",
+        "goal": "3273728e623da04091fe0fcf9035254f3bb8d15cd1a8892423b75a78eb074061"
+      },
+      "source_result_sha256": "9db8db4e88034453b5469258fd458d6171ac35ea550e6672c320356c2423f005",
+      "source_optimization_sha256": "4e2489db611e8a79610df7e8f1046f608827d6142d69ef5e0cf93aa85ad4ca2c",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "ae973e74722c2e0ffa948c70597fbe33917e8c933b0eedb4c3f399d573d37e98",
+      "asset_sha256": {
+        "goal.webp": "f679a7e403a743381dccfe9733a796a78ad54669da2e947007385b1ef43ff793",
+        "poster.webp": "4ec7271cb6f484b4feca2197378d63b90b00324313dd1ee36439b9d4c415e1a0",
+        "prediction.mp4": "8c656fb49cd309ca4dad59a032ae7fc5f7ab1a1f6a09fc16f5b1bea684b6e6da",
+        "start.webp": "eed3b42838fcc58f6f9d2b36dc1873b32a9975dbfaecdc6520e2027d9b191e59"
+      }
+    },
+    {
+      "sample_id": 85,
+      "trajectory": "jackal_2019-09-17-17-35-40_7_r02",
+      "start_frame": 91,
+      "goal_frame": 107,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.23597075314739654,
+          -0.022722145266064857
+        ],
+        [
+          0.4809081799545417,
+          -0.0948229615082421
+        ],
+        [
+          0.7323422496251979,
+          -0.22009629924708515
+        ],
+        [
+          0.9826010926700881,
+          -0.37582566372188897
+        ],
+        [
+          1.253651163969112,
+          -0.5573543129667283
+        ],
+        [
+          1.4856935991691849,
+          -0.6809246153099235
+        ],
+        [
+          1.7408079411334012,
+          -0.7697806602478009
+        ],
+        [
+          2.016758185974482,
+          -0.812315930432847
+        ],
+        [
+          2.271023202929838,
+          -0.801782210530277
+        ],
+        [
+          2.5424736777710786,
+          -0.7399084368279183
+        ],
+        [
+          2.7896688040886333,
+          -0.6663936326612606
+        ],
+        [
+          3.06430206117205,
+          -0.5739803941268131
+        ],
+        [
+          3.3760553937122713,
+          -0.5090392896118736
+        ],
+        [
+          3.686980742706869,
+          -0.5010122733908196
+        ],
+        [
+          3.9766966696609294,
+          -0.5613303586618802
+        ],
+        [
+          4.236929579538442,
+          -0.6842233042784871
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.22030197083950043,
+          -0.001285186386667192
+        ],
+        [
+          0.440573952880002,
+          -0.005140570643200911
+        ],
+        [
+          0.6607859614045029,
+          -0.01156562795203337
+        ],
+        [
+          0.8809080198599484,
+          -0.02055948369659581
+        ],
+        [
+          1.1009101639378163,
+          -0.032120913580376435
+        ],
+        [
+          1.3205615977138654,
+          -0.04908724113023488
+        ],
+        [
+          1.5394224104436802,
+          -0.07427758216897658
+        ],
+        [
+          1.7571847944497632,
+          -0.10765650879028155
+        ],
+        [
+          1.9735424868939604,
+          -0.14917707659258006
+        ],
+        [
+          2.1881912005080792,
+          -0.19878089070205165
+        ],
+        [
+          2.4007807577075164,
+          -0.25657613354161224
+        ],
+        [
+          2.6109434469936406,
+          -0.32265376937372026
+        ],
+        [
+          2.818356724517758,
+          -0.3969123865965055
+        ],
+        [
+          3.0227022660471987,
+          -0.47923801797687315
+        ],
+        [
+          3.223666455508377,
+          -0.5695043155599043
+        ],
+        [
+          3.420940866304076,
+          -0.6675727445793727
+        ]
+      ],
+      "ate_m": 0.5878248964221128,
+      "goal_error_m": 0.8161585760525772,
+      "normalized_goal_error": 0.19016600099749884,
+      "reference_curvature": {
+        "total_turn_deg": 124.59664227113068,
+        "net_turn_deg": -19.778475754802116,
+        "max_step_turn_deg": 13.517834245771558,
+        "segment_turns_deg": [
+          -22.536604040826102,
+          44.59904274355375,
+          -41.84091445752978
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 2,
+        "max_chord_deviation_m": 0.48240705605421613,
+        "length_m": 4.5002818203180714,
+        "chord_length_m": 4.291821733493316,
+        "deviation_ratio": 0.10719485474803454
+      },
+      "planned_curvature": {
+        "total_turn_deg": 26.098498480983316,
+        "net_turn_deg": -26.098498480983316,
+        "max_step_turn_deg": 2.244744838239737,
+        "segment_turns_deg": [
+          -4.0826279515578054,
+          -10.792146338226908,
+          -11.223724191198603
+        ],
+        "turning_segments": 2,
+        "turn_direction_changes": 0,
+        "max_chord_deviation_m": 0.23157783416201091,
+        "length_m": 3.5248914945045744,
+        "chord_length_m": 3.4854683731249834,
+        "deviation_ratio": 0.06569786177051085
+      },
+      "actions_body_waypoint_units": [
+        [
+          0.8812078833580017,
+          -0.005140745546668768,
+          -0.01166736613959074
+        ],
+        [
+          0.8812078833580017,
+          -0.005140745546668768,
+          -0.01166736613959074
+        ],
+        [
+          0.8812078833580017,
+          -0.005140745546668768,
+          -0.01166736613959074
+        ],
+        [
+          0.8812078833580017,
+          -0.005140745546668768,
+          -0.01166736613959074
+        ],
+        [
+          0.8812078833580017,
+          -0.005140745546668768,
+          -0.01166736613959074
+        ],
+        [
+          0.8810679316520691,
+          -0.016523858532309532,
+          -0.03750430792570114
+        ],
+        [
+          0.8810679316520691,
+          -0.016523858532309532,
+          -0.03750430792570114
+        ],
+        [
+          0.8810679316520691,
+          -0.016523858532309532,
+          -0.03750430792570114
+        ],
+        [
+          0.8810679316520691,
+          -0.016523858532309532,
+          -0.03750430792570114
+        ],
+        [
+          0.8810679316520691,
+          -0.016523858532309532,
+          -0.03750430792570114
+        ],
+        [
+          0.8810538053512573,
+          -0.01726125366985798,
+          -0.039178188890218735
+        ],
+        [
+          0.8810538053512573,
+          -0.01726125366985798,
+          -0.039178188890218735
+        ],
+        [
+          0.8810538053512573,
+          -0.01726125366985798,
+          -0.039178188890218735
+        ],
+        [
+          0.8810538053512573,
+          -0.01726125366985798,
+          -0.039178188890218735
+        ],
+        [
+          0.8810538053512573,
+          -0.01726125366985798,
+          -0.039178188890218735
+        ],
+        [
+          0.8810538053512573,
+          -0.01726125366985798,
+          -0.039178188890218735
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.8812078833580017,
+          -0.005140745546668768,
+          -0.011667365702390839
+        ],
+        [
+          1.762295811520008,
+          -0.020562282572803642,
+          -0.023334731404781678
+        ],
+        [
+          2.6431438456180114,
+          -0.04626251180813348,
+          -0.03500209710717252
+        ],
+        [
+          3.5236320794397935,
+          -0.08223793478638323,
+          -0.046669462809563356
+        ],
+        [
+          4.403640655751265,
+          -0.12848365432150574,
+          -0.058336828511954195
+        ],
+        [
+          5.2822463908554615,
+          -0.19634896452093953,
+          -0.09584113795237556
+        ],
+        [
+          6.157689641774721,
+          -0.2971103286759063,
+          -0.1333454473927969
+        ],
+        [
+          7.028739177799053,
+          -0.4306260351611262,
+          -0.1708497568332183
+        ],
+        [
+          7.894169947575842,
+          -0.5967083063703202,
+          -0.20835406627363967
+        ],
+        [
+          8.752764802032317,
+          -0.7951235628082066,
+          -0.24585837571406105
+        ],
+        [
+          9.603123030830066,
+          -1.026304534166449,
+          -0.28503656400849187
+        ],
+        [
+          10.443773787974562,
+          -1.290615077494881,
+          -0.3242147523029226
+        ],
+        [
+          11.273426898071031,
+          -1.587649546386022,
+          -0.3633929405973534
+        ],
+        [
+          12.090809064188795,
+          -1.9169520719074926,
+          -0.40257112889178415
+        ],
+        [
+          12.894665822033508,
+          -2.2780172622396173,
+          -0.4417493171862149
+        ],
+        [
+          13.683763465216304,
+          -2.6702909783174906,
+          -0.48092750548064567
+        ]
+      ],
+      "parameters": [
+        0.8812228660521975,
+        -0.011667365702390839,
+        -0.037504309440421366,
+        -0.03917818829443079
+      ],
+      "search_goal_loss": 0.2505733072757721,
+      "final_goal_loss": 0.24834752082824707,
+      "search_to_final_loss_delta": -0.0022257864475250244,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-085",
+      "dataset": "RECON",
+      "title": {
+        "en": "Around the cottage",
+        "zh": "绕行小屋"
+      },
+      "start": "assets/navigation/curved-recon-085/start.webp",
+      "goal": "assets/navigation/curved-recon-085/goal.webp",
+      "poster": "assets/navigation/curved-recon-085/poster.webp",
+      "video": "assets/navigation/curved-recon-085/prediction.mp4",
+      "normalized_ate": 0.1369639591119863,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Recomputed from the archived raw float32 final RGB, not the search batch; same deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source.py",
+      "inference_source_sha256": "0253e3158b1afabcf6f4d173e992d6126b6f3930ae1eb1d6241e2fbc309d326d",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-085",
+      "source_frame_sha256": {
+        "prediction/000.png": "a7e1f5cee889294df12c2b30867c98bf7d6020c547320faf537bd55db7cb9038",
+        "prediction/001.png": "1228e1464da60d3a9611a52847e4d404fa3d1872a5d11e6185f2aaeaa1653bdb",
+        "prediction/002.png": "7e7778bd131b7c618f1f63f907c62c81bc26277e7710a2e7db90fdad323b54c0",
+        "prediction/003.png": "3609eb2eaacdb289d341fc81d6841e677ad4aa74f5aae7a858004b694cfffab2",
+        "prediction/004.png": "3f5332c0c3968a674f956275ef46731ccccdc2ecdf8513a5ebce9fbfa43fd494",
+        "prediction/005.png": "b1c2d726fa4d3e6dffdc91361d9aecda78eec251fc809b04be4e2f2626f8cf72",
+        "prediction/006.png": "b924bab2296a195b70d1955e1b56fbb8919935a4413b51d2a9c985391c6b587c",
+        "prediction/007.png": "682839fa21837478bc83e7589fea7e480c1608b46854c6dde217ee7eaceaab72",
+        "prediction/008.png": "58b7731aaef328e162d83355a8661b7c28678cddbfa305482e018c089ca4c4af",
+        "prediction/009.png": "891dbc3d8c11222e533596de4708a293c71cccab4877f22a6d4213a7b50b9ede",
+        "prediction/010.png": "fed79d8f71e3dce3d799a66ca876ffa11192dc0c7cdf7cc49d10b6df0c098de4",
+        "prediction/011.png": "02b54d6c4c2455f9531e05ef737fd979500d9423328c80ed5e436aea06d39680",
+        "prediction/012.png": "38d7cb1c99eb68130d7aa2076b5cfa5992914c5c5ace7a8a0ab462881f7992e9",
+        "prediction/013.png": "af1e106a1cba1ddc2a4f411c5fd2cb7ea16e04360fd17b8698ff13870f80aa4c",
+        "prediction/014.png": "4612c89383a6d4fee67c0877388d7551dfcb5716e2637dac6adef00d687bef82",
+        "prediction/015.png": "655822622dbad14fca5d92a1b650add852d82029f25c83c74b3fdbc1e692c818",
+        "prediction/016.png": "1aea6652fbbf3b37f346f0452356d48c19c792d68671f6a840a4191ef77864c3"
+      },
+      "source_observation_sha256": {
+        "start": "9bd254dbd556051f68101cf1c7f4006dd3214fd362429845383c244eba02117c",
+        "goal": "c6efb6e77519ed8840d86fda9cf5ce99dc6d43997310f8d630f5dff8e202e095"
+      },
+      "source_result_sha256": "86fced04948c36911aedde64e6c644c0ddde36ad0a062d90f0761c78472adacc",
+      "source_optimization_sha256": "aa5a7193db2b2b29140b0514d00bfcdfa0da68e10048fde05ec135d68c670d76",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "613509b9a542a856c3b5933a367f2a859bdac164aa1ff06a389216328401e2e4",
+      "asset_sha256": {
+        "goal.webp": "e0b3fdb86c72273795bac6a3a468422f67f2e5dd963fbae166669a24fdb053ad",
+        "poster.webp": "1c51870f1642b95623304e4bf87fcb4241671c799479e8e0a5b19937b9a7664b",
+        "prediction.mp4": "d46ddfa337fac3ee194985d88a02777a5069f899b569d1d95981de67fe91c1c8",
+        "start.webp": "78bcd3ca5a83c796347bc4a24482e9953d2e00eb6774e3ca0ef3c2211365e05d"
+      }
+    },
+    {
+      "sample_id": 74,
+      "trajectory": "jackal_2020-01-03-13-30-05_6_r04",
+      "start_frame": 27,
+      "goal_frame": 43,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.17295347728269966,
+          0.02336857784970047
+        ],
+        [
+          0.3858662781213437,
+          0.07605946461249001
+        ],
+        [
+          0.6160249310767517,
+          0.12088859465153073
+        ],
+        [
+          0.8189459126018983,
+          0.14709970810665757
+        ],
+        [
+          1.0004272544227046,
+          0.1603966643128462
+        ],
+        [
+          1.1973573034788723,
+          0.16032686912820598
+        ],
+        [
+          1.4031133141864949,
+          0.12851374882792277
+        ],
+        [
+          1.611838980661954,
+          0.057828805264998465
+        ],
+        [
+          1.8120648180950163,
+          -0.05265076845258029
+        ],
+        [
+          1.9635911069862557,
+          -0.18697159395065818
+        ],
+        [
+          2.098493417639408,
+          -0.3343994362307713
+        ],
+        [
+          2.2532420118546908,
+          -0.5121029099877751
+        ],
+        [
+          2.3986839826067556,
+          -0.6829347963118264
+        ],
+        [
+          2.540915278596636,
+          -0.8451219984397329
+        ],
+        [
+          2.6866666286578638,
+          -1.0168138814336216
+        ],
+        [
+          2.812225281382728,
+          -1.2053403154632432
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.1834559440612793,
+          0.0029632914811372757
+        ],
+        [
+          0.36672047855216644,
+          0.011850074119181745
+        ],
+        [
+          0.5496023936109704,
+          0.026651075850207786
+        ],
+        [
+          0.7319108785836749,
+          0.04735085398367114
+        ],
+        [
+          0.9134557211070773,
+          0.07392781131460835
+        ],
+        [
+          1.0958195345016708,
+          0.09413430634424448
+        ],
+        [
+          1.2792934819474735,
+          0.09560858103224498
+        ],
+        [
+          1.461958458595183,
+          0.0783352147276546
+        ],
+        [
+          1.641903821286125,
+          0.04249488376899656
+        ],
+        [
+          1.8172473735397794,
+          -0.01153752835808507
+        ],
+        [
+          1.9865755896331567,
+          -0.08219739044612316
+        ],
+        [
+          2.1488250166395515,
+          -0.1678710988505252
+        ],
+        [
+          2.3026677492705283,
+          -0.26785747038334895
+        ],
+        [
+          2.4468446855248196,
+          -0.3813381820835848
+        ],
+        [
+          2.58017583161351,
+          -0.507384468654599
+        ],
+        [
+          2.701569959436316,
+          -0.6449647237997553
+        ]
+      ],
+      "ate_m": 0.29613898314986853,
+      "goal_error_m": 0.5711964670822712,
+      "normalized_goal_error": 0.18668688327039862,
+      "reference_curvature": {
+        "total_turn_deg": 78.11991831509013,
+        "net_turn_deg": -64.03128337209591,
+        "max_step_turn_deg": 12.666650029351588,
+        "segment_turns_deg": [
+          -7.715215136237481,
+          -47.519945721313064,
+          -8.796122514545374
+        ],
+        "turning_segments": 3,
+        "max_chord_deviation_m": 0.6881317593454701,
+        "length_m": 3.3988689549477966,
+        "chord_length_m": 3.0596497036963552,
+        "deviation_ratio": 0.20245904401337508
+      },
+      "planned_curvature": {
+        "total_turn_deg": 64.30811056949294,
+        "net_turn_deg": -49.5017803521081,
+        "max_step_turn_deg": 5.862383697062473,
+        "segment_turns_deg": [
+          5.397368943777234,
+          -28.973310695953455,
+          -25.925838599931875
+        ],
+        "turning_segments": 2,
+        "turn_direction_changes": 0,
+        "max_chord_deviation_m": 0.42260179451562707,
+        "length_m": 2.935677917426466,
+        "chord_length_m": 2.777491627471599,
+        "deviation_ratio": 0.14395373280121168
+      },
+      "actions_body_waypoint_units": [
+        [
+          0.7338237762451172,
+          0.011853165924549103,
+          0.03230240195989609
+        ],
+        [
+          0.7338237762451172,
+          0.011853165924549103,
+          0.03230240195989609
+        ],
+        [
+          0.7338237762451172,
+          0.011853165924549103,
+          0.03230240195989609
+        ],
+        [
+          0.7338237762451172,
+          0.011853165924549103,
+          0.03230240195989609
+        ],
+        [
+          0.7338237762451172,
+          0.011853165924549103,
+          0.03230240195989609
+        ],
+        [
+          0.7329592704772949,
+          -0.03753017261624336,
+          -0.10231789946556091
+        ],
+        [
+          0.7329592704772949,
+          -0.03753017261624336,
+          -0.10231789946556091
+        ],
+        [
+          0.7329592704772949,
+          -0.03753017261624336,
+          -0.10231789946556091
+        ],
+        [
+          0.7329592704772949,
+          -0.03753017261624336,
+          -0.10231789946556091
+        ],
+        [
+          0.7329592704772949,
+          -0.03753017261624336,
+          -0.10231789946556091
+        ],
+        [
+          0.7331682443618774,
+          -0.033197883516550064,
+          -0.09049824625253677
+        ],
+        [
+          0.7331682443618774,
+          -0.033197883516550064,
+          -0.09049824625253677
+        ],
+        [
+          0.7331682443618774,
+          -0.033197883516550064,
+          -0.09049824625253677
+        ],
+        [
+          0.7331682443618774,
+          -0.033197883516550064,
+          -0.09049824625253677
+        ],
+        [
+          0.7331682443618774,
+          -0.033197883516550064,
+          -0.09049824625253677
+        ],
+        [
+          0.7331682443618774,
+          -0.033197883516550064,
+          -0.09049824625253677
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7338237762451172,
+          0.011853165924549103,
+          0.03230240155386164
+        ],
+        [
+          1.4668819142086658,
+          0.04740029647672698,
+          0.06460480310772328
+        ],
+        [
+          2.1984095744438816,
+          0.10660430340083114,
+          0.09690720466158492
+        ],
+        [
+          2.9276435143346995,
+          0.18940341593468457,
+          0.12920960621544655
+        ],
+        [
+          3.653822884428309,
+          0.2957112452584334,
+          0.16151200776930819
+        ],
+        [
+          4.383278138006683,
+          0.3765372253769779,
+          0.05919411024033043
+        ],
+        [
+          5.117173927789894,
+          0.38243432412897993,
+          -0.043123787288647325
+        ],
+        [
+          5.847833834380732,
+          0.3133408589106184,
+          -0.1454416848176251
+        ],
+        [
+          6.5676152851445,
+          0.16997953507598623,
+          -0.24775958234660284
+        ],
+        [
+          7.2689894941591175,
+          -0.04615011343234028,
+          -0.3500774798755806
+        ],
+        [
+          7.946302358532627,
+          -0.32878956178449265,
+          -0.4405757288574701
+        ],
+        [
+          8.595300066558206,
+          -0.6714843954021008,
+          -0.5310739778393596
+        ],
+        [
+          9.210670997082113,
+          -1.0714298815333958,
+          -0.6215722268212491
+        ],
+        [
+          9.787378742099278,
+          -1.525352728334339,
+          -0.7120704758031386
+        ],
+        [
+          10.32070332645404,
+          -2.029537874618396,
+          -0.8025687247850282
+        ],
+        [
+          10.806279837745263,
+          -2.5798588951990213,
+          -0.8930669737669177
+        ]
+      ],
+      "parameters": [
+        0.733919486632927,
+        0.03230240155386164,
+        -0.10231789752897776,
+        -0.09049824898188949
+      ],
+      "search_goal_loss": 0.53388512134552,
+      "final_goal_loss": 0.5647279620170593,
+      "search_to_final_loss_delta": 0.030842840671539307,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-074",
+      "dataset": "RECON",
+      "title": {
+        "en": "Through the tall grass",
+        "zh": "穿过高草"
+      },
+      "start": "assets/navigation/curved-recon-074/start.webp",
+      "goal": "assets/navigation/curved-recon-074/goal.webp",
+      "poster": "assets/navigation/curved-recon-074/poster.webp",
+      "video": "assets/navigation/curved-recon-074/prediction.mp4",
+      "normalized_ate": 0.09678852542894167,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Evaluated on the final retained single-candidate rollout RGB, separately from search-batch predictions; deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source_20261010.py",
+      "inference_source_sha256": "48451a293fd0149684445e1e8138f6cf14516f7fd5e4fb01af493721da02dffc",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-074",
+      "source_frame_sha256": {
+        "prediction/000.png": "a553449194397e2c2948b779adb95154911c7f69ed1a2747f36011ca3b028e79",
+        "prediction/001.png": "26af5049b9ae261fcc3966e0ecb711ff4006e15510b8817d86fd57ca26114874",
+        "prediction/002.png": "af4beec76d48e8881bb10684fd1ae65fa5765ef8ce76c8c7dad85145f7fb4a86",
+        "prediction/003.png": "7ab04c482cf897a1fab8f1c445ed0ba978beb38fa63935fc4eaf50ff28ae207b",
+        "prediction/004.png": "0fe1dc0c0f35833e615a816b2982ea2d9be27c7654eca3e3707566356a876dd2",
+        "prediction/005.png": "f9673ae59efb3f62718560be32907088aa6758d5a44f1f77c911b4cb18a660a8",
+        "prediction/006.png": "e7083baaf0fd737227fdc40f7a1ecb941c6fdb8d56f2af2f569e0244f64b4b2b",
+        "prediction/007.png": "3e8500d018e1b329fb6af6545c398a91d021d6d62eee731726983881d8854e68",
+        "prediction/008.png": "9dcd643060529047a14fda7b8280fbfba6134b12f7bbfcadc4c47f57dc43a3d6",
+        "prediction/009.png": "0a554dd0771c90b2fc7d853206169c94f45cb37e85c6f8b75534a07618232025",
+        "prediction/010.png": "50b9eed6523f126986ac950ad19faec038f0ce66bf52abfff5749d2804a2a01e",
+        "prediction/011.png": "e6a3bc7370d33a586a45e558718ce0301c2db48fe54e2f98bb92d13629a4e5a9",
+        "prediction/012.png": "3a4a700e564829886c805015847d0639f49f460866611a19509fdd0dc27b455c",
+        "prediction/013.png": "b1616992e446852f801011ef54c5d74e7214f7f982db02b77526bfe691fb8338",
+        "prediction/014.png": "35790bd5ffdc9e7dae1cf72d183a29bed9da0e5619244b92267d5477233872b3",
+        "prediction/015.png": "7af6e38440b53f3457ed75658aab03be176a7692f6a763edeb9141479ee9d9cb",
+        "prediction/016.png": "ccfec53a82fd93fce9f2ab22efc4e998d34c495e7e9a42fd147291c592cacfbe"
+      },
+      "source_observation_sha256": {
+        "start": "405e0318e774013380e2ea02c064f00dda2a730eb2c18190a4512ff59d23326a",
+        "goal": "793cdb67a422b6a7c5ff8f75120818bb41911937c6d06ebc9cad28021593a4e5"
+      },
+      "source_result_sha256": "fdb747d3b35077fddfa52956e76b42e9845aeeee2c3aaac7a6a3ddc267b561a3",
+      "source_optimization_sha256": "1a530572439169ddfebb52e29611fcf639e64d4b8a9bdd35db1fa6a493d99668",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "e0ae35feca95fdff132f047e143219d524e89f9109f5508e82305e7335981417",
+      "asset_sha256": {
+        "goal.webp": "1c61e0b6881d63b172a5c5266ae11f5ec99733be0258132ef2683541b40c95a6",
+        "poster.webp": "67f58fa9a543e7ffa23b40fc9e7c71c589bc3c364aee2d0b0f9d6e2994b043b6",
+        "prediction.mp4": "02fde079512a399fd57bc0f8c0ab4d68b1ffb9ca65ebe7b4245141d41ba7a1be",
+        "start.webp": "d5c886b82cc5bc67964165791621688d707e9184d9ceb868bed87b1431acb0d1"
+      }
+    },
+    {
+      "sample_id": 61,
+      "trajectory": "jackal_2019-09-12-16-20-46_14_r01",
+      "start_frame": 3,
+      "goal_frame": 19,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.22530018892371467,
+          -0.010584682827480332
+        ],
+        [
+          0.40435269811427094,
+          -0.02448699006384555
+        ],
+        [
+          0.6190923834330244,
+          -0.04972805188416274
+        ],
+        [
+          0.829648229358416,
+          -0.07764900760207523
+        ],
+        [
+          1.0398753724676348,
+          -0.10871453439759439
+        ],
+        [
+          1.2504601494190848,
+          -0.1450615441157076
+        ],
+        [
+          1.4335874139043825,
+          -0.20014394516451792
+        ],
+        [
+          1.6150398667548675,
+          -0.28076083844971483
+        ],
+        [
+          1.8237990714153096,
+          -0.388170141330623
+        ],
+        [
+          2.0131996697861068,
+          -0.49697590591974217
+        ],
+        [
+          2.2012354070003135,
+          -0.6169093983054901
+        ],
+        [
+          2.378739070684808,
+          -0.7352978689007943
+        ],
+        [
+          2.5476544349127583,
+          -0.856142207728423
+        ],
+        [
+          2.705458997040865,
+          -0.9969085379473301
+        ],
+        [
+          2.8256852192349373,
+          -1.1453867775588118
+        ],
+        [
+          2.9300048816375166,
+          -1.3328768513038858
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.29381200671195984,
+          -0.0025294004008173943
+        ],
+        [
+          0.5875369183859245,
+          -0.010116851660500942
+        ],
+        [
+          0.8810876658028709,
+          -0.022760104622001655
+        ],
+        [
+          1.1743772313714906,
+          -0.040455411431060274
+        ],
+        [
+          1.4673186749229157,
+          -0.06319752664718808
+        ],
+        [
+          1.7581218258907099,
+          -0.10521446845268903
+        ],
+        [
+          2.042196987030294,
+          -0.18026910744991442
+        ],
+        [
+          2.315803664328749,
+          -0.28737317903070664
+        ],
+        [
+          2.5753392051140716,
+          -0.42511641509242676
+        ],
+        [
+          2.817386235151383,
+          -0.5916851134171756
+        ],
+        [
+          3.0399911119038308,
+          -0.7834635124585249
+        ],
+        [
+          3.2419123928015074,
+          -0.9969106530190789
+        ],
+        [
+          3.4210512802677284,
+          -1.2298079361509349
+        ],
+        [
+          3.5755457800578427,
+          -1.479734595448093
+        ],
+        [
+          3.703790055083609,
+          -1.744092858825561
+        ],
+        [
+          3.804451116704845,
+          -2.020134950119844
+        ]
+      ],
+      "ate_m": 0.7314307630480202,
+      "goal_error_m": 1.1121959865111684,
+      "normalized_goal_error": 0.3455176458014473,
+      "reference_curvature": {
+        "total_turn_deg": 58.21859562056941,
+        "net_turn_deg": -58.218595620569396,
+        "max_step_turn_deg": 9.906276383760678,
+        "segment_turns_deg": [
+          -7.102989701807725,
+          -22.73787389238985,
+          -28.37773202637182
+        ],
+        "turning_segments": 3,
+        "max_chord_deviation_m": 0.4131869830408467,
+        "length_m": 3.3641068156062737,
+        "chord_length_m": 3.218926732182862,
+        "deviation_ratio": 0.1228221949208182
+      },
+      "planned_curvature": {
+        "total_turn_deg": 69.47195019181936,
+        "net_turn_deg": -69.47195019181936,
+        "max_step_turn_deg": 6.578229807884188,
+        "segment_turns_deg": [
+          -7.728291491162476,
+          -32.52400024831451,
+          -29.219658452342383
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 0,
+        "max_chord_deviation_m": 0.8323099695704682,
+        "length_m": 4.701166253238727,
+        "chord_length_m": 4.3075275409557685,
+        "deviation_ratio": 0.17704329622401108
+      },
+      "actions_body_waypoint_units": [
+        [
+          1.1752480268478394,
+          -0.010117601603269577,
+          -0.01721738837659359
+        ],
+        [
+          1.1752480268478394,
+          -0.010117601603269577,
+          -0.01721738837659359
+        ],
+        [
+          1.1752480268478394,
+          -0.010117601603269577,
+          -0.01721738837659359
+        ],
+        [
+          1.1752480268478394,
+          -0.010117601603269577,
+          -0.01721738837659359
+        ],
+        [
+          1.1752480268478394,
+          -0.010117601603269577,
+          -0.01721738837659359
+        ],
+        [
+          1.1733555793762207,
+          -0.06743159890174866,
+          -0.11481177061796188
+        ],
+        [
+          1.1733555793762207,
+          -0.06743159890174866,
+          -0.11481177061796188
+        ],
+        [
+          1.1733555793762207,
+          -0.06743159890174866,
+          -0.11481177061796188
+        ],
+        [
+          1.1733555793762207,
+          -0.06743159890174866,
+          -0.11481177061796188
+        ],
+        [
+          1.1733555793762207,
+          -0.06743159890174866,
+          -0.11481177061796188
+        ],
+        [
+          1.1737635135650635,
+          -0.05991145223379135,
+          -0.10199584811925888
+        ],
+        [
+          1.1737635135650635,
+          -0.05991145223379135,
+          -0.10199584811925888
+        ],
+        [
+          1.1737635135650635,
+          -0.05991145223379135,
+          -0.10199584811925888
+        ],
+        [
+          1.1737635135650635,
+          -0.05991145223379135,
+          -0.10199584811925888
+        ],
+        [
+          1.1737635135650635,
+          -0.05991145223379135,
+          -0.10199584811925888
+        ],
+        [
+          1.1737635135650635,
+          -0.05991145223379135,
+          -0.10199584811925888
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.1752480268478394,
+          -0.010117601603269577,
+          -0.01721738923934534
+        ],
+        [
+          2.350147673543698,
+          -0.04046740664200377,
+          -0.03443477847869068
+        ],
+        [
+          3.5243506632114836,
+          -0.09104041848800662,
+          -0.05165216771803602
+        ],
+        [
+          4.6975089254859625,
+          -0.1618216457242411,
+          -0.06886955695738135
+        ],
+        [
+          5.869274699691663,
+          -0.25279010658875234,
+          -0.08608694619672669
+        ],
+        [
+          7.0324873035628395,
+          -0.4208578738107561,
+          -0.20089871529713965
+        ],
+        [
+          8.168787948121176,
+          -0.7210764297996577,
+          -0.3157104843975526
+        ],
+        [
+          9.263214657314997,
+          -1.1494927161228266,
+          -0.4305222534979656
+        ],
+        [
+          10.301356820456286,
+          -1.700465660369707,
+          -0.5453340225983785
+        ],
+        [
+          11.269544940605533,
+          -2.3667404536687022,
+          -0.6601457916987914
+        ],
+        [
+          12.159964447615323,
+          -3.1338540498340994,
+          -0.7621416409591046
+        ],
+        [
+          12.96764957120603,
+          -3.9876426120763155,
+          -0.8641374902194179
+        ],
+        [
+          13.684205121070914,
+          -4.9192317446037395,
+          -0.9661333394797311
+        ],
+        [
+          14.302183120231371,
+          -5.918938381792372,
+          -1.0681291887400444
+        ],
+        [
+          14.815160220334436,
+          -6.976371435302244,
+          -1.1701250380003576
+        ],
+        [
+          15.21780446681938,
+          -8.080539800479375,
+          -1.2721208872606709
+        ]
+      ],
+      "parameters": [
+        1.1752915584400039,
+        -0.01721738923934534,
+        -0.11481176910041296,
+        -0.10199584926031326
+      ],
+      "search_goal_loss": 0.38286057114601135,
+      "final_goal_loss": 0.38838058710098267,
+      "search_to_final_loss_delta": 0.0055200159549713135,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-061",
+      "dataset": "RECON",
+      "title": {
+        "en": "Past the courtyard",
+        "zh": "庭院转弯"
+      },
+      "start": "assets/navigation/curved-recon-061/start.webp",
+      "goal": "assets/navigation/curved-recon-061/goal.webp",
+      "poster": "assets/navigation/curved-recon-061/poster.webp",
+      "video": "assets/navigation/curved-recon-061/prediction.mp4",
+      "normalized_ate": 0.2272281489774738,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Evaluated on the final retained single-candidate rollout RGB, separately from search-batch predictions; deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source_20261010.py",
+      "inference_source_sha256": "48451a293fd0149684445e1e8138f6cf14516f7fd5e4fb01af493721da02dffc",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-061",
+      "source_frame_sha256": {
+        "prediction/000.png": "e05722986fd3df6e5696c8ff9385553a11eda49ea1ecc5bc991d18c5fc70da93",
+        "prediction/001.png": "ab2c9c0e96b95eef7b9b1dac2bae3989a27481c371c17d95d7ea1f73da1a5bbc",
+        "prediction/002.png": "2a109594a73b1ffba851fb63732451fb838829e00a1e236ece6a1b7b8f547afb",
+        "prediction/003.png": "8ff8bceeb558330309f23d953e0a5064183edcb4c7938f56b59bb84c742c4631",
+        "prediction/004.png": "53ddb5a401ca56d05de0adcf7942d5d7e4e188c301b4882ba86cdc538752359a",
+        "prediction/005.png": "4c549b5352ec82ef1b67df434f905b255e88e274f6bb38cf579e21af501816e9",
+        "prediction/006.png": "fcce2e81512b469d0b16aa2835d223ed2894991d65fdbb790e71f3663f5ebb37",
+        "prediction/007.png": "9b1ad4d25e60bab2116803ad707b75f8eccfdaefd4bbb423a0cfd7950a0ddd9e",
+        "prediction/008.png": "26210ef220d068e1f379d076676d6f1089ff7c4fbd59222587492a737d5ea12b",
+        "prediction/009.png": "793c26db402a368035746c43e9e6fd2dd69ee438655ee70565a0e4164805ec72",
+        "prediction/010.png": "b762174ef3ea5452121cdadc6eec812e21130b836111904d9859c01825d8bb6b",
+        "prediction/011.png": "36dced9b09131b5d8f6b9510bf8b51cb04dbd5481abe4d2cf3691acd98c07dfa",
+        "prediction/012.png": "ff994b634ae0d76c0d6b12c5662f7d3f1df72d2a5572a51ec27740b167daab49",
+        "prediction/013.png": "cee3114e6ded1b7ceab56afe9d4d52f9f4cd776ef600174f04ac21be6a69f794",
+        "prediction/014.png": "e3bdabeac5fd02cab6133379bf1dabab00a45cd244e610c877397eb68afccbb0",
+        "prediction/015.png": "f3fa314ae7ed2dd6f2b0292c16336133fe5c2c3c4ff9e88b103d727badd503fe",
+        "prediction/016.png": "854c328e0e80a077e7fe8596c51ff959ba22185201b0d2d32f3839ab1608ce0a"
+      },
+      "source_observation_sha256": {
+        "start": "27c3e3b01e5f1ee59b49f82609949d4ba40e19381af9c0f50c73e283905dd462",
+        "goal": "7996950e1272238760b908937e00be7b4eee88d89fba1aba6c487ad88dc4fce9"
+      },
+      "source_result_sha256": "f48a520f3acc23516adbd047b4efa1e89715e4ec0b56e06cc6f3b91d64a66b39",
+      "source_optimization_sha256": "a9bc8a50a9b88bd89f4411cde7d89a618113fc872911c0ee02adc6fe1796b990",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "97a4043c5973302f4219a8428d75aced8cd4712c2d91109384855cd0666f91ec",
+      "asset_sha256": {
+        "goal.webp": "85b7a8a8a2d43df102a4e68dc356744838dbd437c9c60e6341b79496ed99bb83",
+        "poster.webp": "692c7d40108ae907049fac76fa1c0fab55e140dcc01e789ee25a3bc0b0609e73",
+        "prediction.mp4": "5c7daa04b5cba2b3b2c25bb3d9f8708bd7b276b07706dc5608ae68b7e0f2ec3e",
+        "start.webp": "fc323518338a6d8aae66aa3531450aa574344795597c41ee73844209309d5019"
+      }
+    },
+    {
+      "sample_id": 78,
+      "trajectory": "jackal_2019-08-18-15-01-02_2_r00",
+      "start_frame": 3,
+      "goal_frame": 19,
+      "reference_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2720547538867826,
+          -0.005977630592088251
+        ],
+        [
+          0.5425186849007807,
+          -0.024464591783282415
+        ],
+        [
+          0.7975934689433313,
+          -0.07385677698532457
+        ],
+        [
+          1.1452507068280044,
+          -0.2199111224418314
+        ],
+        [
+          1.4122977093990436,
+          -0.3761651946901371
+        ],
+        [
+          1.6562710874382782,
+          -0.5359457106984857
+        ],
+        [
+          1.8762278823068772,
+          -0.7093145725613015
+        ],
+        [
+          2.0916159635533,
+          -0.8836283712122439
+        ],
+        [
+          2.305299878666337,
+          -1.06198454559479
+        ],
+        [
+          2.5229210014623566,
+          -1.245140457901783
+        ],
+        [
+          2.7536557433143622,
+          -1.4306487644549004
+        ],
+        [
+          2.9564073312608934,
+          -1.6130473820875209
+        ],
+        [
+          3.160014271938352,
+          -1.8323469856922971
+        ],
+        [
+          3.352381704449729,
+          -2.093929414096841
+        ],
+        [
+          3.5008781816190937,
+          -2.350792463768903
+        ],
+        [
+          3.6442745750955994,
+          -2.5643661074311224
+        ]
+      ],
+      "planned_xy_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.2126421332359314,
+          -0.006748565007001162
+        ],
+        [
+          0.42442841909724816,
+          -0.02696709803612981
+        ],
+        [
+          0.6345064548515348,
+          -0.060574223030719354
+        ],
+        [
+          0.8420307131740682,
+          -0.10743467719479834
+        ],
+        [
+          1.0461659452473095,
+          -0.1673598554021697
+        ],
+        [
+          1.2471353172168356,
+          -0.2371705387971517
+        ],
+        [
+          1.4456048698199222,
+          -0.31379988484310756
+        ],
+        [
+          1.641343330028753,
+          -0.3971585987305958
+        ],
+        [
+          1.8341226073087409,
+          -0.48714954403791977
+        ],
+        [
+          2.0237180594083566,
+          -0.5836678559224661
+        ],
+        [
+          2.2076165562756414,
+          -0.6906424669526589
+        ],
+        [
+          2.3826425630397665,
+          -0.8115892383494687
+        ],
+        [
+          2.5477367629003544,
+          -0.9457761592005708
+        ],
+        [
+          2.701899949723469,
+          -1.0923910847151623
+        ],
+        [
+          2.8441990755762876,
+          -1.250546651599896
+        ],
+        [
+          2.973772897849887,
+          -1.4192856486827201
+        ]
+      ],
+      "ate_m": 0.8066355908595171,
+      "goal_error_m": 1.3269445188841786,
+      "normalized_goal_error": 0.2977824580773381,
+      "reference_curvature": {
+        "total_turn_deg": 65.12547288512393,
+        "net_turn_deg": -54.863315223399695,
+        "max_step_turn_deg": 11.828757183397467,
+        "segment_turns_deg": [
+          -31.962466031033163,
+          -5.577740217669202,
+          -17.323108974697327
+        ],
+        "turning_segments": 2,
+        "turn_direction_changes": 0,
+        "max_chord_deviation_m": 0.5148355835921933,
+        "length_m": 4.6477643212125175,
+        "chord_length_m": 4.456086928194922,
+        "deviation_ratio": 0.11077058732140747
+      },
+      "planned_curvature": {
+        "total_turn_deg": 50.66175350160838,
+        "net_turn_deg": -50.66175350160838,
+        "max_step_turn_deg": 4.458552160262014,
+        "segment_turns_deg": [
+          -17.337910835684674,
+          -11.031081864614002,
+          -22.292760801309708
+        ],
+        "turning_segments": 3,
+        "turn_direction_changes": 0,
+        "max_chord_deviation_m": 0.350359956478325,
+        "length_m": 3.4039871845682463,
+        "chord_length_m": 3.2951019711904586,
+        "deviation_ratio": 0.1029263441609472
+      },
+      "actions_body_waypoint_units": [
+        [
+          0.8505685329437256,
+          -0.026994260028004646,
+          -0.06345215439796448
+        ],
+        [
+          0.8505685329437256,
+          -0.026994260028004646,
+          -0.06345215439796448
+        ],
+        [
+          0.8505685329437256,
+          -0.026994260028004646,
+          -0.06345215439796448
+        ],
+        [
+          0.8505685329437256,
+          -0.026994260028004646,
+          -0.06345215439796448
+        ],
+        [
+          0.8505685329437256,
+          -0.026994260028004646,
+          -0.06345215439796448
+        ],
+        [
+          0.850872814655304,
+          -0.014524911530315876,
+          -0.03413788601756096
+        ],
+        [
+          0.850872814655304,
+          -0.014524911530315876,
+          -0.03413788601756096
+        ],
+        [
+          0.850872814655304,
+          -0.014524911530315876,
+          -0.03413788601756096
+        ],
+        [
+          0.850872814655304,
+          -0.014524911530315876,
+          -0.03413788601756096
+        ],
+        [
+          0.850872814655304,
+          -0.014524911530315876,
+          -0.03413788601756096
+        ],
+        [
+          0.8503527641296387,
+          -0.033102408051490784,
+          -0.07781641185283661
+        ],
+        [
+          0.8503527641296387,
+          -0.033102408051490784,
+          -0.07781641185283661
+        ],
+        [
+          0.8503527641296387,
+          -0.033102408051490784,
+          -0.07781641185283661
+        ],
+        [
+          0.8503527641296387,
+          -0.033102408051490784,
+          -0.07781641185283661
+        ],
+        [
+          0.8503527641296387,
+          -0.033102408051490784,
+          -0.07781641185283661
+        ],
+        [
+          0.8503527641296387,
+          -0.033102408051490784,
+          -0.07781641185283661
+        ]
+      ],
+      "poses_origin_waypoint_units": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.8505685329437256,
+          -0.026994260028004646,
+          -0.0634521523137252
+        ],
+        [
+          1.6977136763889926,
+          -0.10786839214451924,
+          -0.1269043046274504
+        ],
+        [
+          2.538025819406139,
+          -0.24229689212287742,
+          -0.1903564569411756
+        ],
+        [
+          3.3681228526962728,
+          -0.42973870877919335,
+          -0.2538086092549008
+        ],
+        [
+          4.184663780989238,
+          -0.6694394216086788,
+          -0.317260761568626
+        ],
+        [
+          4.988541268867342,
+          -0.9486821551886068,
+          -0.3513986485673601
+        ],
+        [
+          5.782419479279689,
+          -1.2551995393724302,
+          -0.3855365355660942
+        ],
+        [
+          6.565373320115012,
+          -1.5886343949223831,
+          -0.4196744225648283
+        ],
+        [
+          7.3364904292349635,
+          -1.948598176151679,
+          -0.4538123095635624
+        ],
+        [
+          8.094872237633426,
+          -2.3346714236898642,
+          -0.4879501965622965
+        ],
+        [
+          8.830466225102565,
+          -2.7625698678106354,
+          -0.5657666116307731
+        ],
+        [
+          9.530570252159066,
+          -3.246356953397875,
+          -0.6435830266992498
+        ],
+        [
+          10.190947051601418,
+          -3.783104636802283,
+          -0.7213994417677265
+        ],
+        [
+          10.807599798893875,
+          -4.369564338860649,
+          -0.7992158568362032
+        ],
+        [
+          11.37679630230515,
+          -5.002186606399584,
+          -0.8770322719046799
+        ],
+        [
+          11.895091591399549,
+          -5.6771425947308805,
+          -0.9548486869731566
+        ]
+      ],
+      "parameters": [
+        0.850996807029699,
+        -0.0634521523137252,
+        -0.03413788699873411,
+        -0.07781641506847668
+      ],
+      "search_goal_loss": 0.2892093062400818,
+      "final_goal_loss": 0.29911866784095764,
+      "search_to_final_loss_delta": 0.009909361600875854,
+      "protocol": {
+        "planner": "independent piecewise SE(2) goal-image CEM demo",
+        "input": "single start RGB repeated four times and goal RGB; no recorded actions or later observations",
+        "objective": "LPIPS between final model prediction and VAE-reconstructed goal RGB",
+        "proposal": "one speed and three constant yaw-rate segments; dataset-only speed prior",
+        "feedback": "autoregressive decoded RGB, deterministic VAE posterior mean",
+        "coordinates": "each action is current-body dx,dy in dataset waypoint units,dyaw radians; exact SE(2) integration, multiplied by metric waypoint spacing for meters",
+        "seed": 42,
+        "population": 32,
+        "elites": 6,
+        "iterations": 2,
+        "diffusion_steps": 50,
+        "batch_size": 32,
+        "horizon": 16,
+        "fps": 4,
+        "shared_candidate_noise": true,
+        "ground_truth_usage": "scene selection and post-hoc errors only",
+        "scope": "qualitative offline imagined planning; no execution or success rate; separate from paper benchmark"
+      },
+      "id": "curved-recon-078",
+      "dataset": "RECON",
+      "title": {
+        "en": "Garden bend",
+        "zh": "花园转弯"
+      },
+      "start": "assets/navigation/curved-recon-078/start.webp",
+      "goal": "assets/navigation/curved-recon-078/goal.webp",
+      "poster": "assets/navigation/curved-recon-078/poster.webp",
+      "video": "assets/navigation/curved-recon-078/prediction.mp4",
+      "normalized_ate": 0.18101881849649423,
+      "waypoint_spacing_m": 0.25,
+      "fps": 4,
+      "frame_count": 17,
+      "duration_seconds": 4.25,
+      "selection": "Manually reviewed all predicted frames for scene consistency; selected real multi-segment turns and low post-hoc endpoint error.",
+      "final_loss_audit": "Recomputed from the archived raw float32 final RGB, not the search batch; same deterministic VAE-reconstructed goal and LPIPS alex.",
+      "inference_source": "inference_source.py",
+      "inference_source_sha256": "0253e3158b1afabcf6f4d173e992d6126b6f3930ae1eb1d6241e2fbc309d326d",
+      "source_archive": "curved_navigation_20261009",
+      "source_example": "runs/recon-078",
+      "source_frame_sha256": {
+        "prediction/000.png": "cc069eabc9a97d5a4752c5895c78df683bf3aa9d6c7e203a89133d786f0ad5af",
+        "prediction/001.png": "2ea0b8afecdd2f051fa462f431d8c4d5149b37f3d18e4c2dab2f84271a9a0a64",
+        "prediction/002.png": "5e3439b2720c47d747022cf9bf30883edf2dcef047c23f4df0b2cd77a98723e8",
+        "prediction/003.png": "e8efa355cb8350487aa61892df28d719f32c1605f743a6e9adb50cf700b08791",
+        "prediction/004.png": "2beff8f8ed9fa16dbbb7924fc7f6a3749f4be2f265d5ae7c15f42134f9b934d7",
+        "prediction/005.png": "f690ae628de30b39d1afa00ae7feaa46e3c3b6a688b6ddae575831d7b491e417",
+        "prediction/006.png": "f2aef86599b26ba93e2f9c18bf11e63cb4f92522ebce175c28bcac26009137e8",
+        "prediction/007.png": "d915d4d4aee9e125821a1e8f79a13c0792530276b9c7feb9c1058ddd769c8445",
+        "prediction/008.png": "48a092e221890500226d7903a9d99c15a73c7ac1d96159a6704a3c62dea08a91",
+        "prediction/009.png": "ec9c05942031e637dba8b66cfc7340e7830ee4846e2266b9e016f733006a0ad7",
+        "prediction/010.png": "d0e9227907d8c90915386e87537340b66ab0e5c5f86d657fbbe3b113ed328d17",
+        "prediction/011.png": "1c7dcf80a65a5ecb46685bd98e423960c5beed1d111bddbe09f4fe6bb8abad3e",
+        "prediction/012.png": "d2498559aed1f680c2251c7afc9f1d04cd9bcad9d09c53fc32b551298bf39361",
+        "prediction/013.png": "a3e46624a3444fade6d1e3e364cbccc25b60e99144f9346c8ab9eae0de0e46a4",
+        "prediction/014.png": "69c2223e17e9be284d0ffe8d177c1941d83728a8a9ea7a197e425120fb7e01a4",
+        "prediction/015.png": "9843913330a900b156524077439c90ffc824c9ad7439db5699c7cf5d01fe689f",
+        "prediction/016.png": "132ed3b11daba3aff27d4e648a99350decd29496ab97d0e5fa73fdad03cacdcb"
+      },
+      "source_observation_sha256": {
+        "start": "a2fdc0f7b35f04405a0de9842cf138f75d556f479f37187aaf86ba0c079f104b",
+        "goal": "5d832b89935b174df258d4c9587e5ebbd1fe56601f864e523b9ebce5137d7b27"
+      },
+      "source_result_sha256": "47cb4ac2f090930584a8ab274095d2d5e308daca2d1c523e2a6a76c9834f4f30",
+      "source_optimization_sha256": "c9380e146f503eb9fc2530cb865952a3dba41607733380b8a349948c02be5614",
+      "source_index_sha256": "c62cd08be9f124cbeec48d914460da8630e089bf0bdb84c5018013a82d12ec54",
+      "rollout_sha256": "12b40c3a42e14818b87c797dac3a8493a72c3668818535f92e75dbc6984a8a52",
+      "asset_sha256": {
+        "goal.webp": "e17dce12822f0b48c22dbeba8626f8b2da31edc0392c98c59211ddddcf401993",
+        "poster.webp": "23afb955ef10b93becf0f149d9b4674479363bb4929ebe4e50482f7ff712b3d9",
+        "prediction.mp4": "8f80a8d0de0e34903eb73e5cc0180041981852884df7bddf845f4b66b451b1fd",
+        "start.webp": "9a89b337cf2fd9e2dd6f88bdaa41a9d9cb0c869fbbf6537b40b17de674c087c2"
+      }
+    }
+  ]
+}

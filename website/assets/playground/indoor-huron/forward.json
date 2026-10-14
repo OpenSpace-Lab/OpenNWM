@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "sceneId": "indoor-huron",
+  "source": {
+    "dataset": "HuRoN",
+    "trajectory": "Feb-06-2023-bww8-intloss_00000010_3",
+    "frame": 51,
+    "sha256": "ba08a371d03e7ca38e83233c34bcf99e7beabfc76ae9d061e60ba1f9fc615f6e"
+  },
+  "checkpoint": {
+    "id": "joint_0100000",
+    "bytes": 3137820686,
+    "mtimeNs": 1790066759455754000,
+    "sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4"
+  },
+  "seed": 0,
+  "points": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "actions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "fps": 4,
+  "frames": 16,
+  "duration": 4.0,
+  "diffusionSteps": 250,
+  "protocol": "Single initial RGB repeated to four context frames; autoregressive RGB re-encoding with deterministic VAE posterior means; DDPM; real planar action adapter.",
+  "canvasUnitsToWaypointUnits": 12.0,
+  "waypointSpacingMeters": 0.255,
+  "planetaryTimingNote": null,
+  "elapsedBatchSeconds": 102.54623328894377,
+  "mode": "autoregressive",
+  "modelConditions": [
+    [
+      0.75,
+      -0.0,
+      -0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ],
+    [
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "simulatedSource": false
+}
