@@ -24,6 +24,8 @@ output_dir: ${exp_dir}/planning_${ckp}            # Output directory for saving 
 save_preds: false              # Whether to save prediction tensors
 num_workers: 12                 # Number of workers for data loading
 batch_size: 1                 # Batch size for planning evaluation
+inference_sampler: ddpm       # ddpm (legacy), dpmpp_2m, ddim; inference only
+ddim_eta: null                # DDIM only: null -> 0.0; steps use model.diffusion.eval_timestep_respacing
 
 # Evaluation-only datasets override any training dataset entry stored in the
 # checkpoint config. Each entry fixes the exact available navigation sample count.

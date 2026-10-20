@@ -91,7 +91,9 @@ evaluation_datasets:
 num_workers: 8                  # Number of workers for data loading
 batch_size: 64                  # Batch size for inference
 pin_memory: true               # Disable when several large evaluation jobs share host memory
-eval_diffusion_steps: null      # Optional explicit DDPM step count for pinned protocols
+eval_diffusion_steps: null      # Optional step count; null preserves checkpoint eval_timestep_respacing
+inference_sampler: ddpm         # ddpm (legacy), dpmpp_2m, ddim; inference only
+ddim_eta: null                  # DDIM only: null -> 0.0; explicit values must be in [0, 1]
 eval_type: null                 # Type of evaluation: 'time' or 'rollout'
 eval_sample_indices: null       # Optional fixed subset of positions in the predefined split
 eval_expected_full_count: null  # Optional guard on the predefined split before subsetting

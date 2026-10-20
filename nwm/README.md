@@ -108,6 +108,19 @@ python run.py nwm plan exp_dir="$OPENNWM_WORK_ROOT/runs/reset" ckp=best \
   output_dir="$OPENNWM_WORK_ROOT/plan/reset"
 ```
 
+可选采样器只用于独立推理/规划：`inference_sampler=ddpm`（默认旧路径）、`dpmpp_2m`、`ddim`。infer 继续用已有 `eval_diffusion_steps=20`；省略时保留实验配置的 `model.diffusion.eval_timestep_respacing`。plan 使用 `++model.diffusion.eval_timestep_respacing=20`。例如：
+
+```bash
+python run.py nwm infer exp_dir=/绝对路径/实验目录 ckp=CHECKPOINT_ID \
+  eval_type=time inference_sampler=dpmpp_2m eval_diffusion_steps=20 \
+  prediction_dir=/绝对路径/新的预测目录
+python run.py nwm plan exp_dir=/绝对路径/实验目录 ckp=CHECKPOINT_ID \
+  inference_sampler=ddim ++model.diffusion.eval_timestep_respacing=20 \
+  output_dir=/绝对路径/新的规划目录
+```
+
+DDIM 默认 eta=0，可选 `ddim_eta=0.0` 到 `1.0`；其他采样器显式设置 eta 会报错。新路径要求整数步数 2..训练扩散总步数；无采样的 `gt=1` 不接受加速选项。训练及训练期间的监控仍调用原 `setup_diffusion`，不会由上述选项替换。新路径复用原条件、时间步映射、epsilon/x0 与 learned sigma 转换，保持 latent 不裁剪与 VAE 解码。DPM-Solver++ 固定二阶多步、`lower_order_final=True`、无 dynamic thresholding，逐次生成重置求解器，不支持额外的梯度 `cond_fn`。不同采样器/eta 写入结果身份检查，防止续跑时误用旧图像；旧 DDPM 默认身份不增加字段。部署命令、语义与检查边界见 [部署采样器说明](../deploy/README.md#可选少步采样器)。采样器已完成机载单图入口及共享推理包装器的离线速度/目标匹配对比，记录见部署说明；Hydra 数据集 infer/plan 和闭环导航仍未执行完整测试。
+
 连续预测时，将两条 infer 命令的 `eval_type` 和 eval 命令的 `eval_types` 改为 `rollout`，默认评估 1/4 fps。三条命令可同时传 `'rollout_fps_values=[1,2,4]'` 扩展帧率。
 
 GT/预测实际目录由推理日志给出；指标工具输入目录下应为 `数据集/time/样本/*.png` 或 `数据集/rollout_1fps/样本/*.png`。LPIPS、DreamSim、FID 按原定义计算；每批持久化累积值、FID sufficient statistics 和游标，重跑继续，完成 JSON 直接复用。参数/输入改变请使用新输出目录或 `resume=false`。推理/规划记录权重的路径、大小、修改时间与关键配置，`latest`/`best` 改变时要求新输出目录，避免误用旧结果。规划保留逐样本结果以便恢复。首次 DreamSim/LPIPS/FID 会获取公开预训练权重；离线机器需提前准备相应缓存。

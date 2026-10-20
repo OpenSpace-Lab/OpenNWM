@@ -90,6 +90,14 @@ def output_identity(directory, config, *, checkpoint=None, name="run"):
     def plain(value):
         return OmegaConf.to_container(value, resolve=True) if OmegaConf.is_config(value) else value
     identity = {key: plain(config[key]) for key in fields if key in config}
+    # Omit legacy defaults so existing DDPM results remain resumable. Different
+    # accelerated samplers/eta must never reuse a DDPM (or each other's) cache.
+    sampler = config.get("inference_sampler", "ddpm")
+    if sampler != "ddpm":
+        identity["inference_sampler"] = sampler
+        if sampler == "ddim":
+            eta = config.get("ddim_eta")
+            identity["ddim_eta"] = 0.0 if eta is None else eta
     if checkpoint is not None:
         stat = os.stat(checkpoint)
         identity["checkpoint"] = {"path": os.path.realpath(checkpoint),

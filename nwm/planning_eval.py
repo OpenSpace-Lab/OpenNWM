@@ -30,7 +30,6 @@ from train_utils import (
     setup_model,
     print_config,
     cleanup,
-    setup_diffusion,
     validate_model_context_sizes,
 )
 
@@ -44,6 +43,7 @@ from evo.core.metrics import PoseRelation
 from datasets import TrajectoryEvalDataset
 from isolated_nwm_infer import model_forward_wrapper
 from scripts.benchmark_reproducibility import samplewise_randn
+from diffusion.inference_sampling import setup_inference_diffusion, validate_sampler_options
 from misc import (
     calculate_delta_yaw,
     get_action_torch,
@@ -247,6 +247,9 @@ class WM_Planning_Evaluator:
                 f"Experiment file {self.exp_dir} does not exist, using default configuration"
             )
 
+        validate_sampler_options(
+            self.config.get("inference_sampler", "ddpm"), self.config.get("ddim_eta")
+        )
         validate_model_context_sizes(
             self.config,
             "eval_context_size",
@@ -278,7 +281,7 @@ class WM_Planning_Evaluator:
         self.model.to(self.device)
         if self.config.get("torch_compile", False):
             self.model = torch.compile(self.model)
-        self.diffusion = setup_diffusion(self.config, for_eval=True, device=self.device)
+        self.diffusion = setup_inference_diffusion(self.config, device=self.device)
 
         self.model = torch.nn.parallel.DistributedDataParallel(
             self.model, device_ids=[self.device], find_unused_parameters=False

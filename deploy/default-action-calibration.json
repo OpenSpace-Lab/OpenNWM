@@ -1,0 +1,4233 @@
+{
+  "schema": "opennwm.fixed15.v1",
+  "waypoint_spacing_m": 0.25,
+  "contract_sha256": "9abae16d65b2ae654c033c6f04175d7d8f2c068a31c5c6d514bbe4dc5c01256f",
+  "repeats": 3,
+  "ready": true,
+  "problems": [],
+  "actions": {
+    "stationary": {
+      "proposal": {
+        "candidate": "stationary",
+        "nominal": {
+          "name": "stationary",
+          "distance_m": 0.0,
+          "yaw_rad": 0.0
+        },
+        "metric_target": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "raw_candidate": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "schedule": {
+          "duration_s": 0.5,
+          "vx_m_s": 0.0,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.0
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.0
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "stationary",
+            "nominal": {
+              "name": "stationary",
+              "distance_m": 0.0,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "duration_s": 0.5,
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.0
+          },
+          "measured_m_rad": [
+            -0.00014323084931358292,
+            4.1655916915756206e-05,
+            -0.0003424026072025299
+          ],
+          "measured_path_m": 0.00014916531637476147,
+          "measured_accumulated_turn_rad": 0.0003424026072025299,
+          "finished_monotonic": 842.698537504,
+          "control_sent": false,
+          "observation_horizon_s": 1.3997511040000745,
+          "before_image": {
+            "timestamp_monotonic": 841.316760384,
+            "sequence": 152,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 842.716511488,
+            "sequence": 172,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "stationary",
+            "nominal": {
+              "name": "stationary",
+              "distance_m": 0.0,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "duration_s": 0.5,
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.0
+          },
+          "measured_m_rad": [
+            9.299599169558705e-06,
+            -0.00010485099894115835,
+            -0.0004217997193336487
+          ],
+          "measured_path_m": 0.00010526259793332695,
+          "measured_accumulated_turn_rad": 0.0004217997193336487,
+          "finished_monotonic": 851.529144704,
+          "control_sent": false,
+          "observation_horizon_s": 1.3984414079999397,
+          "before_image": {
+            "timestamp_monotonic": 850.137976576,
+            "sequence": 278,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 851.536417984,
+            "sequence": 298,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "stationary",
+            "nominal": {
+              "name": "stationary",
+              "distance_m": 0.0,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "duration_s": 0.5,
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.0
+          },
+          "measured_m_rad": [
+            6.184977214119905e-06,
+            -2.424943572572959e-05,
+            0.000520315021276474
+          ],
+          "measured_path_m": 2.502576824306245e-05,
+          "measured_accumulated_turn_rad": 0.000520315021276474,
+          "finished_monotonic": 856.234073568,
+          "control_sent": false,
+          "observation_horizon_s": 1.4693457920000128,
+          "before_image": {
+            "timestamp_monotonic": 854.828152672,
+            "sequence": 345,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 856.297498464,
+            "sequence": 366,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "model_action": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "observation_horizon_s": 1.422512768000009,
+        "max_xy_deviation_m": 0.0001230584887141797,
+        "max_yaw_deviation_rad": 0.0006016107896963755,
+        "sample_count": 3
+      }
+    },
+    "forward_25": {
+      "proposal": {
+        "candidate": "forward_25",
+        "nominal": {
+          "name": "forward_25",
+          "distance_m": 0.25,
+          "yaw_rad": 0.0
+        },
+        "metric_target": [
+          0.25,
+          0.0,
+          0.0
+        ],
+        "raw_candidate": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.0,
+          "duration_s": 3.0
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.25
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "forward_25",
+            "nominal": {
+              "name": "forward_25",
+              "distance_m": 0.25,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0,
+              "duration_s": 3.0
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.4776824414730072,
+            "y": 0.2631935775279999,
+            "yaw": 0.1028616800904274,
+            "received": 959.405161536,
+            "source": 1792485214.4458559,
+            "speed": 4.346075560982526e-09,
+            "yaw_speed": 0.0021305286791175604
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 959.406517184,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.001512928000011,
+            "command_count": 57
+          },
+          "end_pose": {
+            "x": 0.6862999200820923,
+            "y": 0.2777586281299591,
+            "yaw": 0.1237436830997467,
+            "received": 963.587383744,
+            "source": 1792485218.6278543,
+            "speed": 6.24048528800486e-06,
+            "yaw_speed": -0.0074568502604961395
+          },
+          "measured_m_rad": [
+            0.20901035515103858,
+            -0.00693285798833553,
+            0.020882003009319305
+          ],
+          "measured_path_m": 0.2193687058429531,
+          "measured_accumulated_turn_rad": 0.15887189656496048,
+          "finished_monotonic": 963.589274432,
+          "observation_horizon_s": 4.692859839999983,
+          "before_image": {
+            "timestamp_monotonic": 958.938319232,
+            "sequence": 1832,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 963.631179072,
+            "sequence": 1899,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "forward_25",
+            "nominal": {
+              "name": "forward_25",
+              "distance_m": 0.25,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0,
+              "duration_s": 3.0
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.15766853094100952,
+            "y": 0.18497759103775024,
+            "yaw": 0.25914451479911804,
+            "received": 1658.981622176,
+            "source": 1792485914.0258737,
+            "speed": 0.012462473585315756,
+            "yaw_speed": -0.0021305286791175604
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 1658.983007424,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.002088191999974,
+            "command_count": 57
+          },
+          "end_pose": {
+            "x": 0.36785635352134705,
+            "y": 0.23232044279575348,
+            "yaw": 0.30045732855796814,
+            "received": 1663.261444,
+            "source": 1792485918.3059177,
+            "speed": 4.791432631583307e-08,
+            "yaw_speed": -0.021305285394191742
+          },
+          "measured_m_rad": [
+            0.21530133939194493,
+            -0.008099359831385829,
+            0.0413128137588501
+          ],
+          "measured_path_m": 0.22075545244095646,
+          "measured_accumulated_turn_rad": 0.18052226305007935,
+          "finished_monotonic": 1663.264242368,
+          "observation_horizon_s": 4.828909248000173,
+          "before_image": {
+            "timestamp_monotonic": 1658.452266784,
+            "sequence": 93,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 1663.281176032,
+            "sequence": 162,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "forward_25",
+            "nominal": {
+              "name": "forward_25",
+              "distance_m": 0.25,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0,
+              "duration_s": 3.0
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.3580557405948639,
+            "y": 0.2271014302968979,
+            "yaw": 0.2879846394062042,
+            "received": 1672.226737376,
+            "source": 1792485927.271815,
+            "speed": 1.374957339981355e-08,
+            "yaw_speed": -0.011717907153069973
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 1672.229016224,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.0006631359999574,
+            "command_count": 58
+          },
+          "end_pose": {
+            "x": 0.5650031566619873,
+            "y": 0.27581557631492615,
+            "yaw": 0.2961364686489105,
+            "received": 1676.516829408,
+            "source": 1792485931.5598428,
+            "speed": 2.811062487400037e-07,
+            "yaw_speed": -0.0021305286791175604
+          },
+          "measured_m_rad": [
+            0.212260767459376,
+            -0.01206928484549026,
+            0.008151829242706297
+          ],
+          "measured_path_m": 0.22555804805452764,
+          "measured_accumulated_turn_rad": 0.1588597297668457,
+          "finished_monotonic": 1676.519599776,
+          "observation_horizon_s": 4.8327680959998816,
+          "before_image": {
+            "timestamp_monotonic": 1671.752444576,
+            "sequence": 283,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 1676.585212672,
+            "sequence": 352,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.21219082066745318,
+          -0.009033834221737208,
+          0.023448882003625233
+        ],
+        "model_action": [
+          0.8487632826698127,
+          -0.03613533688694883,
+          0.023448882003625233
+        ],
+        "observation_horizon_s": 4.784845728000012,
+        "max_xy_deviation_m": 0.0038117531444757913,
+        "max_yaw_deviation_rad": 0.017863931755224865,
+        "sample_count": 3
+      }
+    },
+    "left_arc_25_pi12": {
+      "proposal": {
+        "candidate": "left_arc_25_pi12",
+        "nominal": {
+          "name": "left_arc_25_pi12",
+          "distance_m": 0.25,
+          "yaw_rad": 0.2617993877991494
+        },
+        "metric_target": [
+          0.2471539823663423,
+          0.03253843906720014,
+          0.2617993877991494
+        ],
+        "raw_candidate": [
+          0.9886159294653692,
+          0.13015375626880055,
+          0.2617993877991494
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.12697467554247122,
+          "duration_s": 2.969026042556627
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.25
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_25_pi12",
+            "nominal": {
+              "name": "left_arc_25_pi12",
+              "distance_m": 0.25,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.2471539823663423,
+              0.03253843906720014,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.9886159294653692,
+              0.13015375626880055,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.12697467554247122,
+              "duration_s": 2.969026042556627
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": -0.09651581943035126,
+            "y": 0.10133785009384155,
+            "yaw": 0.142948180437088,
+            "received": 1776.750022208,
+            "source": 1792486031.7898574,
+            "speed": 0.00865507989948377,
+            "yaw_speed": -0.008522114716470242
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 1776.751923232,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 2.970835520000037,
+            "command_count": 57
+          },
+          "end_pose": {
+            "x": 0.14997461438179016,
+            "y": 0.1929519772529602,
+            "yaw": 0.41478022933006287,
+            "received": 1781.11054096,
+            "source": 1792486036.1539211,
+            "speed": 1.914912656541797e-06,
+            "yaw_speed": 0.03302319347858429
+          },
+          "measured_m_rad": [
+            0.2570278212138093,
+            0.05556420950672209,
+            0.27183204889297485
+          ],
+          "measured_path_m": 0.30111206621188913,
+          "measured_accumulated_turn_rad": 0.3231833577156067,
+          "finished_monotonic": 1781.112510528,
+          "observation_horizon_s": 4.83321798399993,
+          "before_image": {
+            "timestamp_monotonic": 1776.285252416,
+            "sequence": 1776,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 1781.1184704,
+            "sequence": 1845,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_25_pi12",
+            "nominal": {
+              "name": "left_arc_25_pi12",
+              "distance_m": 0.25,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.2471539823663423,
+              0.03253843906720014,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.9886159294653692,
+              0.13015375626880055,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.12697467554247122,
+              "duration_s": 2.969026042556627
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.14114297926425934,
+            "y": 0.1901516169309616,
+            "yaw": 0.4189010262489319,
+            "received": 1792.81351216,
+            "source": 1792486047.859862,
+            "speed": 1.9692847974551425e-08,
+            "yaw_speed": -0.011717907153069973
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 1792.816259296,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 2.9696525439999277,
+            "command_count": 57
+          },
+          "end_pose": {
+            "x": 0.36092448234558105,
+            "y": 0.3350842595100403,
+            "yaw": 0.7037037014961243,
+            "received": 1797.395178976,
+            "source": 1792486052.4418588,
+            "speed": 2.054807836944179e-07,
+            "yaw_speed": 0.017044229432940483
+          },
+          "measured_m_rad": [
+            0.2597307567198764,
+            0.04300365095384796,
+            0.2848026752471924
+          ],
+          "measured_path_m": 0.2808189144801507,
+          "measured_accumulated_turn_rad": 0.32461732625961304,
+          "finished_monotonic": 1797.40442976,
+          "observation_horizon_s": 5.102660799999967,
+          "before_image": {
+            "timestamp_monotonic": 1792.327619808,
+            "sequence": 2005,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 1797.430280608,
+            "sequence": 2078,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_25_pi12",
+            "nominal": {
+              "name": "left_arc_25_pi12",
+              "distance_m": 0.25,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.2471539823663423,
+              0.03253843906720014,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.9886159294653692,
+              0.13015375626880055,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.12697467554247122,
+              "duration_s": 2.969026042556627
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.35682862997055054,
+            "y": 0.3315964341163635,
+            "yaw": 0.7057756185531616,
+            "received": 1802.21839408,
+            "source": 1792486057.263867,
+            "speed": 2.5906187216244322e-08,
+            "yaw_speed": -0.004261057358235121
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 1802.221287264,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 2.9703445120001106,
+            "command_count": 57
+          },
+          "end_pose": {
+            "x": 0.5259107947349548,
+            "y": 0.5372581481933594,
+            "yaw": 0.998304009437561,
+            "received": 1807.022788064,
+            "source": 1792486062.0699115,
+            "speed": 4.5436436335552905e-07,
+            "yaw_speed": 0.015978964045643806
+          },
+          "measured_m_rad": [
+            0.2620871024436612,
+            0.04686010895410926,
+            0.2925283908843994
+          ],
+          "measured_path_m": 0.2928475152270455,
+          "measured_accumulated_turn_rad": 0.3403409719467163,
+          "finished_monotonic": 1807.024588672,
+          "observation_horizon_s": 5.323265184000093,
+          "before_image": {
+            "timestamp_monotonic": 1801.76772192,
+            "sequence": 2140,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 1807.090987104,
+            "sequence": 2216,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.2596152267924489,
+          0.048475989804893115,
+          0.28305437167485553
+        ],
+        "model_action": [
+          1.0384609071697957,
+          0.19390395921957246,
+          0.28305437167485553
+        ],
+        "observation_horizon_s": 5.086381322666663,
+        "max_xy_deviation_m": 0.0075456958704795355,
+        "max_yaw_deviation_rad": 0.011222322781880678,
+        "sample_count": 3
+      }
+    },
+    "right_arc_25_pi12": {
+      "proposal": {
+        "candidate": "right_arc_25_pi12",
+        "nominal": {
+          "name": "right_arc_25_pi12",
+          "distance_m": 0.25,
+          "yaw_rad": -0.2617993877991494
+        },
+        "metric_target": [
+          0.2471539823663423,
+          -0.03253843906720014,
+          -0.2617993877991494
+        ],
+        "raw_candidate": [
+          0.9886159294653692,
+          -0.13015375626880055,
+          -0.2617993877991494
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": -0.20148956104359217,
+          "duration_s": 2.694269657090905
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.25
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_25_pi12",
+            "nominal": {
+              "name": "right_arc_25_pi12",
+              "distance_m": 0.25,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.2471539823663423,
+              -0.03253843906720014,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.9886159294653692,
+              -0.13015375626880055,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.20148956104359217,
+              "duration_s": 2.694269657090905
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.29782411456108093,
+            "y": 0.2693880796432495,
+            "yaw": -0.2239610254764557,
+            "received": 2247.3914336,
+            "source": 1792486502.4558644,
+            "speed": 1.2603706528940881e-08,
+            "yaw_speed": 0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 2247.393766048,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 2.6958511999996517,
+            "command_count": 52
+          },
+          "end_pose": {
+            "x": 0.5225574374198914,
+            "y": 0.1829454004764557,
+            "yaw": -0.4998296797275543,
+            "received": 2251.231273984,
+            "source": 1792486506.295864,
+            "speed": 0.013073072387517677,
+            "yaw_speed": -0.012783171609044075
+          },
+          "measured_m_rad": [
+            0.23831904746330515,
+            -0.034372006064215734,
+            -0.2758686542510986
+          ],
+          "measured_path_m": 0.2546346403439208,
+          "measured_accumulated_turn_rad": 0.29090848565101624,
+          "finished_monotonic": 2251.233997888,
+          "observation_horizon_s": 4.343750527999873,
+          "before_image": {
+            "timestamp_monotonic": 2246.917779552,
+            "sequence": 248,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 2251.26153008,
+            "sequence": 310,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_25_pi12",
+            "nominal": {
+              "name": "right_arc_25_pi12",
+              "distance_m": 0.25,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.2471539823663423,
+              -0.03253843906720014,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.9886159294653692,
+              -0.13015375626880055,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.20148956104359217,
+              "duration_s": 2.694269657090905
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.1472909301519394,
+            "y": 0.3455585241317749,
+            "yaw": 0.12763851881027222,
+            "received": 2264.873376128,
+            "source": 1792486519.9378586,
+            "speed": 0.01135036147040287,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 2264.875246144,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 2.6948039040003096,
+            "command_count": 52
+          },
+          "end_pose": {
+            "x": 0.39804011583328247,
+            "y": 0.3464423418045044,
+            "yaw": -0.1917712241411209,
+            "received": 2268.959037024,
+            "source": 1792486524.0238705,
+            "speed": 1.2635918826631557e-06,
+            "yaw_speed": 0.0063915858045220375
+          },
+          "measured_m_rad": [
+            0.248821908682805,
+            -0.031041794615987443,
+            -0.31940974295139307
+          ],
+          "measured_path_m": 0.3091434161796614,
+          "measured_accumulated_turn_rad": 0.3622877523303032,
+          "finished_monotonic": 2268.961696512,
+          "observation_horizon_s": 4.620991071999924,
+          "before_image": {
+            "timestamp_monotonic": 2264.353896992,
+            "sequence": 497,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 2268.974888064,
+            "sequence": 563,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_25_pi12",
+            "nominal": {
+              "name": "right_arc_25_pi12",
+              "distance_m": 0.25,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.2471539823663423,
+              -0.03253843906720014,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.9886159294653692,
+              -0.13015375626880055,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.20148956104359217,
+              "duration_s": 2.694269657090905
+            },
+            "hard_distance_m": 0.5,
+            "hard_turn_rad": 0.7853981633974483,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.3885374963283539,
+            "y": 0.34872040152549744,
+            "yaw": -0.1882685422897339,
+            "received": 2285.510822208,
+            "source": 1792486540.5761878,
+            "speed": 2.6091848960520315e-08,
+            "yaw_speed": -0.011717907153069973
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 2285.512701952,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 2.6961275520002346,
+            "command_count": 51
+          },
+          "end_pose": {
+            "x": 0.6239989399909973,
+            "y": 0.26795831322669983,
+            "yaw": -0.4613085985183716,
+            "received": 2289.513075392,
+            "source": 1792486544.579906,
+            "speed": 1.9857981254076418e-06,
+            "yaw_speed": 0.0053263213485479355
+          },
+          "measured_m_rad": [
+            0.2464160806939446,
+            -0.03526643635972271,
+            -0.2730400562286377
+          ],
+          "measured_path_m": 0.2836708720290796,
+          "measured_accumulated_turn_rad": 0.2979264259338379,
+          "finished_monotonic": 2289.515105856,
+          "observation_horizon_s": 4.549882815999808,
+          "before_image": {
+            "timestamp_monotonic": 2285.008918208,
+            "sequence": 792,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 2289.558801024,
+            "sequence": 857,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.24451901228001827,
+          -0.03356007901330863,
+          -0.2894394844770431
+        ],
+        "model_action": [
+          0.9780760491200731,
+          -0.13424031605323453,
+          -0.2894394844770431
+        ],
+        "observation_horizon_s": 4.504874805333202,
+        "max_xy_deviation_m": 0.006252902467212743,
+        "max_yaw_deviation_rad": 0.029970258474349976,
+        "sample_count": 3
+      }
+    },
+    "left_arc_25_pi4": {
+      "proposal": {
+        "candidate": "left_arc_25_pi4",
+        "nominal": {
+          "name": "left_arc_25_pi4",
+          "distance_m": 0.25,
+          "yaw_rad": 0.7853981633974483
+        },
+        "metric_target": [
+          0.22507907903927651,
+          0.09323080714451414,
+          0.7853981633974483
+        ],
+        "raw_candidate": [
+          0.9003163161571061,
+          0.37292322857805654,
+          0.7853981633974483
+        ],
+        "schedule": {
+          "vx_m_s": 0.10013149247462876,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.35,
+          "duration_s": 3.231352443692358
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.25
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_25_pi4",
+            "nominal": {
+              "name": "left_arc_25_pi4",
+              "distance_m": 0.25,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.22507907903927651,
+              0.09323080714451414,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.9003163161571061,
+              0.37292322857805654,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.10013149247462876,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 3.231352443692358
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.466064989566803,
+            "y": 0.17260949313640594,
+            "yaw": 0.8120169639587402,
+            "received": 3163.798141248,
+            "source": 1792487418.895836,
+            "speed": 1.619151410809859e-08,
+            "yaw_speed": 0.009587379172444344
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3163.799328512,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.2324761599998055,
+            "command_count": 62
+          },
+          "end_pose": {
+            "x": 0.545698881149292,
+            "y": 0.40779250860214233,
+            "yaw": 1.62462317943573,
+            "received": 3168.408350112,
+            "source": 1792487423.5039427,
+            "speed": 0.004886028143826316,
+            "yaw_speed": 0.0010652643395587802
+          },
+          "measured_m_rad": [
+            0.2254577603069554,
+            0.1040259860299332,
+            0.8126062154769897
+          ],
+          "measured_path_m": 0.27104030492448833,
+          "measured_accumulated_turn_rad": 0.8137761354446411,
+          "finished_monotonic": 3168.410012416,
+          "observation_horizon_s": 5.11113615999966,
+          "before_image": {
+            "timestamp_monotonic": 3163.342230176,
+            "sequence": 407,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3168.453366336,
+            "sequence": 480,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_25_pi4",
+            "nominal": {
+              "name": "left_arc_25_pi4",
+              "distance_m": 0.25,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.22507907903927651,
+              0.09323080714451414,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.9003163161571061,
+              0.37292322857805654,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.10013149247462876,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 3.231352443692358
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.4411591589450836,
+            "y": -0.07805200666189194,
+            "yaw": -0.054396066814661026,
+            "received": 3209.73032896,
+            "source": 1792487464.82786,
+            "speed": 0.005607805765393935,
+            "yaw_speed": -0.0021305286791175604
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3209.732932992,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.2321121280001535,
+            "command_count": 62
+          },
+          "end_pose": {
+            "x": 0.6750187873840332,
+            "y": 0.008680189959704876,
+            "yaw": 0.7591046094894409,
+            "received": 3214.264581408,
+            "source": 1792487469.3638322,
+            "speed": 9.907868504758166e-07,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "measured_m_rad": [
+            0.22879816231057684,
+            0.09931868237000444,
+            0.8135006763041019
+          ],
+          "measured_path_m": 0.30371813481466,
+          "measured_accumulated_turn_rad": 0.8137098886072636,
+          "finished_monotonic": 3214.26618528,
+          "observation_horizon_s": 5.039863839999725,
+          "before_image": {
+            "timestamp_monotonic": 3209.270291104,
+            "sequence": 1063,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3214.310154944,
+            "sequence": 1135,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_25_pi4",
+            "nominal": {
+              "name": "left_arc_25_pi4",
+              "distance_m": 0.25,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.22507907903927651,
+              0.09323080714451414,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.9003163161571061,
+              0.37292322857805654,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.10013149247462876,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 3.231352443692358
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.6705415844917297,
+            "y": 0.0016218501841649413,
+            "yaw": 0.7558113932609558,
+            "received": 3219.508249056,
+            "source": 1792487474.605865,
+            "speed": 1.5965133727274678e-08,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3219.508745248,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.2328734719999375,
+            "command_count": 62
+          },
+          "end_pose": {
+            "x": 0.7656502723693848,
+            "y": 0.22046123445034027,
+            "yaw": 1.560158371925354,
+            "received": 3223.97024656,
+            "source": 1792487479.0698657,
+            "speed": 1.9161847130853283e-06,
+            "yaw_speed": 0.010652642697095871
+          },
+          "measured_m_rad": [
+            0.21930946029861745,
+            0.09401967474596522,
+            0.8043469786643982
+          ],
+          "measured_path_m": 0.286903267076023,
+          "measured_accumulated_turn_rad": 0.8047640919685364,
+          "finished_monotonic": 3223.972016,
+          "observation_horizon_s": 4.898067232000358,
+          "before_image": {
+            "timestamp_monotonic": 3219.075894752,
+            "sequence": 1203,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3223.973961984,
+            "sequence": 1273,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.22452179430538322,
+          0.09912144771530096,
+          0.8101512901484966
+        ],
+        "model_action": [
+          0.8980871772215329,
+          0.39648579086120384,
+          0.8101512901484966
+        ],
+        "observation_horizon_s": 5.016355743999914,
+        "max_xy_deviation_m": 0.007293593985733762,
+        "max_yaw_deviation_rad": 0.0058043114840984344,
+        "sample_count": 3
+      }
+    },
+    "right_arc_25_pi4": {
+      "proposal": {
+        "candidate": "right_arc_25_pi4",
+        "nominal": {
+          "name": "right_arc_25_pi4",
+          "distance_m": 0.25,
+          "yaw_rad": -0.7853981633974483
+        },
+        "metric_target": [
+          0.22507907903927651,
+          -0.09323080714451414,
+          -0.7853981633974483
+        ],
+        "raw_candidate": [
+          0.9003163161571061,
+          -0.37292322857805654,
+          -0.7853981633974483
+        ],
+        "schedule": {
+          "vx_m_s": 0.08677984048497893,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": -0.35,
+          "duration_s": 3.67672314330483
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.25
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_25_pi4",
+            "nominal": {
+              "name": "right_arc_25_pi4",
+              "distance_m": 0.25,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.22507907903927651,
+              -0.09323080714451414,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.9003163161571061,
+              -0.37292322857805654,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.08677984048497893,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 3.67672314330483
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.39363884925842285,
+            "y": 0.33348435163497925,
+            "yaw": -0.037928760051727295,
+            "received": 3444.996729568,
+            "source": 1792487700.0997605,
+            "speed": 4.132123272945622e-08,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3444.998880896,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.678768192000007,
+            "command_count": 70
+          },
+          "end_pose": {
+            "x": 0.6024563312530518,
+            "y": 0.2391585409641266,
+            "yaw": -0.8452000021934509,
+            "received": 3450.122821664,
+            "source": 1792487705.2258508,
+            "speed": 4.899766454097988e-07,
+            "yaw_speed": 0.023435814306139946
+          },
+          "measured_m_rad": [
+            0.2122441018449045,
+            -0.08633968135996635,
+            -0.8072712421417236
+          ],
+          "measured_path_m": 0.29716890597468937,
+          "measured_accumulated_turn_rad": 0.8109684959053993,
+          "finished_monotonic": 3450.12519312,
+          "observation_horizon_s": 5.67135526400034,
+          "before_image": {
+            "timestamp_monotonic": 3444.517953792,
+            "sequence": 673,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3450.189309056,
+            "sequence": 754,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_25_pi4",
+            "nominal": {
+              "name": "right_arc_25_pi4",
+              "distance_m": 0.25,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.22507907903927651,
+              -0.09323080714451414,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.9003163161571061,
+              -0.37292322857805654,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.08677984048497893,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 3.67672314330483
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.6252552270889282,
+            "y": 0.2628234326839447,
+            "yaw": -0.3003375828266144,
+            "received": 3459.508629088,
+            "source": 1792487714.611861,
+            "speed": 1.2157126072433458e-08,
+            "yaw_speed": 0.0053263213485479355
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3459.510885888,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.6805154240000775,
+            "command_count": 71
+          },
+          "end_pose": {
+            "x": 0.8123364448547363,
+            "y": 0.09461631625890732,
+            "yaw": -1.1418074369430542,
+            "received": 3464.477160128,
+            "source": 1792487719.5818815,
+            "speed": 0.01865052451277847,
+            "yaw_speed": -0.0063915858045220375
+          },
+          "measured_m_rad": [
+            0.2284696865221848,
+            -0.10533099447559767,
+            -0.8414698541164398
+          ],
+          "measured_path_m": 0.32436698504477324,
+          "measured_accumulated_turn_rad": 0.8815577328205109,
+          "finished_monotonic": 3464.480627808,
+          "observation_horizon_s": 5.532305631999861,
+          "before_image": {
+            "timestamp_monotonic": 3459.010449312,
+            "sequence": 880,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3464.542754944,
+            "sequence": 959,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_25_pi4",
+            "nominal": {
+              "name": "right_arc_25_pi4",
+              "distance_m": 0.25,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.22507907903927651,
+              -0.09323080714451414,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.9003163161571061,
+              -0.37292322857805654,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.08677984048497893,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 3.67672314330483
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.25
+          },
+          "start_pose": {
+            "x": 0.5792940855026245,
+            "y": 0.19917993247509003,
+            "yaw": -0.24320144951343536,
+            "received": 3477.07602256,
+            "source": 1792487732.1798677,
+            "speed": 6.391293612818043e-09,
+            "yaw_speed": 0.0010652643395587802
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3477.078733856,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.6781624320001356,
+            "command_count": 70
+          },
+          "end_pose": {
+            "x": 0.7740429043769836,
+            "y": 0.04810290038585663,
+            "yaw": -0.9946094155311584,
+            "received": 3482.082792992,
+            "source": 1792487737.185912,
+            "speed": 0.008248178573481715,
+            "yaw_speed": 0.02237055078148842
+          },
+          "measured_m_rad": [
+            0.22539877683571694,
+            -0.09973346218201731,
+            -0.7514079660177232
+          ],
+          "measured_path_m": 0.27939998042639563,
+          "measured_accumulated_turn_rad": 0.7852076441049576,
+          "finished_monotonic": 3482.084993696,
+          "observation_horizon_s": 5.5298835520002285,
+          "before_image": {
+            "timestamp_monotonic": 3476.582859488,
+            "sequence": 1131,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3482.11274304,
+            "sequence": 1210,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.22203752173426874,
+          -0.09713471267252712,
+          -0.8000496874252955
+        ],
+        "model_action": [
+          0.888150086937075,
+          -0.38853885069010846,
+          -0.8000496874252955
+        ],
+        "observation_horizon_s": 5.577848149333477,
+        "max_xy_deviation_m": 0.014575451079419896,
+        "max_yaw_deviation_rad": 0.04864172140757228,
+        "sample_count": 3
+      }
+    },
+    "forward_50": {
+      "proposal": {
+        "candidate": "forward_50",
+        "nominal": {
+          "name": "forward_50",
+          "distance_m": 0.5,
+          "yaw_rad": 0.0
+        },
+        "metric_target": [
+          0.5,
+          0.0,
+          0.0
+        ],
+        "raw_candidate": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.0,
+          "duration_s": 5.518522936193551
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.5
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "forward_50",
+            "nominal": {
+              "name": "forward_50",
+              "distance_m": 0.5,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.5,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              2.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0,
+              "duration_s": 5.518522936193551
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 0.6907382607460022,
+            "y": 0.009384368546307087,
+            "yaw": -0.0771617591381073,
+            "received": 3617.808586784,
+            "source": 1792487872.9158607,
+            "speed": 0.0017108303343458303,
+            "yaw_speed": -0.0053263213485479355
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3617.809440224,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.519733088000066,
+            "command_count": 106
+          },
+          "end_pose": {
+            "x": 1.178373098373413,
+            "y": -0.02215166948735714,
+            "yaw": -0.0380680188536644,
+            "received": 3625.154079616,
+            "source": 1792487880.2618365,
+            "speed": 5.846932293711826e-07,
+            "yaw_speed": -0.0010652643395587802
+          },
+          "measured_m_rad": [
+            0.4886148463748171,
+            0.006147232294780938,
+            0.039093740284442895
+          ],
+          "measured_path_m": 0.5141535637191814,
+          "measured_accumulated_turn_rad": 0.4238262139260769,
+          "finished_monotonic": 3625.154609312,
+          "observation_horizon_s": 7.910419712000021,
+          "before_image": {
+            "timestamp_monotonic": 3617.315303712,
+            "sequence": 3141,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3625.225723424,
+            "sequence": 3254,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "forward_50",
+            "nominal": {
+              "name": "forward_50",
+              "distance_m": 0.5,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.5,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              2.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0,
+              "duration_s": 5.518522936193551
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 0.8342869281768799,
+            "y": 0.007772537879645824,
+            "yaw": -0.12552236020565033,
+            "received": 3640.131245024,
+            "source": 1792487895.2399297,
+            "speed": 0.012694787321325125,
+            "yaw_speed": -0.010652642697095871
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3640.131692224,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.519716736000191,
+            "command_count": 106
+          },
+          "end_pose": {
+            "x": 1.2993241548538208,
+            "y": -0.04224679619073868,
+            "yaw": -0.10142455995082855,
+            "received": 3647.036871168,
+            "source": 1792487902.145859,
+            "speed": 3.838698909638991e-07,
+            "yaw_speed": -0.017044229432940483
+          },
+          "measured_m_rad": [
+            0.4676405734668652,
+            0.008593603656597108,
+            0.024097800254821777
+          ],
+          "measured_path_m": 0.5008490535338687,
+          "measured_accumulated_turn_rad": 0.4297644644975662,
+          "finished_monotonic": 3647.03926368,
+          "observation_horizon_s": 7.426337663999675,
+          "before_image": {
+            "timestamp_monotonic": 3639.645185568,
+            "sequence": 3460,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3647.071523232,
+            "sequence": 3566,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "forward_50",
+            "nominal": {
+              "name": "forward_50",
+              "distance_m": 0.5,
+              "yaw_rad": 0.0
+            },
+            "metric_target": [
+              0.5,
+              0.0,
+              0.0
+            ],
+            "raw_candidate": [
+              2.0,
+              0.0,
+              0.0
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.0,
+              "duration_s": 5.518522936193551
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 0.7845027446746826,
+            "y": -0.028922894969582558,
+            "yaw": 0.021126460283994675,
+            "received": 3658.368952736,
+            "source": 1792487913.4798384,
+            "speed": 0.004445721634886831,
+            "yaw_speed": 0.0074568502604961395
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 3658.37062048,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.520379776000027,
+            "command_count": 106
+          },
+          "end_pose": {
+            "x": 1.2765591144561768,
+            "y": -0.005578950047492981,
+            "yaw": 0.08640674501657486,
+            "received": 3665.171508672,
+            "source": 1792487920.2818704,
+            "speed": 0.006235322573188511,
+            "yaw_speed": -0.011717907153069973
+          },
+          "measured_m_rad": [
+            0.49243970300408996,
+            0.012944099517221204,
+            0.06528028473258018
+          ],
+          "measured_path_m": 0.5282211007089272,
+          "measured_accumulated_turn_rad": 0.4809028785675764,
+          "finished_monotonic": 3665.17813616,
+          "observation_horizon_s": 7.276488672000141,
+          "before_image": {
+            "timestamp_monotonic": 3657.923569184,
+            "sequence": 3721,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 3665.200057856,
+            "sequence": 3825,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.4828983742819241,
+          0.009228311822866417,
+          0.042823941757281624
+        ],
+        "model_action": [
+          1.9315934971276965,
+          0.03691324729146567,
+          0.042823941757281624
+        ],
+        "observation_horizon_s": 7.537748682666613,
+        "max_xy_deviation_m": 0.015270996698589811,
+        "max_yaw_deviation_rad": 0.02245634297529856,
+        "sample_count": 3
+      }
+    },
+    "left_arc_50_pi12": {
+      "proposal": {
+        "candidate": "left_arc_50_pi12",
+        "nominal": {
+          "name": "left_arc_50_pi12",
+          "distance_m": 0.5,
+          "yaw_rad": 0.2617993877991494
+        },
+        "metric_target": [
+          0.4943079647326846,
+          0.06507687813440027,
+          0.2617993877991494
+        ],
+        "raw_candidate": [
+          1.9772318589307385,
+          0.2603075125376011,
+          0.2617993877991494
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.06506921991012113,
+          "duration_s": 5.7936935305434085
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.5
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_50_pi12",
+            "nominal": {
+              "name": "left_arc_50_pi12",
+              "distance_m": 0.5,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.4943079647326846,
+              0.06507687813440027,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              1.9772318589307385,
+              0.2603075125376011,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.06506921991012113,
+              "duration_s": 5.7936935305434085
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.0747328996658325,
+            "y": 0.07704076170921326,
+            "yaw": -0.2635077238082886,
+            "received": 4708.95469232,
+            "source": 1792488964.0998642,
+            "speed": 0.003115331103285851,
+            "yaw_speed": 0.0
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 4708.957092832,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.796264831999906,
+            "command_count": 111
+          },
+          "end_pose": {
+            "x": 1.573753833770752,
+            "y": 0.007114858832210302,
+            "yaw": 0.025684012100100517,
+            "received": 4716.2335472,
+            "source": 1792488971.3798673,
+            "speed": 2.4859836321012487e-07,
+            "yaw_speed": 0.012783171609044075
+          },
+          "measured_m_rad": [
+            0.5000093782894367,
+            0.062467160898518656,
+            0.2891917359083891
+          ],
+          "measured_path_m": 0.5449744735417285,
+          "measured_accumulated_turn_rad": 0.5261598434299231,
+          "finished_monotonic": 4716.236649344,
+          "observation_horizon_s": 7.771588703999441,
+          "before_image": {
+            "timestamp_monotonic": 4708.485011968,
+            "sequence": 366,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 4716.256600672,
+            "sequence": 477,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_50_pi12",
+            "nominal": {
+              "name": "left_arc_50_pi12",
+              "distance_m": 0.5,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.4943079647326846,
+              0.06507687813440027,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              1.9772318589307385,
+              0.2603075125376011,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.06506921991012113,
+              "duration_s": 5.7936935305434085
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.2561941146850586,
+            "y": 0.04609062895178795,
+            "yaw": -0.08114521205425262,
+            "received": 4724.789166016,
+            "source": 1792488979.9358494,
+            "speed": 1.0013420902720625e-08,
+            "yaw_speed": -0.0063915858045220375
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 4724.791075616,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.795518272000663,
+            "command_count": 111
+          },
+          "end_pose": {
+            "x": 1.7844995260238647,
+            "y": 0.06376679986715317,
+            "yaw": 0.1735062450170517,
+            "received": 4731.918398976,
+            "source": 1792488987.0658622,
+            "speed": 1.6866534044597248e-07,
+            "yaw_speed": -0.013848436065018177
+          },
+          "measured_m_rad": [
+            0.5251342769453455,
+            0.06044043220546641,
+            0.2546514570713043
+          ],
+          "measured_path_m": 0.559446178177078,
+          "measured_accumulated_turn_rad": 0.4890884254127741,
+          "finished_monotonic": 4731.920276896,
+          "observation_horizon_s": 7.6357444479999685,
+          "before_image": {
+            "timestamp_monotonic": 4724.31085584,
+            "sequence": 592,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 4731.946600288,
+            "sequence": 701,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_50_pi12",
+            "nominal": {
+              "name": "left_arc_50_pi12",
+              "distance_m": 0.5,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.4943079647326846,
+              0.06507687813440027,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              1.9772318589307385,
+              0.2603075125376011,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.06506921991012113,
+              "duration_s": 5.7936935305434085
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.062461256980896,
+            "y": 0.07479799538850784,
+            "yaw": -0.030308794230222702,
+            "received": 4743.95425744,
+            "source": 1792488999.0999074,
+            "speed": 0.0033633801676425626,
+            "yaw_speed": 0.0010652643395587802
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 4743.960388576,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.794660447999377,
+            "command_count": 111
+          },
+          "end_pose": {
+            "x": 1.5728130340576172,
+            "y": 0.13091181218624115,
+            "yaw": 0.2382429987192154,
+            "received": 4751.025958304,
+            "source": 1792489006.1737926,
+            "speed": 0.01030387255243397,
+            "yaw_speed": -0.011717907153069973
+          },
+          "measured_m_rad": [
+            0.508416902829908,
+            0.0715538239217214,
+            0.2685517929494381
+          ],
+          "measured_path_m": 0.550793137373556,
+          "measured_accumulated_turn_rad": 0.5146012166514993,
+          "finished_monotonic": 4751.0299808,
+          "observation_horizon_s": 7.64260959999956,
+          "before_image": {
+            "timestamp_monotonic": 4743.419777312,
+            "sequence": 865,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 4751.062386912,
+            "sequence": 974,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.5111868526882302,
+          0.06482047234190215,
+          0.2707983286430438
+        ],
+        "model_action": [
+          2.0447474107529207,
+          0.2592818893676086,
+          0.2707983286430438
+        ],
+        "observation_horizon_s": 7.6833142506663235,
+        "max_xy_deviation_m": 0.01461900800344395,
+        "max_yaw_deviation_rad": 0.018393407265345274,
+        "sample_count": 3
+      }
+    },
+    "right_arc_50_pi12": {
+      "proposal": {
+        "candidate": "right_arc_50_pi12",
+        "nominal": {
+          "name": "right_arc_50_pi12",
+          "distance_m": 0.5,
+          "yaw_rad": -0.2617993877991494
+        },
+        "metric_target": [
+          0.4943079647326846,
+          -0.06507687813440027,
+          -0.2617993877991494
+        ],
+        "raw_candidate": [
+          1.9772318589307385,
+          -0.2603075125376011,
+          -0.2617993877991494
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": -0.11298061078731468,
+          "duration_s": 5.765950884038966
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.5
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_50_pi12",
+            "nominal": {
+              "name": "right_arc_50_pi12",
+              "distance_m": 0.5,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.4943079647326846,
+              -0.06507687813440027,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              1.9772318589307385,
+              -0.2603075125376011,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.11298061078731468,
+              "duration_s": 5.765950884038966
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.5174068212509155,
+            "y": 0.13928565382957458,
+            "yaw": -0.23318064212799072,
+            "received": 4888.288454848,
+            "source": 1792489143.439799,
+            "speed": 0.005650779790849702,
+            "yaw_speed": 0.0010652643395587802
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 4888.290412416,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.76708656000028,
+            "command_count": 110
+          },
+          "end_pose": {
+            "x": 2.0050437450408936,
+            "y": -0.05759046599268913,
+            "yaw": -0.5129414200782776,
+            "received": 4895.57791648,
+            "source": 1792489150.7278373,
+            "speed": 4.901174467895071e-07,
+            "yaw_speed": 0.019174758344888687
+          },
+          "measured_m_rad": [
+            0.5199324965749067,
+            -0.07886808609956118,
+            -0.27976077795028687
+          ],
+          "measured_path_m": 0.5799549854895946,
+          "measured_accumulated_turn_rad": 0.5738466680049896,
+          "finished_monotonic": 4895.580119424,
+          "observation_horizon_s": 7.838087328000256,
+          "before_image": {
+            "timestamp_monotonic": 4887.791861248,
+            "sequence": 2927,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 4895.629948576,
+            "sequence": 3039,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_50_pi12",
+            "nominal": {
+              "name": "right_arc_50_pi12",
+              "distance_m": 0.5,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.4943079647326846,
+              -0.06507687813440027,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              1.9772318589307385,
+              -0.2603075125376011,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.11298061078731468,
+              "duration_s": 5.765950884038966
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.6345454454421997,
+            "y": 0.06807757914066315,
+            "yaw": -0.2734653055667877,
+            "received": 4907.243429376,
+            "source": 1792489162.3939197,
+            "speed": 9.51415168559026e-09,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 4907.245935232,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.771298623999428,
+            "command_count": 110
+          },
+          "end_pose": {
+            "x": 2.1297950744628906,
+            "y": -0.17496837675571442,
+            "yaw": -0.579948365688324,
+            "received": 4914.282869696,
+            "source": 1792489169.4338663,
+            "speed": 2.898270940710988e-07,
+            "yaw_speed": -0.0010652643395587802
+          },
+          "measured_m_rad": [
+            0.5424858732562526,
+            -0.10026270014375643,
+            -0.30648306012153625
+          ],
+          "measured_path_m": 0.5853675380448192,
+          "measured_accumulated_turn_rad": 0.5414071977138519,
+          "finished_monotonic": 4914.284575168,
+          "observation_horizon_s": 7.564351295999586,
+          "before_image": {
+            "timestamp_monotonic": 4906.761882112,
+            "sequence": 3198,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 4914.326233408,
+            "sequence": 3306,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_50_pi12",
+            "nominal": {
+              "name": "right_arc_50_pi12",
+              "distance_m": 0.5,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.4943079647326846,
+              -0.06507687813440027,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              1.9772318589307385,
+              -0.2603075125376011,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.11298061078731468,
+              "duration_s": 5.765950884038966
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.5338457822799683,
+            "y": 0.05107974633574486,
+            "yaw": -0.2707352340221405,
+            "received": 4934.342753088,
+            "source": 1792489189.4938576,
+            "speed": 6.855148117355586e-09,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 4934.346486304,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 5.767567039999449,
+            "command_count": 110
+          },
+          "end_pose": {
+            "x": 2.028961658477783,
+            "y": -0.1712380051612854,
+            "yaw": -0.5876629948616028,
+            "received": 4941.415069824,
+            "source": 1792489196.5658627,
+            "speed": 7.479735799206953e-08,
+            "yaw_speed": 0.010652642697095871
+          },
+          "measured_m_rad": [
+            0.5365376965972116,
+            -0.08180595103037339,
+            -0.3169277608394623
+          ],
+          "measured_path_m": 0.5700078511470252,
+          "measured_accumulated_turn_rad": 0.5462336242198944,
+          "finished_monotonic": 4941.416880032,
+          "observation_horizon_s": 7.563577919999261,
+          "before_image": {
+            "timestamp_monotonic": 4933.857288576,
+            "sequence": 3585,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 4941.420866496,
+            "sequence": 3693,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.5329853554761237,
+          -0.08697891242456368,
+          -0.30105719963709515
+        ],
+        "model_action": [
+          2.1319414219044948,
+          -0.3479156496982547,
+          -0.30105719963709515
+        ],
+        "observation_horizon_s": 7.655338847999701,
+        "max_xy_deviation_m": 0.016331529452538192,
+        "max_yaw_deviation_rad": 0.021296421686808287,
+        "sample_count": 3
+      }
+    },
+    "left_arc_50_pi4": {
+      "proposal": {
+        "candidate": "left_arc_50_pi4",
+        "nominal": {
+          "name": "left_arc_50_pi4",
+          "distance_m": 0.5,
+          "yaw_rad": 0.7853981633974483
+        },
+        "metric_target": [
+          0.45015815807855303,
+          0.18646161428902827,
+          0.7853981633974483
+        ],
+        "raw_candidate": [
+          1.8006326323142121,
+          0.7458464571561131,
+          0.7853981633974483
+        ],
+        "schedule": {
+          "vx_m_s": 0.11999999999999998,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.23840567126482512,
+          "duration_s": 4.7439029000112205
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.5
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_50_pi4",
+            "nominal": {
+              "name": "left_arc_50_pi4",
+              "distance_m": 0.5,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.45015815807855303,
+              0.18646161428902827,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              1.8006326323142121,
+              0.7458464571561131,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.11999999999999998,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.23840567126482512,
+              "duration_s": 4.7439029000112205
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.6818100214004517,
+            "y": -0.009667543694376945,
+            "yaw": -0.24308545887470245,
+            "received": 5417.729352096,
+            "source": 1792489672.8938615,
+            "speed": 0.007255755405086686,
+            "yaw_speed": -0.008522114716470242
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5417.731395424,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 4.746754752000015,
+            "command_count": 90
+          },
+          "end_pose": {
+            "x": 2.161459445953369,
+            "y": 0.09637151658535004,
+            "yaw": 0.5414729118347168,
+            "received": 5423.768946784,
+            "source": 1792489678.9319265,
+            "speed": 0.006159621159142168,
+            "yaw_speed": 0.0
+          },
+          "measured_m_rad": [
+            0.44002425406255996,
+            0.21837240809140734,
+            0.7845583707094193
+          ],
+          "measured_path_m": 0.5593087481812733,
+          "measured_accumulated_turn_rad": 0.7971451431512833,
+          "finished_monotonic": 5423.771456928,
+          "observation_horizon_s": 6.581760703999862,
+          "before_image": {
+            "timestamp_monotonic": 5417.23766192,
+            "sequence": 379,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5423.819422624,
+            "sequence": 473,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_50_pi4",
+            "nominal": {
+              "name": "left_arc_50_pi4",
+              "distance_m": 0.5,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.45015815807855303,
+              0.18646161428902827,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              1.8006326323142121,
+              0.7458464571561131,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.11999999999999998,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.23840567126482512,
+              "duration_s": 4.7439029000112205
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.6042728424072266,
+            "y": -0.11202255636453629,
+            "yaw": -0.06576173007488251,
+            "received": 5436.130425856,
+            "source": 1792489691.2939563,
+            "speed": 8.660709710067657e-09,
+            "yaw_speed": 0.0010652643395587802
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5436.132729216,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 4.746747615999993,
+            "command_count": 91
+          },
+          "end_pose": {
+            "x": 2.0499119758605957,
+            "y": 0.07006340473890305,
+            "yaw": 0.7753698229789734,
+            "received": 5442.230337888,
+            "source": 1792489697.3938758,
+            "speed": 1.844247052801498e-06,
+            "yaw_speed": 0.0063915858045220375
+          },
+          "measured_m_rad": [
+            0.43271021501464996,
+            0.2109772601917287,
+            0.8411315530538559
+          ],
+          "measured_path_m": 0.5476231089272284,
+          "measured_accumulated_turn_rad": 0.8442120030522346,
+          "finished_monotonic": 5442.24271968,
+          "observation_horizon_s": 6.654483392000657,
+          "before_image": {
+            "timestamp_monotonic": 5435.650750688,
+            "sequence": 642,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5442.30523408,
+            "sequence": 737,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "left_arc_50_pi4",
+            "nominal": {
+              "name": "left_arc_50_pi4",
+              "distance_m": 0.5,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.45015815807855303,
+              0.18646161428902827,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              1.8006326323142121,
+              0.7458464571561131,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.11999999999999998,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.23840567126482512,
+              "duration_s": 4.7439029000112205
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.6217577457427979,
+            "y": 0.010666990652680397,
+            "yaw": -0.14603379368782043,
+            "received": 5456.177895488,
+            "source": 1792489711.3418307,
+            "speed": 0.005960733351160657,
+            "yaw_speed": -0.0010652643395587802
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5456.180160096,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 4.746150015999774,
+            "command_count": 90
+          },
+          "end_pose": {
+            "x": 2.0725815296173096,
+            "y": 0.13945244252681732,
+            "yaw": 0.66361403465271,
+            "received": 5462.433908448,
+            "source": 1792489717.5979023,
+            "speed": 1.7001712191554783e-06,
+            "yaw_speed": 0.0010652643395587802
+          },
+          "measured_m_rad": [
+            0.42728496300721497,
+            0.19301641668335115,
+            0.8096478283405304
+          ],
+          "measured_path_m": 0.5251088889625285,
+          "measured_accumulated_turn_rad": 0.8516984470188618,
+          "finished_monotonic": 5462.434387808,
+          "observation_horizon_s": 6.793779296000139,
+          "before_image": {
+            "timestamp_monotonic": 5455.672520032,
+            "sequence": 928,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5462.466299328,
+            "sequence": 1025,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.4333398106948083,
+          0.20745536165549572,
+          0.8117792507012686
+        ],
+        "model_action": [
+          1.7333592427792333,
+          0.8298214466219829,
+          0.8117792507012686
+        ],
+        "observation_horizon_s": 6.676674464000219,
+        "max_xy_deviation_m": 0.015657085055289614,
+        "max_yaw_deviation_rad": 0.029352302352587345,
+        "sample_count": 3
+      }
+    },
+    "right_arc_50_pi4": {
+      "proposal": {
+        "candidate": "right_arc_50_pi4",
+        "nominal": {
+          "name": "right_arc_50_pi4",
+          "distance_m": 0.5,
+          "yaw_rad": -0.7853981633974483
+        },
+        "metric_target": [
+          0.45015815807855303,
+          -0.18646161428902827,
+          -0.7853981633974483
+        ],
+        "raw_candidate": [
+          1.8006326323142121,
+          -0.7458464571561131,
+          -0.7853981633974483
+        ],
+        "schedule": {
+          "vx_m_s": 0.12,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": -0.2744291547477527,
+          "duration_s": 4.945422171336934
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.5
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_50_pi4",
+            "nominal": {
+              "name": "right_arc_50_pi4",
+              "distance_m": 0.5,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.45015815807855303,
+              -0.18646161428902827,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              1.8006326323142121,
+              -0.7458464571561131,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.2744291547477527,
+              "duration_s": 4.945422171336934
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.9790865182876587,
+            "y": 0.05458594486117363,
+            "yaw": -0.3718279004096985,
+            "received": 5579.603297216,
+            "source": 1792489834.7698324,
+            "speed": 0.007019930437009067,
+            "yaw_speed": -0.008522114716470242
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5579.603719136,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 4.9479871679995995,
+            "command_count": 94
+          },
+          "end_pose": {
+            "x": 2.3009138107299805,
+            "y": -0.3060784637928009,
+            "yaw": -1.2219090461730957,
+            "received": 5585.861355968,
+            "source": 1792489841.0298579,
+            "speed": 3.354920490257543e-07,
+            "yaw_speed": -0.009587379172444344
+          },
+          "measured_m_rad": [
+            0.43087139983066114,
+            -0.21909235184835507,
+            -0.8500811457633972
+          ],
+          "measured_path_m": 0.557279318048199,
+          "measured_accumulated_turn_rad": 0.8670706748962402,
+          "finished_monotonic": 5585.861799296,
+          "observation_horizon_s": 6.791681984000206,
+          "before_image": {
+            "timestamp_monotonic": 5579.111378752,
+            "sequence": 2691,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5585.903060736,
+            "sequence": 2788,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_50_pi4",
+            "nominal": {
+              "name": "right_arc_50_pi4",
+              "distance_m": 0.5,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.45015815807855303,
+              -0.18646161428902827,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              1.8006326323142121,
+              -0.7458464571561131,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.2744291547477527,
+              "duration_s": 4.945422171336934
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.932813286781311,
+            "y": -0.053542111068964005,
+            "yaw": -0.036707621067762375,
+            "received": 5607.5686264,
+            "source": 1792489862.7378728,
+            "speed": 1.3440821232218531e-08,
+            "yaw_speed": 0.0
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5607.570845536,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 4.946687327999825,
+            "command_count": 95
+          },
+          "end_pose": {
+            "x": 2.354706287384033,
+            "y": -0.2821761965751648,
+            "yaw": -0.8485584259033203,
+            "received": 5613.748597376,
+            "source": 1792489868.915891,
+            "speed": 3.4899730927124086e-07,
+            "yaw_speed": 0.0
+          },
+          "measured_m_rad": [
+            0.4299995215037474,
+            -0.21299685565607201,
+            -0.8118508048355579
+          ],
+          "measured_path_m": 0.5225822902730535,
+          "measured_accumulated_turn_rad": 0.8465132899582386,
+          "finished_monotonic": 5613.750228896,
+          "observation_horizon_s": 6.6538615680001385,
+          "before_image": {
+            "timestamp_monotonic": 5607.134472064,
+            "sequence": 3091,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5613.788333632,
+            "sequence": 3186,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "right_arc_50_pi4",
+            "nominal": {
+              "name": "right_arc_50_pi4",
+              "distance_m": 0.5,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.45015815807855303,
+              -0.18646161428902827,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              1.8006326323142121,
+              -0.7458464571561131,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.12,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.2744291547477527,
+              "duration_s": 4.945422171336934
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.5
+          },
+          "start_pose": {
+            "x": 1.9738059043884277,
+            "y": -0.08781132847070694,
+            "yaw": -0.29522013664245605,
+            "received": 5626.08992096,
+            "source": 1792489881.2598586,
+            "speed": 5.838205932325011e-09,
+            "yaw_speed": -0.0010652643395587802
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5626.09182,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 4.946292063999863,
+            "command_count": 94
+          },
+          "end_pose": {
+            "x": 2.3350422382354736,
+            "y": -0.4245136082172394,
+            "yaw": -1.1020158529281616,
+            "received": 5632.25970048,
+            "source": 1792489887.4278986,
+            "speed": 5.404398454692539e-07,
+            "yaw_speed": 0.008522114716470242
+          },
+          "measured_m_rad": [
+            0.4435722563475323,
+            -0.2170340237762866,
+            -0.8067957162857056
+          ],
+          "measured_path_m": 0.5281027668902052,
+          "measured_accumulated_turn_rad": 0.8511127233505249,
+          "finished_monotonic": 5632.260244576,
+          "observation_horizon_s": 6.654396863999864,
+          "before_image": {
+            "timestamp_monotonic": 5625.615649312,
+            "sequence": 3355,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5632.270046176,
+            "sequence": 3450,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.4348143925606469,
+          -0.21637441042690456,
+          -0.8229092222948869
+        ],
+        "model_action": [
+          1.7392575702425876,
+          -0.8654976417076182,
+          -0.8229092222948869
+        ],
+        "observation_horizon_s": 6.699980138666736,
+        "max_xy_deviation_m": 0.008782668608135065,
+        "max_yaw_deviation_rad": 0.027171923468510273,
+        "sample_count": 3
+      }
+    },
+    "rotate_left_pi12": {
+      "proposal": {
+        "candidate": "rotate_left_pi12",
+        "nominal": {
+          "name": "rotate_left_pi12",
+          "distance_m": 0.0,
+          "yaw_rad": 0.2617993877991494
+        },
+        "metric_target": [
+          0.0,
+          0.0,
+          0.2617993877991494
+        ],
+        "raw_candidate": [
+          0.0,
+          0.0,
+          0.2617993877991494
+        ],
+        "schedule": {
+          "vx_m_s": 0.0,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.35,
+          "duration_s": 1.2925409774769432
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.0
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_left_pi12",
+            "nominal": {
+              "name": "rotate_left_pi12",
+              "distance_m": 0.0,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 1.2925409774769432
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.017133951187134,
+            "y": -0.19909055531024933,
+            "yaw": 0.7319207191467285,
+            "received": 5682.770950208,
+            "source": 1792489937.9438336,
+            "speed": 3.6432631461259243e-09,
+            "yaw_speed": 0.0063915858045220375
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5682.773338176,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 1.2943031360000532,
+            "command_count": 25
+          },
+          "end_pose": {
+            "x": 2.02058482170105,
+            "y": -0.19830740988254547,
+            "yaw": 1.0326372385025024,
+            "received": 5685.295511456,
+            "source": 1792489940.465861,
+            "speed": 1.142074485889604e-05,
+            "yaw_speed": 0.026631608605384827
+          },
+          "measured_m_rad": [
+            0.0030904513527705334,
+            -0.0017236398988498803,
+            0.3007165193557739
+          ],
+          "measured_path_m": 0.05378796700032088,
+          "measured_accumulated_turn_rad": 0.30098092555999756,
+          "finished_monotonic": 5685.298143104,
+          "observation_horizon_s": 3.0817828799999916,
+          "before_image": {
+            "timestamp_monotonic": 5682.258616128,
+            "sequence": 4164,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5685.340399008,
+            "sequence": 4208,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_left_pi12",
+            "nominal": {
+              "name": "rotate_left_pi12",
+              "distance_m": 0.0,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 1.2925409774769432
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.0189192295074463,
+            "y": -0.20307445526123047,
+            "yaw": 1.0338037014007568,
+            "received": 5690.020023808,
+            "source": 1792489945.1918752,
+            "speed": 5.950383826588671e-09,
+            "yaw_speed": 0.0053263213485479355
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5690.022488032,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 1.294153792000543,
+            "command_count": 25
+          },
+          "end_pose": {
+            "x": 2.0235681533813477,
+            "y": -0.1985214799642563,
+            "yaw": 1.319993257522583,
+            "received": 5692.500053408,
+            "source": 1792489947.671868,
+            "speed": 3.49986580119159e-06,
+            "yaw_speed": 0.0021305286791175604
+          },
+          "measured_m_rad": [
+            0.006290325198918888,
+            -0.0016654987637441522,
+            0.28618955612182617
+          ],
+          "measured_path_m": 0.04459870099566274,
+          "measured_accumulated_turn_rad": 0.29117631912231445,
+          "finished_monotonic": 5692.5005064,
+          "observation_horizon_s": 2.9417362559997855,
+          "before_image": {
+            "timestamp_monotonic": 5689.6104216,
+            "sequence": 4269,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5692.552157856,
+            "sequence": 4311,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_left_pi12",
+            "nominal": {
+              "name": "rotate_left_pi12",
+              "distance_m": 0.0,
+              "yaw_rad": 0.2617993877991494
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 1.2925409774769432
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.0225307941436768,
+            "y": -0.20432858169078827,
+            "yaw": 1.322048306465149,
+            "received": 5697.34208368,
+            "source": 1792489952.5158594,
+            "speed": 6.885849977842845e-09,
+            "yaw_speed": -0.0021305286791175604
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 5697.343786368,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 1.294855904000542,
+            "command_count": 25
+          },
+          "end_pose": {
+            "x": 2.0352938175201416,
+            "y": -0.19645297527313232,
+            "yaw": 1.5803033113479614,
+            "received": 5699.872235488,
+            "source": 1792489955.0438914,
+            "speed": 8.472103193836098e-06,
+            "yaw_speed": 0.013848436065018177
+          },
+          "measured_m_rad": [
+            0.010775344081824244,
+            -0.010431294362269085,
+            0.2582550048828125
+          ],
+          "measured_path_m": 0.04552527288447466,
+          "measured_accumulated_turn_rad": 0.26076698303222656,
+          "finished_monotonic": 5699.875509216,
+          "observation_horizon_s": 2.9386416959996495,
+          "before_image": {
+            "timestamp_monotonic": 5696.963710304,
+            "sequence": 4374,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 5699.902352,
+            "sequence": 4416,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.006718706877837888,
+          -0.004606811008287706,
+          0.2817203601201375
+        ],
+        "model_action": [
+          0.026874827511351552,
+          -0.018427244033150825,
+          0.2817203601201375
+        ],
+        "observation_horizon_s": 2.987386943999809,
+        "max_xy_deviation_m": 0.007097951235784339,
+        "max_yaw_deviation_rad": 0.023465355237325014,
+        "sample_count": 3
+      }
+    },
+    "rotate_right_pi12": {
+      "proposal": {
+        "candidate": "rotate_right_pi12",
+        "nominal": {
+          "name": "rotate_right_pi12",
+          "distance_m": 0.0,
+          "yaw_rad": -0.2617993877991494
+        },
+        "metric_target": [
+          0.0,
+          0.0,
+          -0.2617993877991494
+        ],
+        "raw_candidate": [
+          0.0,
+          0.0,
+          -0.2617993877991494
+        ],
+        "schedule": {
+          "vx_m_s": 0.0,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": -0.35,
+          "duration_s": 1.7235771289323933
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.0
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_right_pi12",
+            "nominal": {
+              "name": "rotate_right_pi12",
+              "distance_m": 0.0,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 1.7235771289323933
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.1394591331481934,
+            "y": -0.22102060914039612,
+            "yaw": 0.25600841641426086,
+            "received": 6102.745911712,
+            "source": 1792490357.941915,
+            "speed": 0.010020732687641124,
+            "yaw_speed": -0.012783171609044075
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6102.747608256,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 1.725382783999521,
+            "command_count": 33
+          },
+          "end_pose": {
+            "x": 2.194779872894287,
+            "y": -0.21427398920059204,
+            "yaw": -0.06670638918876648,
+            "received": 6105.575360064,
+            "source": 1792490360.7718332,
+            "speed": 4.636742493012345e-06,
+            "yaw_speed": -0.011717907153069973
+          },
+          "measured_m_rad": [
+            0.05522613671791483,
+            -0.007481640854877943,
+            -0.32271480560302734
+          ],
+          "measured_path_m": 0.13265650428566408,
+          "measured_accumulated_turn_rad": 0.33188459277153015,
+          "finished_monotonic": 6105.580486112,
+          "observation_horizon_s": 3.359697247999975,
+          "before_image": {
+            "timestamp_monotonic": 6102.250114464,
+            "sequence": 741,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6105.609811712,
+            "sequence": 789,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_right_pi12",
+            "nominal": {
+              "name": "rotate_right_pi12",
+              "distance_m": 0.0,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 1.7235771289323933
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.1867308616638184,
+            "y": -0.2135685831308365,
+            "yaw": -0.07364597916603088,
+            "received": 6110.871061376,
+            "source": 1792490366.0678673,
+            "speed": 2.016663767270564e-09,
+            "yaw_speed": -0.017044229432940483
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6110.873792128,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 1.7248972799998228,
+            "command_count": 33
+          },
+          "end_pose": {
+            "x": 2.198296308517456,
+            "y": -0.22632503509521484,
+            "yaw": -0.40282103419303894,
+            "received": 6114.1049288,
+            "source": 1792490369.2997663,
+            "speed": 4.455686407275909e-07,
+            "yaw_speed": -0.013848436065018177
+          },
+          "measured_m_rad": [
+            0.012472709489912064,
+            -0.01187089489567101,
+            -0.32917505502700806
+          ],
+          "measured_path_m": 0.05832116303824056,
+          "measured_accumulated_turn_rad": 0.33459386229515076,
+          "finished_monotonic": 6114.105369248,
+          "observation_horizon_s": 3.7797417920000953,
+          "before_image": {
+            "timestamp_monotonic": 6110.36956768,
+            "sequence": 857,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6114.149309472,
+            "sequence": 911,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_right_pi12",
+            "nominal": {
+              "name": "rotate_right_pi12",
+              "distance_m": 0.0,
+              "yaw_rad": -0.2617993877991494
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              -0.2617993877991494
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              -0.2617993877991494
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 1.7235771289323933
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.1907894611358643,
+            "y": -0.22261124849319458,
+            "yaw": -0.41083747148513794,
+            "received": 6118.83061056,
+            "source": 1792490374.0258877,
+            "speed": 8.85392008501949e-09,
+            "yaw_speed": -0.0031957929022610188
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6118.833622368,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 1.7251203199994052,
+            "command_count": 33
+          },
+          "end_pose": {
+            "x": 2.2013356685638428,
+            "y": -0.2361757904291153,
+            "yaw": -0.729791522026062,
+            "received": 6121.869517504,
+            "source": 1792490377.0658612,
+            "speed": 3.801987449167385e-07,
+            "yaw_speed": 0.012783171609044075
+          },
+          "measured_m_rad": [
+            0.015085991930624904,
+            -0.008223876003103477,
+            -0.3189540505409241
+          ],
+          "measured_path_m": 0.05778682535794124,
+          "measured_accumulated_turn_rad": 0.3300809860229492,
+          "finished_monotonic": 6121.869972352,
+          "observation_horizon_s": 3.567553279999629,
+          "before_image": {
+            "timestamp_monotonic": 6118.352749472,
+            "sequence": 971,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6121.920302752,
+            "sequence": 1022,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.027594946046150596,
+          -0.009192137251217477,
+          -0.3236146370569865
+        ],
+        "model_action": [
+          0.11037978418460238,
+          -0.03676854900486991,
+          -0.3236146370569865
+        ],
+        "observation_horizon_s": 3.5689974399998996,
+        "max_xy_deviation_m": 0.027684083800286426,
+        "max_yaw_deviation_rad": 0.005560417970021547,
+        "sample_count": 3
+      }
+    },
+    "rotate_left_pi4": {
+      "proposal": {
+        "candidate": "rotate_left_pi4",
+        "nominal": {
+          "name": "rotate_left_pi4",
+          "distance_m": 0.0,
+          "yaw_rad": 0.7853981633974483
+        },
+        "metric_target": [
+          0.0,
+          0.0,
+          0.7853981633974483
+        ],
+        "raw_candidate": [
+          0.0,
+          0.0,
+          0.7853981633974483
+        ],
+        "schedule": {
+          "vx_m_s": 0.0,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": 0.35,
+          "duration_s": 3.1394652080652454
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.0
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_left_pi4",
+            "nominal": {
+              "name": "rotate_left_pi4",
+              "distance_m": 0.0,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 3.1394652080652454
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 1.964216709136963,
+            "y": -0.2915296256542206,
+            "yaw": -0.5029317140579224,
+            "received": 6232.180394176,
+            "source": 1792490487.3779,
+            "speed": 5.1278264043044425e-09,
+            "yaw_speed": -0.012783171609044075
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6232.193347168,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.1415678719995412,
+            "command_count": 60
+          },
+          "end_pose": {
+            "x": 1.9925529956817627,
+            "y": -0.28594833612442017,
+            "yaw": 0.2756121754646301,
+            "received": 6236.693729184,
+            "source": 1792490491.8939137,
+            "speed": 0.008580420755425984,
+            "yaw_speed": -0.008522114716470242
+          },
+          "measured_m_rad": [
+            0.02213733550738415,
+            0.018548161757920137,
+            0.7785438895225525
+          ],
+          "measured_path_m": 0.19664545437289255,
+          "measured_accumulated_turn_rad": 0.7843806743621826,
+          "finished_monotonic": 6236.695462464,
+          "observation_horizon_s": 5.036231936000149,
+          "before_image": {
+            "timestamp_monotonic": 6231.728949184,
+            "sequence": 610,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6236.76518112,
+            "sequence": 682,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_left_pi4",
+            "nominal": {
+              "name": "rotate_left_pi4",
+              "distance_m": 0.0,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 3.1394652080652454
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 1.9933332204818726,
+            "y": -0.28598281741142273,
+            "yaw": 0.27533987164497375,
+            "received": 6241.085819136,
+            "source": 1792490496.287907,
+            "speed": 0.011278606893718502,
+            "yaw_speed": -0.008522114716470242
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6241.087786592,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.1405168960000083,
+            "command_count": 60
+          },
+          "end_pose": {
+            "x": 1.9895925521850586,
+            "y": -0.28528398275375366,
+            "yaw": 1.038042426109314,
+            "received": 6245.641687232,
+            "source": 1792490500.8438828,
+            "speed": 0.01525266528703821,
+            "yaw_speed": 0.0074568502604961395
+          },
+          "measured_m_rad": [
+            -0.003409772997188599,
+            0.001689502084400019,
+            0.7627025544643402
+          ],
+          "measured_path_m": 0.09664253534134812,
+          "measured_accumulated_turn_rad": 0.76279416680336,
+          "finished_monotonic": 6245.646995424,
+          "observation_horizon_s": 5.040195264000431,
+          "before_image": {
+            "timestamp_monotonic": 6240.61721856,
+            "sequence": 737,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6245.657413824,
+            "sequence": 809,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_left_pi4",
+            "nominal": {
+              "name": "rotate_left_pi4",
+              "distance_m": 0.0,
+              "yaw_rad": 0.7853981633974483
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": 0.35,
+              "duration_s": 3.1394652080652454
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 1.9911359548568726,
+            "y": -0.2826448976993561,
+            "yaw": 1.0420401096343994,
+            "received": 6250.451277312,
+            "source": 1792490505.653918,
+            "speed": 0.003532153722419167,
+            "yaw_speed": -0.0021305286791175604
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6250.455284768,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.1413392639997255,
+            "command_count": 60
+          },
+          "end_pose": {
+            "x": 1.9925554990768433,
+            "y": -0.2826233506202698,
+            "yaw": 1.8776631355285645,
+            "received": 6255.457105152,
+            "source": 1792490510.659875,
+            "speed": 2.0725116373261295e-07,
+            "yaw_speed": 0.008522114716470242
+          },
+          "measured_m_rad": [
+            0.0007347075076032935,
+            -0.0012148147790263088,
+            0.835623025894165
+          ],
+          "measured_path_m": 0.10458376405434491,
+          "measured_accumulated_turn_rad": 0.8361313343048096,
+          "finished_monotonic": 6255.458711392,
+          "observation_horizon_s": 5.396094048000123,
+          "before_image": {
+            "timestamp_monotonic": 6250.069499136,
+            "sequence": 872,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6255.465593184,
+            "sequence": 949,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.006487423339266281,
+          0.006340949687764615,
+          0.7922898232936859
+        ],
+        "model_action": [
+          0.025949693357065123,
+          0.02536379875105846,
+          0.7922898232936859
+        ],
+        "observation_horizon_s": 5.157507082666901,
+        "max_xy_deviation_m": 0.019847815431315217,
+        "max_yaw_deviation_rad": 0.043333202600479126,
+        "sample_count": 3
+      }
+    },
+    "rotate_right_pi4": {
+      "proposal": {
+        "candidate": "rotate_right_pi4",
+        "nominal": {
+          "name": "rotate_right_pi4",
+          "distance_m": 0.0,
+          "yaw_rad": -0.7853981633974483
+        },
+        "metric_target": [
+          0.0,
+          0.0,
+          -0.7853981633974483
+        ],
+        "raw_candidate": [
+          0.0,
+          0.0,
+          -0.7853981633974483
+        ],
+        "schedule": {
+          "vx_m_s": 0.0,
+          "vy_m_s": 0.0,
+          "yaw_rad_s": -0.35,
+          "duration_s": 3.8661811328083355
+        },
+        "hard_distance_m": 0.7,
+        "hard_turn_rad": 1.0471975511965976,
+        "mapped_path_length_m": 0.0
+      },
+      "samples": [
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_right_pi4",
+            "nominal": {
+              "name": "rotate_right_pi4",
+              "distance_m": 0.0,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 3.8661811328083355
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.395292282104492,
+            "y": -0.2161635160446167,
+            "yaw": -0.11990445852279663,
+            "received": 6307.876514816,
+            "source": 1792490563.0798192,
+            "speed": 7.347616912401276e-09,
+            "yaw_speed": -0.0021305286791175604
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6307.880924736,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.8670779519998177,
+            "command_count": 74
+          },
+          "end_pose": {
+            "x": 2.407015562057495,
+            "y": -0.23566311597824097,
+            "yaw": -0.9374502897262573,
+            "received": 6312.938901088,
+            "source": 1792490568.1438625,
+            "speed": 9.943009653606854e-06,
+            "yaw_speed": -0.021305285394191742
+          },
+          "measured_m_rad": [
+            0.01397159812527609,
+            -0.017957286439038093,
+            -0.8175458312034607
+          ],
+          "measured_path_m": 0.18165748426606612,
+          "measured_accumulated_turn_rad": 0.8184339851140976,
+          "finished_monotonic": 6312.940535584,
+          "observation_horizon_s": 5.608051008000075,
+          "before_image": {
+            "timestamp_monotonic": 6307.4021072,
+            "sequence": 1690,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6313.010158208,
+            "sequence": 1770,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-1",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_right_pi4",
+            "nominal": {
+              "name": "rotate_right_pi4",
+              "distance_m": 0.0,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 3.8661811328083355
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.4016685485839844,
+            "y": -0.22691738605499268,
+            "yaw": -0.951246440410614,
+            "received": 6317.56872016,
+            "source": 1792490572.7738626,
+            "speed": 3.2967782144055916e-09,
+            "yaw_speed": -0.0063915858045220375
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6317.57068016,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.8667744320000565,
+            "command_count": 74
+          },
+          "end_pose": {
+            "x": 2.3987791538238525,
+            "y": -0.2302330881357193,
+            "yaw": -1.761300802230835,
+            "received": 6322.714761664,
+            "source": 1792490577.919868,
+            "speed": 2.5006623594701846e-06,
+            "yaw_speed": -0.015978964045643806
+          },
+          "measured_m_rad": [
+            0.0010216640966431924,
+            -0.0042776962072641886,
+            -0.810054361820221
+          ],
+          "measured_path_m": 0.09570357404297877,
+          "measured_accumulated_turn_rad": 0.8143884539604187,
+          "finished_monotonic": 6322.7152528,
+          "observation_horizon_s": 5.60003856000003,
+          "before_image": {
+            "timestamp_monotonic": 6317.138078912,
+            "sequence": 1829,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6322.738117472,
+            "sequence": 1909,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-2",
+          "physical_camera_pose_sync_verified": false
+        },
+        {
+          "status": "succeeded",
+          "proposal": {
+            "candidate": "rotate_right_pi4",
+            "nominal": {
+              "name": "rotate_right_pi4",
+              "distance_m": 0.0,
+              "yaw_rad": -0.7853981633974483
+            },
+            "metric_target": [
+              0.0,
+              0.0,
+              -0.7853981633974483
+            ],
+            "raw_candidate": [
+              0.0,
+              0.0,
+              -0.7853981633974483
+            ],
+            "schedule": {
+              "vx_m_s": 0.0,
+              "vy_m_s": 0.0,
+              "yaw_rad_s": -0.35,
+              "duration_s": 3.8661811328083355
+            },
+            "hard_distance_m": 0.7,
+            "hard_turn_rad": 1.0471975511965976,
+            "mapped_path_length_m": 0.0
+          },
+          "start_pose": {
+            "x": 2.451942205429077,
+            "y": -0.23116686940193176,
+            "yaw": -0.174513578414917,
+            "received": 6332.410185472,
+            "source": 1792490587.6158874,
+            "speed": 8.34153507563597e-09,
+            "yaw_speed": -0.013848436065018177
+          },
+          "execution_mode": "static_walk_timed",
+          "waypoint_verified": false,
+          "confirmation": "explicit terminal MOVE token",
+          "started_monotonic": 6332.411943904,
+          "controller": {
+            "status": "succeeded",
+            "completion_basis": "elapsed_command_time",
+            "waypoint_verified": false,
+            "elapsed_s": 3.868437856000128,
+            "command_count": 74
+          },
+          "end_pose": {
+            "x": 2.4470064640045166,
+            "y": -0.2491420954465866,
+            "yaw": -1.0199729204177856,
+            "received": 6337.509297728,
+            "source": 1792490592.7139144,
+            "speed": 4.501675923422074e-06,
+            "yaw_speed": -0.008522114716470242
+          },
+          "measured_m_rad": [
+            -0.001739750236956437,
+            -0.01855919081963357,
+            -0.8454593420028687
+          ],
+          "measured_path_m": 0.13080052227109926,
+          "measured_accumulated_turn_rad": 0.8456196784973145,
+          "finished_monotonic": 6337.509781856,
+          "observation_horizon_s": 5.605692320000344,
+          "before_image": {
+            "timestamp_monotonic": 6331.978072704,
+            "sequence": 2041,
+            "physical_camera_pose_sync_verified": false
+          },
+          "after_image": {
+            "timestamp_monotonic": 6337.583765024,
+            "sequence": 2121,
+            "physical_camera_pose_sync_verified": false
+          },
+          "phase": "repeat-3",
+          "physical_camera_pose_sync_verified": false
+        }
+      ],
+      "summary": {
+        "mean_m_rad": [
+          0.0044178373283209485,
+          -0.013598057821978616,
+          -0.8243531783421835
+        ],
+        "model_action": [
+          0.017671349313283794,
+          -0.05439223128791446,
+          -0.8243531783421835
+        ],
+        "observation_horizon_s": 5.604593962666816,
+        "max_xy_deviation_m": 0.010501296086732689,
+        "max_yaw_deviation_rad": 0.021106163660685184,
+        "sample_count": 3
+      }
+    }
+  },
+  "timing_policy": "measured_before_to_after_image_interval_at_training_4fps",
+  "execution_policy": "fixed_timed_commands_with_existing_motion_guards_no_online_learning"
+}

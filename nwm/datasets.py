@@ -39,7 +39,6 @@ from motion_condition import (
     motion_offset_mask,
     validate_motion_types,
 )
-from two_stage_data import OfflineProxyStore
 
 logger = logging.getLogger(__name__)
 
@@ -458,6 +457,10 @@ class TrainingDataset(BaseDataset):
         two_stage_config: Optional[Any] = None,
         finetune_substage: Optional[str] = None,
     ):
+        # Evaluation on Jetson Python 3.8 must not import training-only
+        # dataclasses that require a newer Python runtime.
+        from two_stage_data import OfflineProxyStore
+
         super().__init__(
             data_folder,
             data_split_folder,

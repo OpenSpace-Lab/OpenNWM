@@ -18,7 +18,6 @@ from checkpoint_io import output_identity
 
 import misc
 import distributed as dist
-from datasets import EvalDataset
 from PIL import Image
 from hydra_utils import load_experiment_config, merge_configs
 from train_utils import (
@@ -26,7 +25,6 @@ from train_utils import (
     setup_model,
     print_config,
     create_logger,
-    setup_diffusion,
     validate_model_context_sizes,
 )
 from motion_condition import make_motion_group
@@ -35,6 +33,7 @@ from scripts.benchmark_reproducibility import (
     expand_sample_keys,
     samplewise_noise_schedule,
 )
+from diffusion.inference_sampling import setup_inference_diffusion, validate_sampler_options
 
 
 def _model_flag(model, name):
@@ -97,6 +96,8 @@ def select_missing(output_dir, idxs, frames, *tensors):
 
 
 def get_dataset_eval(config, dataset_name, eval_type, predefined_index=True):
+    from datasets import EvalDataset
+
     # Explicit evaluation entries override experiment/training dataset entries.
     # This keeps held-out split controls (for example a fixed 500-window index)
     # from being shadowed by an older training config stored in a checkpoint run.
@@ -292,7 +293,7 @@ def model_forward_wrapper(
             model_kwargs=model_kwargs,
             progress=progress,
             device=device,
-            step_noises=step_noises,
+            step_noises=step_noises if getattr(diffusion, "uses_step_noise", True) else None,
             clip_denoised=False,
         )
 
@@ -584,8 +585,19 @@ def main(config: DictConfig):
     else:
         raise ValueError(f"Experiment directory {config.exp_dir} does not exist")
 
+    validate_sampler_options(config.get("inference_sampler", "ddpm"), config.get("ddim_eta"))
+    if config.gt and (config.get("inference_sampler", "ddpm") != "ddpm" or config.get("ddim_eta") is not None):
+        raise ValueError("Sampler options require prediction mode (gt=0)")
     requested_diffusion_steps = config.get("eval_diffusion_steps")
     if requested_diffusion_steps is not None:
+        if config.get("inference_sampler", "ddpm") != "ddpm" and (
+            isinstance(requested_diffusion_steps, bool)
+            or not (
+                isinstance(requested_diffusion_steps, int)
+                or isinstance(requested_diffusion_steps, str) and requested_diffusion_steps.isdigit()
+            )
+        ):
+            raise ValueError("Accelerated eval_diffusion_steps must be an integer step count")
         requested_diffusion_steps = int(requested_diffusion_steps)
         if requested_diffusion_steps <= 0:
             raise ValueError("eval_diffusion_steps must be positive")
@@ -627,7 +639,7 @@ def main(config: DictConfig):
             model = torch.compile(model)
 
         # Create diffusion model
-        diffusion = setup_diffusion(config, for_eval=True, device=device)
+        diffusion = setup_inference_diffusion(config, device=device)
 
         model = torch.nn.parallel.DistributedDataParallel(
             model, device_ids=[device], find_unused_parameters=False
