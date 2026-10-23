@@ -55,3 +55,17 @@ python3 deploy/remote_navigate.py 192.168.14.129 auto \
 机载源代码、安装脚本及构建日志：`/home/unitree/ndj/work/aic-usb-test`。模块：`/lib/modules/5.10.104-tegra/extra/go2-aic`。自动切换规则：`/etc/udev/rules.d/70-go2-aic-modeswitch.rules`。NetworkManager 连接 `go2-office` 已设置自动连接并关闭省电。重启/拔插自动恢复尚未实测，内核升级后需重编译。
 
 短时无线测试：25 次 ping 无丢包，平均 36.387 ms，最大 125.953 ms。尚未验收长距离稳定性和运动时无线失联急停。
+
+## 独立日志与交互窗口
+
+本机支持 GNOME Terminal 时，加 `--new-terminal`：
+
+```bash
+python3 deploy/remote_navigate.py 192.168.14.129 auto --new-terminal \
+  --model opennwm-dmd --sampler dmd --steps 4 \
+  --batch-size 14 --matching-batch-size 140 --target-window 10
+```
+
+新窗口显示机载导航日志并接收密码、START 等交互。导航退出后保留本机 shell，便于查看错误和重新运行。SSH 自身的连接/转发诊断单独写到启动时显示的 `~/.local/state/opennwm/ssh-*.log`，可用 `--ssh-log` 指定；机载导航的标准输出和错误仍显示在终端。
+
+`channel … open failed: connect failed: Connection refused` 表示转发目标端口没有服务监听。页面打开过早、导航失败或正常退出都可能导致该消息。先检查导航日志；例如机器人状态 `1001（阻尼）` 时，导航就绪检查会拒绝启动，页面端口尚未开放。应先由现场人员使用遥控器使机器人进入可行走状态，再重新启动；启动器不自动站起或绕过该检查。

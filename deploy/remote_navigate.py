@@ -5,12 +5,18 @@ import datetime
 import os
 import re
 import shlex
+import shutil
+import subprocess
+import sys
+from pathlib import Path
 
 p = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
 p.add_argument('host', help='机载无线 IP，例如 192.168.14.129')
 p.add_argument('mode', choices=['check', 'preview', 'manual', 'auto', 'monitor'], nargs='?', default='check')
 p.add_argument('--port', type=int, default=8765, help='本机浏览器端口')
 p.add_argument('--display-port', type=int, default=8765, help='机载可视化端口，自动匹配 SSH 转发')
+p.add_argument('--new-terminal', action='store_true', help='新开 GNOME 终端显示导航日志并接收输入')
+p.add_argument('--ssh-log', help='SSH 连接/转发诊断文件（默认 ~/.local/state/opennwm/ 下）')
 p.add_argument('--dry-run', action='store_true', help='仅打印命令，不连接、不启动导航')
 p.add_argument('--nav-help', action='store_true', help='读取机载导航脚本的最新帮助，不启动导航')
 nav = p.add_argument_group('导航参数（发送给机载脚本）')
@@ -37,7 +43,25 @@ if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9.:-]*', a.host):
     p.error('host 必须为 IP 或主机名')
 if not (1024 <= a.port <= 65535 and 1024 <= a.display_port <= 65535):
     p.error('本机和机载页面端口必须在 1024–65535 之间')
-ssh = ['ssh', '-o', 'ConnectTimeout=8', '-o', 'ServerAliveInterval=3', '-o', 'ServerAliveCountMax=3', '-o', 'ExitOnForwardFailure=yes']
+if a.new_terminal:
+    terminal = shutil.which('gnome-terminal')
+    if terminal is None:
+        p.error('未找到 gnome-terminal；请手动新开终端并去掉 --new-terminal')
+    child = [sys.executable, str(Path(__file__).resolve())] + [v for v in sys.argv[1:] if v != '--new-terminal']
+    shell = (shlex.join(child) + '; result=$?; '
+             'printf "\\n导航会话已结束（退出码 %s）。本窗口保留为本机终端。\\n" "$result"; exec bash')
+    launch = [terminal, '--title=OpenNWM 导航日志与交互', '--working-directory=' + str(Path(__file__).resolve().parent.parent), '--', 'bash', '-c', shell]
+    if a.dry_run:
+        print('仅预览新终端命令，未执行：\n' + shlex.join(launch))
+        raise SystemExit(0)
+    raise SystemExit(subprocess.run(launch).returncode)
+ssh_log = Path(a.ssh_log).expanduser() if a.ssh_log else Path.home() / '.local/state/opennwm' / ('ssh-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f') + '.log')
+if not a.dry_run:
+    ssh_log.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(str(ssh_log), os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+    os.close(fd)
+print('SSH 连接/转发诊断：' + str(ssh_log), flush=True)
+ssh = ['ssh', '-E', str(ssh_log), '-o', 'ConnectTimeout=8', '-o', 'ServerAliveInterval=3', '-o', 'ServerAliveCountMax=3', '-o', 'ExitOnForwardFailure=yes']
 dest = 'unitree@' + a.host
 entry = 'auto_window_navigate.py' if a.mode == 'auto' else 'window_navigate.py'
 base = ['/home/unitree/ndj/envs/opennwm/bin/python', '-B', '/home/unitree/ndj/code/OpenNWM/deploy/' + entry]
@@ -69,4 +93,7 @@ else:
 if a.dry_run:
     print('仅预览命令，未执行：\n' + shlex.join(ssh))
 else:
-    os.execvp('ssh', ssh)
+    result = subprocess.run(ssh)
+    if result.returncode:
+        print(f'连接或导航已退出（退出码 {result.returncode}）。请先查看上方导航错误；SSH 诊断见 {ssh_log}。', flush=True)
+    raise SystemExit(result.returncode)
