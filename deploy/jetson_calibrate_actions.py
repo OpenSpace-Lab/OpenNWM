@@ -30,10 +30,22 @@ class CalibrationNeedsRecollection(RuntimeError):
     """A fixed-command repeat set failed quality checks; explicit redo is required."""
 
 
+def require_correctable_direction(proposal, measured):
+    """Reject direction/drift faults before any duration or speed tuning."""
+    if len(measured) != 3 or not all(math.isfinite(v) for v in measured):
+        raise RuntimeError('Invalid measured motion; refusing to adjust command')
+    nominal = proposal['nominal']
+    if nominal['distance_m'] and not nominal['yaw_rad'] and abs(measured[1]) > .04:
+        raise RuntimeError('直行侧移超限：dy=%+.3f m，限值 0.04 m；停止标定，不延长指令，请检查底层控制/避障/地面与定位' % measured[1])
+    if not nominal['distance_m'] and nominal['yaw_rad'] and math.hypot(*measured[:2]) > .04:
+        raise RuntimeError('原地转向平移超限：%.3f m，限值 0.04 m；停止标定，不继续试调' % math.hypot(*measured[:2]))
+
+
 def tune_schedule(proposal, measured):
     """Offline pilot adjustment only; final repeat trials always use one frozen schedule."""
     if len(measured) != 3 or not all(math.isfinite(v) for v in measured):
         raise RuntimeError('Invalid measured motion; refusing to adjust command')
+    require_correctable_direction(proposal, measured)
     nominal = proposal['nominal']
     actual = nav.body_twist(measured)
     schedule = proposal['schedule']
@@ -148,6 +160,7 @@ def retune_recollection(proposal, old_samples):
 
 
 def validate_pilot(proposal, pilot):
+    require_correctable_direction(proposal, pilot['measured_m_rad'])
     name = proposal['candidate']
     summary = summarize_samples(name, [pilot], 1)
     # The lower yaw boundary is 15 degrees. A single barely passing pilot

@@ -101,6 +101,8 @@ def summarize_samples(name, samples, repeats):
         raise ValueError(name + ': turn differs from nominal by more than pi/36')
     if not spec['distance_m'] and math.hypot(*mean[:2]) > .04:
         raise ValueError(name + ': excessive drift for rotation')
+    if spec['distance_m'] and not spec['yaw_rad'] and abs(mean[1]) > .04:
+        raise ValueError(name + ': excessive lateral drift for straight motion')
     if not spec['yaw_rad'] and abs(mean[2]) > math.pi/60:
         raise ValueError(name + ': excessive unintended turn')
     if name == 'stationary':
