@@ -10,7 +10,7 @@ import jetson_calibrate_actions as c
 
 class RotationBracket(unittest.TestCase):
     def setUp(self):
-        self.p = c.nominal_proposals()['rotate_right_pi12']
+        self.p = c.nominal_proposals()['rotate_right_pi9']
         self.p['schedule'] = dict(vx_m_s=0., vy_m_s=0., yaw_rad_s=-.35, duration_s=1.4844432269)
         self.history = []
         for duration, yaw in [(1.55104917, -.27733016), (1.75702660, -.35830644),
@@ -24,7 +24,8 @@ class RotationBracket(unittest.TestCase):
 
     def test_real_oscillation_interpolates_inside_bracket(self):
         result = c.bracket_rotation_schedule(self.p, self.history)
-        self.assertAlmostEqual(result['duration_s'], 1.6447, places=3)
+        # The 20-degree target lies near the high edge; keep the 75% interior cap.
+        self.assertAlmostEqual(result['duration_s'], 1.55104917 + .75*(1.75702660-1.55104917))
         self.assertEqual(result['yaw_rad_s'], -.35)
         self.assertEqual(self.p['schedule']['duration_s'], 1.4844432269)
 
@@ -43,7 +44,7 @@ class RotationBracket(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root/'pilot-history.json').write_text(json.dumps(self.history))
-            trial = root/'026-rotate_right_pi12-pilot-7'
+            trial = root/'026-rotate_right_pi9-pilot-7'
             trial.mkdir()
             (trial/'execution.json').write_text(json.dumps(self.history[-1]))
             restored = c.restore_pilot_history(root/'calibration.json')

@@ -1,5 +1,6 @@
 """Offline navigation guards. No DDS, camera, GPU or real robot commands."""
 import json
+import itertools
 import math
 from pathlib import Path
 import sys
@@ -260,7 +261,12 @@ class Limits(unittest.TestCase):
             self.assertEqual(saved['status'],expected)
             if expected == 'failed':
                 self.assertIn('hard limit after stop',result['budget_error'])
-            io.stop.assert_called(); io.disarm_navigation_motion.assert_called_once()
+            if expected == 'succeeded':
+                io.pause_motion.assert_called(); io.release_motion_control.assert_called_once()
+                io.stop.assert_not_called()
+            else:
+                io.stop.assert_called()
+            io.disarm_navigation_motion.assert_called_once()
 
     def test_motion_fault_is_not_cleared_by_valid_final_pose(self):
         io=MagicMock(); io.read_pose.return_value=pose()
@@ -347,7 +353,8 @@ class TimedMotion(unittest.TestCase):
         self.assertGreater(guarded.move.call_count,20)
         for call in guarded.move.call_args_list:
             self.assertEqual(call.args,(.12,0.,0.))
-        guarded.stop.assert_called_once()
+        guarded.pause_motion.assert_called_once()
+        guarded.stop.assert_not_called()
 
     def test_budget_or_sensor_failure_stops_without_sending_more(self):
         guarded=MagicMock(); guarded.read_pose.side_effect=RuntimeError('limit')
@@ -582,7 +589,7 @@ class Confirmation(unittest.TestCase):
             n.confirm_start(capture)
 
     def run_fake(self, tokens, selected='forward_25', scene_score=0., poses=None,
-                 target_count=1, max_actions=2, move_status='succeeded', confirmation_age=0.):
+                 target_count=1, max_actions=2, move_status='succeeded', confirmation_age=0., measurements=None, automatic=False, window_targets=None, history_update="action"):
         from PIL import Image
         im=Image.new('RGB',(224,224))
         with tempfile.TemporaryDirectory() as tmp:
@@ -592,17 +599,27 @@ class Confirmation(unittest.TestCase):
             calibration_path = root/'fixed15.json'
             calibration_path.write_text(json.dumps(calibration_fixture()))
             args=SimpleNamespace(mode='navigate',output=root,max_actions=max_actions,model='opennwm',display_port=0,
-                                 action_calibration=calibration_path, batch_size=15)
+                                 action_calibration=calibration_path, batch_size=15, automatic=automatic,
+                                 window_navigation=window_targets is not None, target_window=5, history_update=history_update)
             capture=MagicMock()
             observation_count=[0]
             def latest(*a,**k):
                 observation_count[0]+=1
                 return im,{'sequence':observation_count[0],'timestamp_monotonic':float(observation_count[0])}
             capture.latest.side_effect=latest
-            engine=MagicMock(); engine.select.side_effect=lambda *a,**kw: ({'selected':selected,'ranking':[], 'current_goal_lpips':.5},im)
+            engine=MagicMock()
+            choices=iter(selected) if isinstance(selected,list) else None
+            target_choices=iter(window_targets) if window_targets is not None else None
+            engine.select.side_effect=lambda *a,**kw: ({'selected':next(choices) if choices is not None else selected,
+                                                       'ranking':[{'lpips':.1}], 'selected_lpips':.1, 'current_goal_lpips':.5,
+                                                       'selected_target_index':next(target_choices) if target_choices is not None else None},im)
             engine.distance.return_value=scene_score
             if isinstance(scene_score, Exception):
                 engine.distance.side_effect=scene_score
+            if isinstance(scene_score, list):
+                engine.distance.side_effect=itertools.chain(scene_score, itertools.repeat(0.))
+            recovery_history=n.ActionHistory()
+            recovery_history.append(im, {'sequence':0,'timestamp_monotonic':0.}, action_step=0)
             io=MagicMock(); io.walking_readiness.return_value={'ready':True}
             fake_ros=MagicMock()
             scale=n.OnlineScale()
@@ -622,13 +639,19 @@ class Confirmation(unittest.TestCase):
             with patch.dict(sys.modules,{'rclpy':fake_ros}), patch.object(n,'robot_adapter',return_value=io), \
                  patch.object(n,'Capture',return_value=capture), patch.object(n,'Engine',return_value=engine), \
                  patch.object(n,'OnlineScale',return_value=scale), \
+                 patch.object(n,'automatic_replan_context',return_value=(pose(), recovery_history)) as recovery, \
                  patch.object(n,'stopped_pose',return_value=pose(),side_effect=poses), patch.object(n,'do_motion') as move, \
                  patch.object(n.os,'open',return_value=123456), patch.object(n.os,'close'), patch.object(n.fcntl,'flock'), \
                  patch.object(n.time,'monotonic',side_effect=lambda:clock[0]), \
                  patch('builtins.input',side_effect=answer):
                 move.return_value={'status':move_status,'measured_m_rad':[.05,0,0],'finished_monotonic':2.,
                                    'controller':{'completion_basis':'elapsed_command_time'}}
+                if measurements is not None:
+                    actual=iter(measurements)
+                    move.side_effect=lambda *a,**kw: dict(move.return_value, measured_m_rad=next(actual))
                 status={}; n.run_robot(args,plan,status)
+                status['test_pngs']=[p.name for p in root.glob('step-*/*.png')]
+                status['test_targets']=[json.loads(p.read_text()) for p in sorted(root.glob('step-*/target.json'))]
                 status['test_histories']=[json.loads(p.read_text()) for p in sorted(root.glob('step-*/history.json'))]
                 status['test_compensation_exists']=(root/'execution-compensation.json').exists()
                 status['test_batch_inputs']=[{'count':len(call.args[2]), 'kwargs':call.kwargs} for call in engine.select.call_args_list]
@@ -636,10 +659,163 @@ class Confirmation(unittest.TestCase):
                 status['test_prompts']=prompts
                 status['test_rejections']=[json.loads(p.read_text()) for p in sorted(root.glob('step-*/proposal-rejection.json'))]
                 status['test_arrivals']=[json.loads(p.read_text()) for p in sorted(root.glob('step-*/arrival.json'))]
+                status['test_candidate_sets']=[list(call.args[2]) for call in engine.select.call_args_list]
+                status['test_constraints']=[json.loads(p.read_text()) for p in sorted(root.glob('step-*/candidate-constraints.json'))]
+                status['test_comparisons']=[json.loads(p.read_text()) for p in sorted(root.glob('step-*/image-comparison.json'))]
                 status['test_inferences']=engine.select.call_count
+                status['test_recoveries']=recovery.call_count
                 count=move.call_count
                 io.close.assert_called_once(); capture.close.assert_called_once()
                 return count,status
+
+    def test_auto_window_can_move_target_forward_then_finish_at_last(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=4, max_actions=4,
+                                   selected=['forward_25','forward_25','stationary','stationary'],
+                                   window_targets=[1,2,3,4])
+        self.assertEqual(count,2)
+        self.assertEqual([a['goal'] for a in status['test_arrivals']],[3,4])
+        self.assertEqual(status['status'],'all_targets_confirmed')
+        self.assertEqual(len(status['test_prompts']),1)
+        guard = status['test_batch_inputs'][0]['kwargs']['loop_guard']
+        self.assertEqual([(r[0], r[1]) for r in guard.history],
+                         [(1, 'forward_25'), (2, 'forward_25'), (3, 'stationary'), (4, 'stationary')])
+
+    def test_auto_window_rejects_previous_target(self):
+        with self.assertRaisesRegex(RuntimeError, 'outside the target window'):
+            self.run_fake(['START'], automatic=True, target_count=4, max_actions=2,
+                          selected=['forward_25', 'forward_25'], window_targets=[3, 1])
+
+    def test_manual_window_requires_move_and_arrival_confirmation(self):
+        count,status=self.run_fake(['START','MOVE','','arrived'], target_count=4, max_actions=2,
+                                   selected=['forward_25','stationary'], window_targets=[3,4])
+        self.assertEqual(count,1)
+        self.assertEqual(status['status'],'all_targets_confirmed')
+        self.assertEqual(status['test_arrivals'][0]['confirmed_by'],'operator')
+
+    def test_auto_motion_then_stationary_advances_all_targets_without_prompts(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=2, max_actions=4,
+                                   selected=['forward_25','stationary','forward_25','stationary'])
+        self.assertEqual(count,2)
+        self.assertEqual(len(status['test_prompts']),1)
+        self.assertIn('将自动运动',status['test_prompts'][0]['prompt'])
+        self.assertEqual(status['targets_confirmed'],2)
+        self.assertEqual(status['status'],'all_targets_confirmed')
+        self.assertEqual([a['confirmed_by'] for a in status['test_arrivals']],['stationary_selected']*2)
+        self.assertEqual(len(status['test_comparisons']),2)
+        self.assertTrue(all('actual_vs_reference_goal_lpips' in c for c in status['test_comparisons']))
+
+    def test_auto_stationary_never_moves_and_keeps_history(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=2, selected='stationary')
+        self.assertEqual(count,0)
+        self.assertEqual(status['targets_confirmed'],2)
+        self.assertEqual([h['total_observation_events'] for h in status['test_histories']],[1,1])
+
+    def test_round_history_updates_even_when_stationary(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=3, max_actions=3,
+                                   selected='stationary', history_update='round')
+        self.assertEqual(count,0)
+        self.assertEqual([h['total_observation_events'] for h in status['test_histories']],[1,2,3])
+        self.assertTrue(all(h['update_mode']=='round' for h in status['test_histories']))
+
+    def test_round_history_updates_once_after_motion_and_after_unconfirmed_round(self):
+        count,status=self.run_fake(['START','MOVE','','no','q'], max_actions=3,
+                                   selected='forward_25', history_update='round')
+        self.assertEqual(count,1)
+        self.assertEqual([h['total_observation_events'] for h in status['test_histories']],[1,2,3])
+
+    def test_auto_proposal_limit_and_turn_guard_survive_target_switch(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=2, max_actions=3,
+                                   selected=['rotate_left_pi9','stationary','forward_25'],
+                                   measurements=[[0,0,math.pi/12],[.21,0,0]])
+        self.assertEqual(count,2)
+        self.assertEqual(status['status'],'proposal_limit_reached')
+        self.assertNotIn('rotate_right_pi9',status['test_candidate_sets'][2])
+        self.assertFalse(any('_arc_' in name for names in status['test_candidate_sets'] for name in names))
+
+    def test_navigation_only_saves_post_action_images_and_target_indices(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=2, max_actions=2,
+                                   selected=['forward_25','stationary'], window_targets=[1,2])
+        self.assertEqual(count, 1)
+        self.assertEqual(status['test_pngs'], ['actual-after.png', 'actual-after.png'])
+        self.assertEqual([r['target_index'] for r in status['test_targets']], [1,2])
+
+    def test_auto_stale_proposal_replans_without_old_motion_or_target_advance(self):
+        count,status=self.run_fake(['START'], automatic=True, scene_score=[.2, 0.],
+                                   selected=['forward_25', 'stationary'], window_targets=[3, 1], target_count=4)
+        self.assertEqual(count, 0)
+        self.assertEqual(status['test_recoveries'], 1)
+        self.assertEqual(status['test_inferences'], 2)
+        self.assertEqual(len(status['test_prompts']), 1)
+        self.assertEqual(status['test_rejections'][0]['resume_target_index'], 1)
+        self.assertEqual([a['goal'] for a in status['test_arrivals']], [1])
+        self.assertTrue(status['test_histories'][1]['cold_start_repetition'])
+        guard=status['test_batch_inputs'][0]['kwargs']['loop_guard']
+        self.assertEqual([(r[0],r[1]) for r in guard.history], [(1,'stationary')])
+
+    def test_auto_repeated_stale_proposals_stop_at_limit(self):
+        with self.assertRaisesRegex(RuntimeError,'连续 3 次提案失效'):
+            self.run_fake(['START'], automatic=True, scene_score=.2, max_actions=4)
+
+    def test_auto_successful_check_resets_rejection_streak(self):
+        count,status=self.run_fake(['START'], automatic=True, target_count=4, max_actions=4,
+                                   selected='stationary', scene_score=[.2, 0., .2, 0.])
+        self.assertEqual(count, 0)
+        self.assertEqual(status['test_recoveries'], 2)
+        self.assertEqual([r['consecutive_rejections'] for r in status['test_rejections']], [1, 1])
+
+    def test_auto_failed_motion_stops(self):
+        with self.assertRaisesRegex(RuntimeError,'Action did not complete'):
+            self.run_fake(['START'], automatic=True, move_status='failed')
+
+    def test_turn_stop_straight_then_reverse_and_constraint_logs(self):
+        with self.assertLogs(n.LOG, level='INFO') as logs:
+            count,status=self.run_fake(['START','MOVE','','MOVE','MOVE','','q'],
+                selected=['rotate_left_pi9','stationary','forward_25','rotate_right_pi9'],
+                max_actions=4,measurements=[[0,0,math.pi/12],[.21,0,0]])
+        self.assertEqual(count,2)
+        sets=status['test_candidate_sets']
+        self.assertEqual([len(v) for v in sets],[7,5,5,7])
+        self.assertNotIn('rotate_right_pi9',sets[1])
+        self.assertFalse(any('_arc_' in name for names in sets for name in names))
+        self.assertIn('rotate_right_pi9',sets[3])
+        self.assertTrue(any('排除 2 个原地右转候选' in line for line in logs.output))
+        self.assertTrue(any('约束解除' in line for line in logs.output))
+
+    def test_forward_actions_remain_eligible(self):
+        count,status=self.run_fake(['START','MOVE','','MOVE','','q'],max_actions=3,
+            selected=['forward_25','forward_50','rotate_left_pi9'],
+            measurements=[[.23,0.,0.],[.48,0.,0.]])
+        self.assertEqual(count,2)
+        self.assertEqual([len(v) for v in status['test_candidate_sets']],[7,7,7])
+
+    def test_forward_after_in_place_turn_is_allowed_and_releases_guard(self):
+        count,status=self.run_fake(['START','MOVE','','MOVE','','q'],max_actions=3,
+            selected=['rotate_left_pi9','forward_25','rotate_right_pi9'],
+            measurements=[[0,0,math.pi/12],[.23,0.,0.]])
+        self.assertEqual(count,2)
+        self.assertEqual([len(v) for v in status['test_candidate_sets']],[7,5,7])
+
+    def test_goal_switch_does_not_clear_executed_turn(self):
+        count,status=self.run_fake(['START','MOVE','arrived','q'],target_count=2,
+            selected=['rotate_right_pi9','stationary'],measurements=[[0,0,-math.pi/12]])
+        self.assertEqual(count,1)
+        self.assertNotIn('rotate_left_pi9',status['test_candidate_sets'][1])
+
+    def test_unexecuted_turn_proposal_does_not_constrain_next_proposal(self):
+        count,status=self.run_fake(['START','yes','q'],selected=['rotate_left_pi9','rotate_right_pi9'])
+        self.assertEqual(count,0)
+        self.assertEqual([len(v) for v in status['test_candidate_sets']],[7,7])
+
+    def test_no_actual_forward_progress_does_not_release_constraint(self):
+        count,status=self.run_fake(['START','MOVE','','MOVE','','q'],max_actions=3,
+            selected=['rotate_left_pi9','forward_25','stationary'],measurements=[[0,0,math.pi/12],[0,0,0]])
+        self.assertEqual(count,2)
+        self.assertNotIn('rotate_right_pi9',status['test_candidate_sets'][2])
+
+    def test_forbidden_model_selection_is_rejected_before_move_prompt(self):
+        with self.assertRaisesRegex(RuntimeError,'violates candidate constraints'):
+            self.run_fake(['START','MOVE',''],selected=['rotate_left_pi9','rotate_right_pi9'],
+                          measurements=[[0,0,math.pi/12]])
 
     def test_q_no_movement(self):
         count,status=self.run_fake(['START','q'])
@@ -656,7 +832,7 @@ class Confirmation(unittest.TestCase):
         self.assertEqual(status['test_histories'][0]['action_steps'],[0,0,0,0])
         self.assertEqual(status['test_histories'][1]['action_steps'],[0,0,0,1])
         self.assertFalse(status['test_compensation_exists'])
-        self.assertTrue(all(v['count']==15 and not v['kwargs'] for v in status['test_batch_inputs']))
+        self.assertTrue(all(v['count']==7 and not v['kwargs'] for v in status['test_batch_inputs']))
         first,second=status['test_proposals']
         self.assertEqual(first['metric_target'],second['metric_target'])
         self.assertEqual(second['schedule'],first['schedule'])

@@ -159,7 +159,7 @@ class ResumeCalibration(unittest.TestCase):
             path=Path(tmp)/'calibration.json'; data=self.partial(); path.write_text(json.dumps(data))
             with self.assertRaises(ValueError): load_calibration(path)
             resumed=load_calibration(path,require_ready=False)
-            self.assertEqual(sum(len(v['samples']) for v in resumed['actions'].values()),4)
+            self.assertEqual(sum(len(v['samples']) for v in resumed['actions'].values()),1)
             self.assertFalse(resumed['ready'])
             data['actions']['forward_25']['samples'][0]['status']='failed'; path.write_text(json.dumps(data))
             with self.assertRaises(ValueError): load_calibration(path,require_ready=False)
@@ -184,6 +184,6 @@ class ResumeCalibration(unittest.TestCase):
             self.assertEqual(samples['forward_25'][0],original)
             self.assertTrue(all(name!='stationary' for name,phase in trial_names))
             self.assertEqual([phase for name,phase in trial_names if name=='forward_25'],['repeat-2','repeat-3'])
-            self.assertEqual(len(trial_names),54)  # No repeated stationary, pilot or accepted forward sample.
+            self.assertEqual(len(trial_names),22)  # No repeated stationary, pilot or accepted forward sample.
 
 if __name__=='__main__': unittest.main()

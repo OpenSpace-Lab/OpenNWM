@@ -25,13 +25,13 @@ class Calibration(unittest.TestCase):
 
     def test_exact_geometry_units_and_measured_not_nominal_condition(self):
         specs = candidate_specs()
-        self.assertEqual(len(specs), 15)
-        self.assertEqual(len({s['name'] for s in specs}), 15)
+        self.assertEqual(len(specs), 7)
+        self.assertEqual(len({s['name'] for s in specs}), 7)
         self.assertEqual({s['distance_m'] for s in specs}, {0., .25, .5})
-        self.assertEqual({abs(s['yaw_rad']) for s in specs}, {0., math.pi/12, math.pi/4})
-        p = nominal_proposals()['left_arc_25_pi4']
-        self.assertAlmostEqual(p['metric_target'][0], .225079079, places=8)
-        self.assertAlmostEqual(p['metric_target'][1], .093230807, places=8)
+        self.assertEqual({abs(s['yaw_rad']) for s in specs}, {0., math.pi/9, math.pi/4})
+        p = nominal_proposals()['rotate_left_pi4']
+        self.assertEqual(p['metric_target'], [0., 0., math.pi/4])
+        self.assertTrue(all(not (s['distance_m'] and s['yaw_rad']) for s in specs))
         calibrated = calibrated_proposals(self.load(calibration_fixture()))
         self.assertAlmostEqual(calibrated['forward_50']['effective_candidate'][0], 1.92)
         self.assertNotEqual(calibrated['forward_50']['effective_candidate'], p['raw_candidate'])
@@ -52,7 +52,7 @@ class Calibration(unittest.TestCase):
             sample = data['actions']['forward_25']['samples'][0]
             if mutation == 'failed': sample['status'] = 'failed'
             if mutation == 'nan': sample['measured_m_rad'][0] = float('nan')
-            if mutation == 'path': sample['measured_path_m'] = .71
+            if mutation == 'path': sample['measured_path_m'] = 1.01
             if mutation == 'turn': sample['measured_accumulated_turn_rad'] = math.pi/3
             if mutation == 'spread': sample['measured_m_rad'][1] = .1
             if mutation == 'short':
@@ -88,7 +88,8 @@ class Calibration(unittest.TestCase):
         adjusted = c.tune_schedule(proposal, [.18,0.,0.])
         validate_schedule(adjusted)
         self.assertAlmostEqual(adjusted['duration_s'], proposal['schedule']['duration_s']*1.2)
-        turn = nominal_proposals()['rotate_left_pi12']
+        self.assertEqual(adjusted['vx_m_s'], .30)
+        turn = nominal_proposals()['rotate_left_pi9']
         with self.assertRaises(RuntimeError): c.tune_schedule(turn, [0.,0.,-.1])
 
     def test_plan_is_file_only_and_not_navigation_ready(self):
@@ -98,7 +99,7 @@ class Calibration(unittest.TestCase):
                                     capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertFalse(json.loads((out/'calibration.json').read_text())['ready'])
-            self.assertEqual(len(json.loads((out/'plan.json').read_text())['candidates']), 15)
+            self.assertEqual(len(json.loads((out/'plan.json').read_text())['candidates']), 7)
 
     def test_wrong_move_token_has_no_control_side_effect(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -125,7 +126,7 @@ class Calibration(unittest.TestCase):
                 samples, status = {}, {}
                 c.collect(args, samples, nominal_proposals(), status)
                 self.assertEqual(status['status'], 'complete')
-                self.assertEqual(run.call_count, 59)  # 14 pilots + 45 frozen repeats (3 stationary).
+                self.assertEqual(run.call_count, 24)  # 6 pilots + 18 moving repeats; stationary is built in.
                 self.assertTrue(all(len(v)==3 for v in samples.values()))
                 self.assertTrue(all(s['phase'].startswith('repeat') for v in samples.values() for s in v))
                 io.stop.assert_called_once(); io.close.assert_called_once(); capture.close.assert_called_once()

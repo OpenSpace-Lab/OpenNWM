@@ -13,18 +13,18 @@ import jetson_calibrate_actions as c
 from calibrated_actions import nominal_proposals
 from calibration_fixture import calibration_fixture
 
-NAME='right_arc_25_pi12'
+NAME='rotate_right_pi9'
 MEASURED=[
- [.27096861645797216,-.011363059586198487,-.13927200064063075],
- [.24971870082382236,-.017655099378319987,-.20049522072076797],
- [.24777792710780622,-.028195676186997462,-.23764744400978088]]
+ [0.,0.,-.13927200064063075],
+ [0.,0.,-.20049522072076797],
+ [0.,0.,-.23764744400978088]]
 
 
 class PilotBudget(unittest.TestCase):
     def run_trials(self, rounds, fail=False):
         fixture=calibration_fixture()['actions'][NAME]['samples'][0]
         proposal=nominal_proposals()[NAME]
-        proposal['schedule']=dict(vx_m_s=.12,vy_m_s=0.,yaw_rad_s=-.12848637506404037,duration_s=2.9340941266564227)
+        proposal['schedule']=dict(vx_m_s=0.,vy_m_s=0.,yaw_rad_s=-.12848637506404037,duration_s=2.9340941266564227)
         proposals={NAME:proposal}; samples={}; status={}; pilots=[]
         def trial(args,io,capture,p,number,phase):
             result=copy.deepcopy(fixture);result['proposal']=copy.deepcopy(p)
@@ -56,8 +56,8 @@ class PilotBudget(unittest.TestCase):
         for a,b in zip(pilots,pilots[1:]):
             old=abs(a['yaw_rad_s'])*a['duration_s'];new=abs(b['yaw_rad_s'])*b['duration_s']
             self.assertLessEqual(new/old,1.200001)
-            self.assertLessEqual(abs(b['yaw_rad_s']),.35)
-            self.assertLessEqual(b['vx_m_s'],.120001)
+            self.assertLessEqual(abs(b['yaw_rad_s']),.45)
+            self.assertEqual(b['vx_m_s'],0.)
 
     def test_exhaustion_saves_next_unverified_schedule_and_no_samples(self):
         samples,status,pilots,proposal,error,audit=self.run_trials(3)
@@ -66,13 +66,13 @@ class PilotBudget(unittest.TestCase):
         self.assertFalse(audit['next_schedule_verified'])
         self.assertEqual(audit['previous_schedule'],pilots[-1])
         self.assertEqual(audit['next_schedule'],proposal['schedule'])
-        self.assertGreater(abs(proposal['schedule']['yaw_rad_s']),abs(pilots[-1]['yaw_rad_s']))
+        self.assertGreater(proposal['schedule']['duration_s'],pilots[-1]['duration_s'])
 
-    def test_pilot_16_48_degrees_does_not_freeze_boundary_command(self):
-        proposal=nominal_proposals()['left_arc_50_pi12']
-        sample=copy.deepcopy(calibration_fixture()['actions']['left_arc_50_pi12']['samples'][0])
-        sample['measured_m_rad']=[.5066563386910296,.0810734068398721,.28757496178150177]
-        with self.assertRaisesRegex(ValueError,'margin insufficient'):
+    def test_pilot_below_nominal_tolerance_is_rejected(self):
+        proposal=nominal_proposals()['rotate_left_pi9']
+        sample=copy.deepcopy(calibration_fixture()['actions']['rotate_left_pi9']['samples'][0])
+        sample['measured_m_rad']=[0.,0.,.24]
+        with self.assertRaisesRegex(ValueError,'below'):
             c.validate_pilot(proposal,sample)
         sample['measured_m_rad'][2]=.3141592653589793
         c.validate_pilot(proposal,sample)

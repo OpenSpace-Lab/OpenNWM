@@ -24,7 +24,7 @@ class Limits(unittest.TestCase):
     def test_all_navigation_proposals_use_new_hard_limits(self):
         ready=self.load(calibration_fixture())
         for proposal in calibrated_proposals(ready).values():
-            self.assertEqual(proposal['hard_distance_m'],.7)
+            self.assertEqual(proposal['hard_distance_m'],1.)
             self.assertEqual(proposal['hard_turn_rad'],math.pi/3)
         self.assertEqual({p['nominal']['distance_m'] for p in nominal_proposals().values()},{0.,.25,.5})
     def test_old_timed_samples_migrate_without_changing_commands_or_measurements(self):
@@ -48,10 +48,10 @@ class Limits(unittest.TestCase):
         with self.assertRaises(ValueError):self.load(data,require_ready=False)
     def test_guard_still_enforces_new_limit_and_retains_reserve(self):
         pose=lambda x,yaw,source:SimpleNamespace(x=x,y=0.,yaw=yaw,source=source)
-        proposal=nominal_proposals()['left_arc_25_pi4']
+        proposal=nominal_proposals()['rotate_left_pi4']
         budget=MotionBudget(pose(0,0,0),proposal)
         budget.check(pose(.6,math.radians(46.69),1),stopped=True)
-        with self.assertRaises(RuntimeError):budget.check(pose(.7,math.radians(46.69),2),stopped=True)
+        with self.assertRaises(RuntimeError):budget.check(pose(1.,math.radians(46.69),2),stopped=True)
         budget=MotionBudget(pose(0,0,0),proposal)
         with self.assertRaises(MotionReserveStop):budget.check(pose(0,math.radians(56.1),1))
         budget=MotionBudget(pose(0,0,0),proposal)

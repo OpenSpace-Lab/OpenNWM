@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline fixed15 calibration. plan is file-only; collect needs a MOVE token per trial."""
+"""Offline forward/turn calibration. plan is file-only; collect needs MOVE per trial."""
 import argparse
 import copy
 import fcntl
@@ -16,9 +16,36 @@ import time
 
 import jetson_navigate as nav
 from calibrated_actions import (SPACING, candidate_specs, nominal_proposals, build_calibration,
-                                summarize_samples, validate_schedule, load_calibration, HARD_DISTANCE, HARD_TURN)
+                                summarize_samples, validate_schedule, load_calibration, HARD_DISTANCE, HARD_TURN,
+                                FORWARD_CALIBRATION_SPEED, TURN_CALIBRATION_RATE, ARC_CALIBRATION_SPEED,
+                                ARC_CALIBRATION_RATE, SCHEMA, contract_hash, restrict_legacy_actions)
 
 LOG = logging.getLogger('go2.calibrate')
+TUNING_POLICY = 'fixed_translation_030_forward50_seed2_v4'
+
+
+def initial_proposals():
+    proposals = nominal_proposals()
+    for name in ('forward_25', 'forward_50'):
+        proposal = proposals[name]
+        proposal['schedule'] = dict(vx_m_s=FORWARD_CALIBRATION_SPEED, vy_m_s=0.,
+                                    yaw_rad_s=0., duration_s=2.)
+    for proposal in proposals.values():
+        if proposal['nominal']['yaw_rad']:
+            schedule = proposal['schedule']
+            if proposal['nominal']['distance_m']:
+                distance, yaw = proposal['nominal']['distance_m'], proposal['nominal']['yaw_rad']
+                duration = max(1., distance/FORWARD_CALIBRATION_SPEED, abs(yaw)/ARC_CALIBRATION_RATE)
+                proposal['schedule'] = dict(vx_m_s=FORWARD_CALIBRATION_SPEED, vy_m_s=0.,
+                                            yaw_rad_s=yaw/duration, duration_s=duration)
+                validate_schedule(proposal['schedule'])
+                continue
+            factor = TURN_CALIBRATION_RATE / .35
+            for key in ('vx_m_s', 'vy_m_s', 'yaw_rad_s'):
+                schedule[key] *= factor
+            schedule['duration_s'] = max(1., schedule['duration_s']/factor)
+            validate_schedule(schedule)
+    return proposals
 
 
 class CalibrationNeedsMoreTrials(RuntimeError):
@@ -35,8 +62,6 @@ def require_correctable_direction(proposal, measured):
     if len(measured) != 3 or not all(math.isfinite(v) for v in measured):
         raise RuntimeError('Invalid measured motion; refusing to adjust command')
     nominal = proposal['nominal']
-    if nominal['distance_m'] and not nominal['yaw_rad'] and abs(measured[1]) > .04:
-        raise RuntimeError('直行侧移超限：dy=%+.3f m，限值 0.04 m；停止标定，不延长指令，请检查底层控制/避障/地面与定位' % measured[1])
     if not nominal['distance_m'] and nominal['yaw_rad'] and math.hypot(*measured[:2]) > .04:
         raise RuntimeError('原地转向平移超限：%.3f m，限值 0.04 m；停止标定，不继续试调' % math.hypot(*measured[:2]))
 
@@ -54,17 +79,78 @@ def tune_schedule(proposal, measured):
     if nominal['yaw_rad'] and (actual[2]*nominal['yaw_rad'] <= 0 or abs(actual[2]) < math.pi/180):
         raise RuntimeError('No correctly directed rotation; refusing to amplify command')
     xy_gain = nominal['distance_m']/math.hypot(*actual[:2]) if nominal['distance_m'] else 1.
-    # Aiming slightly above the lower edge avoids accepting sub-15-degree averages.
-    yaw_target = max(abs(nominal['yaw_rad']), math.radians(18))
+    # Tune to the nominal 20/45-degree angle.
+    yaw_target = abs(nominal['yaw_rad'])
     yaw_gain = yaw_target/abs(actual[2]) if nominal['yaw_rad'] else 1.
     xy_gain, yaw_gain = [min(1.2, max(.8, v)) for v in (xy_gain, yaw_gain)]
-    integrated = [schedule['vx_m_s']*schedule['duration_s']*xy_gain,
-                  schedule['vy_m_s']*schedule['duration_s']*xy_gain,
-                  schedule['yaw_rad_s']*schedule['duration_s']*yaw_gain]
-    duration = max(1., math.hypot(*integrated[:2])/.12, abs(integrated[2])/.35)
-    result = dict(zip(('vx_m_s', 'vy_m_s', 'yaw_rad_s'), [v/duration for v in integrated]), duration_s=duration)
+    if nominal['distance_m']:
+        # Linear velocity is invariant; distance feedback changes time only.
+        duration = max(.25, schedule['duration_s']*xy_gain)
+        yaw = schedule['yaw_rad_s']*schedule['duration_s']*yaw_gain/duration if nominal['yaw_rad'] else 0.
+        yaw = max(-ARC_CALIBRATION_RATE, min(ARC_CALIBRATION_RATE, yaw))
+        result = dict(vx_m_s=FORWARD_CALIBRATION_SPEED, vy_m_s=0., yaw_rad_s=yaw, duration_s=duration)
+    else:
+        # Pure rotation retains its angular speed and tunes elapsed time.
+        result = dict(schedule, duration_s=max(.25, schedule['duration_s']*yaw_gain))
     validate_schedule(result)
     return result
+
+
+def upgrade_fixed_translation(proposals, samples):
+    """Recollect only commands whose linear velocity conflicts with the new policy."""
+    changes = []
+    for name, proposal in proposals.items():
+        if not proposal['nominal']['distance_m']:
+            continue
+        old = proposal['schedule']
+        if old['vx_m_s'] == FORWARD_CALIBRATION_SPEED and old['vy_m_s'] == 0.:
+            continue
+        # Keep the old command integrals as the unverified tuning seed.
+        duration = max(.25, math.hypot(old['vx_m_s'], old['vy_m_s'])*old['duration_s']/FORWARD_CALIBRATION_SPEED)
+        yaw = old['yaw_rad_s']*old['duration_s']/duration
+        new = dict(vx_m_s=FORWARD_CALIBRATION_SPEED, vy_m_s=0.,
+                   yaw_rad_s=max(-ARC_CALIBRATION_RATE, min(ARC_CALIBRATION_RATE, yaw)), duration_s=duration)
+        validate_schedule(new)
+        changes.append(dict(candidate=name, previous_schedule=copy.deepcopy(old),
+                            next_schedule=copy.deepcopy(new),
+                            archived_samples=copy.deepcopy(samples.get(name, [])),
+                            next_schedule_verified=False))
+        proposal['schedule'] = new
+        samples[name] = []
+    return changes
+
+
+def upgrade_forward50_seed(proposals, samples, source_policy):
+    """Replace an old, unaccepted long seed once; never relabel failed trials."""
+    name = 'forward_50'
+    if source_policy == TUNING_POLICY or name not in proposals or samples.get(name):
+        return None
+    schedule = proposals[name]['schedule']
+    if schedule['duration_s'] <= 2.:
+        return None
+    previous = copy.deepcopy(schedule)
+    schedule['duration_s'] = 2.
+    validate_schedule(schedule)
+    return dict(candidate=name, previous_schedule=previous, next_schedule=copy.deepcopy(schedule),
+                next_schedule_verified=False, reason='Replace unaccepted long forward_50 seed; no failed samples reused')
+
+
+def retry_schedule(proposal, rejected, reason, cycle):
+    """Retune from the measured mean without varying the fixed linear speed."""
+    for record in rejected:
+        if record.get('status') not in ('succeeded', 'stopped_at_reserve') or any(
+                record.get(k) for k in ('error', 'budget_error', 'feedback_error', 'avoidance_intervened')):
+            raise RuntimeError('Execution/feedback fault; refusing automatic retry')
+    if any(r['status'] == 'stopped_at_reserve' for r in rejected):
+        raise RuntimeError('Motion reserve reached; inspect before further tuning')
+    mean = [sum(r['measured_m_rad'][i] for r in rejected)/len(rejected) for i in range(3)]
+    require_correctable_direction(proposal, mean)
+    nominal = proposal['nominal']
+    if nominal['distance_m'] and (mean[0] <= 0 or math.hypot(*mean[:2]) < .02):
+        raise RuntimeError('No forward progress; refusing automatic retry')
+    if nominal['yaw_rad'] and mean[2]*nominal['yaw_rad'] <= 0:
+        raise RuntimeError('Incorrect rotation direction; refusing automatic retry')
+    return tune_schedule(proposal, mean)
 
 
 def bracket_rotation_schedule(proposal, history):
@@ -76,7 +162,7 @@ def bracket_rotation_schedule(proposal, history):
     if proposal['nominal']['distance_m'] or not proposal['nominal']['yaw_rad']:
         return None
     schedule = proposal['schedule']
-    target = max(abs(proposal['nominal']['yaw_rad']), math.radians(18))
+    target = abs(proposal['nominal']['yaw_rad'])
     points = []
     for record in history:
         try:
@@ -163,12 +249,6 @@ def validate_pilot(proposal, pilot):
     require_correctable_direction(proposal, pilot['measured_m_rad'])
     name = proposal['candidate']
     summary = summarize_samples(name, [pilot], 1)
-    # The lower yaw boundary is 15 degrees. A single barely passing pilot
-    # cannot establish that repeated runs will remain above that boundary.
-    if (math.isclose(abs(proposal['nominal']['yaw_rad']), math.pi/12)
-            and abs(summary['mean_m_rad'][2]) < math.radians(17)):
-        raise ValueError('%s: pilot turn margin insufficient (%.3f deg; need >=17 deg before repeats; tune toward 18 deg)'
-                         % (name, math.degrees(abs(summary['mean_m_rad'][2]))))
     return summary
 
 
@@ -232,7 +312,47 @@ def measure_trial(args, io, capture, proposal, phase, directory):
     return record
 
 
+def find_auto_resume(root, repeats, requested_redo=()):
+    """Choose the latest compatible wireless collection, never a plan or wired run."""
+    for path in sorted(root.glob('wifi-calibration-*/calibration.json'), key=lambda p: p.parent.name, reverse=True):
+        try:
+            data = restrict_legacy_actions(json.loads(path.read_text()))
+            marker = path.parent / 'session.json'
+            if not marker.exists():
+                marker = path.parent / 'status.json'
+            metadata = json.loads(marker.read_text())
+            if metadata.get('mode') != 'collect':
+                continue
+            if data.get('schema') != SCHEMA or data.get('repeats') != repeats:
+                continue
+            # Validate the contract before interpreting samples by current action names.
+            # Clearing samples here is in-memory only; rejected groups are handled below.
+            load_calibration(path, require_ready=False, redo_candidates=list(data['actions']))
+            redo = list(requested_redo)
+            for name, entry in data['actions'].items():
+                if name == 'stationary' or not entry['samples']:
+                    continue
+                try:
+                    summarize_samples(name, entry['samples'], len(entry['samples']))
+                except ValueError:
+                    redo.append(name)
+            redo = list(dict.fromkeys(redo))
+            # Check definitions, schedules and every retained sample before selection.
+            load_calibration(path, require_ready=False, redo_candidates=redo)
+            return path, redo
+        except (OSError, ValueError, KeyError, TypeError):
+            continue
+    return None, list(requested_redo)
+
+
 def collect(args, samples, proposals, status):
+    moving = [name for name in proposals if name != 'stationary']
+    if all(len(samples.get(name, [])) >= args.repeats for name in moving):
+        for name in moving:
+            summarize_samples(name, samples[name], args.repeats)
+        LOG.info('所有运动动作已合格，跳过采集，不连接运动接口')
+        status['status'] = 'complete'
+        return
     import rclpy
     rclpy.init()
     io = capture = None
@@ -248,6 +368,9 @@ def collect(args, samples, proposals, status):
         capture = nav.Capture(args, io)
         capture.wait_ready()
         for name, proposal in proposals.items():
+            if name == 'stationary':
+                LOG.info('stationary: 使用内置零动作，跳过采集')
+                continue
             existing = samples.get(name, [])
             if existing:
                 summarize_samples(name, existing, len(existing))
@@ -255,46 +378,70 @@ def collect(args, samples, proposals, status):
                     LOG.info('%s: 保留已有 %d 个合格样本，跳过', name, len(existing))
                     continue
                 LOG.info('%s: 保留 %d 个样本，沿用冻结指令继续', name, len(existing))
-            # Pilots are saved separately; no changing schedules inside the final repeat set.
-            if name != 'stationary' and not existing:
-                for tuning_round in range(args.max_tuning_rounds):
+            cycle = 0
+            while True:
+                # Pilots are saved separately; no changing schedules inside the final repeat set.
+                if name != 'stationary' and not existing:
+                    tuning_round = 0
+                    while True:
+                        number += 1
+                        pilot = trial(args, io, capture, proposal, number, 'pilot-%d-%d' % (cycle, tuning_round))
+                        history.append(copy.deepcopy(pilot))
+                        nav.save_json(args.output / 'pilot-history.json', history)
+                        try:
+                            validate_pilot(proposal, pilot)
+                            break
+                        except ValueError as exc:
+                            LOG.warning('Pilot needs offline adjustment: %s', exc)
+                            if pilot.get('status') != 'succeeded' or any(pilot.get(k) for k in ('error', 'budget_error', 'feedback_error', 'avoidance_intervened')):
+                                raise RuntimeError('Invalid feedback or motion reserve reached; no tuning')
+                            previous_schedule = proposal['schedule'].copy()
+                            proposal['schedule'] = (bracket_rotation_schedule(proposal, history)
+                                                    or tune_schedule(proposal, pilot['measured_m_rad']))
+                            nav.save_json(args.output / 'pilot-tuning.json', {
+                                'candidate': name, 'reason': str(exc), 'measured_m_rad': pilot['measured_m_rad'],
+                                'previous_schedule': previous_schedule, 'next_schedule': proposal['schedule'],
+                                'next_schedule_verified': False})
+                            nav.save_json(args.output / 'frozen-command-candidates.json', proposals)
+                            nav.save_json(args.output / 'calibration.json', build_calibration(samples, args.repeats, proposals))
+                            LOG.info('已保存下一次待验证指令：%s；当前实测转角 %+.4fπ / 名义 %+.4fπ',
+                                     name, pilot['measured_m_rad'][2]/math.pi, proposal['nominal']['yaw_rad']/math.pi)
+                            tuning_round += 1
+                            if args.max_tuning_rounds and tuning_round >= args.max_tuning_rounds:
+                                raise CalibrationNeedsMoreTrials(
+                                    '%s：本轮 %d 次试调已用完，仍未达标；已保存进度和下一次待验证指令，可用 --resume 继续'
+                                    % (name, args.max_tuning_rounds))
+                samples.setdefault(name, [])
+                for repetition in range(len(samples[name]), args.repeats):
                     number += 1
-                    pilot = trial(args, io, capture, proposal, number, 'pilot-%d' % tuning_round)
-                    history.append(copy.deepcopy(pilot))
-                    nav.save_json(args.output / 'pilot-history.json', history)
-                    try:
-                        validate_pilot(proposal, pilot)
-                        break
-                    except ValueError as exc:
-                        LOG.warning('Pilot needs offline adjustment: %s', exc)
-                        if any(pilot.get(k) for k in ('error', 'budget_error', 'feedback_error', 'avoidance_intervened')):
-                            raise RuntimeError('Invalid feedback; no tuning')
-                        previous_schedule = proposal['schedule'].copy()
-                        proposal['schedule'] = (bracket_rotation_schedule(proposal, history)
-                                                or tune_schedule(proposal, pilot['measured_m_rad']))
-                        nav.save_json(args.output / 'pilot-tuning.json', {
-                            'candidate': name, 'reason': str(exc), 'measured_m_rad': pilot['measured_m_rad'],
-                            'previous_schedule': previous_schedule, 'next_schedule': proposal['schedule'],
-                            'next_schedule_verified': False})
-                        nav.save_json(args.output / 'frozen-command-candidates.json', proposals)
-                        LOG.info('已保存下一次待验证指令：%s；当前实测转角 %+.4fπ / 名义 %+.4fπ',
-                                 name, pilot['measured_m_rad'][2]/math.pi, proposal['nominal']['yaw_rad']/math.pi)
-                        if tuning_round+1 == args.max_tuning_rounds:
-                            raise CalibrationNeedsMoreTrials(
-                                '%s：本轮 %d 次试调已用完，仍未达标；已保存进度和下一次待验证指令，可用 --resume 继续'
-                                % (name, args.max_tuning_rounds))
-            samples.setdefault(name, [])
-            for repetition in range(len(samples[name]), args.repeats):
-                number += 1
-                result = trial(args, io, capture, proposal, number, 'repeat-%d' % (repetition+1))
-                samples[name].append(result)
-                nav.save_json(args.output / 'calibration.json', build_calibration(samples, args.repeats, proposals))
-            try:
-                summarize_samples(name, samples[name], args.repeats)
-            except ValueError as exc:
-                raise CalibrationNeedsRecollection(
-                    '%s；本组重复测量不合格，进度已保存。续跑时加 --redo-candidate %s，仅重测此候选' % (exc, name)) from exc
-            LOG.info('%s: %d repetitions accepted; command frozen', name, args.repeats)
+                    result = trial(args, io, capture, proposal, number, 'repeat-%d' % (repetition+1))
+                    samples[name].append(result)
+                    nav.save_json(args.output / 'calibration.json', build_calibration(samples, args.repeats, proposals))
+                try:
+                    summary = summarize_samples(name, samples[name], args.repeats)
+                    for warning in summary.get('warnings', []):
+                        LOG.warning('%s: %s', name, warning)
+                except ValueError as exc:
+                    cycle += 1
+                    # Archive every rejected sample before changing the frozen command.
+                    previous = copy.deepcopy(proposal['schedule'])
+                    next_schedule = retry_schedule(proposal, samples[name], str(exc), cycle)
+                    nav.save_json(args.output / ('rejected-%s-%03d.json' % (name, cycle)),
+                                  dict(candidate=name, reason=str(exc), samples=samples[name],
+                                       previous_schedule=previous, next_schedule=next_schedule,
+                                       next_schedule_verified=False))
+                    if args.max_tuning_rounds and cycle >= args.max_tuning_rounds:
+                        raise CalibrationNeedsRecollection('%s；达到指定重试组数，进度已保存' % exc) from exc
+                    proposal['schedule'] = next_schedule
+                    samples[name] = []
+                    existing = []
+                    nav.save_json(args.output / 'calibration.json', build_calibration(samples, args.repeats, proposals))
+                    nav.save_json(args.output / 'frozen-command-candidates.json', proposals)
+                    LOG.warning('%s；失败组已留档，继续第 %d 轮试调并重新测量 %d 次；下一指令 %s',
+                                exc, cycle+1, args.repeats, next_schedule)
+                    continue
+                LOG.info('%s: %d repetitions accepted; command frozen', name, args.repeats)
+                break
         status['status'] = 'complete'
     finally:
         try:
@@ -319,23 +466,32 @@ def main():
     parser.add_argument('mode', choices=('plan', 'collect'))
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--repeats', type=int, default=3)
-    parser.add_argument('--resume', type=Path, help='Read accepted samples from an earlier calibration.json; always write a new output directory')
+    restart = parser.add_mutually_exclusive_group()
+    restart.add_argument('--resume', type=Path, help='Read accepted samples from an earlier calibration.json; always write a new output directory')
+    restart.add_argument('--auto-resume', action='store_true', help='Resume latest compatible wireless collection; recollect rejected candidates')
     parser.add_argument('--redo-candidate', action='append', default=[],
                         help='With --resume, recollect this named candidate in the new output; repeat flag for multiple names')
-    parser.add_argument('--max-tuning-rounds', type=int, default=8,
-                        help='Pilot attempts per unfinished candidate in this run; default 8, maximum 12')
+    parser.add_argument('--max-tuning-rounds', type=int, default=0,
+                        help='0 (default): retry until accepted or operator exits; 1..12 limits pilots per group and rejected groups')
     parser.add_argument('--runtime-root', type=Path, default=nav.REPO.parent / 'go2-runtime')
     parser.add_argument('--ros-setup', type=Path, default=nav.REPO.parents[1] / 'envs/go2-ros/install/setup.bash')
     parser.add_argument('--interface', default='eth10')
     args = parser.parse_args()
-    if not 3 <= args.repeats <= 20 or not 1 <= args.max_tuning_rounds <= 12:
-        parser.error('repeats must be 3..20; max-tuning-rounds 1..12')
+    if not 3 <= args.repeats <= 20 or not 0 <= args.max_tuning_rounds <= 12:
+        parser.error('repeats must be 3..20; max-tuning-rounds 0..12')
     if not re.fullmatch(r'[a-zA-Z0-9_.:-]+', args.interface):
         parser.error('Invalid network interface')
     for name in ('output', 'runtime_root', 'ros_setup'):
         setattr(args, name, getattr(args, name).expanduser().resolve())
+    if args.auto_resume:
+        if args.mode != 'collect':
+            parser.error('--auto-resume requires collect')
+        args.resume, args.redo_candidate = find_auto_resume(args.output.parent, args.repeats, args.redo_candidate)
+        print('自动续跑：' + (str(args.resume) if args.resume else '无兼容无线进度，从头开始'), flush=True)
+        if args.redo_candidate:
+            print('本次重测：' + ', '.join(args.redo_candidate), flush=True)
     if args.redo_candidate and args.resume is None:
-        parser.error('--redo-candidate requires --resume')
+        parser.error('--redo-candidate requires a compatible resume source')
     resumed = None
     if args.resume is not None:
         if args.mode != 'collect':
@@ -354,13 +510,18 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s',
                         handlers=[logging.StreamHandler(), logging.FileHandler(args.output / 'calibration.log')])
-    proposals, samples = nominal_proposals(), {}
+    proposals, samples = initial_proposals(), {}
     if resumed is not None:
         proposals = {name: entry['proposal'] for name, entry in resumed['actions'].items()}
         samples = {name: entry['samples'] for name, entry in resumed['actions'].items()}
         source_data = json.loads(args.resume.read_text())
+        upgrades = upgrade_fixed_translation(proposals, samples)
+        upgraded = {item['candidate'] for item in upgrades}
+        if upgrades:
+            nav.save_json(args.output / 'fixed-speed-migration.json', upgrades)
+            LOG.info('旧线速度切换为固定 0.30 m/s，对应旧样本留档并重新试调：%s', ', '.join(sorted(upgraded)))
         adjustments = [retune_recollection(proposals[name], source_data['actions'][name]['samples'])
-                       for name in dict.fromkeys(args.redo_candidate)]
+                       for name in dict.fromkeys(args.redo_candidate) if name not in upgraded]
         if adjustments:
             nav.save_json(args.output / 'recollection-adjustments.json', adjustments)
             for adjustment in adjustments:
@@ -369,16 +530,24 @@ def main():
             'path': str(args.resume), 'sha256': nav.digest(args.resume),
             'samples_preserved': {name: len(v) for name, v in samples.items()},
             'limit_migration': resumed.get('limit_migration'),
+            'action_set_migration': resumed.get('action_set_migration'),
             'recollection': resumed.get('recollection')})
         if resumed.get('recollection'):
             LOG.info('仅在新运行中重采所选候选，源文件不变：%s', resumed['recollection'])
         if resumed.get('limit_migration'):
-            LOG.info('硬限位已迁移至 0.70 m / π/3；需重新采集的旧限位停止候选：%s',
+            LOG.info('硬限位已迁移至 1.00 m / π/3；需重新采集的旧限位停止候选：%s',
                      resumed['limit_migration']['recollect_candidates'])
+        marker = args.resume.parent / 'session.json'
+        source_policy = json.loads(marker.read_text()).get('tuning_policy') if marker.exists() else None
+        seed_change = upgrade_forward50_seed(proposals, samples, source_policy)
+        if seed_change:
+            nav.save_json(args.output / 'forward50-seed-migration.json', seed_change)
+            LOG.info('forward_50 尚未验收：起始时长由 %.3f s 缩短为 2.000 s，需重新试调',
+                     seed_change['previous_schedule']['duration_s'])
     args.pilot_history = restore_pilot_history(args.resume) if resumed is not None else []
     # An explicit redo starts a new tuning experiment for that candidate.
     args.pilot_history = [r for r in args.pilot_history
-                          if r.get('proposal', {}).get('candidate') not in args.redo_candidate]
+                          if r.get('proposal', {}).get('candidate') not in set(args.redo_candidate) | (upgraded if resumed is not None else set())]
     for name, proposal in proposals.items():
         if not samples.get(name):
             adjusted = bracket_rotation_schedule(proposal, args.pilot_history)
@@ -386,12 +555,17 @@ def main():
                 LOG.info('恢复历史试调区间：%s；下一次待验证时长 %.3f s', name, adjusted['duration_s'])
                 proposal['schedule'] = adjusted
     nav.save_json(args.output / 'pilot-history.json', args.pilot_history)
+    moving_count = sum(name != 'stationary' for name in proposals)
     nav.save_json(args.output / 'plan.json', dict(waypoint_spacing_m=SPACING,
         candidates=candidate_specs(), proposals=proposals, repetitions=args.repeats,
-        fixed_repeat_trials=15*args.repeats, moving_repeat_trials=14*args.repeats,
-        additional_pilots_min=14, additional_pilots_max=14*args.max_tuning_rounds,
+        fixed_repeat_trials=moving_count*args.repeats, moving_repeat_trials=moving_count*args.repeats,
+        stationary_policy='builtin_zero_action_no_collection',
+        additional_pilots_min=moving_count, additional_pilots_max=(moving_count*args.max_tuning_rounds if args.max_tuning_rounds else None),
+        tuning_policy=TUNING_POLICY, retry_until_accepted=args.max_tuning_rounds == 0,
         nominal_distance_is_arc_length=True, hard_path_limit_m=HARD_DISTANCE, hard_turn_limit_rad=HARD_TURN,
         stopping_reserve_m=.015, stopping_reserve_rad=math.radians(4)))
+    nav.save_json(args.output / 'session.json', dict(mode=args.mode, interface=args.interface, repeats=args.repeats, tuning_policy=TUNING_POLICY))
+    nav.save_json(args.output / 'calibration.json', build_calibration(samples, args.repeats, proposals))
     status = dict(status='plan_only_no_robot_io', mode=args.mode)
     def interrupted(signum, frame):
         raise KeyboardInterrupt('Signal %d' % signum)

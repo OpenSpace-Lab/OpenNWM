@@ -34,6 +34,8 @@ from calibrated_actions import (load_calibration, calibrated_proposals, HARD_DIS
 # All navigation candidates use 0.5 seconds at the training convention of 4 FPS.
 # Measured observation intervals are retained for diagnostics only.
 
+from navigation_constraints import TurnReversalGuard
+
 LOG = logging.getLogger('go2.navigate')
 MIN_TRANSLATION_M = .21
 MIN_TURN_RAD = math.radians(15)
@@ -72,7 +74,8 @@ def model_frame(image):
 
 class ActionHistory:
     """Initial observation plus one real observation per completed action; no time resampling."""
-    def __init__(self):
+    def __init__(self, update_mode="action"):
+        self.update_mode = update_mode
         self.events = deque(maxlen=4)
         self.total_events = 0
 
@@ -88,7 +91,8 @@ class ActionHistory:
         events = list(self.events)
         padded = [events[0]]*(4-len(events))+events
         return [e[0].copy() for e in padded], {
-            'selection_rule': 'initial_then_post_action_latest_four',
+            'selection_rule': 'initial_then_post_' + self.update_mode + '_latest_four',
+            'update_mode': self.update_mode,
             'timestamps_monotonic': [e[1]['timestamp_monotonic'] for e in padded],
             'sequences': [e[1]['sequence'] for e in padded],
             'action_steps': [e[1]['action_step'] for e in padded],
@@ -96,6 +100,17 @@ class ActionHistory:
             'unique_real_frames': len(events), 'left_padding_slots': 4-len(events),
             'cold_start_repetition': self.total_events == 1,
             'total_observation_events': self.total_events, 'physical_camera_pose_sync_verified': False}
+
+
+def finish_observation_round(args, capture, history, step, directory):
+    """Refresh real observations for a completed no-motion round, when enabled."""
+    if getattr(args, 'history_update', 'action') == 'round':
+        history.update_mode = 'round'
+        image, metadata = capture.latest(after=time.monotonic())
+        history.append(image, metadata, action_step=step)
+        image.save(directory / 'round-observation.png')
+        save_json(directory / 'post-round-history.json', history.context()[1])
+    return history.context()
 
 
 def reference_rows(episode, seconds):
@@ -139,10 +154,30 @@ def select_targets(rows, rule):
     return list(zip(chosen, reasons))
 
 
+def select_timed_targets(rows, interval):
+    """Take the first available frame at/after each fixed timeline tick."""
+    origin = int(rows[0]['timeline_ns'])
+    chosen = [(0, 'start')]
+    tick = 1
+    for i, row in enumerate(rows[1:], 1):
+        elapsed = (int(row['timeline_ns']) - origin) / 1e9
+        if elapsed + 1e-9 >= tick * interval:
+            chosen.append((i, 'fixed_time_interval'))
+            tick = math.floor((elapsed + 1e-9) / interval) + 1
+    return chosen
+
+
+def target_window(center, count, size):
+    # Never include targets before the current index, including at the end.
+    first = max(0, center)
+    return list(range(first, min(first + size, count)))
+
+
 def prepare_reference(args):
     from PIL import Image, ImageDraw, ImageFont
     rows = reference_rows(args.reference, args.reference_seconds)
-    selected = select_targets(rows, args.target_rule)
+    selected = (select_timed_targets(rows, args.target_interval) if getattr(args, 'window_navigation', False)
+                else select_targets(rows, args.target_rule))
     if len(selected) < 2:
         raise ValueError('No target satisfies the selected rule')
     directory = args.output / 'reference'
@@ -163,7 +198,8 @@ def prepare_reference(args):
                         'relative_to_previous_m_rad': relative_pose(previous, row), 'reason': reason})
     last = selected[-1][0]
     plan = {'episode': str(args.reference), 'reference_seconds': args.reference_seconds,
-            'rule': args.target_rule, 'source_csv_sha256': digest(args.reference / 'aligned_pose.csv'),
+            'rule': 'fixed_time_interval' if getattr(args, 'window_navigation', False) else args.target_rule,
+            'target_interval_s': getattr(args, 'target_interval', None), 'source_csv_sha256': digest(args.reference / 'aligned_pose.csv'),
             'targets': targets, 'target_count': len(targets) - 1,
             'covered_until_seconds': targets[-1]['elapsed_seconds'],
             'uncovered_tail_seconds': (int(rows[-1]['timeline_ns']) - int(rows[last]['timeline_ns'])) / 1e9,
@@ -182,7 +218,7 @@ def prepare_reference(args):
                   (i, target['elapsed_seconds'], math.hypot(*p[:2]), math.degrees(p[2])), fill='white')
     canvas.save(args.output / 'reference.png')
     LOG.debug('Reference: %d targets, rule=%s, covered %.2fs, remaining %.2fs',
-             plan['target_count'], args.target_rule, plan['covered_until_seconds'], plan['uncovered_tail_seconds'])
+             plan['target_count'], plan['rule'], plan['covered_until_seconds'], plan['uncovered_tail_seconds'])
     return plan
 
 
@@ -436,12 +472,12 @@ for(let i=0;i<4;i++){const c=document.createElement('section');c.className='card
 async function live(){try{const r=await fetch('/live.jpg?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(r.status);const u=URL.createObjectURL(await r.blob());byId('live').src=u;if(liveURL)URL.revokeObjectURL(liveURL);liveURL=u}catch(e){byId('camera-status').textContent='摄像头暂不可用'}finally{setTimeout(live,150)}}
 async function state(){try{const r=await fetch('/state.json',{cache:'no-store'});if(!r.ok)throw Error(r.status);const s=await r.json();byId('phase').textContent=s.phase;byId('model-title').textContent=(s.model==='nwm-b'?'NWM-B':'OpenNWM')+' / 导航实时监看';byId('phase').classList.toggle('bad',!!s.camera_error);byId('camera-status').textContent=s.camera_error||('画面年龄 '+s.camera_age_s.toFixed(2)+' s · 帧 '+s.camera_sequence);byId('camera-status').classList.toggle('bad',!!s.camera_error);
 byId('goal-title').textContent='当前目标 '+s.goal_number+' / '+s.goal_total;byId('goal-meta').textContent='原视频帧 '+s.frame_index+' · '+Number(s.reference_time_s).toFixed(3)+' s';
-byId('candidates').textContent=s.candidate_count==null?'等待推理':s.candidate_count+' / 15 · 提案 '+s.step+' · 固定离线标定';
-byId('action').textContent=s.action_text||'尚未选择动作';byId('limits').textContent=s.limit_text||'固定 15 候选；名义路程 0.25/0.50 m，转角 π/12 或 π/4';
+byId('candidates').textContent=s.candidate_count==null?'等待推理':s.candidate_count+' / 7 · 提案 '+s.step+' · 固定离线标定';
+byId('action').textContent=s.action_text||'尚未选择动作';byId('limits').textContent=s.limit_text||'前进/原地转向与静止共 7 个选项；名义路程 0.25/0.50 m，转角 π/12 或 π/4';
 byId('note').textContent=s.note||'本页面只读。切换目标请输入 arrived；执行请输入 MOVE；终端 q 退出。';
 if(revision!==s.revision){revision=s.revision;for(const key of ['goal','prediction']){const im=byId(key);if(s.assets.includes('/'+key+'.jpg'))im.src='/'+key+'.jpg?r='+revision;else im.src='/placeholder.svg'}
-const h=s.history||{};byId('history-meta').textContent=h.unique_real_frames?('4 个输入槽位 · '+h.unique_real_frames+' 张不同真实帧 · '+(h.cold_start_repetition?'冷启动：同一帧重复填充':('按动作完成顺序 · 左侧补齐 '+(h.left_padding_slots||0)+' 个槽位'))):'尚未采样';
-for(let i=0;i<4;i++){const im=byId('h'+i),path='/history/'+i+'.jpg';if(s.assets.includes(path)){im.src=path+'?r='+revision;const ts=h.timestamps_monotonic||[];byId('hlabel'+i).textContent='历史 '+(i+1)+' · 帧 '+(h.sequences||[])[i]+' · '+((h.action_steps||[])[i]===0?'初始帧':'动作 '+(h.action_steps||[])[i]+' 后')}else{im.src='/placeholder.svg';byId('hlabel'+i).textContent='历史 '+(i+1)+' · 等待输入'}}byId('prediction-meta').textContent=s.selected||'推理完成后显示'}
+const h=s.history||{};byId('history-meta').textContent=h.unique_real_frames?('4 个输入槽位 · '+h.unique_real_frames+' 张不同真实帧 · '+(h.cold_start_repetition?'冷启动：同一帧重复填充':((h.update_mode==='round'?'按每轮结束顺序':'按动作完成顺序')+' · 左侧补齐 '+(h.left_padding_slots||0)+' 个槽位'))):'尚未采样';
+for(let i=0;i<4;i++){const im=byId('h'+i),path='/history/'+i+'.jpg';if(s.assets.includes(path)){im.src=path+'?r='+revision;const ts=h.timestamps_monotonic||[];byId('hlabel'+i).textContent='历史 '+(i+1)+' · 帧 '+(h.sequences||[])[i]+' · '+((h.action_steps||[])[i]===0?'初始帧':(h.update_mode==='round'?'轮次 ':'动作 ')+(h.action_steps||[])[i]+' 后')}else{im.src='/placeholder.svg';byId('hlabel'+i).textContent='历史 '+(i+1)+' · 等待输入'}}byId('prediction-meta').textContent=s.selected||'推理完成后显示'}
 }catch(e){byId('phase').textContent='连接已断开 / 程序已结束';byId('phase').classList.add('bad');byId('camera-status').textContent='画面已停止更新';byId('camera-status').classList.add('bad')}finally{setTimeout(state,500)}}live();state();
 </script></html>'''
 
@@ -629,7 +665,7 @@ class Capture:
                         h, w = frame.image.shape[:2]
                         pipeline = Gst.parse_launch(
                             'appsrc name=source format=time is-live=false block=true max-bytes=8388608 '
-                            '! videoconvert ! x264enc tune=zerolatency speed-preset=ultrafast bitrate=2500 '
+                            '! videoconvert ! x264enc tune=zerolatency speed-preset=ultrafast bitrate=8000 '
                             '! h264parse ! matroskamux ! filesink name=output')
                         app = pipeline.get_by_name('source')
                         app.set_property('caps', Gst.Caps.from_string(
@@ -733,8 +769,18 @@ class MotionBudget:
             self.previous = pose
         displacement = math.hypot(pose.x - self.initial.x, pose.y - self.initial.y)
         yaw = abs(wrap(pose.yaw - self.initial.yaw))
-        distance_limit = self.proposal['hard_distance_m'] - (0. if stopped else STOP_DISTANCE_RESERVE_M)
-        turn_limit = self.proposal['hard_turn_rad'] - (0. if stopped else math.radians(4))
+        reserve = STOP_DISTANCE_RESERVE_M
+        schedule = self.proposal.get('schedule', {})
+        speed = math.hypot(schedule.get('vx_m_s', 0.), schedule.get('vy_m_s', 0.))
+        if speed > .18:
+            # The zero-stop forward_50 run exceeded 0.70 m after its timed
+            # command ended. Reserve 12 cm at 0.30 m/s, including settling.
+            reserve = max(reserve, speed * .4)
+        distance_limit = self.proposal['hard_distance_m'] - (0. if stopped else reserve)
+        turn_reserve = math.radians(4)
+        if abs(schedule.get('yaw_rad_s', 0.)) > .45:
+            turn_reserve = max(turn_reserve, abs(schedule['yaw_rad_s']) * .2)
+        turn_limit = self.proposal['hard_turn_rad'] - (0. if stopped else turn_reserve)
         limit_kind = 'hard limit after stop' if stopped else 'stopping reserve'
         if max(self.distance, displacement) >= distance_limit:
             raise (RuntimeError if stopped else MotionReserveStop)('Measured path/displacement reached %s: %.4f >= %.4f m' %
@@ -764,6 +810,72 @@ class GuardedIO:
     def stop(self):
         self.io.stop()
 
+    def pause_motion(self):
+        self.io.pause_motion()
+
+
+class SettlingIO:
+    """Monitor every coast/settling pose; escalate to emergency stop at reserve."""
+    def __init__(self, io, capture, budget, record):
+        self.io, self.capture, self.budget, self.record = io, capture, budget, record
+        self.emergency = record.get('status') != 'succeeded'
+        self.current = None
+
+    def read_pose(self):
+        self.capture.check()
+        pose = self.io.read_pose()
+        self.current = pose
+        try:
+            self.budget.check(pose, stopped=self.emergency)
+        except MotionReserveStop as exc:
+            self.emergency = True
+            self.record.update(status='stopped_at_reserve', stop_reason=str(exc))
+            controller = self.record.setdefault('controller', {})
+            controller.update(status='stopped_at_reserve', completion_basis='motion_reserve_during_settling')
+            LOG.warning('等待停稳期间达到刹停预留，立即强制停止：%s', exc)
+            self.io.stop()
+            # A large feedback jump can cross both limits in the same sample.
+            try:
+                self.budget.check(pose, stopped=True)
+            except RuntimeError as hard:
+                self.record.update(status='failed', budget_error=str(hard))
+                raise
+        except RuntimeError as exc:
+            self.record.update(status='failed', budget_error=str(exc))
+            self.io.stop()
+            raise
+        return pose
+
+
+class NavigationLoopGuard:
+    """On a repeated stationary state, select a motion candidate for this step only."""
+
+    def __init__(self):
+        self.history = []
+
+    def observe(self, target, action, pose, step):
+        # Only confirmed actions enter history; cancelled proposals cannot form a loop.
+        self.history.append((target, action, pose.x, pose.y, pose.yaw, step))
+
+    def choose(self, ranking, pose):
+        first = ranking[0]
+        if first['candidate'] != 'stationary':
+            return first, None
+        for target, action, x, y, yaw, step in reversed(self.history):
+            if (target == first['target_index'] and action == first['candidate']
+                    and math.hypot(pose.x-x, pose.y-y) <= .03
+                    and abs(wrap(pose.yaw-yaw)) <= math.radians(5)):
+                alternatives = [r for r in ranking if r['candidate'] != 'stationary']
+                if not alternatives:
+                    raise RuntimeError('Stationary loop: no eligible motion candidate')
+                # No persistent ban: the next decision checks for a new loop normally.
+                return alternatives[0], {
+                    'repeated_target_index': target, 'blocked_candidate': 'stationary',
+                    'previous_step': step, 'scope': 'this_selection_only',
+                    'position_tolerance_m': .03, 'yaw_tolerance_deg': 5,
+                }
+        return first, None
+
 
 class Engine:
     def __init__(self, args):
@@ -792,7 +904,10 @@ class Engine:
         torch.hub.set_dir(str(args.model_root / 'planning/torch/hub'))
         self.scorer = lpips.LPIPS(net='alex', model_path=str(args.model_root / 'planning/lpips/v0.1/alex.pth'),
                                  verbose=False).eval().requires_grad_(False).to(self.device)
-        LOG.info('模型就绪 · 标定位移 · 运动候选预测 0.5 s（k=0.015625）· 静止直接评分')
+        if getattr(args, 'matching_metric', 'lpips') == 'dinov2':
+            from dino_matching import DinoMatcher
+            self.dino = DinoMatcher(args.dinov2_model or args.model_root / 'planning/dinov2-small', self.device)
+        LOG.info('模型就绪 · 标定位移 · 全部候选（含静止）预测 0.5 s（k=0.015625）')
 
     def distance(self, a, b, a_prepared=False, b_prepared=False):
         torch = self.torch
@@ -803,6 +918,37 @@ class Engine:
         if not math.isfinite(score):
             raise RuntimeError('Invalid LPIPS score')
         return score
+
+    def lpips_distances(self, candidates, targets):
+        """Cartesian candidate/target scores in bounded GPU batches, candidate-major."""
+        torch = self.torch
+        count, target_count = len(candidates), len(targets)
+        limit = self.args.batch_size * target_count
+        scores = []
+        with torch.inference_mode():
+            for first in range(0, count * target_count, limit):
+                pairs = torch.arange(first, min(first + limit, count * target_count), device=self.device)
+                scores.append(self.scorer(candidates[pairs // target_count],
+                                          targets[pairs % target_count]).flatten())
+        return torch.cat(scores).reshape(count, target_count)
+
+    def dino_target_features(self, goals):
+        """Cache reference features across overlapping windows; content keys avoid stale reuse."""
+        torch, np = self.torch, self.np
+        if not hasattr(self, 'target_features'):
+            self.target_features = OrderedDict()
+        prepared = [model_frame(im) for _, im in goals]
+        keys = [hashlib.sha256(im.tobytes()).hexdigest() for im in prepared]
+        missing = OrderedDict((key, im) for key, im in zip(keys, prepared) if key not in self.target_features)
+        if missing:
+            pixels = torch.stack([torch.from_numpy(np.array(im, dtype=np.float32)).permute(2, 0, 1) / 255.
+                                  for im in missing.values()]).to(self.device)
+            for key, feature in zip(missing, self.dino.encode(pixels)):
+                self.target_features[key] = feature.detach().clone()
+        result = torch.stack([self.target_features[key] for key in keys])
+        for key in keys: self.target_features.move_to_end(key)
+        while len(self.target_features) > 128: self.target_features.popitem(last=False)
+        return result
 
     def encode_history(self, images):
         prepared = [model_frame(im) for im in images]
@@ -819,29 +965,35 @@ class Engine:
         while len(self.history_latents) > 8: self.history_latents.popitem(last=False)
         return result, len(missing)
 
-    def select(self, images, goal, paths, step, directory):
+    def select(self, images, goal, paths, step, directory, *, window_goals=None, loop_guard=None, source_pose=None):
         from PIL import Image
         from misc import normalize_data
         from isolated_nwm_infer import model_forward_wrapper
         torch, np = self.torch, self.np
         names, scores, best = list(paths), [], None
-        motion_names = [name for name in names if name != 'stationary']
+        predictions = {}
+        goals = window_goals if window_goals is not None else [(None, goal)]
+        metric = getattr(self.args, 'matching_metric', 'lpips')
         began = time.monotonic()
         with torch.inference_mode():
-            current_goal_lpips = self.distance(images[-1], goal)
-            if not math.isfinite(current_goal_lpips):
-                raise RuntimeError('Invalid current-goal LPIPS score')
-            if 'stationary' in paths:
-                scores.append({'candidate': 'stationary', 'lpips': current_goal_lpips,
-                               'score_source': 'current_observation'})
-                best = (current_goal_lpips, 'stationary', np.asarray(model_frame(images[-1])))
-            target = self.transform(goal)[None].to(self.device)
+            targets = torch.stack([self.transform(im) for _, im in goals]).to(self.device)
+            current_scores = self.lpips_distances(self.transform(images[-1])[None].to(self.device), targets)[0].tolist()
+            current_lpips = current_scores
+            if metric == 'dinov2':
+                def to_tensor(im):
+                    return torch.from_numpy(np.array(im, dtype=np.float32)).permute(2, 0, 1) / 255.
+                target_features = self.dino_target_features(goals)
+                current_features = self.dino.encode(to_tensor(model_frame(images[-1]))[None].to(self.device))
+                current_scores = self.dino.distances(current_features, target_features)[0].tolist()
+            for (number, im), score in zip(goals, current_scores):
+                if not math.isfinite(score):
+                    raise RuntimeError('Invalid current-goal matching score')
             latent, encoded_count = self.encode_history(images)
             torch.cuda.synchronize()
             history_seconds = time.monotonic()-began
-            LOG.debug('历史按动作完成顺序输入；本轮新增 VAE 编码 %d 张 / 4 槽位，用时 %.3f s', encoded_count, history_seconds)
-            for first in range(0, len(motion_names), self.args.batch_size):
-                batch_names = motion_names[first:first + self.args.batch_size]
+            LOG.debug('历史按所选更新模式输入；本轮新增 VAE 编码 %d 张 / 4 槽位，用时 %.3f s', encoded_count, history_seconds)
+            for first in range(0, len(names), self.args.batch_size):
+                batch_names = names[first:first + self.args.batch_size]
                 values = np.asarray([paths[name][-1] for name in batch_names], dtype=np.float32)
                 if self.args.model in ('nwm-b', 'nwm-dmd'):
                     stats = {k: np.asarray(v) for k, v in self.config.dataset.action_stats.items()}
@@ -856,28 +1008,44 @@ class Engine:
                     rgb = self.tokenizer.decode(output, denormalize=True).float().clamp(0, 1)
                 if tuple(rgb.shape) != (len(batch_names), 3, 224, 224) or not torch.isfinite(rgb).all():
                     raise RuntimeError('Invalid prediction shape or nonfinite pixels')
-                batch_scores = self.scorer(rgb * 2 - 1, target.expand(len(batch_names), -1, -1, -1)).flatten().tolist()
-                for name, score, pixels in zip(batch_names, batch_scores, rgb):
-                    if not math.isfinite(score):
-                        raise RuntimeError('Nonfinite candidate score')
-                    scores.append({'candidate': name, 'lpips': score, 'score_source': 'model_prediction'})
-                    if best is None or score < best[0]:
-                        best = (score, name, (pixels.cpu().permute(1, 2, 0).numpy() * 255).astype('uint8'))
-                LOG.debug('Step %d: generated/scored %d/%d candidates; best %s LPIPS %.5f',
-                         step, first + len(batch_names), len(motion_names), best[1], best[0])
+                for name, pixels in zip(batch_names, rgb):
+                    predictions[name] = (pixels.cpu().permute(1, 2, 0).numpy() * 255).astype('uint8')
+                # Generate/decode each action only once; reuse it for every target.
+                pair_scores = (self.dino.distances(self.dino.encode(rgb), target_features)
+                               if metric == 'dinov2' else self.lpips_distances(rgb * 2 - 1, targets)).tolist()
+                for target_pos, (number, _) in enumerate(goals):
+                    batch_scores = [row[target_pos] for row in pair_scores]
+                    for name, score, pixels in zip(batch_names, batch_scores, rgb):
+                        if not math.isfinite(score):
+                            raise RuntimeError('Nonfinite candidate score')
+                        row = {'candidate': name, 'score': score, metric: score, 'score_source': 'model_prediction'}
+                        if window_goals is not None: row['target_index'] = number
+                        scores.append(row)
+                        if best is None or score < best[0]:
+                            best = (score, name, predictions[name], number)
+                LOG.debug('Step %d: generated/scored %d/%d candidates; best %s distance %.5f',
+                         step, first + len(batch_names), len(names), best[1], best[0])
                 del context, output, rgb
+            ranking = sorted(scores, key=lambda v: v['score'])
+            chosen, loop_report = (loop_guard.choose(ranking, source_pose)
+                                   if loop_guard is not None else (ranking[0], None))
+            best = (chosen['score'], chosen['candidate'], predictions[chosen['candidate']],
+                    chosen.get('target_index'))
             prediction = Image.fromarray(best[2])
-            prediction.save(directory / 'selected-prediction.png')
-        ranking = sorted(scores, key=lambda v: v['lpips'])
-        return {'selected': best[1], 'ranking': ranking, 'inference_seconds': time.monotonic() - began,
+        current_goal_lpips = current_lpips[[number for number, _ in goals].index(best[3])]
+        return {'selected': best[1], 'selected_target_index': best[3], 'ranking': ranking, 'inference_seconds': time.monotonic() - began,
                 'history_vae_encoded_images': encoded_count, 'history_preparation_seconds': history_seconds,
                 'current_goal_lpips': current_goal_lpips,
-                'inferred_candidate_count': len(motion_names),
-                'stationary_score_source': 'current_observation',
-                'selected_image_source': 'current_observation' if best[1] == 'stationary' else 'model_prediction',
+                'inferred_candidate_count': len(names),
+                'loop_avoidance': loop_report, 'matching_metric': metric, 'selected_score': best[0],
+                'current_goal_score': current_scores[[number for number, _ in goals].index(best[3])],
+                **({'selected_lpips': best[0]} if metric == 'lpips' else {'selected_dinov2': best[0]}),
+                'stationary_score_source': 'model_prediction',
+                'selected_image_source': 'model_prediction',
                 'normalized_k': NORMALIZED_K,
                 'model_horizon_seconds': MODEL_HORIZON_SECONDS,
                 'model_frame_offset': MODEL_FRAME_OFFSET,
+                'target_count': len(goals), 'candidate_target_pair_count': len(scores),
                 'candidate_count': len(names)}, prediction
 
 
@@ -987,11 +1155,12 @@ class RemotePacketMonitor:
 
 def robot_adapter(execute, allow_idle_remote=False):
     from motion_control.ros_adapter import Go2ROS
+    from gait_session import SessionGaitControl
     from go2_capture.core import decode_remote_packet
     from unitree_go.msg import LowState
     from rclpy.qos import QoSProfile, ReliabilityPolicy
 
-    class MonitoredROS(Go2ROS):
+    class MonitoredROS(SessionGaitControl, Go2ROS):
         def __init__(self):
             self.remote_monitor = RemotePacketMonitor(decode_remote_packet, allow_idle_remote=allow_idle_remote)
             self.navigation_motion_pending = False
@@ -1023,6 +1192,7 @@ def robot_adapter(execute, allow_idle_remote=False):
                 self.wireless_last_valid = now
                 active = bool(msg.keys) or max(abs(v) for v in axes) > .1
                 if active:
+                    self.invalidate_gait()
                     self.wireless_last_activity = now
                     self.wireless_neutral_since = None
                     if self.remote_protected() and not self.fault:
@@ -1057,6 +1227,8 @@ def robot_adapter(execute, allow_idle_remote=False):
             with self.lock:
                 self.remote_monitor.accept(msg.wireless_remote, time.monotonic(),
                     moving=self.remote_protected())
+                if self.remote_monitor.neutral_since is None:
+                    self.invalidate_gait()
                 if self.remote_monitor.fault and not self.fault:
                     self.fault = self.remote_monitor.fault
 
@@ -1117,26 +1289,32 @@ def decision_image(images, goal, prediction, proposal, path):
     canvas.save(path)
 
 
-def stopped_pose(io, timeout=2.):
-    deadline = time.monotonic() + timeout
-    stable = None
+def stopped_pose(io, timeout=2., *, stable_seconds=.4, min_wait=0., position_tolerance=None):
+    began = time.monotonic()
+    deadline = began + timeout
+    stable = anchor = None
     remote_error = None
     while time.monotonic() < deadline:
         try:
             p = io.read_pose()
         except RemoteTelemetryNotReady as exc:
             # Only used before/after motion, never in the active command loop.
-            stable = None
+            stable = anchor = None
             remote_error = exc
             time.sleep(.02)
             continue
         remote_error = None
         if p.speed < .025 and abs(p.yaw_speed) < .04:
-            stable = stable or time.monotonic()
-            if time.monotonic() - stable >= .4:
+            now = time.monotonic()
+            if stable is None:
+                stable, anchor = now, p
+            if position_tolerance is not None and (math.hypot(p.x-anchor.x, p.y-anchor.y) > position_tolerance
+                                                   or abs(wrap(p.yaw-anchor.yaw)) > math.radians(1)):
+                stable, anchor = now, p
+            if now - stable >= stable_seconds and now - began >= min_wait:
                 return p
         else:
-            stable = None
+            stable = anchor = None
         time.sleep(.02)
     if remote_error is not None:
         raise RemoteTelemetryNotReady('Remote telemetry did not recover within %.1f s: %s' % (timeout, remote_error))
@@ -1207,10 +1385,50 @@ def recover_stale_proposal(capture, io, display, directory, source, current, rea
         return current, history
 
 
-def confirm_start(capture):
+def automatic_replan_context(capture, io, engine, directory):
+    """Stay stopped and require fresh, stable observations before discarding history."""
+    io.stop()
+    anchor_pose = stopped_pose(io)
+    anchor, metadata = capture.latest(after=time.monotonic())
+    anchor_time = metadata['timestamp_monotonic']
+    previous_sequence = metadata['sequence']
+    deadline = time.monotonic() + 10.
+    while time.monotonic() < deadline:
+        time.sleep(.2)
+        capture.check()
+        current = io.read_pose()  # Remote takeover/faults still propagate immediately.
+        image, metadata = capture.latest(after=time.monotonic())
+        if metadata['sequence'] <= previous_sequence:
+            raise RuntimeError('Recovery requires fresh camera frames')
+        previous_sequence = metadata['sequence']
+        score = engine.distance(anchor, image)
+        if not math.isfinite(score):
+            raise RuntimeError('Invalid recovery scene distance')
+        stationary = current.speed < .025 and abs(current.yaw_speed) < .04
+        try:
+            assert_source_unchanged(anchor_pose, current)
+        except StaleProposal:
+            stationary = False
+        if not stationary or score > .05:
+            anchor, anchor_pose = image, current
+            anchor_time = metadata['timestamp_monotonic']
+            continue
+        if metadata['timestamp_monotonic'] - anchor_time >= .4:
+            history = ActionHistory()
+            history.append(image, metadata, action_step=0)
+            save_json(directory / 'recovery.json', {'resolution': 'automatic_replan_new_context',
+                'pose': pose_dict(current), 'frame': metadata, 'stable_seconds': metadata['timestamp_monotonic'] - anchor_time,
+                'anchor_lpips': score, 'stability_lpips_limit': .05})
+            return current, history
+    raise RuntimeError('自动重规划停止：10 秒内未采集到稳定画面')
+
+
+def confirm_start(capture, automatic=False):
     while True:
         capture.check()
-        answer = input('确认现场已对齐参考起点、机器人可行走，输入 START/start 开始选点（不移动）；q 退出：').strip()
+        prompt = ('确认现场已对齐参考起点、机器人可行走，输入 START/start 启动自动导航（将自动运动）；q 退出：'
+                  if automatic else '确认现场已对齐参考起点、机器人可行走，输入 START/start 开始选点（不移动）；q 退出：')
+        answer = input(prompt).strip()
         LOG.debug('Startup response: %s', answer)
         if answer.casefold() == 'start':
             capture.check()
@@ -1226,10 +1444,12 @@ def execute_schedule(guarded, schedule, clock=time.monotonic, sleep=time.sleep):
     velocity = [schedule[k] for k in ('vx_m_s', 'vy_m_s', 'yaw_rad_s')]
     if not all(math.isfinite(v) for v in [duration]+velocity) or not 0 < duration <= 15:
         raise ValueError('Invalid timed motion schedule')
-    if math.hypot(*velocity[:2]) > .120001 or abs(velocity[2]) > .350001:
+    from calibrated_actions import translation_speed_limit, angular_speed_limit
+    if math.hypot(*velocity[:2]) > translation_speed_limit(*velocity) + 1e-6 or abs(velocity[2]) > angular_speed_limit(*velocity[:2]) + 1e-6:
         raise ValueError('Timed velocity exceeds configured limits')
     began = previous = clock()
     count = 0
+    completed = False
     try:
         while True:
             now = clock()
@@ -1246,6 +1466,7 @@ def execute_schedule(guarded, schedule, clock=time.monotonic, sleep=time.sleep):
             guarded.move(*velocity)
             count += 1
             sleep(min(.05, remaining))
+        completed = True
         return {'status': 'succeeded', 'completion_basis': 'elapsed_command_time',
                 'waypoint_verified': False, 'elapsed_s': clock()-began, 'command_count': count}
     except MotionReserveStop as exc:
@@ -1253,26 +1474,49 @@ def execute_schedule(guarded, schedule, clock=time.monotonic, sleep=time.sleep):
                 'stop_reason': str(exc), 'waypoint_verified': False,
                 'elapsed_s': clock()-began, 'command_count': count}
     finally:
-        guarded.stop()
+        if completed:
+            try:
+                guarded.pause_motion()
+            except BaseException:
+                guarded.stop()
+                raise
+        else:
+            guarded.stop()
 
 
 def do_motion(args, io, capture, proposal, directory):
+    gait_policy = proposal.get('gait_policy', 'static_walk')
+    if gait_policy not in ('static_walk', 'preserve_current'):
+        raise ValueError('Unknown gait policy: ' + str(gait_policy))
     initial = io.read_pose()
     guarded = GuardedIO(io, capture, proposal, initial)
     record = {'status': 'starting', 'proposal': proposal, 'start_pose': pose_dict(initial),
-              'execution_mode': 'static_walk_timed', 'waypoint_verified': False,
-              'confirmation': 'explicit terminal MOVE token', 'started_monotonic': time.monotonic()}
+              'execution_mode': gait_policy + '_timed', 'gait_policy': gait_policy, 'waypoint_verified': False,
+              'confirmation': ('automatic after terminal START' if getattr(args, 'automatic', False)
+                               else 'explicit terminal MOVE token'), 'started_monotonic': time.monotonic()}
     save_json(directory / 'execution.json', record)
     try:
         # These are the first control side effects, strictly AFTER terminal confirmation.
         capture.check()
         io.arm_navigation_motion()
-        io.static_walk()
-        time.sleep(.5)
+        if gait_policy == 'static_walk':
+            switched = io.static_walk() is not False
+            if switched:
+                LOG.info('本会话请求小碎步；等待机身稳定后执行速度指令')
+                ready = stopped_pose(guarded, timeout=6., stable_seconds=.8,
+                                     min_wait=2., position_tolerance=.005)
+                io.confirm_static_gait()
+                record['gait_ready_pose'] = pose_dict(ready)
+            else:
+                LOG.info('沿用本会话小碎步，不重复切换')
+            record['gait_switch_sent'] = switched
+            record['gait_transition_policy'] = 'session_static_walk_v2'
+        else:
+            time.sleep(.5)
         guarded.read_pose()
         io.enable_avoidance()
-        LOG.debug('碎步定时执行：vx=%+.3f m/s vy=%+.3f m/s 转速=%+.2f°/s，持续 %.3f s；不检验 waypoint 到达',
-                 proposal['schedule']['vx_m_s'], proposal['schedule']['vy_m_s'],
+        LOG.debug('定时执行（%s）：vx=%+.3f m/s vy=%+.3f m/s 转速=%+.2f°/s，持续 %.3f s；不检验 waypoint 到达',
+                 gait_policy, proposal['schedule']['vx_m_s'], proposal['schedule']['vy_m_s'],
                  math.degrees(proposal['schedule']['yaw_rad_s']), proposal['schedule']['duration_s'])
         result = execute_schedule(guarded, proposal['schedule'])
         record['controller'] = result
@@ -1287,12 +1531,16 @@ def do_motion(args, io, capture, proposal, directory):
         record.update(status='failed', error=str(exc) or type(exc).__name__)
         raise
     finally:
+        settling = SettlingIO(io, capture, guarded.budget, record)
         try:
-            try:
+            if record['status'] == 'succeeded':
+                io.pause_motion()
+            else:
                 io.stop()
-            finally:
-                io.disarm_navigation_motion()
-            final = stopped_pose(io)
+            if proposal.get('settling_policy') == 'pose_stable_2s_v1':
+                final = stopped_pose(settling, timeout=6., stable_seconds=.8, min_wait=2., position_tolerance=.005)
+            else:
+                final = stopped_pose(settling)
             record['end_pose'] = pose_dict(final)
             record['measured_m_rad'] = relative_pose(record['start_pose'], record['end_pose'])
             try:
@@ -1301,8 +1549,24 @@ def do_motion(args, io, capture, proposal, directory):
                 record.update(status='failed', budget_error=str(exc))
             record['measured_path_m'] = guarded.budget.distance
             record['measured_accumulated_turn_rad'] = guarded.budget.turn
+            if record['status'] == 'succeeded':
+                io.release_motion_control()
+                record['stop_policy'] = 'zero_then_release_after_settle_v1'
+            else:
+                io.stop()
         except Exception as exc:
             record.update(status='failed', feedback_error=str(exc))
+            io.stop()
+        except BaseException:
+            io.stop()
+            raise
+        finally:
+            record['measured_path_m'] = guarded.budget.distance
+            record['measured_accumulated_turn_rad'] = guarded.budget.turn
+            if 'end_pose' not in record and settling.current is not None:
+                record['end_pose'] = pose_dict(settling.current)
+                record['measured_m_rad'] = relative_pose(record['start_pose'], record['end_pose'])
+            io.disarm_navigation_motion()
         if record['status'] == 'failed':
             LOG.error('动作失败详情：error=%s | budget_error=%s | feedback_error=%s',
                       record.get('error'), record.get('budget_error'), record.get('feedback_error'))
@@ -1314,6 +1578,7 @@ def do_motion(args, io, capture, proposal, directory):
 def run_robot(args, plan, status):
     import rclpy
     from PIL import Image
+    automatic = getattr(args, 'automatic', False)
     rclpy.init()
     io = capture = display = None
     lock = None
@@ -1352,57 +1617,97 @@ def run_robot(args, plan, status):
                  sum(len(v['samples']) for v in calibration['actions'].values()), args.action_calibration.name)
         if args.mode == 'navigate':
             LOG.info('起点参考 · %s', args.output / plan['targets'][0]['file'])
-            LOG.info('请保持机器人站立并对齐起点；每步输入 MOVE 确认，arrived 确认到达，q 退出。')
+            LOG.info('请保持机器人站立并对齐起点；START 后自动连续导航，静止胜出切换目标，Ctrl+C 停止。'
+                     if automatic else '请保持机器人站立并对齐起点；每步输入 MOVE 确认，arrived 确认到达，q 退出。')
             if display: display.update(phase='等待 START / start')
-            if not confirm_start(capture):
+            if not confirm_start(capture, automatic=automatic):
                 status['status'] = 'cancelled_before_navigation'
                 return
         source_pose = stopped_pose(io)
-        action_history = ActionHistory()
+        action_history = ActionHistory(getattr(args, 'history_update', 'action'))
         initial_image, initial_metadata = capture.latest()
         action_history.append(initial_image, initial_metadata, action_step=0)
         images, history = action_history.context()
+        turn_guard = TurnReversalGuard()
+        loop_guard = NavigationLoopGuard() if getattr(args, 'window_navigation', False) else None
         index, step = 1, 0
+        stale_rejections = 0
         while index < len(plan['targets']) and step < args.max_actions:
             capture.check()
+            proposal_index = index
             target = plan['targets'][index]
             with Image.open(args.output / target['file']) as f:
                 goal = f.convert('RGB')
             step += 1
             directory = args.output / ('step-%03d' % step)
             directory.mkdir()
-            for j, im in enumerate(images):
-                im.save(directory / ('history-%d.png' % j))
-                model_frame(im).save(directory / ('model-input-history-%d.png' % j))
-            goal.save(directory / 'goal.png')
-            model_frame(goal).save(directory / 'model-input-goal.png')
             save_json(directory / 'history.json', history)
-            proposals = fixed_proposals
+            proposals, constraint_report = turn_guard.eligible(fixed_proposals)
+            save_json(directory / 'candidate-constraints.json', constraint_report)
+            if constraint_report['blocked']:
+                previous = constraint_report['state']['last_turn']
+                LOG.info('约束 · 第 %03d 步实测%s转 %.1f°；排除 %d 个原地%s转候选（弧线仍允许）。静止不解除，累计实测平移 %.2f/%.2f m 后解除',
+                         previous['step'], '左' if previous['direction'] > 0 else '右',
+                         abs(math.degrees(previous['measured_yaw_rad'])), len(constraint_report['blocked']),
+                         '右' if previous['direction'] > 0 else '左', turn_guard.translation_progress_m,
+                         turn_guard.release_distance_m)
+                LOG.debug('排除候选：%s', ', '.join(constraint_report['blocked']))
             paths = {name: p['effective_path'] for name, p in proposals.items()}
             save_json(directory / 'candidate-proposals.json', proposals)
             if display:
                 display.update(goal=goal, images=images, history=history, clear_inputs=True,
                                goal_number=index, goal_total=len(plan['targets'])-1,
                                frame_index=target['frame_index'], reference_time_s=target['elapsed_seconds'],
-                               phase='14 个运动候选推理 + 静止直接评分', step=step, candidate_count=15,
-                               limit_text='固定15候选；名义路程 0.25/0.50 m；硬限位 0.70 m / π/3（60°）')
-            LOG.info('── 第 %03d 步 · 目标 %d/%d · 正在评估 15 个动作 ──',
-                     step, index, len(plan['targets'])-1)
-            selection, prediction = engine.select(images, goal, paths, step, directory)
+                               phase='%d 个候选推理（含静止）' % len(paths),
+                               step=step, candidate_count=len(paths),
+                               limit_text='前进/原地转向与静止共7个选项；名义路程 0.25/0.50 m；硬限位 1.00 m / π/3（60°）')
+            LOG.info('── 第 %03d 步 · 目标 %d/%d · 评估 %d/7 个动作 ──',
+                     step, index, len(plan['targets'])-1, len(paths))
+            window_goals = None
+            if getattr(args, 'window_navigation', False):
+                window_goals = []
+                for number in target_window(index, len(plan['targets']), args.target_window):
+                    with Image.open(args.output / plan['targets'][number]['file']) as im:
+                        window_goals.append((number, im.convert('RGB')))
+                save_json(directory / 'target-window.json', {'center': index, 'indices': [n for n, _ in window_goals]})
+            selection, prediction = engine.select(images, goal, paths, step, directory,
+                **({'window_goals': window_goals, 'loop_guard': loop_guard,
+                    'source_pose': source_pose} if window_goals is not None else {}))
+            if selection.get('loop_avoidance'):
+                event = selection['loop_avoidance']
+                LOG.info('循环 · 首次重复第 %03d 步目标 %d 的静止状态；本轮排除全部 stationary，重选目标 %d + %s；下轮恢复静止候选',
+                         event['previous_step'], event['repeated_target_index'],
+                         selection['selected_target_index'], selection['selected'])
+            if window_goals is not None:
+                previous_index = index
+                index = selection['selected_target_index']
+                if index not in [n for n, _ in window_goals]:
+                    raise RuntimeError('Selected target is outside the target window')
+                target = plan['targets'][index]
+                goal = next(im for n, im in window_goals if n == index)
+                LOG.info('窗口 · 目标 %d → %d · 候选 %s · %s %.4f',
+                         previous_index, index, selection['selected'], selection.get('matching_metric', 'lpips'),
+                         selection.get('selected_score', selection.get('selected_lpips')))
+                if display:
+                    display.update(goal=goal, goal_number=index, frame_index=target['frame_index'],
+                                   reference_time_s=target['elapsed_seconds'])
             # A remote takeover during lengthy inference invalidates this proposal.
             # Check before presenting a MOVE prompt; callback logs also cover input waits.
             io.read_pose()
+            if selection['selected'] not in proposals:
+                raise RuntimeError('Selected action violates candidate constraints: ' + selection['selected'])
             proposal = proposals[selection['selected']]
             selection.update(reference_target=target, proposal=proposal, history=history,
+                             candidate_constraints=constraint_report,
                              source_pose=pose_dict(source_pose), calibration_sha256=digest(args.action_calibration))
-            prediction.save(directory / 'executed-condition-prediction.png')
-            decision_image(images, goal, prediction, proposal, directory / 'decision.png')
+            save_json(directory / 'target.json', {'target_index': index, 'reference_file': target['file'],
+                'frame_index': target['frame_index']})
             save_json(directory / 'selection.json', selection)
             save_json(args.output / 'run-status.json', dict(status, current_step=step, current_goal=index))
             LOG.debug('Selected %s; nominal model action=%s; calibrated mean endpoint: dx=%.3fm dy=%.3fm yaw=%+.2fdeg; hard path<=%.2fm / turn<=%.1fdeg',
                 selection['selected'], proposal['raw_candidate'], *proposal['metric_target'][:2],
                 math.degrees(proposal['metric_target'][2]), proposal['hard_distance_m'], math.degrees(proposal['hard_turn_rad']))
-            LOG.debug('Decision image: %s; current-vs-goal LPIPS %.5f', directory / 'decision.png', selection['current_goal_lpips'])
+            LOG.debug('Current-vs-goal LPIPS %.5f', selection['current_goal_lpips'])
             dx, dy, dyaw = proposal['metric_target']
             schedule = proposal['schedule']
             LOG.debug('固定候选 %s：实测平均终点 [%+.4f m, %+.4f m, %+.4fπ]；'
@@ -1414,15 +1719,17 @@ def run_robot(args, plan, status):
             LOG.info('距离 · 当前图像与目标 LPIPS %.4f', selection['current_goal_lpips'])
             if display:
                 display.update(prediction=prediction, selected=selection['selected'],
-                               phase='只读预览完成' if args.mode == 'preview' else '等待 MOVE 确认',
-                               note='静止使用当前真实图像评分；14 个运动候选使用预测图像。终端 MOVE 执行，arrived 到达，q 退出。',
+                               phase='只读预览完成' if args.mode == 'preview' else ('自动执行前检查' if automatic else '等待 MOVE 确认'),
+                               note=('自动导航：动作结束后继续推理；静止胜出切换目标；Ctrl+C 停止。' if automatic else
+                                     '全部候选（含静止）使用模型预测图像评分。终端 MOVE 执行，arrived 到达，q 退出。'),
                                action_text='净距离 %.3f m / 转角 %+.1f° · 碎步 %.2f s' %
                                            (math.hypot(dx,dy),math.degrees(dyaw),schedule['duration_s']))
             if args.mode == 'preview':
+                finish_observation_round(args, capture, action_history, step, directory)
                 status.update(status='preview_complete_no_motion', completed_proposals=step)
                 return
             prompted = time.monotonic()
-            token = input('  › MOVE 执行 / arrived 到达 / q 退出：').strip()
+            token = 'MOVE' if automatic else input('  › MOVE 执行 / arrived 到达 / q 退出：').strip()
             LOG.debug('Terminal response: %s', token)
             if token == 'q':
                 status.update(status='stopped_by_operator', completed_proposals=step)
@@ -1437,11 +1744,11 @@ def run_robot(args, plan, status):
                         display.update(goal=image, clear_inputs=True, goal_number=index,
                                        frame_index=next_target['frame_index'], reference_time_s=next_target['elapsed_seconds'],
                                        phase='目标已切换，采集历史')
-                images, history = action_history.context()
+                images, history = finish_observation_round(args, capture, action_history, step, directory)
                 continue
             if token != 'MOVE':
                 LOG.info('未确认动作 · 保持静止')
-                images, history = action_history.context()
+                images, history = finish_observation_round(args, capture, action_history, step, directory)
                 continue
             capture.check()
             current = stopped_pose(io)
@@ -1456,16 +1763,50 @@ def run_robot(args, plan, status):
                 if scene_distance > .15:
                     raise StaleProposal('Scene changed since inference: LPIPS %.4f > 0.15' % scene_distance)
             except StaleProposal as exc:
+                if automatic:
+                    io.stop()
+                    stale_rejections += 1
+                    index = proposal_index  # A rejected match must not advance the target.
+                    save_json(directory / 'proposal-rejection.json', {'reason': str(exc), 'automatic': True,
+                        'status': 'discarded_no_motion', 'consecutive_rejections': stale_rejections,
+                        'resolution': 'rejection_limit' if stale_rejections >= 3 else 'automatic_replan',
+                        'resume_target_index': index})
+                    if stale_rejections >= 3:
+                        raise RuntimeError('自动导航停止：连续 3 次提案失效') from exc
+                    LOG.warning('提案失效，保持停止并重新采集稳定画面（连续 %d/3）：%s', stale_rejections, exc)
+                    if display:
+                        display.update(phase='保持停止，采集稳定画面后重新推理', selected=None, action_text='旧动作已作废')
+                    source_pose, action_history = automatic_replan_context(capture, io, engine, directory)
+                    action_history.update_mode = getattr(args, 'history_update', 'action')
+                    images, history = action_history.context()
+                    continue
                 recovered = recover_stale_proposal(capture, io, display, directory, source_pose, current, exc)
                 if recovered is None:
                     status.update(status='stopped_by_operator', completed_proposals=step, targets_confirmed=index-1)
                     return
                 source_pose, action_history = recovered
+                action_history.update_mode = getattr(args, 'history_update', 'action')
                 images, history = action_history.context()
                 continue
+            stale_rejections = 0
+            if loop_guard is not None:
+                loop_guard.observe(index, selection['selected'], source_pose, step)
             if max(abs(v) for v in proposal['metric_target']) < 1e-9:
-                LOG.info('选择静止 · 未移动；到达仍需输入 arrived 确认')
-                images, history = action_history.context()
+                latest.save(directory / 'actual-after.png')
+                if automatic:
+                    save_json(directory / 'arrival.json', {
+                        'confirmed_by': 'stationary_selected', 'goal': index,
+                        'current_goal_lpips': selection['current_goal_lpips']})
+                    LOG.info('到达 · 目标 %d/%d 静止胜出，%s', index, len(plan['targets'])-1,
+                             '全部目标完成' if index == len(plan['targets'])-1 else '切换下一个目标')
+                    index += 1
+                    status.update(status='running', targets_confirmed=index-1)
+                    save_json(args.output / 'run-status.json', status)
+                    if display and index == len(plan['targets']):
+                        display.update(phase='全部目标已完成（静止判定）')
+                else:
+                    LOG.info('选择静止 · 未移动；到达仍需输入 arrived 确认')
+                images, history = finish_observation_round(args, capture, action_history, step, directory)
                 continue
             status['motion_attempts'] = status.get('motion_attempts', 0) + 1
             if display: display.update(phase='执行固定标定指令')
@@ -1482,21 +1823,37 @@ def run_robot(args, plan, status):
                     'online_update': False})
             source_pose = stopped_pose(io)
             after_image, after_metadata = capture.latest(after=execution.get('finished_monotonic'))
+            action_history.update_mode = getattr(args, 'history_update', 'action')
             action_history.append(after_image, after_metadata, action_step=step)
             images, history = action_history.context()
             images[-1].save(directory / 'actual-after.png')
-            model_frame(images[-1]).save(directory / 'model-input-after.png')
             save_json(directory / 'post-action-history.json', history)
+            if getattr(args, 'history_update', 'action') == 'round':
+                save_json(directory / 'post-round-history.json', history)
             if execution['status'] not in ('succeeded', 'stopped_at_reserve'):
                 reasons = '; '.join('%s: %s' % (key, execution[key])
                                     for key in ('error', 'budget_error', 'feedback_error') if execution.get(key))
                 raise RuntimeError('Action did not complete; stopped rather than proceeding: ' +
                                    (reasons or 'unknown failure; inspect execution.json'))
+            constraint_event = turn_guard.observe(proposal, execution, step)
+            status['turn_reversal_guard'] = turn_guard.snapshot()
+            save_json(directory / 'constraint-state-after-action.json',
+                      {'event': constraint_event, 'state': turn_guard.snapshot()})
+            if constraint_event and constraint_event['event'] == 'released_by_translation':
+                LOG.info('约束解除 · 累计实测平移 %.2f m，解除原地反向转动限制',
+                         constraint_event['previous']['translation_progress_m'])
             # Score the completed action against this goal before asking the operator.
             comparison = {'actual_vs_reference_goal_lpips': engine.distance(images[-1], goal)}
             save_json(directory / 'image-comparison.json', comparison)
             LOG.info('距离 · 执行后实际图像与目标 LPIPS %.4f', comparison['actual_vs_reference_goal_lpips'])
-            # No next planning inference until the operator chooses to continue.
+            if automatic:
+                comparison['prediction_vs_actual_lpips'] = engine.distance(prediction, images[-1], a_prepared=True)
+                save_json(directory / 'image-comparison.json', comparison)
+                status.update(status='running', current_step=step, current_goal=index, targets_confirmed=index-1)
+                save_json(args.output / 'run-status.json', status)
+                if display: display.update(phase='动作已结束，继续推理')
+                continue
+            # Manual navigation waits for the operator before the next inference.
             if display:
                 display.update(phase='动作已结束，等待到达确认 / 继续 / q')
             status.update(current_step=step, current_goal=index, targets_confirmed=index-1,
@@ -1604,7 +1961,7 @@ class Tee:
         return self.original.fileno()
 
 
-def main():
+def main(*, automatic=False, entry_script=None, window_navigation=False):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('mode', choices=('prepare', 'probe', 'preview', 'navigate'))
     parser.add_argument('--reference', type=Path, default=REPO.parents[1] / 'data/go2-workspace/datasets/episode_20261017T050607_8c26ec7b')
@@ -1619,14 +1976,28 @@ def main():
     parser.add_argument('--display-port', type=int, default=8765, help='Read-only localhost monitor port; 0 disables display')
     parser.add_argument('--steps', type=int, default=None)
     add_sampler_arguments(parser, default_steps=50)
-    parser.add_argument('--batch-size', type=int, choices=(14,15), default=14,
-                        help='14 motion candidates per inference; legacy value 15 also runs only 14')
+    parser.add_argument('--batch-size', type=int, choices=(6,7,14,15), default=7,
+                        help='At most 7 candidates including stationary; batch size limits each inference call')
+    parser.add_argument('--history-update', choices=('action', 'round'), default='action',
+                        help='action: append after motion; round: append after every round, waiting for motion when executed')
     parser.add_argument('--action-calibration', type=Path, default=Path(__file__).with_name('default-action-calibration.json'),
-                        help='Validated fixed15 calibration (default: bundled 45-sample calibration)')
+                        help='Validated forward/turn calibration; compatible old files retain only forward/turn actions')
     parser.add_argument('--verbose', action='store_true', help='Show detailed terminal logs; navigation.log always retains details')
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--matching-metric', choices=('lpips', 'dinov2'), default='lpips',
+                        help='Candidate/target matching distance; scene-change safety remains LPIPS')
+    parser.add_argument('--dinov2-model', type=Path, help='Local Hugging Face DINOv2 model directory')
     parser.add_argument('--max-actions', type=int, default=50, help='Maximum proposals, including cancelled proposals')
+    if window_navigation:
+        parser.add_argument('--target-interval', type=float, default=.5, help='Reference sampling interval in seconds')
+        parser.add_argument('--target-window', type=int, default=10, help='Number of reference frames in the current-and-future window (at least 3)')
     args = parser.parse_args()
+    args.window_navigation = window_navigation
+    if window_navigation and (not math.isfinite(args.target_interval) or args.target_interval <= 0
+                              or args.target_window < 3):
+        parser.error('Target interval must be positive; target window must be at least 3')
+    args.automatic = automatic
+    args.entry_script = Path(entry_script or __file__).resolve()
     validate_sampler_arguments(parser, args)
     if args.mode in ('prepare', 'probe') and (args.sampler != 'ddpm' or args.ddim_eta is not None):
         parser.error('Sampler options require preview or navigate mode')
@@ -1646,7 +2017,7 @@ def main():
         args.action_calibration = args.action_calibration.expanduser().resolve()
         load_calibration(args.action_calibration)
     if args.mode == 'navigate' and not sys.stdin.isatty():
-        parser.error('navigate requires a real interactive terminal; piped/automatic confirmations are prohibited')
+        parser.error('navigate requires a real interactive terminal for START')
     if args.mode != 'prepare':
         if args.interface == 'lo' or not Path('/sys/class/net', args.interface).exists():
             parser.error('A real robot-facing network interface is required')
@@ -1658,10 +2029,12 @@ def main():
     handler = next(h for h in logging.getLogger().handlers if isinstance(h, logging.FileHandler))
     sys.stdout, sys.stderr = Tee(sys.stdout, handler), Tee(sys.stderr, handler)
     status = {'status': 'starting', 'mode': args.mode, 'model': args.model,
-              'time_condition': 'fixed_model_horizon_0.5s', 'candidate_count': 15,
-              'inferred_candidate_count': 14, 'stationary_score_source': 'current_observation',
+              'time_condition': 'fixed_model_horizon_0.5s', 'candidate_count': 7,
+              'max_inferred_candidate_count': 7, 'stationary_score_source': 'model_prediction',
+              'candidate_constraints_policy': 'no_opposite_in_place_turn_until_0.20m_measured_translation',
               'model_horizon_seconds': MODEL_HORIZON_SECONDS, 'normalized_k': NORMALIZED_K,
-              'waypoint_spacing_m': .25, 'online_calibration': False,
+              'waypoint_spacing_m': None if window_navigation else .25, 'online_calibration': False,
+              'target_selection': 'fixed_time_forward_window' if window_navigation else 'pose_threshold',
               'hard_distance_m': HARD_DISTANCE, 'hard_turn_rad': HARD_TURN,
               'physical_collision_free_guaranteed': False, 'motion_attempts': 0,
               'script_sha256': digest(Path(__file__)),

@@ -17,19 +17,23 @@ def main():
     p.add_argument('host', help='机载无线 IP，例如 192.168.14.129')
     p.add_argument('mode', choices=['plan', 'collect'], help='plan 只生成计划；collect 逐次确认采集')
     p.add_argument('--repeats', type=int, default=3, help='每个动作的正式重复次数，3–20')
-    p.add_argument('--max-tuning-rounds', type=int, default=8, help='每个动作最多试调次数，1–12')
+    p.add_argument('--max-tuning-rounds', type=int, default=0, help='0：持续试调直到验收通过或手动退出；1–12：限制每组试调次数和重试组数')
     p.add_argument('--output', help='新的机载输出目录；默认自动生成')
-    p.add_argument('--resume', help='本次无线标定中断后，读取之前的机载 calibration.json')
+    restart = p.add_mutually_exclusive_group()
+    restart.add_argument('--resume', help='显式指定机载 calibration.json；默认自动续跑最近兼容无线标定')
+    restart.add_argument('--fresh', action='store_true', help='从头开始，不读取任何旧进度')
     p.add_argument('--redo-candidate', action='append', default=[], help='配合 resume 重测指定候选')
     p.add_argument('--new-terminal', action='store_true', help='新开独立标定终端，退出后保留窗口')
     p.add_argument('--dry-run', action='store_true', help='只打印命令，不连接或采集')
     a = p.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9.:-]*', a.host):
         p.error('host 必须是 IP 或主机名')
-    if not 3 <= a.repeats <= 20 or not 1 <= a.max_tuning_rounds <= 12:
-        p.error('repeats 必须为 3–20；max-tuning-rounds 必须为 1–12')
-    if (a.resume and a.mode != 'collect') or (a.redo_candidate and not a.resume):
-        p.error('resume 仅用于 collect；redo-candidate 需要 resume')
+    if not 3 <= a.repeats <= 20 or not 0 <= a.max_tuning_rounds <= 12:
+        p.error('repeats 必须为 3–20；max-tuning-rounds 必须为 0–12')
+    if (a.resume or a.fresh or a.redo_candidate) and a.mode != 'collect':
+        p.error('resume、fresh、redo-candidate 仅用于 collect')
+    if a.redo_candidate and a.fresh:
+        p.error('redo-candidate 不能与 fresh 同用')
     if a.new_terminal:
         terminal = shutil.which('gnome-terminal')
         if not terminal:
@@ -57,12 +61,16 @@ def main():
               '--max-tuning-rounds', str(a.max_tuning_rounds), '--output', output]
     if a.resume:
         remote += ['--resume', a.resume]
+    elif a.mode == 'collect' and not a.fresh:
+        remote += ['--auto-resume']
     for name in a.redo_candidate:
         remote += ['--redo-candidate', name]
     command = ['ssh', '-B', interface, '-o', 'ConnectTimeout=8', '-o', 'ServerAliveInterval=3',
                '-o', 'ServerAliveCountMax=3', '-tt', 'unitree@' + address, 'exec ' + shlex.join(remote)]
     print('无线接口：' + interface, flush=True)
     print('机载输出：' + output, flush=True)
+    if a.mode == 'collect':
+        print('进度：' + ('从头开始' if a.fresh else ('指定续跑文件' if a.resume else '自动续跑最近兼容无线标定；合格动作跳过')), flush=True)
     print('新标定文件：' + output + '/calibration.json', flush=True)
     print('首次无线标定请拔掉外接网线；每次输入终端显示的 MOVE 编号。q 或 Ctrl+C 退出。', flush=True)
     print('完成且 ready=true 后，导航加 --action-calibration ' + shlex.quote(output + '/calibration.json'), flush=True)
