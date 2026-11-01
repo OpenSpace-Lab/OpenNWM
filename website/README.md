@@ -1,7 +1,7 @@
 # OpenNWM 项目网站
 
 原生 HTML、CSS 和 JavaScript 学术主页，无前端构建步骤。正式地址：
-[OpenNWM](https://b0b8k1ng.github.io/OpenNWM/)。此目录也可独立作为静态站部署；
+[OpenNWM](https://openspace-lab.github.io/OpenNWM/)。此目录也可独立作为静态站部署；
 论文、字体、图片和视频均保留在 `assets/`，模型服务不属于静态站依赖。
 
 ## 页面结构
@@ -100,7 +100,7 @@ conda run --no-capture-output -n base python -m http.server 8000 --bind 127.0.0.
 打开 <http://127.0.0.1:8000/>；按 `Ctrl+C` 停止。可用 Python 3 的绝对路径替换上方
 `conda run`。页面通过 HTTP 读取 JSON，请通过服务器预览。
 
-公开站由 [网站仓库](https://github.com/B0B8K1ng/b0b8k1ng.github.io) 的 GitHub Pages
+公开站由 [网站仓库](https://github.com/OpenSpace-Lab/openspace-lab.github.io) 的 GitHub Pages
 工作流部署到 `/OpenNWM/`。保持所有相对路径和目录层级即可迁移到其他静态服务器。
 页面仅提供英文。推送前检查桌面/手机布局、媒体回退以及 Demo 的在线/离线状态。
 
@@ -117,7 +117,7 @@ DDPM，其协议与实时请求分别保存。
 仍可查看真实预计算结果；自绘轨迹不会被替换成预设结果。静态 Pages 本身不执行模型。
 
 部署、GPU 选择、队列与接口说明见源代码仓库的
-[推理服务文档](https://github.com/B0B8K1ng/OpenNWM/blob/main/website/server/README.md)。
+[推理服务文档](https://github.com/OpenSpace-Lab/OpenNWM/blob/main/website/server/README.md)。
 服务代码和运行环境由源代码仓库管理，独立静态网站无需包含 `server/`。
 
 ## 内容维护与溯源

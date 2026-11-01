@@ -80,7 +80,7 @@ class HttpTests(unittest.TestCase):
         cls.website_patch.start()
         cls.app = Application.__new__(Application)
         cls.app.predictor = SimpleNamespace(loaded=False, steps=50)
-        cls.app.allowed_origins = {"https://b0b8k1ng.github.io"}
+        cls.app.allowed_origins = {"https://openspace-lab.github.io", "https://b0b8k1ng.github.io", "http://127.0.0.1:8766"}
         cls.app.api_only = False
         cls.app.rate_history = {}
         cls.app.retention_seconds = 86400
@@ -222,20 +222,30 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(status, 403)
 
     def test_public_preflight_and_api_only_exposure(self):
-        headers = {"Origin": "https://b0b8k1ng.github.io", "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "content-type"}
-        status, response_headers, body = self.raw_request("/api/predict", "OPTIONS", headers)
-        self.assertEqual(status, 204)
-        self.assertEqual(response_headers["Access-Control-Allow-Origin"], headers["Origin"])
-        self.assertEqual(body, b"")
+        headers = {"Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "content-type"}
+        origins = ("https://openspace-lab.github.io", "https://b0b8k1ng.github.io", "http://127.0.0.1:8766")
+        for origin in origins:
+            with self.subTest(origin=origin):
+                headers["Origin"] = origin
+                status, response_headers, body = self.raw_request("/api/predict", "OPTIONS", headers)
+                self.assertEqual(status, 204)
+                self.assertEqual(response_headers["Access-Control-Allow-Origin"], origin)
+                self.assertEqual(body, b"")
+                status, response_headers, _ = self.raw_request("/api/health", headers={"Origin": origin})
+                self.assertEqual(status, 200)
+                self.assertEqual(response_headers["Access-Control-Allow-Origin"], origin)
         headers["Origin"] = "https://unrelated.example"
         self.assertEqual(self.raw_request("/api/predict", "OPTIONS", headers)[0], 403)
         self.assertEqual(self.raw_request("/api/health", headers={"Origin": headers["Origin"]})[0], 403)
         with patch.object(self.app, "api_only", True):
             for path in ("/", "/clip.mp4", "/../.env", "/%2e%2e/.env", "/server/serve.py"):
                 self.assertEqual(self.raw_request(path)[0], 404)
-            status, response_headers, _ = self.raw_request("/api/media/test-media/prediction.mp4", headers={"Origin": "https://b0b8k1ng.github.io", "Range": "bytes=0-15"})
-            self.assertEqual(status, 206)
-            self.assertEqual(response_headers["Access-Control-Allow-Origin"], "https://b0b8k1ng.github.io")
+            for origin in origins:
+                with self.subTest(origin=origin, api_only=True):
+                    status, response_headers, body = self.raw_request("/api/media/test-media/prediction.mp4", headers={"Origin": origin, "Range": "bytes=0-15"})
+                    self.assertEqual(status, 206)
+                    self.assertEqual(response_headers["Access-Control-Allow-Origin"], origin)
+                    self.assertEqual(body, self.media_bytes[:16])
 
     def test_rate_limit_and_retention(self):
         isolated = Application.__new__(Application)

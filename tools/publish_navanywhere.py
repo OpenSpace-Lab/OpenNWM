@@ -70,7 +70,7 @@ def dataset_card(source, repo_id, modelscope_repo):
         'LAM-Data 的完整已发布文件，包括 NavAnywhere 快照与历史动作数据。'
         '压缩包名称、包内路径和数据校验值保持原样。\n\n'
         f'- ModelScope：[源仓库](https://modelscope.cn/datasets/{modelscope_repo})\n'
-        '- 代码：[OpenNWM](https://github.com/B0B8K1ng/OpenNWM)\n\n'
+        '- 代码：[OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM)\n\n'
         '### Hugging Face 下载\n\n```bash\n'
         f'hf download {repo_id} --repo-type dataset --local-dir /path/to/NavAnywhere\n'
         '```\n\n中断后重跑同一命令即可续传。数据以归档文件发布，请按下方说明解压。\n'

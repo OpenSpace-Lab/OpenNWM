@@ -111,7 +111,7 @@ The Nav15 Pixel+Action release of OpenNWM: a latent action model (LAM), a
 Stage 1 navigation world model pretrained with latent actions, and a Stage 2
 world model adapted to real navigation actions.
 
-- Code and setup: [B0B8K1ng/OpenNWM](https://github.com/B0B8K1ng/OpenNWM)
+- Code and setup: [OpenSpace-Lab/OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM)
 - Repository: [{repo_id}](https://modelscope.cn/models/{repo_id})
 - Training data: [NavAnywhere](https://modelscope.cn/datasets/LittleBoss/NavAnywhere)
 
@@ -245,7 +245,7 @@ def stage(args):
     commit = subprocess.check_output(['git', '-C', str(REPO_ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     write_json(payload / 'manifest.json', {
         'schema_version': 1, 'release': 'OpenNWM Nav15 Pixel+Action', 'repo_id': args.repo_id,
-        'source_code': 'https://github.com/B0B8K1ng/OpenNWM', 'source_code_commit': commit,
+        'source_code': 'https://github.com/OpenSpace-Lab/OpenNWM', 'source_code_commit': commit,
         'checkpoint_format': 'original, unmodified training checkpoints', 'checkpoints': rows,
     })
     files = {}

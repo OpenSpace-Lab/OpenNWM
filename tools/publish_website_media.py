@@ -71,7 +71,7 @@ def stage(args):
         files[relative.as_posix()] = {'bytes': before.st_size, 'sha256': source_hash}
     write_json(payload / 'media-manifest.json', {
         'version': 1, 'release': args.tag, 'repo_id': args.repo_id,
-        'website': 'https://b0b8k1ng.github.io/OpenNWM/',
+        'website': 'https://openspace-lab.github.io/OpenNWM/',
         'encoding': 'Original website bytes, without media re-encoding',
         'real_world_clips': sorted(selected),
         'files': [{'path': name, **value} for name, value in files.items()],
@@ -85,7 +85,7 @@ tags:
 
 # OpenNWM website media
 
-Original media files for the [OpenNWM project website](https://b0b8k1ng.github.io/OpenNWM/).
+Original media files for the [OpenNWM project website](https://openspace-lab.github.io/OpenNWM/).
 This public delivery mirror preserves the exact website file bytes; it does not
 re-encode videos or reduce image quality. See `media-manifest.json` for sizes and
 SHA256 hashes. Original sources retain their respective licenses.

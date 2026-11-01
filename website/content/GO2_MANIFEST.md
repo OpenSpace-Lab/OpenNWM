@@ -118,7 +118,7 @@ The eight shortened clips retain their `_curated` asset IDs.
 
 ## Production and validation
 
-Source tools are in the [OpenNWM repository](https://github.com/B0B8K1ng/OpenNWM):
+Source tools are in the [OpenNWM repository](https://github.com/OpenSpace-Lab/OpenNWM):
 
 - `tools/render_go2_gallery.py` preserves source/model views and renders constant
   clip-mean panels; documented shorter excerpts still require complete windows.

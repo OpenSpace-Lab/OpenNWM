@@ -48,7 +48,7 @@ frameworks:
 # {name}
 
 Four-step DMD2 distillation pilot of {'OpenNWM Nav15 Stage 2' if name == 'OpenNWM-DMD' else 'the official NWM CDiT-B checkpoint'}.
-Code and dependencies: [OpenNWM](https://github.com/B0B8K1ng/OpenNWM).
+Code and dependencies: [OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM).
 Method: [DMD2](https://github.com/tianweiy/DMD2/tree/8d8fa55633d47cfb81bbc7a892e7248f9518763f).
 
 **This is a short training pilot, not a converged or quality-preserving release.**

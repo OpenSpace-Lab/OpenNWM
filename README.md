@@ -7,8 +7,8 @@
 <p><em>Learn navigation dynamics from action-free video. Adapt them to physical actions.</em></p>
 
 <p>
-  <a href="https://b0b8k1ng.github.io/OpenNWM/">🌐 Project Page</a> &nbsp;·&nbsp;
-  <a href="https://b0b8k1ng.github.io/OpenNWM/assets/paper/OpenNWM.pdf">📄 Paper</a> &nbsp;·&nbsp;
+  <a href="https://openspace-lab.github.io/OpenNWM/">🌐 Project Page</a> &nbsp;·&nbsp;
+  <a href="https://openspace-lab.github.io/OpenNWM/assets/paper/OpenNWM.pdf">📄 Paper</a> &nbsp;·&nbsp;
   <a href="https://huggingface.co/LittleB0sS/OpenNWM">🤗 Models</a> &nbsp;·&nbsp;
   <a href="https://huggingface.co/datasets/LittleB0sS/NavAnywhere">🤗 NavAnywhere</a>
 </p>
@@ -38,7 +38,7 @@ The pipeline has three parts: **learn latent actions → pretrain navigation dyn
 Use Linux, Conda, Git, `tar`, `zstd` (`unzstd`), and an NVIDIA GPU with a driver compatible with CUDA 12.4. LAM and NWM use separate environments because their dependencies differ. Run all commands from the repository root unless stated otherwise.
 
 ```bash
-git clone https://github.com/B0B8K1ng/OpenNWM.git
+git clone https://github.com/OpenSpace-Lab/OpenNWM.git
 cd OpenNWM
 
 conda create -n open-lam python=3.10 -y

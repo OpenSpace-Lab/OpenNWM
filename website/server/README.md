@@ -34,8 +34,10 @@ Its `processes.json` records exact commands, GPU, PIDs and log paths.
 The cloudflared 2026.10.5 Linux AMD64 binary was verified against the official
 release SHA-256 before use.
 
-Allowed browser origins: `https://b0b8k1ng.github.io` and the local preview
-`http://127.0.0.1:8766`. JSON CORS preflight and cross-origin media byte ranges
+The public website is [OpenNWM](https://openspace-lab.github.io/OpenNWM/).
+Allowed browser origins: `https://openspace-lab.github.io`, the previous site's
+`https://b0b8k1ng.github.io` for compatibility, and the local preview
+`http://127.0.0.1:8766`. Origins contain no URL path. JSON CORS preflight and cross-origin media byte ranges
 are supported. This is an intentionally public demo, not a private authenticated
 API; CORS is not authentication. Admission is bounded to one active job, three
 queued jobs, 20 requests per client per hour, at least 15 seconds between client

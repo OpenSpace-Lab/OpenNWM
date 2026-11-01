@@ -14,7 +14,8 @@ args = parser.parse_args()
 repo = Path(__file__).resolve().parents[1]
 commands = {
     "api": [sys.executable, "-u", "website/server/serve.py", "--host", "127.0.0.1", "--port", "8765", "--api-only", "--steps", "50",
-            "--allow-origin", "https://b0b8k1ng.github.io", "--allow-origin", "http://127.0.0.1:8766", "--output", str(args.root)],
+            "--allow-origin", "https://openspace-lab.github.io", "--allow-origin", "https://b0b8k1ng.github.io",
+            "--allow-origin", "http://127.0.0.1:8766", "--output", str(args.root)],
     "tunnel": [str(args.root / "bin/cloudflared"), "tunnel", "--no-autoupdate", "--protocol", "http2", "--url", "http://127.0.0.1:8765", "--metrics", "127.0.0.1:8767"],
 }
 record = {"startedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(), "cwd": str(repo), "cudaVisibleDevices": args.gpu, "services": {}}

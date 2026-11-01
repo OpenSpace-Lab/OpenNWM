@@ -23,7 +23,7 @@ RELEASES = Path('/file_system/nas/algorithm/dujun.nie/nwm/releases')
 REPO = 'LittleBoss/OpenNWM-Website'
 TAG = 'site-20261031-v7'
 BASE_TAG = 'site-20261030-v6'
-ORIGIN = 'https://b0b8k1ng.github.io'
+ORIGIN = 'https://openspace-lab.github.io'
 LOGO_ASSETS = ('assets/paper/figure-2-framework-dark.svg',
                'assets/opennwm-logo.svg', 'assets/opennwm-logo.pdf')
 
