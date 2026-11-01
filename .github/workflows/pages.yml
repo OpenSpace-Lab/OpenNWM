@@ -1,4 +1,4 @@
-name: Deploy OpenNWM project site
+name: Build and publish public OpenNWM website
 
 on:
   push:
@@ -11,41 +11,56 @@ on:
       - .github/workflows/pages.yml
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: read
 
 concurrency:
-  group: pages
+  group: static-site
   cancel-in-progress: false
 
 jobs:
-  build:
+  publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    env:
+      PUBLIC_SITE_PUBLISH_ENABLED: ${{ secrets.OPENNWM_SITE_DEPLOY_KEY != '' }}
     steps:
       - uses: actions/checkout@v6
       - name: Test the public artifact boundary
         run: python3 -m unittest discover -s tests -p test_build_project_pages.py
       - name: Build reviewed static files
         run: python3 tools/build_project_pages.py --output-dir _site
-      - name: Upload Pages artifact
+      - name: Upload reviewed website artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: _site
-
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Deploy project site
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Check out the public static repository
+        if: env.PUBLIC_SITE_PUBLISH_ENABLED == 'true'
+        uses: actions/checkout@v6
+        with:
+          repository: OpenSpace-Lab/OpenNWM-site
+          ref: main
+          path: public-site
+          ssh-key: ${{ secrets.OPENNWM_SITE_DEPLOY_KEY }}
+          persist-credentials: true
+      - name: Publish reviewed static files
+        if: env.PUBLIC_SITE_PUBLISH_ENABLED == 'true'
+        env:
+          GIT_AUTHOR_NAME: B0B8K1ng
+          GIT_AUTHOR_EMAIL: 182785743+B0B8K1ng@users.noreply.github.com
+          GIT_COMMITTER_NAME: B0B8K1ng
+          GIT_COMMITTER_EMAIL: 182785743+B0B8K1ng@users.noreply.github.com
+        run: |
+          rsync -a --delete --exclude='.git/' --exclude='.github/' --exclude='/README.md' _site/ public-site/
+          git -C public-site add --all
+          if git -C public-site diff --cached --quiet; then
+            echo "The public website is already up to date."
+            exit 0
+          fi
+          git -C public-site commit -m "Publish website from OpenNWM ${GITHUB_SHA}"
+          git -C public-site push origin HEAD:main
+      - name: Report pending automatic publication setup
+        if: env.PUBLIC_SITE_PUBLISH_ENABLED != 'true'
+        run: |
+          echo '::warning::Website built successfully; automatic public-repository sync is not configured.'
+          echo 'The reviewed website artifact is available. Public-repository sync was skipped because OPENNWM_SITE_DEPLOY_KEY is missing. An organization owner must permit deploy keys before a scoped publishing key can be configured. The existing public website files were not changed by this run.' >> "$GITHUB_STEP_SUMMARY"

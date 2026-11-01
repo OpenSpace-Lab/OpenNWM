@@ -100,18 +100,34 @@ conda run --no-capture-output -n base python -m http.server 8000 --bind 127.0.0.
 打开 <http://127.0.0.1:8000/>；按 `Ctrl+C` 停止。可用 Python 3 的绝对路径替换上方
 `conda run`。页面通过 HTTP 读取 JSON，请通过服务器预览。
 
-项目站直接由 [OpenSpace-Lab/OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM) 的
-`.github/workflows/pages.yml` 发布，地址为 `https://openspace-lab.github.io/OpenNWM/`，
-无需创建或修改 `openspace-lab.github.io` 仓库。工作流仅打包 `website/` 中的公开静态内容，
-排除推理服务、开发文件和未选中的真机媒体；发布产物根目录直接包含 `index.html`，
-由 GitHub Pages 提供 `/OpenNWM/` 路径，不在产物中重复创建这一层目录。
+源码保留在 private 的 [OpenSpace-Lab/OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM)，
+公开网站文件由 [OpenSpace-Lab/OpenNWM-site](https://github.com/OpenSpace-Lab/OpenNWM-site)
+保存。源码仓库的 `.github/workflows/pages.yml` 先测试、打包 `website/` 中的公开静态内容，
+排除推理服务、开发文件和未选中的真机媒体，配置发布密钥后再同步到公开网站仓库的 `main` 分支。
+同步会清理过期网站文件，保留公开仓库的 `.github/` 和部署说明 `README.md`。
+工作流使用仅有公开网站仓库写权限的 SSH deploy key；私钥存放在源码仓库的 Actions
+secret `OPENNWM_SITE_DEPLOY_KEY` 中。提交作者和提交者均为 `B0B8K1ng`。
+目前组织策略禁止 deploy keys，自动同步密钥尚未配置；缺少密钥时工作流仍测试和上传
+静态产物，并明确提示跳过同步。首次公开文件已通过本机的 `B0B8K1ng` SSH 账号推送。
+启用自动同步需组织所有者先允许 deploy keys，再配置仅限 `OpenNWM-site` 的写入密钥及上述 secret。
 
-首次发布需要仓库管理员或维护者在 **Settings → Pages → Build and deployment → Source**
-选择 **GitHub Actions**。之后推送到 `main` 的网站及发布流程改动会自动部署，也可在
-**Actions → Deploy OpenNWM project site → Run workflow** 手动发布。
-组织名下的 private 仓库需要 GitHub Team 或 Enterprise 套餐才能使用 Pages；Free 套餐
-仅支持 public 仓库。源码保持 private 时，应由组织所有者升级套餐后启用 Pages。
-网站公开访问与源码仓库的可见性分别配置，部署工作流不会修改仓库可见性。
+目标地址保持为 `https://openspace-lab.github.io/OpenNWM/`。为同时保留私有源码仓库名称
+和这个网址，组织网站 `OpenSpace-Lab/openspace-lab.github.io` 的 Pages 工作流会读取
+公开网站仓库，将其静态文件放在发布产物的 `OpenNWM/` 子目录。公开网站仓库本身
+不启用项目 Pages，以免生成 `/OpenNWM-site/` 地址。源码仓库不再直接发布 Pages。
+
+首次启用需要组织所有者将**仅用于网站的** `openspace-lab.github.io` 仓库设为 public，
+并授予 `B0B8K1ng` 写入和 Pages 管理权限，或由所有者自行安装公开网站仓库中的
+`.github/organization-pages.yml` 模板到组织网站仓库的 `.github/workflows/` 目录。
+随后在组织网站仓库的 **Settings → Pages → Build and deployment → Source**
+选择 **GitHub Actions**。组织 Free 套餐支持 public 仓库的 Pages；源码仓库继续保持
+private，工作流不会修改任何仓库的可见性。
+
+发布密钥配置完成后，推送到源码 `main` 分支的网站及发布流程改动会自动同步公开文件，
+也可在源码仓库的 **Actions → Build and publish public OpenNWM website → Run workflow**
+手动同步。组织网站的
+发布工作流支持手动运行，并每小时检查一次公开网站仓库，因此文件同步完成后，网页
+更新可能需要等待下一次定时发布；GitHub 的定时任务也可能延迟。
 详见 [GitHub Pages 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)。
 
 本地可在源码仓库根目录用 Python 3.11 或以上版本生成与 Actions 相同的静态产物；
