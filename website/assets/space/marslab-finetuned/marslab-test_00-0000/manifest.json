@@ -1,0 +1,860 @@
+{
+  "schema_version": 1,
+  "model": "OpenNWM · MarsLab few-shot fine-tuned EMA",
+  "checkpoint_sha256": "c5f8ef71736db3f74f024f6a1f3ca9ee477f6c9946513d6435b8717ddc914b30",
+  "source_checkpoint_sha256": "aabff9b5a3ab62a9145073892653a81019782511272933b6acfb41e21b48b4f4",
+  "sample_id": "marslab-test_00-0000",
+  "dataset": "MarsLab",
+  "source_scene": "main_crater",
+  "trajectory_id": "test_00",
+  "split": "same_scene_test",
+  "selection": "The first 20-frame window of test_00, test_01 and test_02, fixed before training; all six held-out windows are evaluated without ranking predictions. Independent held-out trajectories share the training terrain.",
+  "specs_sha256": "908532046807fa866901a02cfa8509be6a6cab5cea0c834c0fdf20d63b1a0afd",
+  "preparation_sha256": "22195590335115e77b8f5bb28bc366127bb93e45463e6c19ca9b82d8a4023ac0",
+  "frame_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "source_frame_stride": 1,
+  "source_anchor_frame": 3,
+  "context_source_paths": [
+    "MarsLab/recordings/test_00/rgb/000000.png",
+    "MarsLab/recordings/test_00/rgb/000001.png",
+    "MarsLab/recordings/test_00/rgb/000002.png",
+    "MarsLab/recordings/test_00/rgb/000003.png"
+  ],
+  "gt_source_paths": [
+    "MarsLab/recordings/test_00/rgb/000004.png",
+    "MarsLab/recordings/test_00/rgb/000005.png",
+    "MarsLab/recordings/test_00/rgb/000006.png",
+    "MarsLab/recordings/test_00/rgb/000007.png",
+    "MarsLab/recordings/test_00/rgb/000008.png",
+    "MarsLab/recordings/test_00/rgb/000009.png",
+    "MarsLab/recordings/test_00/rgb/000010.png",
+    "MarsLab/recordings/test_00/rgb/000011.png",
+    "MarsLab/recordings/test_00/rgb/000012.png",
+    "MarsLab/recordings/test_00/rgb/000013.png",
+    "MarsLab/recordings/test_00/rgb/000014.png",
+    "MarsLab/recordings/test_00/rgb/000015.png",
+    "MarsLab/recordings/test_00/rgb/000016.png",
+    "MarsLab/recordings/test_00/rgb/000017.png",
+    "MarsLab/recordings/test_00/rgb/000018.png",
+    "MarsLab/recordings/test_00/rgb/000019.png"
+  ],
+  "source_sha256": {
+    "MarsLab/recordings/test_00/rgb/000000.png": "a0317488a5189fba01974f93375d47bb8b5a117d13e6f4e005c5faf26101a3dd",
+    "MarsLab/recordings/test_00/rgb/000001.png": "fb9a9741a6b4849f6c4a352016d42f1463e9db657d3c0868c88413ad3713d6ed",
+    "MarsLab/recordings/test_00/rgb/000002.png": "60e2941438c96252ad535ec87669fef9a85435b38bd7f3c11f5f8d9b5d34a540",
+    "MarsLab/recordings/test_00/rgb/000003.png": "37d6e77dc0495787e57408cc8f6a23134acd2489954a0d0c546643c0c5745334",
+    "MarsLab/recordings/test_00/rgb/000004.png": "62e2538c2f6059cd30e480e5e6ca5445d448a0efbd316122c55425201d979b91",
+    "MarsLab/recordings/test_00/rgb/000005.png": "74f4819cb83ef11c5f04ff75e261d5837b2c75146aa9524f1c2b467bbe0c9f3c",
+    "MarsLab/recordings/test_00/rgb/000006.png": "4e2a17fcf9cf11b35e911e019061dd42732ce659f5a7f322f637e417afc8ee1d",
+    "MarsLab/recordings/test_00/rgb/000007.png": "5f194730cd2b7800e2e950a2ed977a6df41c81d960490ce448480c25c354f3dd",
+    "MarsLab/recordings/test_00/rgb/000008.png": "65aa3f0f1bb3f0b44ef7478c6671a635c196fa583d3541e2f2fcf172495859cf",
+    "MarsLab/recordings/test_00/rgb/000009.png": "1ddacb22c289f9392207c041064be17929de0541a5a3a7135136b8c9782b8572",
+    "MarsLab/recordings/test_00/rgb/000010.png": "d08ea282e53c57f5c90c6e1d2c81eebb3ab5ea96899723a55a4f41119266480f",
+    "MarsLab/recordings/test_00/rgb/000011.png": "3152ffb7751ecca0c9262bdce9c3403853da28fcd40f830ef54866e954b3ca4e",
+    "MarsLab/recordings/test_00/rgb/000012.png": "f4fe9b1ede5f36e354851db27c6dee850818506715079bdb88230d52d8335b0c",
+    "MarsLab/recordings/test_00/rgb/000013.png": "4d018a4c604d0d21f9bd686e443cc1f312e53d807961ed348cba44010e7a1b0d",
+    "MarsLab/recordings/test_00/rgb/000014.png": "535675273df3ab1a2760ae28d529f73639aa1072c003d50ac677bebc80e93dca",
+    "MarsLab/recordings/test_00/rgb/000015.png": "b61556a2e5f764cee61b043dc4ae6c843e30dd4142483aabf157f0e0203bc5f5",
+    "MarsLab/recordings/test_00/rgb/000016.png": "a45cc5e86577b3bbaafaf3ba5d99c1b0a3a04e784619c10e74a6e56ad83fb95c",
+    "MarsLab/recordings/test_00/rgb/000017.png": "d50b2158baba285a050122bd667a90f4710e99e011a244fa5d2a9ae44bbb8f32",
+    "MarsLab/recordings/test_00/rgb/000018.png": "2b2dfc4bf4719cccbddb2efccd11027c2ff5278ab1d6d5585d67d6a2fb205fda",
+    "MarsLab/recordings/test_00/rgb/000019.png": "70e857b2971cbe582db7d9b33804ad5dbd7898f42fb16820eb3a7b4773f24083"
+  },
+  "prediction_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "actions": [
+    [
+      0.24751166839582592,
+      0.0008818008997928256,
+      0.004237982150736119
+    ],
+    [
+      0.495074838323779,
+      0.0034964046036343177,
+      0.007868077402001017
+    ],
+    [
+      0.7427114538476718,
+      0.006577711021861332,
+      0.012017628385974088
+    ],
+    [
+      0.9876848386436121,
+      0.011274487801745225,
+      0.015951221337990873
+    ],
+    [
+      1.2345831120323347,
+      0.017008697908438564,
+      0.020241506349957472
+    ],
+    [
+      1.4753524474591575,
+      0.024691713592133346,
+      0.023718198958298853
+    ],
+    [
+      1.703306205141821,
+      0.034422750046350925,
+      0.028676307965326053
+    ],
+    [
+      1.9478200394680358,
+      0.042546765700038125,
+      0.03266344347219485
+    ],
+    [
+      2.1878791525498498,
+      0.05409745301071478,
+      0.0372877702169645
+    ],
+    [
+      2.4347047325365643,
+      0.0631344235528557,
+      0.0418986045224079
+    ],
+    [
+      2.6834611547660385,
+      0.07389676288915314,
+      0.04672801429837836
+    ],
+    [
+      2.926735412820049,
+      0.08900768680298876,
+      0.052378935548321515
+    ],
+    [
+      3.177540368903126,
+      0.10483703467724548,
+      0.05619634638507964
+    ],
+    [
+      3.4231169627662967,
+      0.11934026740399095,
+      0.06056515835731746
+    ],
+    [
+      3.6686174199744603,
+      0.13650005152649103,
+      0.06574598991493685
+    ],
+    [
+      3.908785454546874,
+      0.15530140215975252,
+      0.06937331701302973
+    ]
+  ],
+  "actions_meters_radians": [
+    [
+      0.17275789891100382,
+      0.0006154783396410124,
+      0.004237982150736119
+    ],
+    [
+      0.34555174479993667,
+      0.0024404163124166073,
+      0.007868077402001017
+    ],
+    [
+      0.518396854158269,
+      0.00459110288878678,
+      0.012017628385974088
+    ],
+    [
+      0.6893830849115711,
+      0.007869353540182839,
+      0.015951221337990873
+    ],
+    [
+      0.8617128471075808,
+      0.011871710666887442,
+      0.020241506349957472
+    ],
+    [
+      1.029764740499602,
+      0.017234292784400973,
+      0.023718198958298853
+    ],
+    [
+      1.1888716322326676,
+      0.024026349995087848,
+      0.028676307965326053
+    ],
+    [
+      1.359537106497567,
+      0.029696740745339845,
+      0.03266344347219485
+    ],
+    [
+      1.5270932797448422,
+      0.03775887568913283,
+      0.0372877702169645
+    ],
+    [
+      1.6993723034868757,
+      0.04406648960285009,
+      0.0418986045224079
+    ],
+    [
+      1.872999014193122,
+      0.05157837436834978,
+      0.04672801429837836
+    ],
+    [
+      2.0427992904909367,
+      0.06212547900740628,
+      0.052378935548321515
+    ],
+    [
+      2.2178558344114716,
+      0.0731740283449458,
+      0.05619634638507964
+    ],
+    [
+      2.3892630923096125,
+      0.08329697741449393,
+      0.06056515835731746
+    ],
+    [
+      2.560617208436157,
+      0.09527414305675619,
+      0.06574598991493685
+    ],
+    [
+      2.728249406575447,
+      0.10839708733305187,
+      0.06937331701302973
+    ]
+  ],
+  "translation_scale": {
+    "model_units_per_meter": 1.4327082579496493,
+    "training_median_step_m": 0.1744947016343546,
+    "nominal_step": 0.25,
+    "fit_splits": [
+      "train"
+    ]
+  },
+  "action_translation_units": "Model inputs: shared training-calibrated units. Plotted path: meters.",
+  "action_yaw_units": "Radians, positive left",
+  "action_source": "MarsLab / Isaac Sim PhysX body ground truth",
+  "action_reference": "Realized target body pose relative to the fourth observed body pose, projected to SE(2).",
+  "ground_truth_poses": {
+    "estimated": false,
+    "source": "MarsLab / Isaac Sim PhysX body ground truth",
+    "trajectory_id": "test_00",
+    "raw_artifact_sha256": "edbb80d6dc43b9c47cd0963d3580d2b28008d52db08e1fbe2b9f7251a901faa0",
+    "commands_sha256": "802941e8017da375ce1181f6f57954af6a5a94c667ae00dd0d01006874ac24ed",
+    "scene_sha256": "522b44b8e53dfc5c734b5caa42e01771084358684a9d8a1fc285892017087774",
+    "recorder_sha256": "c93e1033fd661cdfbbf6392d250eb466af9bc75f2d0c93ee0f03a3172b745ae0",
+    "compatibility_sha256": "51696f9d989a0bf8204981ba8f009c3e6e83ddce7b3064240bd683840b0a394b",
+    "physics_hz": 60,
+    "simulator": "Isaac Sim 4.1 / MarsLab physical Perseverance rover",
+    "ground_truth": "PhysX rigid body state; no image-derived poses",
+    "gravity_m_s2": 3.72,
+    "coordinate_convention": "right-handed, X forward / Y left / Z up; quaternion wxyz; meters / seconds / radians",
+    "render_warmup_frames": 128,
+    "render_warmup": {
+      "requested_render_frames": 128,
+      "render_updates": 128,
+      "simulation_time_before": 9.03333380445838,
+      "simulation_time_after": 9.03333380445838,
+      "physics_step_before": 542,
+      "physics_step_after": 542,
+      "body_position_before_m": [
+        -6.0177903175354,
+        -13.537851333618164,
+        1.3962817192077637
+      ],
+      "body_position_after_m": [
+        -6.0177903175354,
+        -13.537851333618164,
+        1.3962817192077637
+      ],
+      "body_quaternion_before_wxyz": [
+        0.9918588399887085,
+        -0.01795152574777603,
+        -0.02762477658689022,
+        0.1230069249868393
+      ],
+      "body_quaternion_after_wxyz": [
+        0.9918588399887085,
+        -0.01795152574777603,
+        -0.02762477658689022,
+        0.1230069249868393
+      ],
+      "camera_timestamp": 9.03333380445838,
+      "physics_state_unchanged": true,
+      "elapsed_wall_seconds": 3.692682757973671,
+      "rendering_frame_before": 0,
+      "rendering_frame_after": 145
+    },
+    "frames": [
+      {
+        "index": 0,
+        "timestamp": 9.03333380445838,
+        "camera_timestamp": 9.03333380445838,
+        "position_m": [
+          -6.0177903175354,
+          -13.537851333618164,
+          1.3962817192077637
+        ],
+        "quaternion_wxyz": [
+          0.9918588399887085,
+          -0.01795152574777603,
+          -0.02762477658689022,
+          0.1230069249868393
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 1,
+        "timestamp": 9.283333817496896,
+        "camera_timestamp": 9.283333817496896,
+        "position_m": [
+          -5.855062961578369,
+          -13.494873046875,
+          1.4037092924118042
+        ],
+        "quaternion_wxyz": [
+          0.991655170917511,
+          -0.0173826701939106,
+          -0.02824106439948082,
+          0.12458097189664841
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 2,
+        "timestamp": 9.533333830535412,
+        "camera_timestamp": 9.533333830535412,
+        "position_m": [
+          -5.691318511962891,
+          -13.452588081359863,
+          1.411950707435608
+        ],
+        "quaternion_wxyz": [
+          0.9913633465766907,
+          -0.020332012325525284,
+          -0.02812807634472847,
+          0.12646892666816711
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 3,
+        "timestamp": 9.783333843573928,
+        "camera_timestamp": 9.783333843573928,
+        "position_m": [
+          -5.52652645111084,
+          -13.407588005065918,
+          1.4203450679779053
+        ],
+        "quaternion_wxyz": [
+          0.9911915063858032,
+          -0.020319480448961258,
+          -0.028627390041947365,
+          0.127699077129364
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 4,
+        "timestamp": 10.033333856612444,
+        "camera_timestamp": 10.033333856612444,
+        "position_m": [
+          -5.359620571136475,
+          -13.36299991607666,
+          1.4302064180374146
+        ],
+        "quaternion_wxyz": [
+          0.9908958673477173,
+          -0.021216221153736115,
+          -0.02890818379819393,
+          0.12976780533790588
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 5,
+        "timestamp": 10.28333386965096,
+        "camera_timestamp": 10.28333386965096,
+        "position_m": [
+          -5.19298791885376,
+          -13.317233085632324,
+          1.4374451637268066
+        ],
+        "quaternion_wxyz": [
+          0.9906009435653687,
+          -0.023283356800675392,
+          -0.029632018879055977,
+          0.13149020075798035
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 6,
+        "timestamp": 10.533333882689476,
+        "camera_timestamp": 10.533333882689476,
+        "position_m": [
+          -5.026388645172119,
+          -13.271138191223145,
+          1.4465535879135132
+        ],
+        "quaternion_wxyz": [
+          0.9903761148452759,
+          -0.022014543414115906,
+          -0.02861553430557251,
+          0.13361071050167084
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 7,
+        "timestamp": 10.783333895727992,
+        "camera_timestamp": 10.783333895727992,
+        "position_m": [
+          -4.861874103546143,
+          -13.22442626953125,
+          1.4562267065048218
+        ],
+        "quaternion_wxyz": [
+          0.9900869131088257,
+          -0.023063968867063522,
+          -0.028784528374671936,
+          0.1355270892381668
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 8,
+        "timestamp": 11.033333908766508,
+        "camera_timestamp": 11.033333908766508,
+        "position_m": [
+          -4.696244716644287,
+          -13.176671981811523,
+          1.4593276977539062
+        ],
+        "quaternion_wxyz": [
+          0.9898043274879456,
+          -0.02345702424645424,
+          -0.028015203773975372,
+          0.1376674324274063
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 9,
+        "timestamp": 11.283333921805024,
+        "camera_timestamp": 11.283333921805024,
+        "position_m": [
+          -4.535098552703857,
+          -13.128691673278809,
+          1.4723753929138184
+        ],
+        "quaternion_wxyz": [
+          0.9895128607749939,
+          -0.025583645328879356,
+          -0.028226327151060104,
+          0.13933074474334717
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 10,
+        "timestamp": 11.53333393484354,
+        "camera_timestamp": 11.53333393484354,
+        "position_m": [
+          -4.3829665184021,
+          -13.0816068649292,
+          1.478689193725586
+        ],
+        "quaternion_wxyz": [
+          0.9891901612281799,
+          -0.02602364867925644,
+          -0.026639144867658615,
+          0.1418314278125763
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 11,
+        "timestamp": 11.783333947882056,
+        "camera_timestamp": 11.783333947882056,
+        "position_m": [
+          -4.219371318817139,
+          -13.032663345336914,
+          1.4854083061218262
+        ],
+        "quaternion_wxyz": [
+          0.9888610243797302,
+          -0.026048462837934494,
+          -0.028574999421834946,
+          0.14373257756233215
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 12,
+        "timestamp": 12.033333960920572,
+        "camera_timestamp": 12.033333960920572,
+        "position_m": [
+          -4.059391975402832,
+          -12.982198715209961,
+          1.4963473081588745
+        ],
+        "quaternion_wxyz": [
+          0.988525390625,
+          -0.02644103579223156,
+          -0.028203532099723816,
+          0.14602400362491608
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 13,
+        "timestamp": 12.283333973959088,
+        "camera_timestamp": 12.283333973959088,
+        "position_m": [
+          -3.8943986892700195,
+          -12.932228088378906,
+          1.5048558712005615
+        ],
+        "quaternion_wxyz": [
+          0.9881807565689087,
+          -0.02665502019226551,
+          -0.028217200189828873,
+          0.14829793572425842
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 14,
+        "timestamp": 12.533333986997604,
+        "camera_timestamp": 12.533333986997604,
+        "position_m": [
+          -3.7284088134765625,
+          -12.880749702453613,
+          1.5131864547729492
+        ],
+        "quaternion_wxyz": [
+          0.9877649545669556,
+          -0.02699226140975952,
+          -0.03019016422331333,
+          0.15060073137283325
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 15,
+        "timestamp": 12.78333400003612,
+        "camera_timestamp": 12.78333400003612,
+        "position_m": [
+          -3.566892147064209,
+          -12.827310562133789,
+          1.5198407173156738
+        ],
+        "quaternion_wxyz": [
+          0.9874140024185181,
+          -0.02607686072587967,
+          -0.027734719216823578,
+          0.15350717306137085
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 16,
+        "timestamp": 13.033334013074636,
+        "camera_timestamp": 13.033334013074636,
+        "position_m": [
+          -3.4004201889038086,
+          -12.772047996520996,
+          1.528584361076355
+        ],
+        "quaternion_wxyz": [
+          0.9870909452438354,
+          -0.026029448956251144,
+          -0.029020359739661217,
+          0.15534496307373047
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 17,
+        "timestamp": 13.283334026113153,
+        "camera_timestamp": 13.283334026113153,
+        "position_m": [
+          -3.237241506576538,
+          -12.718609809875488,
+          1.5356217622756958
+        ],
+        "quaternion_wxyz": [
+          0.9867520928382874,
+          -0.02617359161376953,
+          -0.02874886989593506,
+          0.1575084626674652
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 18,
+        "timestamp": 13.533334039151669,
+        "camera_timestamp": 13.533334039151669,
+        "position_m": [
+          -3.0745863914489746,
+          -12.663392066955566,
+          1.5469342470169067
+        ],
+        "quaternion_wxyz": [
+          0.9863138794898987,
+          -0.026867259293794632,
+          -0.029210619628429413,
+          0.1600310355424881
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      },
+      {
+        "index": 19,
+        "timestamp": 13.783334052190185,
+        "camera_timestamp": 13.783334052190185,
+        "position_m": [
+          -2.9158222675323486,
+          -12.608014106750488,
+          1.5538723468780518
+        ],
+        "quaternion_wxyz": [
+          0.9860203862190247,
+          -0.02605019509792328,
+          -0.03006703406572342,
+          0.16180622577667236
+        ],
+        "command_vw": [
+          0.8,
+          0.02
+        ]
+      }
+    ]
+  },
+  "protocol": "Each of sixteen future views is predicted directly from the same four observed RGB frames and its anchor-relative realized PhysX body displacement. The future reference images are not model context. This is action-conditioned direct prediction, not an autoregressive rollout or a navigation success evaluation.",
+  "limitations": [
+    "Independent held-out trajectories share the main_crater terrain; this is not cross-scene generalization.",
+    "Actions are realized PhysX body displacements, not a claim that commanded velocity exactly equals traveled motion.",
+    "A single translation scale fitted only on training poses is shared by validation and test; metric poses and commands are retained.",
+    "The SE(2) action interface discards vertical motion, pitch, and roll.",
+    "MarsLab scene and rover assets are run with a minimal Isaac Sim 4.1 recorder, not the complete official Isaac Sim 5.x application."
+  ],
+  "playback_fps": 4,
+  "frame_count": 17,
+  "frame_interpolation": false,
+  "source_timestamps_available": true,
+  "source_fps": 4,
+  "playback_speed": 1,
+  "source_timestamps_seconds": [
+    9.783333843573928,
+    10.033333856612444,
+    10.28333386965096,
+    10.533333882689476,
+    10.783333895727992,
+    11.033333908766508,
+    11.283333921805024,
+    11.53333393484354,
+    11.783333947882056,
+    12.033333960920572,
+    12.283333973959088,
+    12.533333986997604,
+    12.78333400003612,
+    13.033334013074636,
+    13.283334026113153,
+    13.533334039151669,
+    13.783334052190185
+  ],
+  "sample_times_seconds": [
+    0.0,
+    0.25000001303851604,
+    0.5000000260770321,
+    0.7500000391155481,
+    1.0000000521540642,
+    1.2500000651925802,
+    1.5000000782310963,
+    1.7500000912696123,
+    2.0000001043081284,
+    2.2500001173466444,
+    2.5000001303851604,
+    2.7500001434236765,
+    3.0000001564621925,
+    3.2500001695007086,
+    3.5000001825392246,
+    3.7500001955777407,
+    4.000000208616257
+  ],
+  "source_span_seconds": 4.000000208616257,
+  "media_duration_seconds": 4.25,
+  "timing": "MarsLab plays at 1× simulation time: 4 FPS, one shared observed anchor and sixteen future samples over 4 seconds; the final frame is held for 0.25 seconds.",
+  "sampling": {
+    "seed": 0,
+    "diffusion_steps": 250,
+    "vae_encoding": "posterior_mean",
+    "image_size": 224,
+    "context_size": 4
+  },
+  "inference_manifest_sha256": "749bdd23851716d91c34e5eb415f04368c977870b9c0a99fe27bd2535f7a3419",
+  "training_metrics_sha256": "332223d49f4e32e60377020ec71aa3bbb52c92b4ce5dfc505a0bef5ca993ac24",
+  "training": {
+    "settings": {
+      "steps": 1000,
+      "effective_batch_size": 8,
+      "microbatch": 2,
+      "learning_rate": 1e-05,
+      "optimizer": "AdamW",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "weight_decay": 0.01,
+      "ema_decay": 0.99,
+      "grad_clip": 2.0,
+      "seed": 0,
+      "diffusion_training_steps": 1000,
+      "precision": "BF16 autocast; FP32 weights",
+      "posterior": "cached mean",
+      "validation_every": 100,
+      "selection": "fixed final step; validation monitored but no test-based selection",
+      "sampling": "shuffled exhaustive (window, horizon) rows; repeat after each epoch",
+      "resume": "no optimizer checkpoint; an interrupted run must restart in a fresh output directory"
+    },
+    "windows": 30,
+    "target_pairs": 480,
+    "scenes": [
+      "main_crater"
+    ],
+    "trajectory_ids": [
+      "train_00",
+      "train_01",
+      "train_02",
+      "train_03",
+      "train_04",
+      "train_05"
+    ],
+    "split_windows": {
+      "train": 30,
+      "val": 3,
+      "same_scene_test": 6
+    },
+    "split_policy": "independent trajectories; nonoverlapping 20-frame windows; test first windows selected before training",
+    "data_manifest_sha256": "3da3f945dd1a9865f9e47998c92d5f5413bc523422c8e9f6a71ce8e614e6115d"
+  },
+  "evaluation": {
+    "windows": 6,
+    "generated_frames": 96,
+    "gallery_sample_ids": [
+      "marslab-test_00-0000",
+      "marslab-test_01-0000",
+      "marslab-test_02-0000"
+    ]
+  },
+  "asset_provenance": {
+    "gt": {
+      "sha256": "4ec40466c20981acb3b72880dd59bd662033468d5d642f8634375d11cb7628aa",
+      "sourceFramesSha256": "4627ae4d717ff0fb73d700a45bdbf75a818f70411f4ffb0395b2fa30827d3de1",
+      "frameCount": 17
+    },
+    "prediction": {
+      "sha256": "2812573efe31d88d6c87ad9eae823437c4ad691efad6b1c38451133481ff5578",
+      "sourceFramesSha256": "c41910a41ddb974679bc959f129c8a4e49d7450cf8dcad3270ed6809b081d2c1",
+      "frameCount": 17
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.go2-section[hidden] { display: none; }
+.go2-section { width: min(1200px, calc(100% - 128px)); max-width: 1200px; margin-inline: auto; padding-inline: 0; padding-top: 24px; scroll-margin-top: 92px; }
+.go2-heading { margin-bottom: 30px; }
+.go2-heading h2 { margin: 0; }
+.go2-routes { display: grid; gap: 38px; }
+.go2-route { min-width: 0; }
+.go2-route + .go2-route { padding-top: 30px; border-top: 1px solid #29322e; }
+.go2-route-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.go2-route-heading h3 { margin: 0; color: #e2e8e1; font: 500 18px/1.4 var(--sans); letter-spacing: -.2px; }
+.go2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
+.go2-clip { min-width: 0; margin: 0; }
+.go2-screen { position: relative; overflow: hidden; border: 1px solid #2d3735; border-radius: 6px; background: #0d1214; aspect-ratio: 16 / 9; }
+.go2-screen video { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.go2-screen video::-webkit-media-controls { display: none !important; }
+.go2-media-error { position: absolute; left: 14px; right: 14px; bottom: 12px; margin: 0; padding: 9px 12px; background: #111817e8; color: #d3d9d1; font: 12px/1.5 var(--sans); }
+.go2-media-error[hidden] { display: none; }
+@media (max-width: 900px) {
+  .go2-section { width: calc(100% - 64px); }
+  .go2-grid { gap: 18px; }
+}
+@media (max-width: 680px) {
+  .go2-section { width: calc(100% - 40px); }
+  .go2-heading { margin-bottom: 24px; }
+  .go2-heading h2 { font-size: 32px; }
+  .go2-routes { gap: 28px; }
+  .go2-route + .go2-route { padding-top: 24px; }
+  .go2-route-heading h3 { font-size: 16px; }
+  .go2-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}

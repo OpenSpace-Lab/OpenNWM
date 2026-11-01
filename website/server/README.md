@@ -1,9 +1,12 @@
 # Local trajectory demo
 
-The standard-library HTTP server hosts the project website and its prediction API
-on the same origin. The model loads on the first request and stays on one GPU.
+The standard-library HTTP server provides genuine OpenNWM DDPM inference.
+The model loads on the first request and stays on one GPU.
 It executes one request at a time, with at most three additional queued requests.
-The GitHub Pages website uses genuine precomputed presets when the API is absent.
+The GitHub Pages website reads the HTTPS API origin from `content/live-service.json`.
+It submits arbitrary drawings, polls progress, and autoplays the returned video.
+Genuine precomputed presets remain available when the API is offline; they never
+substitute for a submitted custom trajectory.
 Static and generated media support single HTTP byte ranges, allowing browsers to
 seek without first downloading the whole video.
 
@@ -16,16 +19,44 @@ CUDA_VISIBLE_DEVICES=4 "$NWM_PYTHON" -u website/server/serve.py --port 8765
 
 Open `http://127.0.0.1:8765/`. For a remote machine, forward the port with SSH
 (`ssh -L 8765:127.0.0.1:8765 your-host`). The default bind address is loopback.
-This development server is intended for local/forwarded use; public hosting needs
-an authenticated reverse proxy and HTTPS on the same origin. It does not create
-an external endpoint or alter any existing experiment.
+For local/forwarded use, omit `--api-only`. Public deployment uses `--api-only`
+so that no static files, Python sources, or filesystem listings are exposed.
+Only allowlisted API endpoints and three output filenames are served.
+
+## Public single-GPU service
+
+`bash tools/live_demo_start.sh` starts a detached API and an outbound HTTPS
+Cloudflare quick tunnel. It sources `.env`, uses the explicit `NWM_PYTHON`
+runtime, binds to loopback, and defaults to GPU 7 and 50 DDPM steps. Inspect GPU
+availability first; the script prints GPU and disk state but never stops another
+process. Output root: `/file_system/nas/algorithm/dujun.nie/opennwm_live_demo_20261029`.
+Its `processes.json` records exact commands, GPU, PIDs and log paths.
+The cloudflared 2026.10.5 Linux AMD64 binary was verified against the official
+release SHA-256 before use.
+
+Allowed browser origins: `https://b0b8k1ng.github.io` and the local preview
+`http://127.0.0.1:8766`. JSON CORS preflight and cross-origin media byte ranges
+are supported. This is an intentionally public demo, not a private authenticated
+API; CORS is not authentication. Admission is bounded to one active job, three
+queued jobs, 20 requests per client per hour, at least 15 seconds between client
+submissions, and 120 requests globally per hour. The tunnel supplies the client
+address, accepted only from its loopback connector. No arbitrary image,
+filesystem path, model, or executable input is accepted.
+
+Keep both recorded processes running to retain the current public URL. Quick
+tunnels have no uptime guarantee and their hostname changes when recreated;
+after restarting one, update and publish `content/live-service.json` with its
+new HTTPS origin. A stable production hostname requires a configured named
+tunnel and domain, which are not currently present. See the official
+[Cloudflare limitations](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/#limitations).
 
 The model uses `NWM_NAV15_STAGE2_RUN`'s imported Stage 2 joint100k run by default
 (override with `--run-dir`), the VAE/data paths in `.env`, and `ffmpeg` on `PATH`.
 The Python runtime is the existing `NWM_PYTHON` environment. No additional web
 framework is required. Generated job outputs go to NAS by default; use `--output`
-to change that location. Only the latest 100 jobs remain in the in-memory API;
-media/manifest files remain on disk for reproducibility.
+to change that location. At most 100 finished jobs are retained, with a 24-hour
+retention limit checked on submissions, completion and startup; expired media
+directories are removed too. Completed jobs are restored after API restarts.
 
 ## API
 
@@ -35,10 +66,10 @@ media/manifest files remain on disk for reproducibility.
 - `GET /api/jobs/{jobId}`: `status` (`queued`, `running`, `completed`, `failed`), `progress` in `[0,1]`, and completed `video`/`poster`/`manifest` URLs plus the inference `protocol`.
 - `GET /api/media/{jobId}/manifest.json`: exact drawn trajectory, body-frame actions, source/checkpoint hashes, seed and protocol; machine-local paths are removed.
 
-Requests accept only the six allowlisted scenes, 2–512 finite points, a path
+Requests accept only allowlisted scenes, 2–512 finite points, a path
 starting at `[0,0]`, x in `[-1,1]`, y in `[-0.25,1.5]`, and integer seeds in
-`[0,2147483647]`. HTTP bodies are capped at 32 KiB. The server rejects browser
-writes from a different origin and returns HTTP 429 when its queue is full.
+`[0,2147483647]`. HTTP bodies are capped at 32 KiB. The server rejects unapproved browser
+origins and returns HTTP 429 when its queue or rate budget is full.
 
 ## Motion and inference
 
@@ -49,11 +80,12 @@ path tangent, starting forward. Each displacement rotates into the current body
 frame: forward x, left y, yaw radians. The model's real-action adapter applies its
 own min/max normalization. This planar control has no height or aerial motion.
 
-All presets use real checkpoint inference, seed 0, 250 DDPM steps, a single source
+Historical presets use real checkpoint inference, seed 0, 250 DDPM steps, a single source
 image repeated into four context frames, and autoregressive RGB re-encoding.
 The VAE uses posterior means so action comparisons and live retries share a
 deterministic image encoding. This differs from the posterior sampling in the
 benchmark evaluator; these demos are qualitative outputs, not benchmark scores.
+Live custom requests use 50 DDPM steps, recorded in every returned manifest.
 Sixteen predicted frames form a four-second MP4; the initial image is shown
 separately. There is no interpolation or fabricated ground truth for drawn paths.
 

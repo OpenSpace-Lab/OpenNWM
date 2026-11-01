@@ -7,6 +7,7 @@
 .motion-gallery-toggle:focus-visible,
 .motion-card-toggle:focus-visible { outline: 2px solid var(--accent,#b6ee65); outline-offset: 3px; }
 .motion-gallery-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.motion-lunar-footnote { grid-column: 1 / -1; margin: -4px 0 0; color: #b4b8bf; font: 400 12px/1.65 var(--sans,Arial,Helvetica,sans-serif); }
 .motion-card { min-width: 0; padding: 12px; border: 1px solid var(--line,#303638); border-radius: 12px; background: var(--surface,#161a1c); }
 .motion-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .motion-card-heading h3 { margin: 0; color: var(--ink,#eee); font: 600 15px/1.35 var(--sans,Arial,Helvetica,sans-serif); letter-spacing: 0; }
@@ -21,6 +22,17 @@
 .motion-card-lunar .motion-path-start { fill: #1a1d23; stroke: #adb3bf; }
 .motion-card-lunar .motion-path-cursor { stroke: #1a1d23; }
 .motion-card-lunar .motion-card-toggle:hover { background: #30343e; }
+.motion-mars-mark { width: 19px; height: 19px; fill: #b77256; stroke: #e2a286; stroke-width: 1.2; }
+.motion-mars-mark path { fill: none; stroke: #6e3f31; stroke-linecap: round; stroke-linejoin: round; }
+.motion-card-mars { --accent: #e3a58b; --line: #65483f; border-color: #765346; background: #2a211e; }
+.motion-card-mars .motion-adaptation-label { color: #d7af9e; }
+.motion-card-mars .motion-trajectory { background: #211a17; }
+.motion-card-mars .motion-path-grid { stroke: #40302a; }
+.motion-card-mars .motion-path-full { stroke: #936a58; }
+.motion-card-mars .motion-path-start { fill: #211a17; stroke: #d2a18b; }
+.motion-card-mars .motion-path-cursor { stroke: #211a17; }
+.motion-card-mars .motion-card-toggle:hover { background: #3d2c25; }
+.motion-card-note { margin: 10px 0 0; color: #c9afa4; font: 400 11px/1.5 var(--sans,Arial,Helvetica,sans-serif); overflow-wrap: anywhere; }
 .motion-card-toggle { flex: 0 0 36px; width: 36px; height: 36px; display: grid; place-items: center; padding: 9px; border-radius: 50%; }
 .motion-card-toggle[aria-pressed="true"] { color: var(--accent,#b6ee65); }
 .motion-card-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }

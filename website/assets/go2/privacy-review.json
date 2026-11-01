@@ -1,0 +1,2192 @@
+{
+  "version": 1,
+  "status": "passed",
+  "reviewed_at": "2026-10-31T04:45:36.798645+00:00",
+  "selection_preserved": true,
+  "clip_count": 44,
+  "redacted_clip_count": 19,
+  "unchanged_experiment_fields": true,
+  "opennwm_lower_ate_and_rpe_clip_count": 41,
+  "mask_policy": "Time-local face mosaics; human-reviewed detections and padded manual tracks. The union of first-person face regions is shared equally across GT, OpenNWM and NWM. Goal-image masks include adjacent local-plan boundaries. No trajectory, score, selection or timing changes.",
+  "review_method": "All clips: full-duration 1-second contact sheets plus 0.25-second face-detector candidates at enlarged panel resolution. Manually reviewed original-resolution faces and fast-motion edge cases. Redacted outputs spot-checked at the reviewed time ranges, including independent review by additional reviewers; every redacted output frame decoded and count/timing validated.",
+  "encoding": "H.264 CRF 18, 1920x1080, 24 FPS, yuv420p, faststart; no audio. Quality measured against the redacted source at 1-second samples.",
+  "baseline_manifest_sha256": "091045187e05d16c217d0873edcbefb298f6a93eb3db1bee40d008d8583ddc2f",
+  "review_plan_sha256": "d88e5e576e323fce78ea4a7eb5ae4ac88eef779fa1a9dd803020f568bf0e22ae",
+  "renderer_sha256": "ef5f23c62bd0ac4dabe6272092c0cdd7ebff401b13c7c02cb48aa055492dfff1",
+  "clips": [
+    {
+      "id": "route_01_clip_04",
+      "video": "assets/go2/route_01_clip_04/comparison.mp4",
+      "poster": "assets/go2/route_01_clip_04/poster.webp",
+      "redacted": false,
+      "video_sha256": "672db7d21563f41fe6010b15ced018a1a9be5fd45f9795d7d1e9203b9567663c",
+      "poster_sha256": "96bb12e5bf6269adcb2401df334ec8315bd6b6f6ff31ea74e5162c65812d2b8e",
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 11537685,
+      "poster_bytes": 168406,
+      "review_notes": "Full clip contact-sheet and detector-candidate review found no real face; robot, scene texture and furniture false positives excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_01_clip_04/metrics.json",
+          "sha256": "2b6e736b244a5a14675c2d4a104e39fc367288b3746ded074052065401d78b26",
+          "bytes": 102535
+        },
+        "trajectories": {
+          "path": "assets/go2/route_01_clip_04/trajectories.csv",
+          "sha256": "a9fdc68c275030eb7257fa6451d6a61e4bff45cc383129991567aa0f9e9006db",
+          "bytes": 22364
+        }
+      }
+    },
+    {
+      "id": "route_01_clip_01_lobby_corner",
+      "video": "assets/go2/route_01_clip_01_lobby_corner/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_01_clip_01_lobby_corner/poster-privacy-v1.webp",
+      "video_sha256": "0195476b9fb2f4f3a9a09d30491b8e13adfce15f1120d7617a3d0b634ef5dabd",
+      "poster_sha256": "0acd4710bc330188edc1720324af8ab9fdc39ca0a65a5d0f0ccfdf7db56d685b",
+      "original_video_sha256": "28c2c30f5814134b72f07226b98b4a69b3b3ba88c4d13804614aaca3ba0b4c08",
+      "original_video": "assets/go2/route_01_clip_01_lobby_corner/comparison.mp4",
+      "original_poster": "assets/go2/route_01_clip_01_lobby_corner/poster.webp",
+      "original_poster_sha256": "32d69d22b9f27160138c1f8014a2af371478e4710dce429914ad2914cb3daa41",
+      "redacted": true,
+      "frame_count": 576,
+      "fps": 24.0,
+      "duration_seconds": 24.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 137,
+      "masked_fraction": 0.0008480345172646605,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.29642391204834,
+      "unmasked_sample_max_mae": 2.294200897216797,
+      "plan_sha256": "2132ae14bb37e8acf5371be0cfc663606e26488dbb4a1895d577aae3a386c727",
+      "boxes": 173,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_01_clip_01_lobby_corner",
+        "status": "passed",
+        "video_sha256": "0195476b9fb2f4f3a9a09d30491b8e13adfce15f1120d7617a3d0b634ef5dabd",
+        "poster_sha256": "0acd4710bc330188edc1720324af8ab9fdc39ca0a65a5d0f0ccfdf7db56d685b",
+        "checked_times": [
+          0,
+          3,
+          4,
+          5,
+          5.25,
+          5.5,
+          5.75,
+          6,
+          10.75,
+          12.5
+        ],
+        "notes": "Reviewed originals at 1-second intervals and detector/edge candidates, then redacted main/GT/OpenNWM/NWM/goal frames. Lobby revision additionally independently checked by root at 3–5.75 s. Poster reviewed."
+      },
+      "video_bytes": 11446596,
+      "poster_bytes": 163626,
+      "review_notes": "Face in GT, OpenNWM, NWM and visual goal while pedestrian passes left. Main view contains legs only.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_01_clip_01_lobby_corner/metrics.json",
+          "sha256": "30746be353c8a5d7179de11ad56ac6c5b3cae95b8c67821a038a3dd2ff9c8d37",
+          "bytes": 88732
+        },
+        "trajectories": {
+          "path": "assets/go2/route_01_clip_01_lobby_corner/trajectories.csv",
+          "sha256": "340e330f3beefbe5a3e1f709bc494a42f7f1536724b169cdbab3491a1df8bcec",
+          "bytes": 18995
+        }
+      }
+    },
+    {
+      "id": "route_01_clip_05",
+      "video": "assets/go2/route_01_clip_05/comparison.mp4",
+      "poster": "assets/go2/route_01_clip_05/poster.webp",
+      "redacted": false,
+      "video_sha256": "a7441be253a4fa4e76c0695dda1dd3e1eb9d636b5c32ba552db2caecd6bc3327",
+      "poster_sha256": "d7d3fd39b9b83aff0e4e24f0c50bc7a9a4c38af1f7b28c79556adc8fd3a2121a",
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 10536817,
+      "poster_bytes": 160900,
+      "review_notes": "Full clip contact-sheet and detector-candidate review found no real face; robot, scene texture and furniture false positives excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_01_clip_05/metrics.json",
+          "sha256": "45646c6ab68be234310c13a690490737c016aca79a84102c962836984b752d64",
+          "bytes": 102580
+        },
+        "trajectories": {
+          "path": "assets/go2/route_01_clip_05/trajectories.csv",
+          "sha256": "6846bff0337392e8558a2fbafd5f02604b59ff13c477e9a36b32e8a0060a2a02",
+          "bytes": 22379
+        }
+      }
+    },
+    {
+      "id": "route_01_clip_06",
+      "video": "assets/go2/route_01_clip_06/comparison.mp4",
+      "poster": "assets/go2/route_01_clip_06/poster.webp",
+      "redacted": false,
+      "video_sha256": "cd20f2a3e4f2f69d8a685cc48ad7ee50e6b55f7f7176875482e57288abde96c7",
+      "poster_sha256": "6df6696a7113551569a4c5aa75dfaf8efbb2d26428bece494e35e08bda1c2315",
+      "frame_count": 480,
+      "fps": 24.0,
+      "duration_seconds": 20.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 8130517,
+      "poster_bytes": 216526,
+      "review_notes": "Full clip contact-sheet and detector-candidate review found no real face; robot, scene texture and furniture false positives excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_01_clip_06/metrics.json",
+          "sha256": "63b0d17963e74427e534e5d7d9d58e23024b296432aafb8b11da26f4214bc1fa",
+          "bytes": 75313
+        },
+        "trajectories": {
+          "path": "assets/go2/route_01_clip_06/trajectories.csv",
+          "sha256": "e9265a0cca0bdfc57fb46ba379a74ba96c6ebe1ab554ca07c6ff2803d71f155d",
+          "bytes": 16148
+        }
+      }
+    },
+    {
+      "id": "route_02_clip_03",
+      "video": "assets/go2/route_02_clip_03/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_02_clip_03/poster-privacy-v1.webp",
+      "video_sha256": "13b4521e966018244b6c2f05e13ff4f80fff81286ef7cdf1bbd1877956b616f0",
+      "poster_sha256": "49bf311e14689042df6e4841389f5114ad30acbca908a653290e8f4f627a5c67",
+      "original_video_sha256": "01464bea5e2c0503f2ffe7e19a2b4291ce22ae41600157bc3fd7dbab7b3d70f5",
+      "original_video": "assets/go2/route_02_clip_03/comparison.mp4",
+      "original_poster": "assets/go2/route_02_clip_03/poster.webp",
+      "original_poster_sha256": "dd538d0d7ade3f3a7eafeeab3a2de1ea833fc6e8972fc3fea55b9602b5d4fc81",
+      "redacted": true,
+      "frame_count": 624,
+      "fps": 24.0,
+      "duration_seconds": 26.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 276,
+      "masked_fraction": 0.00045426076784583726,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.377454996109009,
+      "unmasked_sample_max_mae": 2.377454996109009,
+      "plan_sha256": "fa0d2f729550001987659a891fc44ed4441cf3b90b102abd3d09d5222b62b01c",
+      "boxes": 485,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_02_clip_03",
+        "status": "passed",
+        "video_sha256": "13b4521e966018244b6c2f05e13ff4f80fff81286ef7cdf1bbd1877956b616f0",
+        "poster_sha256": "49bf311e14689042df6e4841389f5114ad30acbca908a653290e8f4f627a5c67",
+        "checked_times": [
+          0,
+          18,
+          20,
+          22,
+          24,
+          25
+        ],
+        "notes": "Reviewed originals at 1-second intervals and detector/edge candidates, then redacted main/GT/OpenNWM/NWM/goal frames. Distant approaching man protected equally in the three first-person panels. Poster reviewed."
+      },
+      "video_bytes": 25290043,
+      "poster_bytes": 469098,
+      "review_notes": "Distant approaching pedestrian in first-person view, head too small for detector. Reviewed manually; shared padded head track applied equally to all models and goal.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_02_clip_03/metrics.json",
+          "sha256": "e48e816a33da7b979fdc0fbf6880ed6a3ee43a8090ceb5658a9c51326138502c",
+          "bytes": 95845
+        },
+        "trajectories": {
+          "path": "assets/go2/route_02_clip_03/trajectories.csv",
+          "sha256": "2b428de02ef5438a9587700e272b60897d2337bf40350d5d212a0b7f9291fb0a",
+          "bytes": 20700
+        }
+      }
+    },
+    {
+      "id": "route_02_clip_07",
+      "video": "assets/go2/route_02_clip_07/comparison.mp4",
+      "poster": "assets/go2/route_02_clip_07/poster.webp",
+      "redacted": false,
+      "video_sha256": "ab19ba9fc4c8e291a5d14741b672421225cef820b348bc05f591cd7abf725397",
+      "poster_sha256": "3c917a81698af2f79e8498347d971668a01f0bedc7059659439cc2fc6dbd7e92",
+      "frame_count": 576,
+      "fps": 24.0,
+      "duration_seconds": 24.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 20896483,
+      "poster_bytes": 515070,
+      "review_notes": "Full clip contact-sheet and detector-candidate review found no real face; robot, scene texture and furniture false positives excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_02_clip_07/metrics.json",
+          "sha256": "4d95623659294ef0b86834aeb15b376062ab679af1871b3de7b1354b0e4788cd",
+          "bytes": 88925
+        },
+        "trajectories": {
+          "path": "assets/go2/route_02_clip_07/trajectories.csv",
+          "sha256": "d1c9e65488e311572d4275a010f25da99e477861e42ddfa95830565774a9247c",
+          "bytes": 19412
+        }
+      }
+    },
+    {
+      "id": "route_02_clip_10",
+      "video": "assets/go2/route_02_clip_10/comparison.mp4",
+      "poster": "assets/go2/route_02_clip_10/poster.webp",
+      "redacted": false,
+      "video_sha256": "a9b6b09cb08dce022620a2aef07240a0d359b64d7d2a0b8d474cbd620c6b69e8",
+      "poster_sha256": "b6f9a9435df2f63ac608af0fe010a333e8591a53bf47434edc82dcf285904df9",
+      "frame_count": 480,
+      "fps": 24.0,
+      "duration_seconds": 20.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 14102914,
+      "poster_bytes": 404214,
+      "review_notes": "Full clip contact-sheet and detector-candidate review found no real face; robot, scene texture and furniture false positives excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_02_clip_10/metrics.json",
+          "sha256": "f9f43bff00f898f767d8a5c801e8c62d9bac2e86656d1ccb058c9997a89774a7",
+          "bytes": 75452
+        },
+        "trajectories": {
+          "path": "assets/go2/route_02_clip_10/trajectories.csv",
+          "sha256": "3cde6b85261216594533d630054d2abf16ecff643812eda7692842d926056b4e",
+          "bytes": 16222
+        }
+      }
+    },
+    {
+      "id": "route_02_clip_13",
+      "video": "assets/go2/route_02_clip_13/comparison.mp4",
+      "poster": "assets/go2/route_02_clip_13/poster.webp",
+      "redacted": false,
+      "video_sha256": "38aef9c6e4f5c6d5cbb5c00fe0442800c108b9c66d3523aadbe77c2d08605059",
+      "poster_sha256": "7fa46ba2601664e7e0facc48491a8677c388620bd0fc944f17f101f295af3e2b",
+      "frame_count": 480,
+      "fps": 24.0,
+      "duration_seconds": 20.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 18972811,
+      "poster_bytes": 474438,
+      "review_notes": "Full clip contact-sheet and detector-candidate review found no real face; robot, scene texture and furniture false positives excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_02_clip_13/metrics.json",
+          "sha256": "d0d19e925b77a4e49880ea0194958784a57e3bd6a79e9eedc16b593558ef63b6",
+          "bytes": 75286
+        },
+        "trajectories": {
+          "path": "assets/go2/route_02_clip_13/trajectories.csv",
+          "sha256": "1e63d227d15658a7bb61ea5a49afe3feba096d7f824a7cefdc7443f78afae3ec",
+          "bytes": 16159
+        }
+      }
+    },
+    {
+      "id": "route_03_clip_03",
+      "video": "assets/go2/route_03_clip_03/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_03_clip_03/poster-privacy-v1.webp",
+      "video_sha256": "3920d8e102e5a8d2a22b6383f409dbd764a8ef28fb72539f278ebf976809002f",
+      "poster_sha256": "c1eff99b4b55662abb0839203bc83774e1783dab13eea098c43e422d8a0e5164",
+      "original_video_sha256": "be6262b957b7377e547b07ca4f9fcbd2a56c4a25a5ec20afa6decba6f149ccbf",
+      "original_video": "assets/go2/route_03_clip_03/comparison.mp4",
+      "original_poster": "assets/go2/route_03_clip_03/poster.webp",
+      "original_poster_sha256": "128b3db925a336f8668e4e07d2b5204c03e1c95b79f81a09ff86b6bfc192a3d3",
+      "redacted": true,
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 380,
+      "masked_fraction": 0.004828986022698045,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.522435188293457,
+      "unmasked_sample_max_mae": 2.5145506858825684,
+      "plan_sha256": "df2bbe6c3a8cf9d24e3847a996ca4365bb382b7ec6c850353ec0efd2a16461d5",
+      "boxes": 440,
+      "tracks": 5,
+      "output_review": {
+        "id": "route_03_clip_03",
+        "status": "passed",
+        "video_sha256": "3920d8e102e5a8d2a22b6383f409dbd764a8ef28fb72539f278ebf976809002f",
+        "poster_sha256": "c1eff99b4b55662abb0839203bc83774e1783dab13eea098c43e422d8a0e5164",
+        "checked_times": [
+          0,
+          4.6,
+          4.8,
+          5,
+          5.2,
+          5.5,
+          5.75,
+          6,
+          7.5,
+          7.75,
+          8,
+          8.25,
+          8.5,
+          8.75,
+          17.5,
+          18.5,
+          19.75,
+          20.5,
+          22,
+          23.5,
+          25.5,
+          27.75
+        ],
+        "checked_panels": [
+          "main",
+          "gt",
+          "opennwm",
+          "nwm",
+          "goal"
+        ],
+        "poster_checked": true,
+        "last_goal_checked": true,
+        "notes": "Reviewed source contact sheets and enlarged candidate crops, then final encoded output at listed times. Revised clipped/top-edge faces and conservatively covered small cyclist heads. All comparison panels use the same mapped masks. Poster and final goal reviewed; no remaining recognizable unmasked faces observed. Printed posters, anime figures, robot head and rear views are not counted as faces."
+      },
+      "video_bytes": 29794652,
+      "poster_bytes": 568310,
+      "review_notes": "Reviewed all five panels at 1 s and all candidate crops; excluded robot heads, leaves, wheel and tree false positives. Added main-top-edge crossing riders and approaching older pedestrian; recording/prediction face views retained in local ROIs only. Output review correction: refined the early rightbound rider and delivery rider with quarter-second source measurements. Final thumbnail audit: conservatively padded GT delivery-rider head track, synchronized to all comparisons and goal.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_03_clip_03/metrics.json",
+          "sha256": "889f89a5e05789e493d3e81f50001f38108ec6778d588879d9a9cc545e958aa9",
+          "bytes": 102589
+        },
+        "trajectories": {
+          "path": "assets/go2/route_03_clip_03/trajectories.csv",
+          "sha256": "f19f3d37f7a9a305cbd108cd578397cc64377cd697d94f12fe2f9f1464a60653",
+          "bytes": 22178
+        }
+      }
+    },
+    {
+      "id": "route_03_clip_06",
+      "video": "assets/go2/route_03_clip_06/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_03_clip_06/poster-privacy-v1.webp",
+      "video_sha256": "641c17b892860e6b6ee91173681eaf4d61907d9333df9af2b0fdcd2978dea6f2",
+      "poster_sha256": "7d28940a7fb3875ffb4226a632d571d77d4e4a254381601be5f270b819bde0f2",
+      "original_video_sha256": "294ffd5a337b55f15dcb0ced2433c68d53bbd7182bd64920a869b28b74a8adcd",
+      "original_video": "assets/go2/route_03_clip_06/comparison.mp4",
+      "original_poster": "assets/go2/route_03_clip_06/poster.webp",
+      "original_poster_sha256": "6df78dcdea30122a888ad5329f901723de6e5fc61a0904da049ea68c734ef14d",
+      "redacted": true,
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 239,
+      "masked_fraction": 0.0012746157189245297,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.4804165363311768,
+      "unmasked_sample_max_mae": 2.4804165363311768,
+      "plan_sha256": "a03ee7d5516449d521a4456197adff6efc31300a779838979cd861bb54aadf45",
+      "boxes": 94,
+      "tracks": 3,
+      "output_review": {
+        "id": "route_03_clip_06",
+        "status": "passed",
+        "video_sha256": "641c17b892860e6b6ee91173681eaf4d61907d9333df9af2b0fdcd2978dea6f2",
+        "poster_sha256": "7d28940a7fb3875ffb4226a632d571d77d4e4a254381601be5f270b819bde0f2",
+        "checked_times": [
+          0,
+          0.5,
+          1.2,
+          2.2,
+          3,
+          20.5,
+          20.75,
+          21,
+          21.25,
+          21.5,
+          21.75,
+          22,
+          22.5,
+          23,
+          23.5,
+          24,
+          27,
+          27.75
+        ],
+        "checked_panels": [
+          "main",
+          "gt",
+          "opennwm",
+          "nwm",
+          "goal"
+        ],
+        "poster_checked": true,
+        "last_goal_checked": true,
+        "notes": "Reviewed source contact sheets and enlarged candidate crops, then final encoded output at listed times. Revised clipped/top-edge faces and conservatively covered small cyclist heads. All comparison panels use the same mapped masks. Poster and final goal reviewed; no remaining recognizable unmasked faces observed. Printed posters, anime figures, robot head and rear views are not counted as faces."
+      },
+      "video_bytes": 25654198,
+      "poster_bytes": 455134,
+      "review_notes": "Confirmed early cyclist, two later walkers and small-window human heads; excluded bike baskets and robot-head false detections. Back-facing riders 17–20 s show no identifiable face. Added entrance/fast-motion tracks. Output review correction: extended the white-cap visitor track before 21 seconds and refined quarter-second positions.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_03_clip_06/metrics.json",
+          "sha256": "525087dc9ffae6760d96c4d8ccfa1d3579305bd9af762ecaa6dccd0e27d03d59",
+          "bytes": 102691
+        },
+        "trajectories": {
+          "path": "assets/go2/route_03_clip_06/trajectories.csv",
+          "sha256": "fe805ffd5030ad08e2648706531b7952d919e2d05c9f4daa33b2f9dee65cbeb0",
+          "bytes": 22633
+        }
+      }
+    },
+    {
+      "id": "route_03_clip_08",
+      "video": "assets/go2/route_03_clip_08/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_03_clip_08/poster-privacy-v1.webp",
+      "video_sha256": "ab553b7dab84b4bd74543b93dba3cc4e157060eeffa7ae0b84a94b3a35ba0fc0",
+      "poster_sha256": "585f111c011329ac895393b26f2814d9c35466809e31a83555d237f7693bc896",
+      "original_video_sha256": "e1755499bb01d635ae3ed638da29c4b9d6198498c838a17fc62022d84ce61a4c",
+      "original_video": "assets/go2/route_03_clip_08/comparison.mp4",
+      "original_poster": "assets/go2/route_03_clip_08/poster.webp",
+      "original_poster_sha256": "f580fe5ed7a5ef2112c77f52dc01461f0aa48eda4ba9d718dfe94c31e869ac25",
+      "redacted": true,
+      "frame_count": 480,
+      "fps": 24.0,
+      "duration_seconds": 20.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 338,
+      "masked_fraction": 0.008795629179526749,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.519991874694824,
+      "unmasked_sample_max_mae": 2.517040252685547,
+      "plan_sha256": "e0f06f179f614008408fe62ac7bc5d5ccf8a20de8e8eac64d446b6fb21959dd6",
+      "boxes": 432,
+      "tracks": 3,
+      "output_review": {
+        "id": "route_03_clip_08",
+        "status": "passed",
+        "video_sha256": "ab553b7dab84b4bd74543b93dba3cc4e157060eeffa7ae0b84a94b3a35ba0fc0",
+        "poster_sha256": "585f111c011329ac895393b26f2814d9c35466809e31a83555d237f7693bc896",
+        "checked_times": [
+          0,
+          6,
+          6.25,
+          7,
+          9,
+          9.5,
+          10,
+          10.5,
+          11,
+          16,
+          16.5,
+          17,
+          17.5,
+          18,
+          19.5,
+          19.75
+        ],
+        "checked_panels": [
+          "main",
+          "gt",
+          "opennwm",
+          "nwm",
+          "goal"
+        ],
+        "poster_checked": true,
+        "last_goal_checked": true,
+        "notes": "Reviewed source contact sheets and enlarged candidate crops, then final encoded output at listed times. Revised clipped/top-edge faces and conservatively covered small cyclist heads. All comparison panels use the same mapped masks. Poster and final goal reviewed; no remaining recognizable unmasked faces observed. Printed posters, anime figures, robot head and rear views are not counted as faces."
+      },
+      "video_bytes": 17472001,
+      "poster_bytes": 440716,
+      "review_notes": "Confirmed 9–11 s two cyclists and 16–18 s later rider. Rejected robot head, scooter baskets and generated non-face texture candidates in prediction panes. All five panels reviewed. Final thumbnail audit: conservative GT head regions for small cyclists, synchronized to all comparisons and goal; trajectories and metric panels unaffected.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_03_clip_08/metrics.json",
+          "sha256": "3f274b6c7b600e098d3250d54d12e2472fc509884ccb691e7b804aaf221ba897",
+          "bytes": 75438
+        },
+        "trajectories": {
+          "path": "assets/go2/route_03_clip_08/trajectories.csv",
+          "sha256": "c2153585634f5ec08db835ea6f73fb7bcb009bd2d06a83d99096affd28995570",
+          "bytes": 16184
+        }
+      }
+    },
+    {
+      "id": "route_03_clip_11",
+      "video": "assets/go2/route_03_clip_11/comparison.mp4",
+      "poster": "assets/go2/route_03_clip_11/poster.webp",
+      "redacted": false,
+      "video_sha256": "1924998669083d9a45fab6c7de255c7688f259e8c2144a46251b14ff8b5e5f92",
+      "poster_sha256": "80ae43dcb1178256f5f16ead5e90285523e449200ab72f21c8029afb2bdbe811",
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 17724201,
+      "poster_bytes": 433420,
+      "review_notes": "All five panels reviewed over whole clip. Nine YuNet detections are robot-head false positives. No identifiable human face found.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_03_clip_11/metrics.json",
+          "sha256": "9805c96b3229ebd77c7ba5c5112351f9fa65a079d1db15b56376df871caf22bf",
+          "bytes": 102698
+        },
+        "trajectories": {
+          "path": "assets/go2/route_03_clip_11/trajectories.csv",
+          "sha256": "015fd2b6f3bc7168e7ee316945bdda985e703505b48ca4c19c8952b8932d8f25",
+          "bytes": 22673
+        }
+      }
+    },
+    {
+      "id": "route_04_clip_03",
+      "video": "assets/go2/route_04_clip_03/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_04_clip_03/poster-privacy-v1.webp",
+      "video_sha256": "044143de71ec53a3e67eb6b726e1ac5fd3f014ffd937dae068615f52a20634f4",
+      "poster_sha256": "caee76a0e4133e9dd5e238b387b16bae2975f20967a8c07b0e0b6d24a424bad3",
+      "original_video_sha256": "6cfc6a6181642df1dffa80180f73433c45206d0c431a4ebcb7d18942d12ba4ab",
+      "original_video": "assets/go2/route_04_clip_03/comparison.mp4",
+      "original_poster": "assets/go2/route_04_clip_03/poster.webp",
+      "original_poster_sha256": "65bc74eef7561c3ab1b5b946d83392e84c156121b4d5372d9c394af263c7c412",
+      "redacted": true,
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 276,
+      "masked_fraction": 0.005092495711392196,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.2987120151519775,
+      "unmasked_sample_max_mae": 2.293576240539551,
+      "plan_sha256": "25d082df1e8749c47da7aca7638919465b32e87417c7dab6fe22f5e9f1a6b67d",
+      "boxes": 655,
+      "tracks": 5,
+      "output_review": {
+        "id": "route_04_clip_03",
+        "status": "passed",
+        "video_sha256": "044143de71ec53a3e67eb6b726e1ac5fd3f014ffd937dae068615f52a20634f4",
+        "poster_sha256": "caee76a0e4133e9dd5e238b387b16bae2975f20967a8c07b0e0b6d24a424bad3",
+        "checked_times": [
+          0,
+          17,
+          18.5,
+          19.5,
+          21,
+          23,
+          24,
+          25,
+          25.5,
+          26,
+          26.5,
+          27,
+          27.5,
+          27.75
+        ],
+        "checked_panels": [
+          "main",
+          "gt",
+          "opennwm",
+          "nwm",
+          "goal"
+        ],
+        "poster_checked": true,
+        "last_goal_checked": true,
+        "notes": "Reviewed source contact sheets and enlarged candidate crops, then final encoded output at listed times. Revised clipped/top-edge faces and conservatively covered small cyclist heads. All comparison panels use the same mapped masks. Poster and final goal reviewed; no remaining recognizable unmasked faces observed. Printed posters, anime figures, robot head and rear views are not counted as faces."
+      },
+      "video_bytes": 15031610,
+      "poster_bytes": 307332,
+      "review_notes": "All late main-camera and GT/model/goal detections are visitors, while early robot/anime detections excluded. Added tracks for escalator pair, left-edge cafe visitors and persistent faces after detector stops at 25.75 s. Output review: enlarged seated visitor track to include complete upper face through final frame; manual tracks already include padding.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_04_clip_03/metrics.json",
+          "sha256": "de9a1c1f5359629bd43c0e44bb171f1fffd2be3b2972e06f150d84c6f6f520c3",
+          "bytes": 102487
+        },
+        "trajectories": {
+          "path": "assets/go2/route_04_clip_03/trajectories.csv",
+          "sha256": "3bb4b510290edf76e932875b4ef956e6c83a8767202e8558043f60ad318150b2",
+          "bytes": 22030
+        }
+      }
+    },
+    {
+      "id": "route_04_clip_07",
+      "video": "assets/go2/route_04_clip_07/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_04_clip_07/poster-privacy-v1.webp",
+      "video_sha256": "1d259517b0d4965caba096b6f925a93c7869d5fd93c3c01dba900c1e012372d8",
+      "poster_sha256": "f2e3a4d1a582f2aa093617e2552655603b5f3dcc159c2f705bf48330b0b073e3",
+      "original_video_sha256": "50d8170e47dc6bff8c3465575abba66eae08dc55ec156ac32d642ad0a631aa99",
+      "original_video": "assets/go2/route_04_clip_07/comparison.mp4",
+      "original_poster": "assets/go2/route_04_clip_07/poster.webp",
+      "original_poster_sha256": "69a7a9165acf361267a9e47365b766e1d7e8fe1729e18a1973dbf9822e9840cc",
+      "redacted": true,
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 181,
+      "masked_fraction": 0.0013456317917309672,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.3116676807403564,
+      "unmasked_sample_max_mae": 2.2933285236358643,
+      "plan_sha256": "2c3596e2691d6ff7a9fa8446b78c19383402d7c9dc27b6f74102537ff1da542c",
+      "boxes": 431,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_04_clip_07",
+        "status": "passed",
+        "video_sha256": "1d259517b0d4965caba096b6f925a93c7869d5fd93c3c01dba900c1e012372d8",
+        "poster_sha256": "f2e3a4d1a582f2aa093617e2552655603b5f3dcc159c2f705bf48330b0b073e3",
+        "checked_times": [
+          0,
+          15,
+          16.5,
+          18,
+          19.5,
+          20.5,
+          21,
+          21.75
+        ],
+        "checked_panels": [
+          "main",
+          "gt",
+          "opennwm",
+          "nwm",
+          "goal"
+        ],
+        "poster_checked": true,
+        "last_goal_checked": true,
+        "notes": "Reviewed source contact sheets and enlarged candidate crops, then final encoded output at listed times. Revised clipped/top-edge faces and conservatively covered small cyclist heads. All comparison panels use the same mapped masks. Poster and final goal reviewed; no remaining recognizable unmasked faces observed. Printed posters, anime figures, robot head and rear views are not counted as faces."
+      },
+      "video_bytes": 13415666,
+      "poster_bytes": 264172,
+      "review_notes": "Confirmed actual shoppers in GT/goal and corresponding reference prediction frames. Rejected large 16.5–17.75 s GT face detections because they are printed advertising photos; also rejected anime posters, robot and display textures. Main-camera faces outside frame.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_04_clip_07/metrics.json",
+          "sha256": "d26d0c2a608096ff05856351c23ec3ebb71050573b0ac1bf82213c8f343163ab",
+          "bytes": 102770
+        },
+        "trajectories": {
+          "path": "assets/go2/route_04_clip_07/trajectories.csv",
+          "sha256": "b781339c10cbc38e73bf0562afb487add3dc43335ba8137f29f6479a3690b101",
+          "bytes": 22816
+        }
+      }
+    },
+    {
+      "id": "route_04_clip_08",
+      "video": "assets/go2/route_04_clip_08/comparison.mp4",
+      "poster": "assets/go2/route_04_clip_08/poster.webp",
+      "redacted": false,
+      "video_sha256": "6ee7ebc9f02d59fdc0a57cc1c1b9fc1c4986f1c5a0ed116d0c2241c35327d2d2",
+      "poster_sha256": "e48842e9dcf6ddedddd3fb4975f8a6fdc38c86ce54eb46ff2760738552aaf76c",
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 12547580,
+      "poster_bytes": 246968,
+      "review_notes": "All five panels and fractional false-positive crops reviewed. Robot head, printed product boxes and storefront patterns only; no identifiable human face found.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_04_clip_08/metrics.json",
+          "sha256": "4766291570a00ac6a46ad760d3107d32998a3628ce1f9a628a9934e684861747",
+          "bytes": 102688
+        },
+        "trajectories": {
+          "path": "assets/go2/route_04_clip_08/trajectories.csv",
+          "sha256": "9e170d431b1ef473604cf504e50fd923a25bf778c5dae54bf639b13abf1e79cb",
+          "bytes": 22645
+        }
+      }
+    },
+    {
+      "id": "route_04_clip_02_cafe_turn",
+      "video": "assets/go2/route_04_clip_02_cafe_turn/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_04_clip_02_cafe_turn/poster-privacy-v1.webp",
+      "video_sha256": "79113cf3e2ae66e82d98684258828b8858bb7858ba8a4079973eedf026bc507d",
+      "poster_sha256": "3f9a92ceebd2ed16f1d5dfbb0b63f80bb3cef5c0f1fa8d5f417494e863468778",
+      "original_video_sha256": "32177f452ebdf139683d5c13233846be014ed8222fc77cf0c4b428db0efdd351",
+      "original_video": "assets/go2/route_04_clip_02_cafe_turn/comparison.mp4",
+      "original_poster": "assets/go2/route_04_clip_02_cafe_turn/poster.webp",
+      "original_poster_sha256": "4b9585f170de3240abd6754a2bb3b83117b8f98e069591143bfc0e8250eefd76",
+      "redacted": true,
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 271,
+      "masked_fraction": 0.0013840713814943415,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.3109548091888428,
+      "unmasked_sample_max_mae": 2.3109548091888428,
+      "plan_sha256": "3d31fc39707c0784ef5e899f74401763a650c722369cd97a57c97c07b541f6eb",
+      "boxes": 583,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_04_clip_02_cafe_turn",
+        "status": "passed",
+        "video_sha256": "79113cf3e2ae66e82d98684258828b8858bb7858ba8a4079973eedf026bc507d",
+        "poster_sha256": "3f9a92ceebd2ed16f1d5dfbb0b63f80bb3cef5c0f1fa8d5f417494e863468778",
+        "checked_times": [
+          0,
+          14,
+          17,
+          18.5,
+          19,
+          19.5,
+          20,
+          20.5,
+          21,
+          21.5,
+          22,
+          22.5,
+          22.75,
+          27.75
+        ],
+        "checked_panels": [
+          "main",
+          "gt",
+          "opennwm",
+          "nwm",
+          "goal"
+        ],
+        "poster_checked": true,
+        "last_goal_checked": true,
+        "notes": "Reviewed source contact sheets and enlarged candidate crops, then final encoded output at listed times. Revised clipped/top-edge faces and conservatively covered small cyclist heads. All comparison panels use the same mapped masks. Poster and final goal reviewed; no remaining recognizable unmasked faces observed. Printed posters, anime figures, robot head and rear views are not counted as faces."
+      },
+      "video_bytes": 16229184,
+      "poster_bytes": 342120,
+      "review_notes": "Confirmed masked visitor in GT 13.75–20 s, corresponding model/goal panes, and later side-profile visitors. Excluded robot, fixtures, posters and hallucinated/warped object-like detections unrelated to recording faces. Main-camera heads are outside image. Output review: added padded GT track for black-jacket approaching visitor at 18.5–22.6s, synchronized equally across comparisons and goal.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_04_clip_02_cafe_turn/metrics.json",
+          "sha256": "7a69883821265f03385da95d86fa69949c1bf8a33d9dc7c1885af51a4bcfc1ca",
+          "bytes": 102689
+        },
+        "trajectories": {
+          "path": "assets/go2/route_04_clip_02_cafe_turn/trajectories.csv",
+          "sha256": "70c3217e4849db8690e4ba34c0da5d6e7227a99d87073f2260a432ce19bbf6ba",
+          "bytes": 22658
+        }
+      }
+    },
+    {
+      "id": "route_05_clip_02_entrance_promemade",
+      "video": "assets/go2/route_05_clip_02_entrance_promemade/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_05_clip_02_entrance_promemade/poster-privacy-v1.webp",
+      "video_sha256": "7273e5381fae5b249235b26faa3dc01434b5bb6f828f8f51b5ed9b83ae4f3863",
+      "poster_sha256": "ddb0fa300df189cdd5272b505964a5a84587832f031fdf147f27457ff3ffff0a",
+      "original_video_sha256": "7538e74c9228f3f1b1ae55518e2cecf796fe656a7e57049f73c92059cf21128d",
+      "original_video": "assets/go2/route_05_clip_02_entrance_promemade/comparison.mp4",
+      "original_poster": "assets/go2/route_05_clip_02_entrance_promemade/poster.webp",
+      "original_poster_sha256": "0308dffdaa826deba0241e47cc840c4b4e6cf2ee8e1bbc7da16e0d2baad9b67c",
+      "redacted": true,
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 330,
+      "masked_fraction": 0.000743261316872428,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.5701324939727783,
+      "unmasked_sample_max_mae": 2.5701324939727783,
+      "plan_sha256": "f296b7355aef2d853527e54ed84bdd1a9039fe62cc6020399f052756b725ebb5",
+      "boxes": 43,
+      "tracks": 9,
+      "output_review": {
+        "id": "route_05_clip_02_entrance_promemade",
+        "status": "passed",
+        "video_sha256": "7273e5381fae5b249235b26faa3dc01434b5bb6f828f8f51b5ed9b83ae4f3863",
+        "plan_sha256": "f296b7355aef2d853527e54ed84bdd1a9039fe62cc6020399f052756b725ebb5",
+        "checked_times": [
+          11.5,
+          12.0,
+          12.5,
+          13.0,
+          13.5,
+          14.0,
+          14.5,
+          15.0,
+          15.5,
+          16.0,
+          16.5,
+          17.0,
+          17.5,
+          18.0,
+          18.5,
+          19.0,
+          19.5,
+          20.0,
+          20.5,
+          21.0,
+          21.5,
+          22.0,
+          22.5,
+          23.0,
+          23.5,
+          24.0,
+          24.5
+        ],
+        "notes": "Independent review of latest entrance-v2-check pairs: early approaching adults and child, later child and background blue-clothed pedestrian have facial coverage in sampled main-view frames through 24.5s. Focus included 16–21s distant faces."
+      },
+      "video_bytes": 22023166,
+      "poster_bytes": 406918,
+      "review_notes": "Manually reviewed full-clip main and prediction panels. Mask real faces only; robot heads, bus decorations, wheels and tree detections excluded. Output review added early distant family and child/bystander face tracks from 11.25 s; all method panels remain unchanged.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_05_clip_02_entrance_promemade/metrics.json",
+          "sha256": "6e1915df4f798f5cfda38d20feb047d4081511864791d87471be6dc87e825d5a",
+          "bytes": 92806
+        },
+        "trajectories": {
+          "path": "assets/go2/route_05_clip_02_entrance_promemade/trajectories.csv",
+          "sha256": "5912b6179e956026c3c613ef4e82c912557e42a7cae3247ebc7f15595e837039",
+          "bytes": 19870
+        }
+      }
+    },
+    {
+      "id": "route_05_clip_03_gate_approach",
+      "video": "assets/go2/route_05_clip_03_gate_approach/comparison.mp4",
+      "poster": "assets/go2/route_05_clip_03_gate_approach/poster.webp",
+      "redacted": false,
+      "video_sha256": "a05286349034d9538b70a90c9f3ffd181b299f806d1c6c8da08a7a642c93849a",
+      "poster_sha256": "c721c3afdcfedafe90e9dd80798728d7f1b64b460a8cb4acaa0dcb5c143b58a9",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 18013368,
+      "poster_bytes": 441560,
+      "review_notes": "Full-duration original contact sheets and face candidates manually reviewed by root. No real human faces; machine/texture candidates excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_05_clip_03_gate_approach/metrics.json",
+          "sha256": "5679a3951003e2de2bcd34c0af106c9544d432c8652208b111429151620e6872",
+          "bytes": 92770
+        },
+        "trajectories": {
+          "path": "assets/go2/route_05_clip_03_gate_approach/trajectories.csv",
+          "sha256": "af0ade042bca16646a8355aa2843d0eddc82bfa942c6fffcd01405dac33e1baf",
+          "bytes": 20232
+        }
+      }
+    },
+    {
+      "id": "route_05_clip_04_shuttle_plaza",
+      "video": "assets/go2/route_05_clip_04_shuttle_plaza/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_05_clip_04_shuttle_plaza/poster-privacy-v1.webp",
+      "video_sha256": "f4c5567d652350aec1555728709b7a23a1e3eb6024d5fe677d9e87207d6da9cd",
+      "poster_sha256": "d3ac0233aae192b47f8a7715b30a460048c2b6d4cd27b669ccf4c2b0ee5e7a81",
+      "original_video_sha256": "e161ca0aaf11d44e56c2231efca4063a0bd40311bc4c518b1ef0fb14cbfe579f",
+      "original_video": "assets/go2/route_05_clip_04_shuttle_plaza/comparison.mp4",
+      "original_poster": "assets/go2/route_05_clip_04_shuttle_plaza/poster.webp",
+      "original_poster_sha256": "b8cf2c7cdf95e21f96f0805cb3ac32d85b0d066646bc08e695a3ad5105557f15",
+      "redacted": true,
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 600,
+      "masked_fraction": 0.018099968653549382,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.5016307830810547,
+      "unmasked_sample_max_mae": 2.4982995986938477,
+      "plan_sha256": "573711d80b9640063c1479a1cdaae1ae90e33cfa9e8adc48af86634370c34b70",
+      "boxes": 418,
+      "tracks": 7,
+      "output_review": {
+        "id": "route_05_clip_04_shuttle_plaza",
+        "status": "passed",
+        "video_sha256": "f4c5567d652350aec1555728709b7a23a1e3eb6024d5fe677d9e87207d6da9cd",
+        "plan_sha256": "573711d80b9640063c1479a1cdaae1ae90e33cfa9e8adc48af86634370c34b70",
+        "checked_times": [
+          0,
+          3,
+          6,
+          9,
+          12,
+          14.0,
+          14.25,
+          14.5,
+          14.75,
+          15,
+          15.25,
+          15.5,
+          15.75,
+          16.0,
+          16.25,
+          16.5,
+          16.75,
+          17,
+          17.25,
+          17.5,
+          17.75,
+          18,
+          18.25,
+          18.5,
+          18.75,
+          19,
+          19.25,
+          19.5,
+          19.75,
+          20.0,
+          20.25,
+          20.5,
+          20.75,
+          21,
+          21.25,
+          21.5,
+          21.75,
+          22.0,
+          22.25,
+          22.5,
+          22.75,
+          23,
+          23.25,
+          23.5,
+          23.75,
+          24,
+          24.25,
+          24.5,
+          24.75
+        ],
+        "notes": "Independent review of plaza-late-v2-check, plaza-panels-check and plaza-goal-check, plus quarter-second midpoints between child-track keyframes from 14.25–24.75s. Sampled child turns and adult face positions are covered; GT/OpenNWM/NWM and goal samples show facial redaction. Late goal shows backs of heads rather than uncovered frontal faces."
+      },
+      "video_bytes": 21735750,
+      "poster_bytes": 362930,
+      "review_notes": "Manually reviewed full-clip main and prediction panels. Mask real faces only; robot heads, bus decorations, wheels and tree detections excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_05_clip_04_shuttle_plaza/metrics.json",
+          "sha256": "9c457958774629179df6ba16d2304ee2be0d7a27ded3aa22a664cdee53b0c9c0",
+          "bytes": 92853
+        },
+        "trajectories": {
+          "path": "assets/go2/route_05_clip_04_shuttle_plaza/trajectories.csv",
+          "sha256": "5e10c6977dd46c1214c1b34e27813e456d00202904f59856a3faa9f09223e36b",
+          "bytes": 20199
+        }
+      }
+    },
+    {
+      "id": "route_05_clip_05_woodland_lane_curated",
+      "video": "assets/go2/route_05_clip_05_woodland_lane_curated/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_05_clip_05_woodland_lane_curated/poster-privacy-v1.webp",
+      "video_sha256": "33d4759d434ac3b78704cb927adbb89f292ea6e1449559648480a52285bdac17",
+      "poster_sha256": "f1e1adbae378118d16ce93fcd917785295874ab5ebc75ef730e3dea4073a037c",
+      "original_video_sha256": "90eff71a1e8ffef0e07b549e0deea860eca30bfa7b3f0035156349607cc533ac",
+      "original_video": "assets/go2/route_05_clip_05_woodland_lane_curated/comparison.mp4",
+      "original_poster": "assets/go2/route_05_clip_05_woodland_lane_curated/poster.webp",
+      "original_poster_sha256": "be3003cd37e63fae7730d969e403d132197de34ccddf8bacffb04c9fc0600eb4",
+      "redacted": true,
+      "frame_count": 312,
+      "fps": 24.0,
+      "duration_seconds": 13.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 66,
+      "masked_fraction": 0.0005355235042735042,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.8052215576171875,
+      "unmasked_sample_max_mae": 2.803354263305664,
+      "plan_sha256": "93a3f5daff529dd1dbad93ccea7f48b2391c8db942e724403eba8f899ab4ba8b",
+      "boxes": 9,
+      "tracks": 1,
+      "output_review": {
+        "id": "route_05_clip_05_woodland_lane_curated",
+        "status": "passed",
+        "video_sha256": "33d4759d434ac3b78704cb927adbb89f292ea6e1449559648480a52285bdac17",
+        "plan_sha256": "93a3f5daff529dd1dbad93ccea7f48b2391c8db942e724403eba8f899ab4ba8b",
+        "checked_times": [
+          9.5,
+          10,
+          10.25,
+          10.5,
+          10.75,
+          11,
+          11.25,
+          11.5,
+          11.75,
+          12,
+          12.25,
+          12.5,
+          12.75,
+          12.95
+        ],
+        "notes": "Independent original/output crop comparison at entry boundary and quarter-second samples to final frame: child face entering from left is covered from visible onset through 12.95s. Robot and surrounding path remain visible."
+      },
+      "video_bytes": 20553071,
+      "poster_bytes": 562960,
+      "review_notes": "Manually reviewed full-clip main and prediction panels. Mask real faces only; robot heads, bus decorations, wheels and tree detections excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_05_clip_05_woodland_lane_curated/metrics.json",
+          "sha256": "b2c8974c2da089dcd1c66de9450d9f8dda25ebdd86731f3c184abf6cd63aaf03",
+          "bytes": 51602
+        },
+        "trajectories": {
+          "path": "assets/go2/route_05_clip_05_woodland_lane_curated/trajectories.csv",
+          "sha256": "3b52b34f540a0abc8b2defc6d2bb4c0d3c6f9e8900a21ebc68933a936a3ea74b",
+          "bytes": 10394
+        }
+      }
+    },
+    {
+      "id": "route_06_clip_01_lakeside_planter_turn",
+      "video": "assets/go2/route_06_clip_01_lakeside_planter_turn/comparison.mp4",
+      "poster": "assets/go2/route_06_clip_01_lakeside_planter_turn/poster.webp",
+      "redacted": false,
+      "video_sha256": "a49188c7f862586b67ad34125625cd04e5bd3be6be0034195a415bc09ea2f3e3",
+      "poster_sha256": "1fde026b360d3804b744c71e3d13bfa8ebee9222652596417fdf9ccc4507ce7d",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 19048704,
+      "poster_bytes": 444774,
+      "review_notes": "Full-duration original contact sheets and face candidates manually reviewed by root. No real human faces; machine/texture candidates excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_06_clip_01_lakeside_planter_turn/metrics.json",
+          "sha256": "e902c1967594a12fd7d001c50778eb9aaff64978a4a0453716602afbe0851130",
+          "bytes": 92698
+        },
+        "trajectories": {
+          "path": "assets/go2/route_06_clip_01_lakeside_planter_turn/trajectories.csv",
+          "sha256": "4088e09c813d32d4bc6a852e29b7dce8f9fd5cf19aeeb3054766c69ec42dd709",
+          "bytes": 19657
+        }
+      }
+    },
+    {
+      "id": "route_06_clip_02_sand_switchbacks_curated",
+      "video": "assets/go2/route_06_clip_02_sand_switchbacks_curated/comparison.mp4",
+      "poster": "assets/go2/route_06_clip_02_sand_switchbacks_curated/poster.webp",
+      "redacted": false,
+      "video_sha256": "2f5ce4e5447ab820598b339c8b043f2981062ac2c2a4023cdc92f57509bb43f0",
+      "poster_sha256": "1bdc7fd335e23edfd7a675139d7942044764b9816d3fd5c62f3b367cbd10209a",
+      "frame_count": 216,
+      "fps": 24.0,
+      "duration_seconds": 9.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 7245200,
+      "poster_bytes": 488690,
+      "review_notes": "Full-duration original contact sheets and face candidates manually reviewed by root. No real human faces; machine/texture candidates excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_06_clip_02_sand_switchbacks_curated/metrics.json",
+          "sha256": "91646035e7f2129d7fb1c3882369623d863f101d361ec66283cc340b9193fee8",
+          "bytes": 38022
+        },
+        "trajectories": {
+          "path": "assets/go2/route_06_clip_02_sand_switchbacks_curated/trajectories.csv",
+          "sha256": "aac00965190d2219568271c3b396a809fb9e3a86251982e2e81d07d189bdeef2",
+          "bytes": 7076
+        }
+      }
+    },
+    {
+      "id": "route_06_clip_04_campground_arc",
+      "video": "assets/go2/route_06_clip_04_campground_arc/comparison.mp4",
+      "poster": "assets/go2/route_06_clip_04_campground_arc/poster.webp",
+      "redacted": false,
+      "video_sha256": "3646d656ca582ca72fd8a51f3c6be9355915b2a2f3fdf97136cebdfe9abe834b",
+      "poster_sha256": "c07e1884e6a85d5695af9c7c6a838665b1c7c7965336c106ec448ae3083c2c07",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 20570630,
+      "poster_bytes": 506356,
+      "review_notes": "Full-duration original contact sheets and face candidates manually reviewed by root. No real human faces; machine/texture candidates excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_06_clip_04_campground_arc/metrics.json",
+          "sha256": "395ef380ec22fc6059e21da5d26615d65de8e18e7defa1fe5badb9ebf48abd23",
+          "bytes": 92864
+        },
+        "trajectories": {
+          "path": "assets/go2/route_06_clip_04_campground_arc/trajectories.csv",
+          "sha256": "f0bcf9ab73b8abbf0dbe31ba83f9f905c2c5d5def636f907689729d9f6ef9356",
+          "bytes": 20181
+        }
+      }
+    },
+    {
+      "id": "route_06_clip_05_fence_path_exit_curated",
+      "video": "assets/go2/route_06_clip_05_fence_path_exit_curated/comparison.mp4",
+      "poster": "assets/go2/route_06_clip_05_fence_path_exit_curated/poster.webp",
+      "redacted": false,
+      "video_sha256": "97e7c27cc60a91b481abb4d1490fe6aacdd27330d6c5ac885e72f06fb710a504",
+      "poster_sha256": "a687ebe77ccfdde18e7e831a897115281122944636326353a20645a3281b0b9e",
+      "frame_count": 288,
+      "fps": 24.0,
+      "duration_seconds": 12.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 11880525,
+      "poster_bytes": 507366,
+      "review_notes": "Full-duration original contact sheets and face candidates manually reviewed by root. No real human faces; machine/texture candidates excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_06_clip_05_fence_path_exit_curated/metrics.json",
+          "sha256": "1998912b43cad6da25acdafa51920c071d50f4f5282102ecb87e7be7f3aebd6f",
+          "bytes": 48252
+        },
+        "trajectories": {
+          "path": "assets/go2/route_06_clip_05_fence_path_exit_curated/trajectories.csv",
+          "sha256": "4571b1a24ac7eaf4c2f298675f932581f1ade83d0c4315e84b01f2d94adb073a",
+          "bytes": 9613
+        }
+      }
+    },
+    {
+      "id": "route_07_clip_01_grass_passage",
+      "video": "assets/go2/route_07_clip_01_grass_passage/comparison.mp4",
+      "poster": "assets/go2/route_07_clip_01_grass_passage/poster.webp",
+      "redacted": false,
+      "video_sha256": "efdb79d1bf2a07a7d5d85865b56cf60a93a43ebe60510cb98e1415064a19da25",
+      "poster_sha256": "38f04ec4a6d548f394acd05f541ef29fa2fd6400ba068c6740ae28ef2a58bd78",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 83056964,
+      "poster_bytes": 562632,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_07_clip_01_grass_passage/metrics.json",
+          "sha256": "2310f04e91fb0d77f747f5b4b77678031d9b8abdaadbaa6d7438da15d0098402",
+          "bytes": 93118
+        },
+        "trajectories": {
+          "path": "assets/go2/route_07_clip_01_grass_passage/trajectories.csv",
+          "sha256": "084250064913951b195857e7643edeaa70a695e50365d418ce3615552a37ff33",
+          "bytes": 19767
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_07_clip_01_grass_passage/comparison.mp4",
+      "fallback_video_sha256": "efdb79d1bf2a07a7d5d85865b56cf60a93a43ebe60510cb98e1415064a19da25",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_07_clip_02_gravel_entry_curated",
+      "video": "assets/go2/route_07_clip_02_gravel_entry_curated/comparison.mp4",
+      "poster": "assets/go2/route_07_clip_02_gravel_entry_curated/poster.webp",
+      "redacted": false,
+      "video_sha256": "87380e898bcf3afea455dd4de4cd5720cfc55dcf196d01b2c130095ad3edbadb",
+      "poster_sha256": "6e1e1097c09785387199f64754585410690604607a4ce3a30957ff1a635516bb",
+      "frame_count": 528,
+      "fps": 24.0,
+      "duration_seconds": 22.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 67303672,
+      "poster_bytes": 553416,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_07_clip_02_gravel_entry_curated/metrics.json",
+          "sha256": "9e6ec385045f81941f0f09c68b7ee277ab17909ca15e055f7d4f1f106a90f393",
+          "bytes": 82893
+        },
+        "trajectories": {
+          "path": "assets/go2/route_07_clip_02_gravel_entry_curated/trajectories.csv",
+          "sha256": "d92bf1639d2c92277685c99d6964f937aeeb1637babbc3af5ea5fc88ed06e1cd",
+          "bytes": 17480
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_07_clip_02_gravel_entry_curated/comparison.mp4",
+      "fallback_video_sha256": "87380e898bcf3afea455dd4de4cd5720cfc55dcf196d01b2c130095ad3edbadb",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_07_clip_03_garden_turn",
+      "video": "assets/go2/route_07_clip_03_garden_turn/comparison.mp4",
+      "poster": "assets/go2/route_07_clip_03_garden_turn/poster.webp",
+      "redacted": false,
+      "video_sha256": "bd31be3662c611bf71d0d4f31ff98eda088da4bb20b53e78baacce522ce51fea",
+      "poster_sha256": "cd1de79aac404f01eb1946f1a819d2470b9cce330002a9a8b66c1fee80471054",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 69424382,
+      "poster_bytes": 570978,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_07_clip_03_garden_turn/metrics.json",
+          "sha256": "32d808a45e9230c0e0c45c691dffea0baad3c3c098895359ed7778bc1645897b",
+          "bytes": 93148
+        },
+        "trajectories": {
+          "path": "assets/go2/route_07_clip_03_garden_turn/trajectories.csv",
+          "sha256": "736df2cfd157436656d26eb81d699635a815aac910e65f19f440c967818d7684",
+          "bytes": 20168
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_07_clip_03_garden_turn/comparison.mp4",
+      "fallback_video_sha256": "bd31be3662c611bf71d0d4f31ff98eda088da4bb20b53e78baacce522ce51fea",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_07_clip_04_stone_wall_bend_curated",
+      "video": "assets/go2/route_07_clip_04_stone_wall_bend_curated/comparison.mp4",
+      "poster": "assets/go2/route_07_clip_04_stone_wall_bend_curated/poster.webp",
+      "redacted": false,
+      "video_sha256": "02b85d361b4874407fabf4924117d2d6eb716c4a0b4a029cfb8e0397d8206360",
+      "poster_sha256": "e50f306181c3099aa1e825a3db3579148668add5298fb04374b81fcbfcd192db",
+      "frame_count": 528,
+      "fps": 24.0,
+      "duration_seconds": 22.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 54666144,
+      "poster_bytes": 589450,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_07_clip_04_stone_wall_bend_curated/metrics.json",
+          "sha256": "8841c8dd897f7ec45293b0f4cced0844f38b72cdcef0f8b2f1bdf1b38bc2c512",
+          "bytes": 82995
+        },
+        "trajectories": {
+          "path": "assets/go2/route_07_clip_04_stone_wall_bend_curated/trajectories.csv",
+          "sha256": "0fbbf1950c3aed00bfac1c8702030234abb908ecdaa61c511344e5552262a073",
+          "bytes": 17828
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_07_clip_04_stone_wall_bend_curated/comparison.mp4",
+      "fallback_video_sha256": "02b85d361b4874407fabf4924117d2d6eb716c4a0b4a029cfb8e0397d8206360",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_08_clip_01_leaf_grove",
+      "video": "assets/go2/route_08_clip_01_leaf_grove/comparison.mp4",
+      "poster": "assets/go2/route_08_clip_01_leaf_grove/poster.webp",
+      "redacted": false,
+      "video_sha256": "be1e2eab1672d751428f4d8d3f59c8bd18756da77c85504f80c3398976576c29",
+      "poster_sha256": "b5c33d52a088c6eba1d54ffb7fb6a6f115c5e641523891fb077b2d62c6b64120",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 61783191,
+      "poster_bytes": 637390,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_08_clip_01_leaf_grove/metrics.json",
+          "sha256": "8486283fab1dd4476034cea910967cb4166e530a8623b122a3182a4a1c9527b2",
+          "bytes": 93043
+        },
+        "trajectories": {
+          "path": "assets/go2/route_08_clip_01_leaf_grove/trajectories.csv",
+          "sha256": "7ab9160c4fe872e414c3424f141bd9669af7e11adba273a05893766753991f02",
+          "bytes": 19673
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_08_clip_01_leaf_grove/comparison.mp4",
+      "fallback_video_sha256": "be1e2eab1672d751428f4d8d3f59c8bd18756da77c85504f80c3398976576c29",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_08_clip_02_tree_slalom",
+      "video": "assets/go2/route_08_clip_02_tree_slalom/comparison.mp4",
+      "poster": "assets/go2/route_08_clip_02_tree_slalom/poster.webp",
+      "redacted": false,
+      "video_sha256": "02301dc1cc00f92ed26702934df8cdb8f095cda5825e311519ce9690d636e35e",
+      "poster_sha256": "f3ff8eee1acc94ea571b47c3902d9dc8a1374c2bb4e44a0661a7a69693cbccfc",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 66279036,
+      "poster_bytes": 576014,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_08_clip_02_tree_slalom/metrics.json",
+          "sha256": "2c8f3d68ca58a204a1abc6d2d542d05cba4554a7777e13be8dab3761dcabc63f",
+          "bytes": 92994
+        },
+        "trajectories": {
+          "path": "assets/go2/route_08_clip_02_tree_slalom/trajectories.csv",
+          "sha256": "b41323ac9d1723ba10059905088585fb5e9905fdd10f7f0de7a8d990a2cbdd91",
+          "bytes": 19811
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_08_clip_02_tree_slalom/comparison.mp4",
+      "fallback_video_sha256": "02301dc1cc00f92ed26702934df8cdb8f095cda5825e311519ce9690d636e35e",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_08_clip_03_grass_gully",
+      "video": "assets/go2/route_08_clip_03_grass_gully/comparison.mp4",
+      "poster": "assets/go2/route_08_clip_03_grass_gully/poster.webp",
+      "redacted": false,
+      "video_sha256": "2dfe3e759d9d0752d8ca9100e157845f207845fb6e6573c9a56c80705d95b784",
+      "poster_sha256": "2a8930c1a856b4a392d747555e0b09303e3689ea2f0ff8055d490fafcdcd2351",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 62402618,
+      "poster_bytes": 571316,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_08_clip_03_grass_gully/metrics.json",
+          "sha256": "1777dccadc02d3301c61e0db9594960d04c85b5e5c7781c8b81403bede82beb6",
+          "bytes": 93078
+        },
+        "trajectories": {
+          "path": "assets/go2/route_08_clip_03_grass_gully/trajectories.csv",
+          "sha256": "02c82bded0c4e695355e60d9bbf6cf1a0cba94c7d9a504f0e8660fd10ad4d35d",
+          "bytes": 20184
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_08_clip_03_grass_gully/comparison.mp4",
+      "fallback_video_sha256": "2dfe3e759d9d0752d8ca9100e157845f207845fb6e6573c9a56c80705d95b784",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_08_clip_04_paved_exit",
+      "video": "assets/go2/route_08_clip_04_paved_exit/comparison.mp4",
+      "poster": "assets/go2/route_08_clip_04_paved_exit/poster.webp",
+      "redacted": false,
+      "video_sha256": "a8323df64a9f11bf5b8fee19cb8e6d03aa599776e15993a472e43736bacc8af2",
+      "poster_sha256": "904db869e4bc344229fa398056ad05fec3162a574cfe10c488e01db3186b41b3",
+      "frame_count": 528,
+      "fps": 24.0,
+      "duration_seconds": 22.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 37708893,
+      "poster_bytes": 539128,
+      "review_notes": "Reviewed full 1-second contact sheet and enlarged panel candidates. No real person observed; detections are robot hardware or landscape texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_08_clip_04_paved_exit/metrics.json",
+          "sha256": "f9c6dede54728ac9068c63316a327ad7e11efd6812ad35b470f664eccf8af2c2",
+          "bytes": 82927
+        },
+        "trajectories": {
+          "path": "assets/go2/route_08_clip_04_paved_exit/trajectories.csv",
+          "sha256": "9cf413bd1b14c20c7aca8c527ef1397b056afba4177963391b3e0abb61894d32",
+          "bytes": 17774
+        }
+      },
+      "fallback_video": "https://raw.githubusercontent.com/B0B8K1ng/b0b8k1ng.github.io/837138275852b88c7e8f6fb3c68a61ec9330d812/assets/go2/route_08_clip_04_paved_exit/comparison.mp4",
+      "fallback_video_sha256": "a8323df64a9f11bf5b8fee19cb8e6d03aa599776e15993a472e43736bacc8af2",
+      "fallback_review": "Unchanged immutable v6 fallback; same reviewed source bytes; no real faces found."
+    },
+    {
+      "id": "route_09_clip_01_plaza_curve",
+      "video": "assets/go2/route_09_clip_01_plaza_curve/comparison.mp4",
+      "poster": "assets/go2/route_09_clip_01_plaza_curve/poster.webp",
+      "redacted": false,
+      "video_sha256": "1db199655b09d3a00dd56dd791e836ed1cb8fd18563d5ca8bef57dbacd37606b",
+      "poster_sha256": "24c6be66e91a53a2dfddd602236cbd413106a7140e13b2628b69083f5eb9b9ae",
+      "frame_count": 576,
+      "fps": 24.0,
+      "duration_seconds": 24.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 15416178,
+      "poster_bytes": 391112,
+      "review_notes": "Empty plaza, no real person observed.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_09_clip_01_plaza_curve/metrics.json",
+          "sha256": "db6aa7d08d1f5956f6e1c56525767808444b92bfd226944a31b0e24657ada28a",
+          "bytes": 88947
+        },
+        "trajectories": {
+          "path": "assets/go2/route_09_clip_01_plaza_curve/trajectories.csv",
+          "sha256": "adac71529e904ca204cf3fd775e4b665517623f1a2232cbb50496ef811822918",
+          "bytes": 19089
+        }
+      }
+    },
+    {
+      "id": "route_09_clip_02_grass_paver_entry",
+      "video": "assets/go2/route_09_clip_02_grass_paver_entry/comparison.mp4",
+      "poster": "assets/go2/route_09_clip_02_grass_paver_entry/poster.webp",
+      "redacted": false,
+      "video_sha256": "04974d2534e56b035b9c9e4cf0f39284a3374e390d9f6b78646828d1424547a1",
+      "poster_sha256": "504b599e646305a933f900716dac3da33d10bd420f6c2c7f73da6e5233810ee8",
+      "frame_count": 672,
+      "fps": 24.0,
+      "duration_seconds": 28.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 23067333,
+      "poster_bytes": 449154,
+      "review_notes": "White dog-shaped amusement cart is a cartoon sculpture, not a human face.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_09_clip_02_grass_paver_entry/metrics.json",
+          "sha256": "5cae4c2ba02e142fa0b8026f5eb705e38b4b93390f28cf82bb501d3de82d27ae",
+          "bytes": 102594
+        },
+        "trajectories": {
+          "path": "assets/go2/route_09_clip_02_grass_paver_entry/trajectories.csv",
+          "sha256": "c4f1e2203bb5696599a4568ff18817e9076d84214c7baa2d2fb8959d0644b167",
+          "bytes": 22228
+        }
+      }
+    },
+    {
+      "id": "route_09_clip_03_garden_s_bend",
+      "video": "assets/go2/route_09_clip_03_garden_s_bend/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_09_clip_03_garden_s_bend/poster-privacy-v1.webp",
+      "video_sha256": "ba093654a2c332884d8334bfbee627fe7f51afda88d30167f0a8d6326c73714c",
+      "poster_sha256": "0e7d1588d95c16be7d7d5c4c6b8deb50eaa8d4552ef0572f8cfca3b907ae2776",
+      "original_video_sha256": "0f0a3034443314a572ca0cbd1eabf9127a77baeeb5c4bcab4254aa84a146a5e1",
+      "original_video": "assets/go2/route_09_clip_03_garden_s_bend/comparison.mp4",
+      "original_poster": "assets/go2/route_09_clip_03_garden_s_bend/poster.webp",
+      "original_poster_sha256": "8abb5417789af38686823854a0fc08c30ba33cff7790b0d6a7cf7f2b18a9b495",
+      "redacted": true,
+      "frame_count": 576,
+      "fps": 24.0,
+      "duration_seconds": 24.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 152,
+      "masked_fraction": 0.004992467307259517,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.679452896118164,
+      "unmasked_sample_max_mae": 2.6805527210235596,
+      "plan_sha256": "15f6e9b8890a6cb471d0cd543be3392b275cc906106da675694abd81740f3cdc",
+      "boxes": 32,
+      "tracks": 3,
+      "output_review": {
+        "id": "route_09_clip_03_garden_s_bend",
+        "status": "passed",
+        "video_sha256": "ba093654a2c332884d8334bfbee627fe7f51afda88d30167f0a8d6326c73714c",
+        "checked_times": [
+          8.5,
+          9.5,
+          10,
+          10.5,
+          11,
+          11.5,
+          12,
+          13.5,
+          14.1
+        ],
+        "notes": "Child main-view face, ear and cheek covered including detector-gap turn at 10.5s; supplemental checks at 10/11/11.5s. Robot and landscape false positives excluded. Sampled encoded-output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 27763043,
+      "poster_bytes": 528376,
+      "review_notes": "Real child in main view entering left edge 8.5s, profile at 9–11s, clear frontal face 12–14s; leaves left edge by 14.25s. Other panels contain landscape/prediction texture, no real face. Selected true detections plus edge coverage; exclude robot detection at 10.75s. Encoded-output review found a detector gap while the child turns away at 10.5s; supplemental full-head track covers 9.75–11.5s including hair, ear, cheek and neck.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_09_clip_03_garden_s_bend/metrics.json",
+          "sha256": "572ebb37c39ca4bf68e8047dd622ec8ad263ac8af6997d90bcbd5907e1316e6e",
+          "bytes": 89029
+        },
+        "trajectories": {
+          "path": "assets/go2/route_09_clip_03_garden_s_bend/trajectories.csv",
+          "sha256": "d467f10fd170092c4df0eb6a773c203b66c6b1c2acf0ee5627cab4b8e9477249",
+          "bytes": 19396
+        }
+      }
+    },
+    {
+      "id": "route_09_clip_04_plaza_return_curated",
+      "video": "assets/go2/route_09_clip_04_plaza_return_curated/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_09_clip_04_plaza_return_curated/poster-privacy-v1.webp",
+      "video_sha256": "0e336cc271d5d5556bec7b15c006db698f914130cc0cdcd282c42052ebfe9423",
+      "poster_sha256": "c138a5e16860432f08938bf566b26d051299c18303c51ac30603eebbe46413b7",
+      "original_video_sha256": "a899778ff3569a75ce6ee0152eec39bedb2d4b59c9c1dae81c3d5fc2d2dfa04c",
+      "original_video": "assets/go2/route_09_clip_04_plaza_return_curated/comparison.mp4",
+      "original_poster": "assets/go2/route_09_clip_04_plaza_return_curated/poster.webp",
+      "original_poster_sha256": "994387bd070355831b2d642cbd3d62b78df0d6cd16118f8bcb03098da8adae28",
+      "redacted": true,
+      "frame_count": 480,
+      "fps": 24.0,
+      "duration_seconds": 20.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 480,
+      "masked_fraction": 0.00830614832497428,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.5837998390197754,
+      "unmasked_sample_max_mae": 2.582702159881592,
+      "plan_sha256": "7005dda774ec9071243a94277f28c8cbb97d0f6b1a5dd09f2a68320f5687e087",
+      "boxes": 2166,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_09_clip_04_plaza_return_curated",
+        "status": "passed",
+        "video_sha256": "0e336cc271d5d5556bec7b15c006db698f914130cc0cdcd282c42052ebfe9423",
+        "checked_times": [
+          0,
+          3,
+          10,
+          16,
+          17.5,
+          18.5,
+          19,
+          19.5,
+          19.95
+        ],
+        "notes": "Three pedestrians covered in GT/OpenNWM/NWM including pitch correction and displaced generated face at 17.5s. Goal independently enlarged: final 19–20s image uses source beyond clip end, so native goal boxes were added and checked at 19/19.5/19.95s. Sampled encoded-output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 28385117,
+      "poster_bytes": 559982,
+      "review_notes": "Three pedestrians in lower GT/OpenNWM/NWM and goal, 0–20s. Pink jacket person initially front-facing; black-clad people mostly walking away with occasional side turns, woman turns near 17–19s. Main view crops heads above its top edge. Tracks conservatively cover heads including side turns; scenery/cart/robot are not faces. GT tracks require panel synchronization including goal at t−1s. Half-second review: added GT pitch keyframes at 17.5s and displaced generated OpenNWM face at 17.5s, synchronized identically across prediction panes. Final goal image at 19–20s shows a source frame beyond the clip endpoint; added three native goal head boxes after enlarged output review.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_09_clip_04_plaza_return_curated/metrics.json",
+          "sha256": "bc13d15828a5edfa5c3ad1adab8b32fe137cb0a9c9d4033a3e807b3900f33a9c",
+          "bytes": 75319
+        },
+        "trajectories": {
+          "path": "assets/go2/route_09_clip_04_plaza_return_curated/trajectories.csv",
+          "sha256": "00cedd9c8d9b7d0e6d5456f9a8af46b4ec421be8e6624b8fabd197d0cc4e4510",
+          "bytes": 16163
+        }
+      }
+    },
+    {
+      "id": "route_10_clip_01_parking_departure_curated",
+      "video": "assets/go2/route_10_clip_01_parking_departure_curated/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_10_clip_01_parking_departure_curated/poster-privacy-v1.webp",
+      "video_sha256": "9072efa2576471137f9ddd80d4201828966f7cbd65c19ad22393ff680e85067e",
+      "poster_sha256": "02dac09c1d68a9d4b758d5df32ecdfaee5a9b3dacd64d93de09e3ca1ff8cd390",
+      "original_video_sha256": "4329abe6193abb714ad239f061243710be57531bd354f767bb84619a0efac9eb",
+      "original_video": "assets/go2/route_10_clip_01_parking_departure_curated/comparison.mp4",
+      "original_poster": "assets/go2/route_10_clip_01_parking_departure_curated/poster.webp",
+      "original_poster_sha256": "b811586f79e6df02f1bf0266d790775d443490e02a57caafa72e3464066936b6",
+      "redacted": true,
+      "frame_count": 384,
+      "fps": 24.0,
+      "duration_seconds": 16.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 312,
+      "masked_fraction": 0.005609110765496399,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.213437557220459,
+      "unmasked_sample_max_mae": 2.2127578258514404,
+      "plan_sha256": "0069ed99e856ecfd8b382604651f7d70a5e67ebcd721d5fb119227baa0ccd84c",
+      "boxes": 460,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_10_clip_01_parking_departure_curated",
+        "status": "passed",
+        "video_sha256": "9072efa2576471137f9ddd80d4201828966f7cbd65c19ad22393ff680e85067e",
+        "checked_times": [
+          5,
+          8,
+          10,
+          12,
+          14,
+          15
+        ],
+        "notes": "Visually checked encoded output at listed times across GT, OpenNWM, NWM and goal panes. Head/face regions covered at these samples; original-resolution source and 1-second goal contact sheets also reviewed. This is sampled output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 7356510,
+      "poster_bytes": 164098,
+      "review_notes": "Approaching couple: tiny faces appear from about 5s, clearer 8–15s in three first-person panels and goal. Main view shows their legs/torso with heads above crop. White car/wheels and robot candidates excluded. One padded group rectangle follows the close pair of heads, not their bodies.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_10_clip_01_parking_departure_curated/metrics.json",
+          "sha256": "a2892f78fef7be21a898db2e8c765050d82947e049fbad57c729ac2a993ab36d",
+          "bytes": 61568
+        },
+        "trajectories": {
+          "path": "assets/go2/route_10_clip_01_parking_departure_curated/trajectories.csv",
+          "sha256": "b2e195b768cfc3bc752c1e063878ae97ea3b0e6659b332c79f645572ebd19483",
+          "bytes": 12689
+        }
+      }
+    },
+    {
+      "id": "route_10_clip_02_garage_lane_turn_curated",
+      "video": "assets/go2/route_10_clip_02_garage_lane_turn_curated/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_10_clip_02_garage_lane_turn_curated/poster-privacy-v1.webp",
+      "video_sha256": "7eae7664b9f467502efcda21fa68e3eafd5515243e4347ed853e4b4cc07052e3",
+      "poster_sha256": "cab90ebb79d9b8f4713d3001fe051de8b98cdf34ebedb834b86f329dcf78e090",
+      "original_video_sha256": "9c4431f0c9de6531d8e56fd2f1902f67dcb14b7a49d55957b938560e912d6773",
+      "original_video": "assets/go2/route_10_clip_02_garage_lane_turn_curated/comparison.mp4",
+      "original_poster": "assets/go2/route_10_clip_02_garage_lane_turn_curated/poster.webp",
+      "original_poster_sha256": "70f24454fcd9590c4016e5dafbe8be4c845677c4a243c749c7fa2513b493eb17",
+      "redacted": true,
+      "frame_count": 456,
+      "fps": 24.0,
+      "duration_seconds": 19.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 136,
+      "masked_fraction": 0.0054521429381226985,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.2693095207214355,
+      "unmasked_sample_max_mae": 2.2693095207214355,
+      "plan_sha256": "4c9edb78cea9528aae2993a59ddbf89638ba6042e21835cf4e09c99299a071fb",
+      "boxes": 210,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_10_clip_02_garage_lane_turn_curated",
+        "status": "passed",
+        "video_sha256": "7eae7664b9f467502efcda21fa68e3eafd5515243e4347ed853e4b4cc07052e3",
+        "checked_times": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          4.8
+        ],
+        "notes": "Visually checked encoded output at listed times across GT, OpenNWM, NWM and goal panes. Head/face regions covered at these samples; original-resolution source and 1-second goal contact sheets also reviewed. This is sampled output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 9027700,
+      "poster_bytes": 187018,
+      "review_notes": "Three people near garage entrance in lower GT/OpenNWM/NWM and goal at 0–5s, move left as camera turns. Main view crops their heads above image. Later car-wheel detections are not faces. Padded group head track ends at left boundary.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_10_clip_02_garage_lane_turn_curated/metrics.json",
+          "sha256": "bb02a488e12485e753acb5584df7ba809a9c3e3207549a77ee9d3cb4e268cc72",
+          "bytes": 71744
+        },
+        "trajectories": {
+          "path": "assets/go2/route_10_clip_02_garage_lane_turn_curated/trajectories.csv",
+          "sha256": "2b3549614e73165e009a0c1952062dec641d7bd62a809ec45dd814efc39dbca8",
+          "bytes": 15096
+        }
+      }
+    },
+    {
+      "id": "route_10_clip_03_store_entrance",
+      "video": "assets/go2/route_10_clip_03_store_entrance/comparison.mp4",
+      "poster": "assets/go2/route_10_clip_03_store_entrance/poster.webp",
+      "redacted": false,
+      "video_sha256": "78532712f417f432c3e59a7e224c0b1b4c57d5e0959ed073c8e7881e7e475060",
+      "poster_sha256": "e8c7d0d856942e7c2c00dc73cc24d216c614bed6b4d8d972f850c64084a58976",
+      "frame_count": 576,
+      "fps": 24.0,
+      "duration_seconds": 24.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 6544432,
+      "poster_bytes": 162812,
+      "review_notes": "No real person observed. Candidate faces are robot hardware, reflections, signage or shop objects.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_10_clip_03_store_entrance/metrics.json",
+          "sha256": "b07ef5c9c60d03e4b3ea43b4f7a0368561d4783186d9326501b527a0e8ff5060",
+          "bytes": 88935
+        },
+        "trajectories": {
+          "path": "assets/go2/route_10_clip_03_store_entrance/trajectories.csv",
+          "sha256": "d27be7a2194878c79ee320b3187827d3914de68981fd26d1060a96d645e2dbea",
+          "bytes": 19386
+        }
+      }
+    },
+    {
+      "id": "route_10_clip_04_indoor_corridor",
+      "video": "assets/go2/route_10_clip_04_indoor_corridor/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_10_clip_04_indoor_corridor/poster-privacy-v1.webp",
+      "video_sha256": "8c5629549acc941bd4213baed536ff1eb825edd964e7fe20701113e0b8d2cc72",
+      "poster_sha256": "4785a04834d006bc7a1e00c6b3bfcb66d2bc91174026f40609db127d12182397",
+      "original_video_sha256": "40684af1328661f40b2a1c8fccbee7be9647f0d1b9519809b4b69cdda5223bac",
+      "original_video": "assets/go2/route_10_clip_04_indoor_corridor/comparison.mp4",
+      "original_poster": "assets/go2/route_10_clip_04_indoor_corridor/poster.webp",
+      "original_poster_sha256": "452e3717e16da732bd7c8f060bf0c5a3b84b406e01d3b0a09fbbfcc14aeb0c88",
+      "redacted": true,
+      "frame_count": 576,
+      "fps": 24.0,
+      "duration_seconds": 24.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 133,
+      "masked_fraction": 0.0031768698358731998,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.318333148956299,
+      "unmasked_sample_max_mae": 2.318333148956299,
+      "plan_sha256": "a3188298aee4a9eb63a19c3b555c56c95d89bdd7364dbae67acfe2794c0c45d4",
+      "boxes": 280,
+      "tracks": 2,
+      "output_review": {
+        "id": "route_10_clip_04_indoor_corridor",
+        "status": "passed",
+        "video_sha256": "8c5629549acc941bd4213baed536ff1eb825edd964e7fe20701113e0b8d2cc72",
+        "checked_times": [
+          0,
+          0.5,
+          1.5,
+          2.5,
+          3,
+          3.5,
+          4.5
+        ],
+        "notes": "Upper-edge main-view partial heads covered. Explicit displaced generated face ROIs now cover OpenNWM/NWM at 1.5/2.5/3.5/4.5s with masks synchronized fairly across panes. GT/goal samples also checked. Sampled encoded-output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 11033305,
+      "poster_bytes": 242032,
+      "review_notes": "Actual pedestrians at 0–5s in lower panels/goal; main shows partial heads at the top edge, including masked woman at 0–1s and people at upper right near 3s. White sign occludes middle interval. No people later. True lower-panel detections supplement manual tracks. Encoded-output review also confirmed generated face offsets at 1.5/2.5/3.5/4.5s. These explicit prediction-window boxes are synchronized to both methods and GT.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_10_clip_04_indoor_corridor/metrics.json",
+          "sha256": "3edd471f2d2fd01bea796cb275db08f074b1719d71a0c512c02d260be5063f18",
+          "bytes": 88993
+        },
+        "trajectories": {
+          "path": "assets/go2/route_10_clip_04_indoor_corridor/trajectories.csv",
+          "sha256": "d6970371a2de973fcabf2b51624c7fbbe2c9d6723a5d5260dcc1b3e1bce04084",
+          "bytes": 19457
+        }
+      }
+    },
+    {
+      "id": "route_11_clip_01_night_zebra_turn",
+      "video": "assets/go2/route_11_clip_01_night_zebra_turn/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_11_clip_01_night_zebra_turn/poster-privacy-v1.webp",
+      "video_sha256": "b70679a60b5db85b242572f56debd5ab36fd51a98904e612216f268a515a3439",
+      "poster_sha256": "b9ca632ba5aeaae807c657622dda770bb80ee4aa0787cc684aefd9a2951b7376",
+      "original_video_sha256": "0630d185f96c9375501ce27d498299eb8ad3e6715223b706c3c0190779d04a1e",
+      "original_video": "assets/go2/route_11_clip_01_night_zebra_turn/comparison.mp4",
+      "original_poster": "assets/go2/route_11_clip_01_night_zebra_turn/poster.webp",
+      "original_poster_sha256": "c19795021b9dee13c97d7dd397ab7396ca346eeb98c29fd09d4db81be5758f01",
+      "redacted": true,
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 226,
+      "masked_fraction": 0.002514796328446502,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.2282416820526123,
+      "unmasked_sample_max_mae": 2.2282416820526123,
+      "plan_sha256": "6f48be9dfe49e8697e4997cb366b3f5de9327c18898cb125183807021b1cc327",
+      "boxes": 300,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_11_clip_01_night_zebra_turn",
+        "status": "passed",
+        "video_sha256": "b70679a60b5db85b242572f56debd5ab36fd51a98904e612216f268a515a3439",
+        "checked_times": [
+          12,
+          14,
+          15.5,
+          16.5,
+          17,
+          17.5
+        ],
+        "notes": "Visually checked encoded output at listed times across GT, OpenNWM, NWM and goal panes. Head/face regions covered at these samples; original-resolution source and 1-second goal contact sheets also reviewed. This is sampled output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 11027818,
+      "poster_bytes": 181296,
+      "review_notes": "Approaching woman in lower panels at about 11–17.8s (goal about 10–16.8s), with hand near face. Real face visible despite low light. Main view crops her head above its upper boundary. Conservative padding covers fast turn during final exit; robot hits excluded. Half-second review added 15.5s head position to cover nonlinear camera turn.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_11_clip_01_night_zebra_turn/metrics.json",
+          "sha256": "9ed6bf72b5d749666c59a7b4a279dccdc2d4d0684242978251f73611692d7f0d",
+          "bytes": 93431
+        },
+        "trajectories": {
+          "path": "assets/go2/route_11_clip_01_night_zebra_turn/trajectories.csv",
+          "sha256": "77bf3ceb51c8dc4d84fbe7f13568f4e8d47439cf8f6863ffe135c654ac19d369",
+          "bytes": 19810
+        }
+      }
+    },
+    {
+      "id": "route_11_clip_02_night_storefront_bollards",
+      "video": "assets/go2/route_11_clip_02_night_storefront_bollards/comparison.mp4",
+      "poster": "assets/go2/route_11_clip_02_night_storefront_bollards/poster.webp",
+      "redacted": false,
+      "video_sha256": "fe6eb8d455ffec5e3d4f0f9997b9bc229922ea5eaf07b8108991eb7b6f1abca7",
+      "poster_sha256": "601f9b36a91fb2182a0923386dbe1236cc5067705f879697485c79298ee05b5c",
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true,
+      "video_bytes": 8773858,
+      "poster_bytes": 184810,
+      "review_notes": "No identifiable human face observed. Enlarged candidates are robot hardware and illuminated architectural texture.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_11_clip_02_night_storefront_bollards/metrics.json",
+          "sha256": "81329449e343da081daaf2b99765fe090bfcc4d07ebad0ce66a7525906ce7cd4",
+          "bytes": 93437
+        },
+        "trajectories": {
+          "path": "assets/go2/route_11_clip_02_night_storefront_bollards/trajectories.csv",
+          "sha256": "85379596503c0c87d7ac1ba194894fa9238561ee959be102d7db5de60494e276",
+          "bytes": 20185
+        }
+      }
+    },
+    {
+      "id": "route_11_clip_03_night_barrier_passage",
+      "video": "assets/go2/route_11_clip_03_night_barrier_passage/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_11_clip_03_night_barrier_passage/poster-privacy-v1.webp",
+      "video_sha256": "067731d75ffc8ec21106603a64efffbbc33f8037cb19f38e24bfebc7bc964463",
+      "poster_sha256": "70f788530136b691e1efcd7cda8ff69108b3182f9555417122ca26115968a9e6",
+      "original_video_sha256": "b03fa8f508b91de851796b7ff685b280fc844e52c49fb33d662c88bb932506d4",
+      "original_video": "assets/go2/route_11_clip_03_night_barrier_passage/comparison.mp4",
+      "original_poster": "assets/go2/route_11_clip_03_night_barrier_passage/poster.webp",
+      "original_poster_sha256": "fc73f4e008cbad0de8996277da30e88c65e752677c7643c03bb8703b23c7bfa9",
+      "redacted": true,
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 190,
+      "masked_fraction": 0.0022585607960390946,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.227229356765747,
+      "unmasked_sample_max_mae": 2.227229356765747,
+      "plan_sha256": "8113fc616e8ede22054b41d34cf3a7f393bd11cb3223213c473fc9d6837b634f",
+      "boxes": 298,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_11_clip_03_night_barrier_passage",
+        "status": "passed",
+        "video_sha256": "067731d75ffc8ec21106603a64efffbbc33f8037cb19f38e24bfebc7bc964463",
+        "checked_times": [
+          3,
+          5,
+          6,
+          6.5,
+          7.5,
+          8
+        ],
+        "notes": "Visually checked encoded output at listed times across GT, OpenNWM, NWM and goal panes. Head/face regions covered at these samples; original-resolution source and 1-second goal contact sheets also reviewed. This is sampled output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 9993613,
+      "poster_bytes": 150138,
+      "review_notes": "Woman pushing cart: small face from ~3s, clear in lower panels at 6–7.5s, exits top-left at ~8s; goal is 1s earlier. Main shows legs/torso and crops head. Selected non-main true detections supplement conservative manual track.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_11_clip_03_night_barrier_passage/metrics.json",
+          "sha256": "29ebc80a576d3fea47726d6d18c8b102ca3e1fcbec7778b0e7625adcaff7de63",
+          "bytes": 93362
+        },
+        "trajectories": {
+          "path": "assets/go2/route_11_clip_03_night_barrier_passage/trajectories.csv",
+          "sha256": "ffdf6ae0bb99737d3fa4f4dc92350a025406b6dc6440bb6f2a78d6958d5ed817",
+          "bytes": 20189
+        }
+      }
+    },
+    {
+      "id": "route_11_clip_04_night_zebra_curve",
+      "video": "assets/go2/route_11_clip_04_night_zebra_curve/comparison-privacy-v1.mp4",
+      "poster": "assets/go2/route_11_clip_04_night_zebra_curve/poster-privacy-v1.webp",
+      "video_sha256": "2eb73454c50e95a6d1a26c09d137865315573cd538764b423b6416f4070db62d",
+      "poster_sha256": "34ee4f6e115286a51e8a8a7503ec4c4a2855e8ec06d8635615761baa696beeef",
+      "original_video_sha256": "c3febc28591e4e95ffc1ad6949c12b6730e3871429310dcb85cd5eae42a1a1b1",
+      "original_video": "assets/go2/route_11_clip_04_night_zebra_curve/comparison.mp4",
+      "original_poster": "assets/go2/route_11_clip_04_night_zebra_curve/poster.webp",
+      "original_poster_sha256": "f75d036925a174e4f7939518f30ed40b0542c0f52d7247d8759a07b621c3ee03",
+      "redacted": true,
+      "frame_count": 600,
+      "fps": 24.0,
+      "duration_seconds": 25.0,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "faststart": true,
+      "masked_frames": 244,
+      "masked_fraction": 0.0026017232510288065,
+      "encoding_crf": 18,
+      "encoding_sample_max_mae": 2.2277157306671143,
+      "unmasked_sample_max_mae": 2.2277157306671143,
+      "plan_sha256": "c99e2f279d61f1130128a4d40d2a2602455a31ef36486e41a4b92029955cde5f",
+      "boxes": 345,
+      "tracks": 0,
+      "output_review": {
+        "id": "route_11_clip_04_night_zebra_curve",
+        "status": "passed",
+        "video_sha256": "2eb73454c50e95a6d1a26c09d137865315573cd538764b423b6416f4070db62d",
+        "checked_times": [
+          12,
+          15,
+          16,
+          17.5,
+          18.5,
+          19
+        ],
+        "notes": "Visually checked encoded output at listed times across GT, OpenNWM, NWM and goal panes. Head/face regions covered at these samples; original-resolution source and 1-second goal contact sheets also reviewed. This is sampled output review, not a frame-by-frame guarantee."
+      },
+      "video_bytes": 11048245,
+      "poster_bytes": 171992,
+      "review_notes": "Dark-clothed approaching pedestrian in lower panels from ~12s, largest at 17–19s; goal 1s earlier. Head is clipped above main view at close range. Lower OpenNWM/NWM face near 18s partly overlaps background light but is a real person. Robot/gate/lamp false candidates excluded.",
+      "downloads": {
+        "metrics": {
+          "path": "assets/go2/route_11_clip_04_night_zebra_curve/metrics.json",
+          "sha256": "33c17d5bf9250faf6e24d98d8c5202d098800580d4c64c782b22bed12c9d6ca7",
+          "bytes": 93353
+        },
+        "trajectories": {
+          "path": "assets/go2/route_11_clip_04_night_zebra_curve/trajectories.csv",
+          "sha256": "b7d7e7be8c71a4a9093a89fbdddbd2a0c8f6b3861cb5a1f4c9099393d740508d",
+          "bytes": 20185
+        }
+      }
+    }
+  ]
+}

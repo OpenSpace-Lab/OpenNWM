@@ -214,11 +214,7 @@ button:focus-visible {
   align-items: center;
   gap: 23px;
 }
-.language-button {
-  font-size: 11px;
-  padding: 7px 0;
-  color: var(--muted);
-}
+
 .header-paper {
   display: flex;
   gap: 15px;
@@ -1690,32 +1686,6 @@ select {
 .demo-player:fullscreen .player-controls {
   width: min(900px, 100%);
 }
-html[lang="zh-CN"] h2 {
-  font-family: var(--sans);
-  font-size: clamp(33px, 3.8vw, 51px);
-  font-weight: 450;
-  line-height: 1.35;
-  letter-spacing: -1px;
-}
-html[lang="zh-CN"] .hero-statement {
-  font-family: var(--sans);
-  font-size: clamp(30px, 3.2vw, 47px);
-  line-height: 1.4;
-  font-weight: 450;
-  letter-spacing: -1px;
-}
-html[lang="zh-CN"] .hero-description {
-  line-height: 2;
-}
-html[lang="zh-CN"] .studio-note h3 {
-  font-family: var(--sans);
-  font-size: 37px;
-  line-height: 1.4;
-}
-html[lang="zh-CN"] .hero-video-bottom p {
-  font-family: var(--sans);
-  font-size: 27px;
-}
 @media (min-width: 1600px) {
   .hero-grid {
     gap: 75px;
@@ -2249,9 +2219,7 @@ html[lang="zh-CN"] .hero-video-bottom p {
     font-size: 10px;
     gap: 8px;
   }
-  .language-button {
-    font-size: 10px;
-  }
+
   .header-actions {
     gap: 18px;
   }
@@ -2762,17 +2730,6 @@ html[lang="zh-CN"] .hero-video-bottom p {
   .dialog-top .eyebrow {
     font-size: 8px;
   }
-  html[lang="zh-CN"] h2 {
-    font-size: 35px;
-    line-height: 1.35;
-  }
-  html[lang="zh-CN"] .hero-statement {
-    font-size: 35px;
-    line-height: 1.4;
-  }
-  html[lang="zh-CN"] .hero-video-bottom p {
-    font-size: 25px;
-  }
 }
 @media (max-width: 370px) {
   .hero-copy h1 {
@@ -2976,8 +2933,6 @@ html[lang="zh-CN"] .hero-video-bottom p {
 .mosaic-caption .eyebrow { font-size: 9px; }
 .mosaic-caption .round-button { background: #203128; color: #fff; width: 33px; height: 33px; flex-shrink: 0; }
 .mosaic-provenance { margin: 13px 0 28px; }
-html[lang="zh-CN"] .hero-center .hero-statement { font-size: clamp(29px,4.1vw,56px); line-height: 1.4; }
-html[lang="zh-CN"] .space-context h3 { font-size: 30px; }
 @media (min-width: 1500px) { .cinematic-hero { max-height: 1080px; } }
 @media (max-width: 1100px) {
   .desktop-nav { gap: 15px; margin-left: 0; font-size: 11px; }
@@ -3069,8 +3024,6 @@ html[lang="zh-CN"] .space-context h3 { font-size: 30px; }
   .mosaic-caption .eyebrow { font-size: 7px; letter-spacing: .8px; line-height: 1.8; }
   .mosaic-caption .round-button { width: 33px; height: 33px; }
   .media-provenance { font-size: 9px; }
-  html[lang="zh-CN"] .hero-center .hero-statement { font-size: 28px; }
-  html[lang="zh-CN"] .space-context h3 { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .scroll-line::after,.generation-orbit { animation: none; }
@@ -3125,8 +3078,7 @@ html[lang="zh-CN"] .space-context h3 { font-size: 30px; }
 .film-source-note { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 38px; padding-top: 20px; border-top: 1px solid var(--line); }
 .film-source-note .eyebrow { font-size: 9px; }
 .film-source-note .text-link { font-size: 11px; }
-.dataset-card-image > video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.65,.2,1), filter .5s; }
-.dataset-card:hover .dataset-card-image > video { transform: scale(1.04); filter: brightness(.92); }
+.dataset-card-image > video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
 .dialog-media-status { position: absolute; inset: auto 12px 12px; color: white; font-size: 12px; padding: 10px; background: #172b22d9; }
 .dialog-media-status[hidden] { display: none; }
 @media (max-width: 1050px) {
@@ -3151,7 +3103,6 @@ html[lang="zh-CN"] .space-context h3 { font-size: 30px; }
   .hero-review { margin-top: 22px; }
   .film-source-note { margin-top: 26px; }
   .film-source-note .eyebrow { font-size: 8px; }
-  html[lang="zh-CN"] .hero-center .hero-statement { font-size: 26px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .planet-o,.cinematic-shade,.dataset-card-image > video { transition: none; }
@@ -3195,7 +3146,6 @@ h2, .section-heading h2 {
 .transfer-card video { display: block; width: 100%; border-radius: 5px; background: #101b18; }
 .space-section .scene-pills button { font-size: 12px; }
 .closing-copy h2 { font-size: clamp(30px, 3.2vw, 46px); }
-html[lang="zh-CN"] h2 { font-weight: 650; line-height: 1.35; }
 @media (max-width: 1100px) {
   .desktop-nav { gap: 12px; }
   .desktop-nav a { font-size: 11px; }
@@ -3215,4 +3165,17 @@ html[lang="zh-CN"] h2 { font-weight: 650; line-height: 1.35; }
   .hero-center h1 { font-size: clamp(54px, 16vw, 100px); }
   .transfer-facts { gap: 7px; }
   .transfer-facts span { font-size: 11px; padding: 6px 9px; }
+}
+
+/* All dataset previews are visible in the grid, with no card controls. */
+.dataset-section .dataset-grid { margin-top: 32px; }
+.dataset-grid .dataset-card { cursor: default; }
+.dataset-grid .dataset-card-image { aspect-ratio: 16 / 9; }
+@media (max-width: 1000px) {
+  .dataset-section .dataset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 540px) {
+  .dataset-section .dataset-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .dataset-grid .dataset-card-label { flex-direction: row; align-items: center; gap: 12px; }
+  .dataset-grid .dataset-card-label h3 { font-size: 14px; }
 }

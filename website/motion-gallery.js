@@ -1,8 +1,10 @@
+import { registerMedia } from "./media-scheduler.js?v=texture-master-20261030-v6-inline1";
+
 const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 })[character]);
 
-// A single scale preserves the recorded path; up is the initial heading.
+// A single scale preserves the input path; up is the initial heading.
 function projectTrajectory(positions) {
   const points = positions.map(([forward, left]) => [-left, -forward]);
   const xs = points.map(([x]) => x), ys = points.map(([, y]) => y);
@@ -12,25 +14,14 @@ function projectTrajectory(positions) {
 }
 
 /** Synchronized GT/OpenNWM wipe comparisons with their given input paths. */
-export function initMotionGallery(demos, getLanguage) {
+export function initMotionGallery(demos) {
   const root = document.querySelector("#motion-gallery");
   if (!root) return { render() {} };
-  const t = (en, zh) => getLanguage() === "zh" ? zh || en : en;
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  let globallyPaused = reducedMotion.matches;
+  const t = (en) => en;
   const items = [];
-  root.innerHTML = '<div class="motion-gallery-toolbar"><button type="button" class="motion-gallery-toggle"></button></div><div class="motion-gallery-grid"></div>';
+  root.innerHTML = '<div class="motion-gallery-grid"></div>';
   const grid = root.querySelector(".motion-gallery-grid");
-  const toggle = root.querySelector(".motion-gallery-toggle");
-  const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg>';
-  const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>';
 
-  function updateButton(item) {
-    const label = item.playing ? t("Pause", "暂停") : t("Play", "播放");
-    item.button.innerHTML = item.playing ? pauseIcon : playIcon;
-    item.button.setAttribute("aria-label", `${label} · ${t(item.demo.title, item.demo.titleZh)}`);
-    item.button.setAttribute("aria-pressed", String(item.playing));
-  }
   function updateTrajectory(item) {
     const time = item.leader.getAttribute("src") ? item.leader.currentTime : item.demo.posterTime || 0;
     const index = Math.min(item.points.length - 1, Math.max(0, Math.floor(time * item.demo.fps + .001)));
@@ -50,7 +41,6 @@ export function initMotionGallery(demos, getLanguage) {
     item.phase = "paused";
     clearInterval(item.syncTimer);
     item.videos.forEach((video) => { video.pause(); video.playbackRate = 1; });
-    updateButton(item);
   }
   function seekPair(item, time) {
     for (const video of item.videos) {
@@ -116,9 +106,9 @@ export function initMotionGallery(demos, getLanguage) {
     updateTrajectory(item);
     startReadyPair(item);
   }
-  function play(item, restart = false) {
+  function play(item, restart = false, resumeTime) {
     if (item.playing || document.hidden || !item.visible) return;
-    const time = restart || item.videos.some((video) => video.ended) ? 0 : Math.min(...item.videos.map((video) => video.currentTime));
+    const time = restart || item.videos.some((video) => video.ended) ? 0 : resumeTime ?? Math.min(...item.videos.map((video) => video.currentTime));
     item.playing = true;
     item.videos.forEach((video) => {
       if (!video.getAttribute("src")) {
@@ -127,48 +117,46 @@ export function initMotionGallery(demos, getLanguage) {
         video.load();
       }
     });
-    updateButton(item);
     holdPair(item, time);
   }
-  function resumeVisible() {
-    items.forEach((item) => {
-      if (globallyPaused || item.userPaused || !item.visible || document.hidden) pause(item);
-      else play(item);
-    });
-  }
-
   for (const demo of demos.demos) {
     const positions = demo.conditioningTrajectory?.positions;
     if (!Array.isArray(positions) || positions.length !== demo.frameCount) continue;
     const points = projectTrajectory(positions);
+    const isMars = demo.environment === "mars";
     const card = document.createElement("article");
-    card.className = `motion-card${demo.environment === "lunar" ? " motion-card-lunar" : ""}`;
+    card.className = `motion-card${demo.environment === "lunar" ? " motion-card-lunar" : isMars ? " motion-card-mars" : ""}`;
     card.dataset.demo = demo.id;
-    const video = (key) => `<video data-model="${key}" muted playsinline preload="none" width="${Number(demo.width) || 224}" height="${Number(demo.height) || 224}" data-source="${escape(demo[key])}" poster="${escape(demo[`${key}Poster`] || demo.poster)}"></video>`;
+    if (demo.environment) card.dataset.environment = demo.environment;
+    if (demo.dataset) card.dataset.dataset = demo.dataset;
+    const video = (key) => `<video data-model="${key}" muted playsinline preload="none" width="${Number(demo.width) || 224}" height="${Number(demo.height) || 224}" data-source="${escape(demo[key])}" data-poster="${escape(demo[`${key}Poster`] || demo.poster)}"></video>`;
     const lunarMark = demo.environment === "lunar" ? '<svg class="motion-moon-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.8 8.8 0 0 1 9.7 3.5a8.8 8.8 0 1 0 10.8 10.8Z"/></svg>' : "";
-    card.innerHTML = `<header class="motion-card-heading"><div class="motion-card-title"><h3 id="motion-title-${escape(demo.id)}"></h3>${demo.fineTuned ? '<span class="motion-adaptation-label"></span>' : ""}</div><div class="motion-card-actions"><button type="button" class="motion-card-toggle"></button>${lunarMark}</div></header><div class="motion-card-media"><div class="motion-comparison" style="--wipe:50%"><div class="motion-video-layer motion-prediction-layer">${video("prediction")}<span class="motion-video-label motion-label-prediction">OpenNWM</span></div><div class="motion-video-layer motion-truth-layer">${video("gt")}<span class="motion-video-label motion-label-gt"></span></div><div class="motion-wipe-handle" aria-hidden="true"><span>‹ ›</span></div><input class="motion-wipe-input" type="range" min="0" max="100" step="1" value="50"></div><figure class="motion-trajectory"><svg viewBox="0 0 132 224" role="img"><path class="motion-path-grid" d="M22 0v224M44 0v224M66 0v224M88 0v224M110 0v224M0 28h132M0 56h132M0 84h132M0 112h132M0 140h132M0 168h132M0 196h132"/><polyline class="motion-path-full" points="${points.map((point) => point.join(",")).join(" ")}"/><polyline class="motion-path-progress"/><circle class="motion-path-start" cx="${points[0][0]}" cy="${points[0][1]}" r="4"/><circle class="motion-path-cursor" r="5"/></svg><figcaption></figcaption></figure></div>`;
+    const marsMark = isMars ? '<svg class="motion-mars-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m5 8 4 1 2-3 4 1m-11 7 4-1 3 3 5 1m-2-7 2 2 3-1"/></svg>' : "";
+    const hasNote = isMars && (demo.conditioningTrajectory?.estimated === true || demo.note);
+    card.innerHTML = `<header class="motion-card-heading"><div class="motion-card-title"><h3 id="motion-title-${escape(demo.id)}"></h3>${demo.fineTuned ? '<span class="motion-adaptation-label"></span>' : ""}</div><div class="motion-card-actions">${lunarMark}${marsMark}</div></header><div class="motion-card-media"><div class="motion-comparison" style="--wipe:50%"><div class="motion-video-layer motion-prediction-layer">${video("prediction")}<span class="motion-video-label motion-label-prediction">OpenNWM</span></div><div class="motion-video-layer motion-truth-layer">${video("gt")}<span class="motion-video-label motion-label-gt"></span></div><div class="motion-wipe-handle" aria-hidden="true"><span>‹ ›</span></div><input class="motion-wipe-input" type="range" min="0" max="100" step="1" value="50"></div><figure class="motion-trajectory"><svg viewBox="0 0 132 224" role="img"><path class="motion-path-grid" d="M22 0v224M44 0v224M66 0v224M88 0v224M110 0v224M0 28h132M0 56h132M0 84h132M0 112h132M0 140h132M0 168h132M0 196h132"/><polyline class="motion-path-full" points="${points.map((point) => point.join(",")).join(" ")}"/><polyline class="motion-path-progress"/><circle class="motion-path-start" cx="${points[0][0]}" cy="${points[0][1]}" r="4"/><circle class="motion-path-cursor" r="5"/></svg><figcaption></figcaption></figure></div>${hasNote ? `<p class="motion-card-note" id="motion-note-${escape(demo.id)}"></p>` : ""}`;
     card.setAttribute("aria-labelledby", `motion-title-${demo.id}`);
+    if (hasNote) card.setAttribute("aria-describedby", `motion-note-${demo.id}`);
     grid.append(card);
     const leader = card.querySelector('[data-model="gt"]');
     const item = {
-      demo, card, points, leader, button: card.querySelector("button"),
+      demo, card, points, leader,
       videos: [leader, card.querySelector('[data-model="prediction"]')],
       comparison: card.querySelector(".motion-comparison"), slider: card.querySelector("input"),
       cursor: card.querySelector(".motion-path-cursor"), progress: card.querySelector(".motion-path-progress"),
-      visible: false, playing: false, userPaused: false, generation: 0,
+      visible: false, playing: false, generation: 0,
       phase: "paused", syncTime: 0, syncTimer: null, pendingSeek: new Set(),
     };
     item.videos.forEach((element) => { element.muted = true; });
     item.slider.addEventListener("input", () => updateWipe(item));
-    item.button.addEventListener("click", () => {
-      if (item.playing) { item.userPaused = true; pause(item); }
-      else { item.userPaused = false; play(item); }
-    });
     leader.addEventListener("timeupdate", () => {
       updateTrajectory(item);
       synchronize(item);
     });
     item.videos.forEach((video) => {
+      // Native autoplay and loop must obey the shared decoder barrier.
+      video.addEventListener("play", () => {
+        if (!item.playing || !item.visible || document.hidden || !["starting", "running"].includes(item.phase)) video.pause();
+      });
       ["loadedmetadata", "canplay", "canplaythrough", "progress"].forEach((event) => video.addEventListener(event, () => startReadyPair(item)));
       video.addEventListener("waiting", () => {
         if (item.playing && (item.phase === "running" || item.phase === "starting") && video.readyState < 3) holdPair(item);
@@ -190,45 +178,59 @@ export function initMotionGallery(demos, getLanguage) {
     });
     updateTrajectory(item);
     items.push(item);
+    registerMedia({
+      element: item.comparison, videos: item.videos,
+      onPlay: (times) => { item.visible = true; play(item, false, Math.min(...times)); },
+      onPause: () => { item.visible = false; pause(item); },
+    });
   }
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      const item = items.find((candidate) => candidate.card === entry.target);
-      item.visible = entry.isIntersecting && entry.intersectionRatio >= .15;
-      if (!item.visible) pause(item);
-      else if (!globallyPaused && !item.userPaused) play(item);
-    }
-  }, { threshold: [0, .15] });
-  items.forEach((item) => observer.observe(item.card));
+  const lunarItems = items.filter(({ demo }) => demo.environment === "lunar" && demo.datasetId === "lusnar" && demo.fineTuned);
+  const lunarFootnote = lunarItems.length ? document.createElement("p") : null;
+  if (lunarFootnote) {
+    lunarFootnote.id = "motion-lunar-method";
+    lunarFootnote.className = "motion-lunar-footnote";
+    lunarItems[lunarItems.length - 1].card.after(lunarFootnote);
+    lunarItems.forEach(({ card }) => card.setAttribute("aria-describedby", lunarFootnote.id));
+  }
+  const marsItems = items.filter(({ demo }) => demo.datasetId === "marslab" && demo.fineTuned);
+  const marsFootnote = marsItems.length ? document.createElement("p") : null;
+  if (marsFootnote) {
+    marsFootnote.id = "motion-mars-method";
+    marsFootnote.className = "motion-lunar-footnote";
+    marsItems[marsItems.length - 1].card.after(marsFootnote);
+    marsItems.forEach(({ card }) => card.setAttribute("aria-describedby", marsFootnote.id));
+  }
   function render() {
-    toggle.textContent = globallyPaused ? t("Play all", "全部播放") : t("Pause all", "全部暂停");
-    toggle.setAttribute("aria-pressed", String(!globallyPaused));
+    if (lunarFootnote) {
+      lunarFootnote.textContent = "LuSNAR simulation: fine-tuned on scenes Moon 1–5, validated on Moon 6, and tested only on Moon 7–9.";
+    }
+    if (marsFootnote) {
+      marsFootnote.textContent = "MarsLab simulation: fine-tuned on six trajectories, validated on one, and tested on three held-out trajectories.";
+    }
     items.forEach((item) => {
       const title = t(item.demo.title, item.demo.titleZh);
+      const isMars = item.demo.environment === "mars";
+      const estimated = item.demo.conditioningTrajectory?.estimated === true;
       item.card.querySelector("h3").textContent = title;
       item.card.querySelector(".motion-label-gt").textContent = t("Ground truth", "真实画面");
-      item.card.querySelector("figcaption").textContent = t("Given path", "给定轨迹");
-      item.card.querySelector(".motion-trajectory svg").setAttribute("aria-label", t(`Given path for ${title}. The dot follows the current video frame.`, `${title}的给定轨迹，圆点对应当前视频帧。`));
+      item.card.querySelector("figcaption").textContent = estimated ? t("Estimated path", "估计轨迹") : t("Given path", "给定轨迹");
+      item.card.querySelector(".motion-trajectory svg").setAttribute("aria-label", estimated
+        ? t(`Visually estimated path for ${title}, with relative scale. The dot follows the current video frame.`, `${title}的视觉估计轨迹，采用相对尺度，圆点对应当前视频帧。`)
+        : t(`Given path for ${title}. The dot follows the current video frame.`, `${title}的给定轨迹，圆点对应当前视频帧。`));
       const adaptation = item.card.querySelector(".motion-adaptation-label");
-      if (adaptation) adaptation.textContent = t("Lightly fine-tuned", "少量微调");
+      if (adaptation) {
+        adaptation.textContent = isMars ? t("Held-out · fine-tuned", "留出测试 · 微调") : t("Lightly fine-tuned", "少量微调");
+        if (isMars) adaptation.title = estimated
+          ? t("OpenNWM predicts each future frame from four fixed observed frames and estimated actions. Offline pose estimation uses future reference frames to label those actions; they are not recorded controls.", "OpenNWM 使用固定的四帧观测和估计动作预测各未来帧。动作由包含未来参考帧的完整视频离线估计，并非记录的控制指令。")
+          : t("OpenNWM predicts each future frame from four fixed observed frames and planar actions measured from simulator ground-truth body poses. Test trajectories were excluded from fine-tuning.", "OpenNWM 使用固定的四帧观测，以及仿真器真实车体位姿计算的平面动作，预测各未来帧。测试轨迹未参与微调。");
+      }
+      const note = item.card.querySelector(".motion-card-note");
+      if (note) note.textContent = item.demo.note ? t(item.demo.note, item.demo.noteZh) : t("Actions estimated offline from full clips; relative scale.", "动作由完整视频离线估计；尺度为相对值。");
       item.slider.setAttribute("aria-label", t(`Compare Ground truth and OpenNWM: ${title}`, `滑动对比真实画面与 OpenNWM：${title}`));
       item.videos.forEach((element) => element.setAttribute("aria-label", `${title} · ${element.dataset.model === "gt" ? t("Ground truth", "真实画面") : "OpenNWM"}`));
       updateWipe(item);
-      updateButton(item);
     });
   }
-  toggle.addEventListener("click", () => {
-    globallyPaused = !globallyPaused;
-    if (!globallyPaused) items.forEach((item) => { item.userPaused = false; });
-    resumeVisible();
-    render();
-  });
-  document.addEventListener("visibilitychange", resumeVisible);
-  reducedMotion.addEventListener("change", () => {
-    globallyPaused = reducedMotion.matches;
-    resumeVisible();
-    render();
-  });
   render();
   return { render };
 }

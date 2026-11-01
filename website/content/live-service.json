@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "apiBase": "https://chess-abu-settings-wit.trycloudflare.com/",
+  "model": "OpenNWM",
+  "sampler": "DDPM",
+  "diffusionSteps": 50
+}

@@ -1,3 +1,6 @@
+import { registerMedia } from "./media-scheduler.js?v=texture-master-20261030-v6-inline1";
+import { setMediaUrl } from "./media-delivery.js?v=texture-master-20261030-v6-inline1";
+
 const $ = (selector) => document.querySelector(selector);
 const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const defaultPaths = {
@@ -6,14 +9,29 @@ const defaultPaths = {
   right: [[0, 0], [0, .25], [.12, .55], [.4, .85], [.65, 1.05]],
 };
 
-export async function initPlayground(getLanguage) {
-  const t = (en, zh) => getLanguage() === "zh" ? zh || en : en;
+export async function initPlayground() {
+  const t = (en) => en;
   const canvas = $("#trajectory-canvas"), context = canvas.getContext("2d");
   const video = $("#playground-video");
-  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  video.muted = true; video.defaultMuted = true;
+  video.loop = true; video.playsInline = true; video.controls = false;
+  const playback = registerMedia({ element: video, videos: [video], sources: [""], posters: [""], priority: 2, cost: 1 });
   let data, scene, preset = "forward", points = defaultPaths.forward.map((point) => [...point]);
   let live = false, busy = false, drawing = false, activePointer = null, version = 0, pollTimer, controller;
   let healthVersion = 0, serviceChecking = false;
+  let apiBase = new URL("./", window.location.href);
+  let pollFailures = 0;
+  const apiUrl = (path) => new URL(path.replace(/^\/+/, ""), apiBase).href;
+  async function configureService() {
+    try {
+      const response = await fetch("content/live-service.json?v=20261029", { cache: "no-cache", signal: AbortSignal.timeout(10000) });
+      if (!response.ok) return;
+      const config = await response.json();
+      const endpoint = new URL(config.apiBase);
+      if (endpoint.protocol !== "https:" || endpoint.username || endpoint.password || endpoint.pathname !== "/") return;
+      apiBase = endpoint;
+    } catch { /* A locally served site can still use its same-origin API. */ }
+  }
   let mode = "initial", message = "ready", progress = 0, serviceChecked = false, errorDetail = "";
   const toCanvas = ([x, y]) => [270 + x * 222, 385 - y * 220];
   function draw() {
@@ -44,7 +62,7 @@ export async function initPlayground(getLanguage) {
     if (activePointer !== null && canvas.hasPointerCapture(activePointer)) canvas.releasePointerCapture(activePointer);
     drawing = false; activePointer = null;
     busy = false; mode = "initial"; progress = 0;
-    video.pause(); video.removeAttribute("src"); video.load();
+    playback.update({ sources: [""], posters: [""] });
     video.hidden = true; $("#playground-initial").hidden = false;
     $("#prediction-placeholder").hidden = false; $("#generation-overlay").hidden = true;
   }
@@ -55,12 +73,10 @@ export async function initPlayground(getLanguage) {
     $("#service-retry").disabled = serviceChecking || busy;
     if (!scene) {
       $("#generate-path").disabled = true;
-      $("#play-preset").disabled = true;
       return;
     }
     $("#prediction-mode").textContent = mode === "live" ? t("LIVE MODEL OUTPUT", "实时模型预测") : mode === "preset" ? t("PRECOMPUTED", "预计算结果") : t("STARTING VIEW", "初始视野");
     $("#generate-path").disabled = !live || busy || drawing || !validPath();
-    $("#play-preset").disabled = busy || !selectedPreset()?.video;
     $("#path-clear").disabled = busy;
     $("#playground-service-note").textContent = live ? t("Custom generation takes a few minutes.", "自定义生成需要几分钟。") : t("Connect the live service to generate a custom path.", "连接实时服务后可生成自定义路线。");
     const messages = {
@@ -94,11 +110,14 @@ export async function initPlayground(getLanguage) {
     if (busy) return;
     resetOutput(); preset = id;
     points = (selectedPreset()?.points || defaultPaths[id]).map((point) => [...point]);
-    message = "ready"; draw(); renderStatus();
+    const item = selectedPreset();
+    message = item?.video ? "preset" : "ready";
+    if (item?.video) showVideo(item.video, item.poster, "preset");
+    draw(); renderStatus();
   }
   function selectScene(id) {
     resetOutput(); scene = data.scenes.find((item) => item.id === id) || data.scenes[0];
-    $("#playground-initial").src = scene.poster || scene.image;
+    setMediaUrl($("#playground-initial"), "src", scene.poster || scene.image);
     $("#playground-initial").alt = t(`${scene.title} — initial observation`, `${scene.titleZh || scene.title} — 初始观测`);
     selectPath("forward"); render();
   }
@@ -117,7 +136,10 @@ export async function initPlayground(getLanguage) {
   canvas.addEventListener("pointerdown", (event) => {
     if (busy || drawing || !scene || !event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
     event.preventDefault(); resetOutput(); drawing = true; preset = null; points = [[0, 0]];
-    activePointer = event.pointerId; canvas.setPointerCapture(event.pointerId); points.push(pointerPoint(event)); message = "custom"; draw(); renderStatus();
+    activePointer = event.pointerId; canvas.setPointerCapture(event.pointerId);
+    const start = pointerPoint(event);
+    if (Math.hypot(...start) > .015) points.push(start);
+    message = "custom"; draw(); renderStatus();
   });
   canvas.addEventListener("pointermove", (event) => {
     if (!drawing || event.pointerId !== activePointer) return;
@@ -135,20 +157,17 @@ export async function initPlayground(getLanguage) {
   canvas.addEventListener("lostpointercapture", stopDrawing);
   window.addEventListener("resize", draw);
   function showVideo(src, poster, outputMode) {
-    mode = outputMode; video.src = src; video.poster = poster || scene.poster || scene.image;
+    mode = outputMode;
     video.hidden = false; $("#playground-initial").hidden = true;
     $("#prediction-placeholder").hidden = true; $("#generation-overlay").hidden = true;
-    video.load(); if (!motion.matches) video.play().catch(() => {}); renderStatus();
+    playback.update({ sources: [src], posters: [poster || scene.poster || scene.image] });
+    renderStatus();
   }
-  $("#play-preset").addEventListener("click", () => {
-    const item = selectedPreset(); if (!item?.video || busy) return;
-    resetOutput(); message = "preset"; showVideo(item.video, item.poster, "preset");
-  });
   async function health() {
     const checkVersion = ++healthVersion;
     serviceChecking = true; renderStatus();
     try {
-      const response = await fetch("api/health", { signal: AbortSignal.timeout(4500), cache: "no-store" });
+      const response = await fetch(apiUrl("api/health"), { signal: AbortSignal.timeout(12000), cache: "no-store" });
       if (!response.ok) throw new Error("Service unavailable");
       const result = await response.json();
       if (checkVersion !== healthVersion) return;
@@ -161,20 +180,25 @@ export async function initPlayground(getLanguage) {
   async function poll(jobId, currentVersion) {
     if (version !== currentVersion) return;
     try {
-      const response = await fetch(`api/jobs/${encodeURIComponent(jobId)}`, { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15000)]), cache: "no-store" });
+      const response = await fetch(apiUrl(`api/jobs/${encodeURIComponent(jobId)}`), { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15000)]), cache: "no-store" });
       if (!response.ok) throw new Error(t("Could not retrieve the generation status.", "无法获取生成状态。"));
       const job = await response.json();
+      pollFailures = 0;
       if (version !== currentVersion) return;
       progress = Math.max(0, Math.min(1, Number(job.progress) || 0));
       if (job.status === "completed") {
         if (!job.video) throw new Error(t("The service returned no video.", "服务未返回视频。"));
-        busy = false; message = "completed"; showVideo(job.video, job.poster, "live"); return;
+        busy = false; message = "completed"; showVideo(apiUrl(job.video), job.poster ? apiUrl(job.poster) : "", "live"); return;
       }
       if (job.status === "failed") throw new Error(job.error || t("The model reported an error.", "模型运行失败。"));
       message = job.status === "queued" ? "queued" : "running"; renderStatus();
       pollTimer = setTimeout(() => poll(jobId, currentVersion), 1800);
     } catch (error) {
       if (version !== currentVersion || error.name === "AbortError") return;
+      if (++pollFailures <= 3 && (error.name === "TypeError" || error.name === "TimeoutError")) {
+        pollTimer = setTimeout(() => poll(jobId, currentVersion), 2500 * pollFailures);
+        return;
+      }
       busy = false; message = "failed"; errorDetail = String(error.message).slice(0, 200);
       $("#generation-overlay").hidden = true; renderStatus();
     }
@@ -183,9 +207,10 @@ export async function initPlayground(getLanguage) {
     if (!live || busy || drawing || !validPath()) return;
     resetOutput(); const currentVersion = version;
     busy = true; message = "queued"; errorDetail = ""; controller = new AbortController();
+    pollFailures = 0;
     $("#generation-overlay").hidden = false; $("#prediction-placeholder").hidden = true; renderStatus();
     try {
-      const response = await fetch("api/predict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sceneId: scene.id, points, seed: 0 }), signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]) });
+      const response = await fetch(apiUrl("api/predict"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sceneId: scene.id, points, seed: 0 }), signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]) });
       const job = await response.json();
       if (version !== currentVersion) return;
       if (!response.ok || !job.jobId) throw new Error(job.error || job.detail || t("The service could not start this request.", "服务无法启动该请求。"));
@@ -200,8 +225,9 @@ export async function initPlayground(getLanguage) {
     if (!video.getAttribute("src")) return;
     message = "failed"; errorDetail = t("The prediction video could not load.", "预测视频加载失败。"); renderStatus();
   });
-  new IntersectionObserver(([entry]) => { if (!entry.isIntersecting) video.pause(); }, { threshold: .01 }).observe(video);
-  document.addEventListener("visibilitychange", () => { if (document.hidden) video.pause(); else if (!busy) health(); });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && !busy) health();
+  });
   draw();
   try {
     const response = await fetch("content/playground.json?v=earth-space-v3-20260930", { cache: "no-cache" });
@@ -211,8 +237,8 @@ export async function initPlayground(getLanguage) {
     selectScene(data.defaultScene || data.scenes[0].id);
   } catch {
     $("#playground-status").textContent = t("Demo scenes could not load. Please reload the page.", "演示场景加载失败，请刷新页面。");
-    $("#play-preset").disabled = true;
   }
+  await configureService();
   await health();
   return { render };
 }

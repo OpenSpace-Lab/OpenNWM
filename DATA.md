@@ -4,19 +4,19 @@
 
 ## 数据
 
-LAM 发布数据：[LittleBoss/LAM-Data](https://modelscope.cn/datasets/LittleBoss/LAM-Data)。安装 ModelScope CLI 后下载，断开后重跑相同命令即可继续：
+NavAnywhere 发布数据：[LittleBoss/NavAnywhere](https://modelscope.cn/datasets/LittleBoss/NavAnywhere)。原 `LittleBoss/LAM-Data` 已在原仓库上改名，旧下载链接失效；包名中的 `LAM-Data-` 前缀保持不变。安装 ModelScope CLI 后下载，断开后重跑相同命令即可继续：
 
 ```bash
 python -m pip install modelscope
-ms-hub download LittleBoss/LAM-Data --repo-type dataset \
-  --local-dir /data/downloads/LAM-Data --max-workers 8
+ms-hub download LittleBoss/NavAnywhere --repo-type dataset \
+  --local-dir /data/downloads/NavAnywhere --max-workers 8
 ```
 
 若仓库要求账户权限，先 `ms-hub login`。解压需要系统的 `zstd` 和 `tar`。NavAnywhere 每个包独立，动作数据按相同 archive 名拼接分片：
 
 ```bash
 mkdir -p /data/navigation
-cd /data/downloads/LAM-Data
+cd /data/downloads/NavAnywhere
 find NavAnywhere -path '*/packs/*.tar.zst' -print0 \
   | xargs -0 -I{} tar --use-compress-program=unzstd -xf '{}' -C /data/navigation
 for first in LAM-Data-{recon,scand,sacson}-*.tar.zst.part-00000; do
@@ -70,7 +70,22 @@ python run.py nwm import-checkpoint \
   --run-dir "$OPENNWM_WORK_ROOT/runs/imported-stage1"
 ```
 
-Pixel、DINO 两种 LAM 和最终 nav15 的权重本机均有；这里没有把未公开的 checkpoint 写成公开下载链接。其他机器可从已有存储复制，或使用对应配方训练。公开的 nav1 100k 权重与本机 nav15 60k 属于不同实验，不能混用其 LAM 缓存来声称同一实验复现。
+最终 Nav15 Pixel+Action 配方的三份原始权重已发布到 [LittleBoss/OpenNWM](https://modelscope.cn/models/LittleBoss/OpenNWM)，合计约 14.79 GB：
+
+| 文件 | 用途 |
+| --- | --- |
+| `lam-nav15-pixel-action-step60k.ckpt` | Nav15 Pixel+Action LAM，60k 步 |
+| `opennwm-nav15-stage1-pretrain60k.pth.tar` | NWM Stage 1，60k 步潜动作预训练 |
+| `opennwm-nav15-stage2-joint100k.pth.tar` | NWM Stage 2，3k warmup 后 100k joint，最终预测/规划模型 |
+
+```bash
+ms-hub download LittleBoss/OpenNWM --repo-type model \
+  --local-dir "$OPENNWM_WORK_ROOT/models/OpenNWM" --max-workers 4
+cd "$OPENNWM_WORK_ROOT/models/OpenNWM"
+sha256sum -c SHA256SUMS
+```
+
+仓库同时提供 Stage 1/2 配置、模型说明和上游许可证。NWM 采用 CC-BY-NC-4.0 上游许可，LAM 保留 DreamDojo Apache-2.0 来源说明。Pixel、DINO 两种 LAM 仍使用本地 checkpoint 或自行训练。旧 nav1 100k 权重与 Nav15 60k 属于不同实验，不能混用其 LAM 缓存来声称同一实验复现。
 
 ## 缓存与本机现成资源
 

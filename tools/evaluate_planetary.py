@@ -37,6 +37,24 @@ def write_json(path, value):
     temporary.replace(path)
 
 
+def feedback_description(samples):
+    """Describe the feedback branches used by the selected sample protocols."""
+    direct = any(sample["protocol"] == "direct" for sample in samples)
+    rollout = any(sample["protocol"] != "direct" for sample in samples)
+    descriptions = []
+    if direct:
+        descriptions.append(
+            "Direct horizons use the same four observed context frames and "
+            "anchor-relative cumulative actions, with no generated-frame feedback."
+        )
+    if rollout:
+        descriptions.append(
+            "Autoregressive and synthetic-control samples re-encode normalized "
+            "generated RGB using current-body-frame actions at each step."
+        )
+    return " ".join(descriptions)
+
+
 def load_samples_manifest(path, context_size):
     """Read raw source samples without reselecting data or changing controls."""
     manifest = json.loads(path.read_text())
@@ -165,7 +183,7 @@ def main():
                 "preprocessing": "Repository get_transform: center crop to 4:3 then resize to 224x224, RGB",
                 "lusnar": "4 observed context frames; 4 FPS nearest-timestamp sampling; direct horizons 1/4/8/16 steps and autoregressive 16 steps",
                 "synmars": "12 test left stills; repeat each initial image four times; straight/left/right synthetic controls; 16 model steps, no known physical duration",
-                "feedback": "Autoregressive normalized RGB re-encoding using current-body-frame action each step",
+                "feedback": feedback_description(samples),
             },
             "data_metadata": metadata,
             "limitations": [
@@ -183,7 +201,11 @@ def main():
         if args.samples_manifest is not None:
             manifest["protocol_details"]["samples"] = "Contexts, targets, horizons and raw actions from the signed external samples manifest"
             manifest["protocol_details"]["lusnar"] = "Observed context frames and paired targets at the horizons specified by each external sample"
-            manifest["protocol_details"]["synmars"] = "Repeated initial-image contexts and synthetic controls specified by each external sample; no paired future GT"
+            manifest["protocol_details"]["synmars"] = (
+                "Contexts, paired targets when supplied, and action provenance are specified by each external sample; "
+                "actions may be estimated or synthetic and are not dataset pose ground truth. "
+                "Frame order does not establish capture timestamps or physical duration."
+            )
             datasets = {sample["dataset"] for sample in samples}
             for dataset, key in (("LuSNAR", "lusnar"), ("SynMars-TW", "synmars")):
                 if dataset not in datasets:
@@ -191,6 +213,12 @@ def main():
                     manifest["limitations"] = [item for item in manifest["limitations"] if not item.startswith(dataset)]
             if supplied_limitations is not None:
                 manifest["limitations"] = supplied_limitations
+            elif "SynMars-TW" in datasets:
+                manifest["limitations"] = [
+                    "SynMars-TW has no pose/action/timestamp truth; external sample metadata identifies "
+                    "estimated or synthetic actions and any paired source-image references."
+                    if item.startswith("SynMars-TW") else item for item in manifest["limitations"]
+                ]
         for sample in samples:
             sample["gt_source_paths"] = sample.get("gt_source_paths") or []
             directory = root / "samples" / sample["id"]

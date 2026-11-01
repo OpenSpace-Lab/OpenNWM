@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_inference_manifest_sha256": "56e5d19f7503860c5fbeca1797a3df97dcc9b2b5c868058176c38356719b3215",
+  "selection": "For each held-out Moon_7..9 scene, select the valid 20-frame window with the largest recorded future yaw range (degrees rounded to two decimals, tie: earliest anchor); require at least one meter of traveled future path, unique nearest source frames within 125 ms of the 4 Hz grid, and retain previous evaluation windows plus their 4 s exclusion buffer. Selection uses only recorded ground-truth poses, before new inference; no prediction image or prediction quality is used. Frozen anchors: Moon_7=180, Moon_8=39, Moon_9=713.",
+  "scenes": [
+    {
+      "scene": "Moon_7",
+      "sample_id": "lusnar_curved_Moon_7_grid0180_direct",
+      "pose_source": "LuSNAR/Moon_7/gt.txt",
+      "pose_source_sha256": "3f889e9fd480afbdcad92e533cffb0655e21739037d3d4e05d4c21f4fbbea187",
+      "source_grid_anchor_index": 180,
+      "validation": "All sixteen metric and normalized actions recomputed from recorded GT; timestamps, unique source frames, annotation hashes and prior exclusion buffer verified."
+    },
+    {
+      "scene": "Moon_8",
+      "sample_id": "lusnar_curved_Moon_8_grid0039_direct",
+      "pose_source": "LuSNAR/Moon_8/gt.txt",
+      "pose_source_sha256": "3adf8e3ca4bd8ab3a84c19963bea1ea043d80b6d145993942d1296c538abbd44",
+      "source_grid_anchor_index": 39,
+      "validation": "All sixteen metric and normalized actions recomputed from recorded GT; timestamps, unique source frames, annotation hashes and prior exclusion buffer verified."
+    },
+    {
+      "scene": "Moon_9",
+      "sample_id": "lusnar_curved_Moon_9_grid0713_direct",
+      "pose_source": "LuSNAR/Moon_9/gt.txt",
+      "pose_source_sha256": "7b6f47fbc69a55c282154bc1979ced200982f7ceffcf6e60924dc61cf17d9688",
+      "source_grid_anchor_index": 713,
+      "validation": "All sixteen metric and normalized actions recomputed from recorded GT; timestamps, unique source frames, annotation hashes and prior exclusion buffer verified."
+    }
+  ],
+  "display": "Anchor [0,0] followed by sixteen recorded body-frame metric XY positions. No trajectory synthesis or interpolation."
+}

@@ -4,10 +4,18 @@
     "short_title": "OpenNWM",
     "title": "OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining",
     "authors": [
-      "Anonymous authors"
+      "Dujun Nie",
+      "Ruiqi Song",
+      "Zixuan Wang",
+      "Hanqing Wang",
+      "Yifan Han",
+      "Baiyong Ding",
+      "Wenzhao Zheng",
+      "Hangbin Wu",
+      "Long Chen"
     ],
     "publication_status": "Under review as a conference paper at ICLR 2027",
-    "review_status": "Paper under double-blind review",
+    "review_status": "The downloadable PDF is the anonymized review version.",
     "publication_year": null,
     "venue": null,
     "doi": null,
@@ -15,7 +23,57 @@
     "source": {
       "page": 1
     },
-    "note": "The supplied manuscript does not identify authors or affiliations and does not state an accepted venue, DOI, arXiv URL, or publication year."
+    "note": "Author order and contribution markers follow the author-supplied title-page image. Affiliations incorporate the authors’ corrections. The downloadable PDF does not state an accepted venue, DOI, arXiv URL, or publication year.",
+    "affiliations": {
+      "1": "CASIA",
+      "2": "UCAS",
+      "3": "HKUST (Guangzhou)",
+      "4": "Shanghai Jiao Tong University",
+      "5": "UC Berkeley",
+      "6": "Tongji University"
+    },
+    "author_affiliations": {
+      "Dujun Nie": [
+        1,
+        2
+      ],
+      "Ruiqi Song": [
+        1,
+        6
+      ],
+      "Zixuan Wang": [
+        1,
+        2
+      ],
+      "Hanqing Wang": [
+        3
+      ],
+      "Yifan Han": [
+        1,
+        2,
+        4
+      ],
+      "Baiyong Ding": [
+        1
+      ],
+      "Wenzhao Zheng": [
+        5
+      ],
+      "Hangbin Wu": [
+        6
+      ],
+      "Long Chen": [
+        1
+      ]
+    },
+    "equal_contributors": [
+      "Dujun Nie",
+      "Ruiqi Song"
+    ],
+    "corresponding_authors": [
+      "Long Chen"
+    ],
+    "research_group": "OpenSpace Lab"
   },
   "overview": {
     "tagline": "Learn navigation dynamics from action-free video. Adapt them to physical actions.",
@@ -593,7 +651,8 @@
           "go_stanford_psnr": 11.323,
           "tum_psnr": 8.957,
           "planetary_rover_psnr": 11.739,
-          "office_go2_psnr": 10.75
+          "office_go2_psnr": 10.75,
+          "params_m": 279
         },
         {
           "id": "nwm-xl-ego4d",
@@ -604,7 +663,8 @@
           "go_stanford_psnr": 11.444,
           "tum_psnr": 8.884,
           "planetary_rover_psnr": 11.906,
-          "office_go2_psnr": 11.083
+          "office_go2_psnr": 11.083,
+          "params_m": 1099
         },
         {
           "id": "rae-nwm",
@@ -615,7 +675,8 @@
           "go_stanford_psnr": 11.528,
           "tum_psnr": 9.007,
           "planetary_rover_psnr": 9.449,
-          "office_go2_psnr": 10.5
+          "office_go2_psnr": 10.5,
+          "params_m": 867
         },
         {
           "id": "opennwm",
@@ -626,7 +687,8 @@
           "go_stanford_psnr": 11.591,
           "tum_psnr": 9.135,
           "planetary_rover_psnr": 12.574,
-          "office_go2_psnr": 11.047
+          "office_go2_psnr": 11.047,
+          "params_m": 280
         }
       ],
       "baseline_note": "NWM† denotes CDiT-XL + Ego4D.",
@@ -678,7 +740,8 @@
           "office_go2_ate": null,
           "office_go2_rpe": null,
           "tartan_drive_ate": 6.65,
-          "tartan_drive_rpe": 1.62
+          "tartan_drive_rpe": 1.62,
+          "params_m": 9
         },
         {
           "id": "nomad",
@@ -690,7 +753,8 @@
           "office_go2_ate": null,
           "office_go2_rpe": null,
           "tartan_drive_ate": 6.32,
-          "tartan_drive_rpe": 1.31
+          "tartan_drive_rpe": 1.31,
+          "params_m": 19
         },
         {
           "id": "nwm",
@@ -702,7 +766,8 @@
           "office_go2_ate": 3.03,
           "office_go2_rpe": 0.68,
           "tartan_drive_ate": 5.72,
-          "tartan_drive_rpe": 1.19
+          "tartan_drive_rpe": 1.19,
+          "params_m": 279
         },
         {
           "id": "rae-nwm",
@@ -714,7 +779,8 @@
           "office_go2_ate": 3.01,
           "office_go2_rpe": 0.67,
           "tartan_drive_ate": 5.99,
-          "tartan_drive_rpe": 1.25
+          "tartan_drive_rpe": 1.25,
+          "params_m": 867
         },
         {
           "id": "garrido",
@@ -726,7 +792,8 @@
           "office_go2_ate": null,
           "office_go2_rpe": null,
           "tartan_drive_ate": null,
-          "tartan_drive_rpe": null
+          "tartan_drive_rpe": null,
+          "params_m": null
         },
         {
           "id": "compact",
@@ -738,7 +805,8 @@
           "office_go2_ate": null,
           "office_go2_rpe": null,
           "tartan_drive_ate": null,
-          "tartan_drive_rpe": null
+          "tartan_drive_rpe": null,
+          "params_m": null
         },
         {
           "id": "opennwm",
@@ -750,7 +818,8 @@
           "office_go2_ate": 2.89,
           "office_go2_rpe": 0.65,
           "tartan_drive_ate": 5.53,
-          "tartan_drive_rpe": 1.16
+          "tartan_drive_rpe": 1.16,
+          "params_m": 280
         }
       ],
       "summary": "OpenNWM has the lowest reported ATE and best or tied-best RPE across RECON, SCAND, and Office-Go2.",
@@ -1020,8 +1089,8 @@
     }
   },
   "citation": {
-    "bibtex": "@unpublished{opennwm,\n  title = {OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},\n  author = {Anonymous Authors},\n  note = {Under review as a conference paper at ICLR 2027}\n}",
-    "note": "Provisional citation preserving the supplied manuscript’s anonymous review status; no publication year or permanent identifier is stated.",
+    "bibtex": "@unpublished{opennwm,\n  title = {OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},\n  author = {Nie, Dujun and Song, Ruiqi and Wang, Zixuan and Wang, Hanqing and Han, Yifan and Ding, Baiyong and Zheng, Wenzhao and Wu, Hangbin and Chen, Long},\n  note = {Under review as a conference paper at ICLR 2027}\n}",
+    "note": "Author names follow the author-supplied title-page image. Publication status follows the supplied manuscript; no publication year or permanent identifier is stated.",
     "source": {
       "page": 1
     }

@@ -1,8 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "description": "Continuous video examples from 15 NavAnywhere sources and 4 action-labeled navigation sources. These are source-data videos, not model predictions.",
   "overview": "assets/datasets/overview.webp",
-  "hero_video": "assets/datasets/walking-tours.mp4",
+  "hero_video": "assets/datasets/walking-tours-timing-v2.mp4",
   "hero_poster": "assets/datasets/walking-tours.webp",
   "asset_processing": "Original dataset frames were center-cropped to 16:9 and resized. No generated imagery, content replacement, or color grading. Video has no audio.",
   "datasets": [
@@ -34,14 +34,22 @@
           "first_frame": 1080,
           "last_frame": 1175,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames; playback speed is for display, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "NavAnywhere/BotanicGarden/1005_00_VLIO/dalsa_color__left__image_raw.mp4"
+          ],
+          "note": "Sampled directly from the source video at 4 FPS; the original video timeline is preserved. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1,
+          "input_video": "NavAnywhere/BotanicGarden/1005_00_VLIO/dalsa_color__left__image_raw.mp4",
+          "source_start_seconds": 270.0
         }
       },
-      "video": "assets/datasets/botanic-garden.mp4",
+      "video": "assets/datasets/botanic-garden-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "casia-nav",
@@ -70,14 +78,20 @@
           "first_frame": 190,
           "last_frame": 285,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_casia_nav_frames.sh:39-41"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/casia-nav.mp4",
+      "video": "assets/datasets/casia-nav-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "citywalker",
@@ -106,14 +120,20 @@
           "first_frame": 1709,
           "last_frame": 1804,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/citywalker.mp4",
+      "video": "assets/datasets/citywalker-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "dl3dv",
@@ -142,14 +162,20 @@
           "first_frame": 0,
           "last_frame": 64,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/dl3dv.mp4",
+      "video": "assets/datasets/dl3dv-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 5.416666666666667
+      "video_duration_seconds": 16.25
     },
     {
       "id": "egowalk",
@@ -175,14 +201,21 @@
           600
         ],
         "video": {
-          "first_frame": 1628,
-          "last_frame": 1723,
+          "first_frame": 1516,
+          "last_frame": 1835,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 40,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/resample_egowalk_40fps.sh:5",
+            "nwm/logs/egowalk_40fps/progress.log:94,241"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 40,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/egowalk.mp4",
+      "video": "assets/datasets/egowalk-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
       "video_duration_seconds": 8.0
@@ -214,14 +247,20 @@
           "first_frame": 804,
           "last_frame": 899,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/krishnacam.mp4",
+      "video": "assets/datasets/krishnacam-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "lavn",
@@ -250,14 +289,20 @@
           "first_frame": 3313,
           "last_frame": 3408,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/lavn.mp4",
+      "video": "assets/datasets/lavn-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "rover",
@@ -287,14 +332,20 @@
           "first_frame": 604,
           "last_frame": 699,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/rover.mp4",
+      "video": "assets/datasets/rover-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "realestate10k",
@@ -323,14 +374,20 @@
           "first_frame": 0,
           "last_frame": 31,
           "frame_step": 1,
-          "playback_fps": 8,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/realestate10k.mp4",
+      "video": "assets/datasets/realestate10k-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 4.0
+      "video_duration_seconds": 8.0
     },
     {
       "id": "sanpo",
@@ -359,14 +416,20 @@
           "first_frame": 23,
           "last_frame": 118,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/sanpo.mp4",
+      "video": "assets/datasets/sanpo-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "great-outdoors",
@@ -396,14 +459,20 @@
           "first_frame": 1534,
           "last_frame": 1629,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_great_outdoors_frames.sh:57-59"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/great-outdoors.mp4",
+      "video": "assets/datasets/great-outdoors-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "walking-tours",
@@ -432,14 +501,20 @@
           "first_frame": 7930,
           "last_frame": 8025,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames; playback speed is for display, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/walking-tours.mp4",
-      "video_width": 768,
-      "video_height": 432,
-      "video_duration_seconds": 8.0
+      "video": "assets/datasets/walking-tours-timing-v2.mp4",
+      "video_width": 480,
+      "video_height": 270,
+      "video_duration_seconds": 24.0
     },
     {
       "id": "ego4d",
@@ -468,14 +543,20 @@
           "first_frame": 2675,
           "last_frame": 2770,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/logs/ego4d_frame_extraction/progress.log:4,901"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/ego4d.mp4",
+      "video": "assets/datasets/ego4d-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "i2nav-robot",
@@ -505,14 +586,20 @@
           "first_frame": 2400,
           "last_frame": 2495,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames; playback speed is for display, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/i2nav-robot.mp4",
+      "video": "assets/datasets/i2nav-robot-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "ub-visiogeoloc",
@@ -541,14 +628,20 @@
           "first_frame": 61,
           "last_frame": 156,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "source_video",
+          "timing_evidence": [
+            "nwm/extract_navanywhere_frames.sh:106-119"
+          ],
+          "note": "Playback preserves the source video timeline at its documented sampling rate. No motion interpolation.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/ub-visiogeoloc.mp4",
+      "video": "assets/datasets/ub-visiogeoloc-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "recon",
@@ -578,14 +671,18 @@
           "first_frame": 6,
           "last_frame": 101,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "display_only",
+          "timing_evidence": [
+            "nwm/downloads/recon_raw/recon_release/jackal_2019-09-09-18-46-15_12_r01.hdf5"
+          ],
+          "note": "The source has 108 images but 110 aligning_times values with irregular intervals; the image-to-timestamp mapping is unverified. 4 FPS is a display rate, not a claim of original speed."
         }
       },
-      "video": "assets/datasets/recon.mp4",
+      "video": "assets/datasets/recon-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "sacson",
@@ -615,14 +712,20 @@
           "first_frame": 0,
           "last_frame": 95,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "nominal_sampling",
+          "timing_evidence": [
+            "nwm/scripts/huron_public_pipeline.py:262"
+          ],
+          "note": "Playback uses the documented nominal 4 Hz preprocessing cadence. Exact per-frame capture timestamps are unavailable.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/sacson.mp4",
+      "video": "assets/datasets/sacson-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "scand",
@@ -652,14 +755,20 @@
           "first_frame": 0,
           "last_frame": 95,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "nominal_sampling",
+          "timing_evidence": [
+            "nwm/scripts/scand_hf_pipeline.py:308"
+          ],
+          "note": "Playback uses the documented nominal 4 Hz preprocessing cadence. Exact per-frame capture timestamps are unavailable.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/scand.mp4",
+      "video": "assets/datasets/scand-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     },
     {
       "id": "tartan-drive",
@@ -689,14 +798,21 @@
           "first_frame": 0,
           "last_frame": 95,
           "frame_step": 1,
-          "playback_fps": 12,
-          "note": "Consecutive stored dataset frames, without synthetic motion or frame interpolation. Playback rate is editorial, not original capture timing."
+          "playback_fps": 4,
+          "timing_status": "nominal_sampling",
+          "timing_evidence": [
+            "nwm/scripts/tartandrive_pipeline.py:261"
+          ],
+          "note": "Playback uses the documented nominal 4 Hz preprocessing cadence. Exact per-frame capture timestamps are unavailable.",
+          "source_sampling_fps": 4,
+          "playback_speed": 1
         }
       },
-      "video": "assets/datasets/tartan-drive.mp4",
+      "video": "assets/datasets/tartan-drive-timing-v2.mp4",
       "video_width": 480,
       "video_height": 270,
-      "video_duration_seconds": 8.0
+      "video_duration_seconds": 24.0
     }
-  ]
+  ],
+  "playback_note": "NavAnywhere clips preserve source-video time. SACSoN, SCAND, and TartanDrive use their nominal 4 Hz preprocessing cadence. RECON is shown at 4 FPS because frame timestamps could not be verified."
 }

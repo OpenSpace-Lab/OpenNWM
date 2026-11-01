@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import queue
 import re
+import shutil
 import threading
 import time
 import traceback
@@ -28,9 +29,48 @@ class Application:
         self.pending = queue.Queue(maxsize=3)
         self.lock = threading.Lock()
         self.recent = deque()
+        self.allowed_origins = set(args.allow_origin)
+        self.api_only = args.api_only
+        self.rate_history = {}
+        self.retention_seconds = 24 * 60 * 60
+        self.restore_jobs()
         threading.Thread(target=self.work, daemon=True).start()
 
-    def submit(self, payload):
+    def restore_jobs(self):
+        """Restore completed outputs after a process restart, with bounded storage."""
+        for directory in sorted(self.output.iterdir(), key=lambda item: item.stat().st_mtime):
+            if not re.fullmatch(r"[0-9a-f]{32}", directory.name) or not directory.is_dir():
+                continue
+            manifest = directory / "manifest.json"
+            if not manifest.is_file() or not (directory / "prediction.mp4").is_file():
+                shutil.rmtree(directory)
+                continue
+            try:
+                data = json.loads(manifest.read_text())
+            except (ValueError, OSError):
+                continue
+            job_id = directory.name
+            self.jobs[job_id] = {"jobId": job_id, "sceneId": data["sceneId"], "status": "completed", "progress": 1,
+                                "createdAt": manifest.stat().st_mtime, "protocol": data["protocol"], "error": None,
+                                "video": f"/api/media/{job_id}/prediction.mp4", "poster": f"/api/media/{job_id}/poster.webp",
+                                "manifest": f"/api/media/{job_id}/manifest.json"}
+            self.recent.append(job_id)
+        self.prune()
+
+    def prune(self):
+        now = time.time()
+        for job_id in list(self.recent):
+            job = self.jobs[job_id]
+            if job["status"] in ("queued", "running"):
+                continue
+            if len(self.recent) <= 100 and now - job.get("createdAt", now) < self.retention_seconds:
+                continue
+            self.recent.remove(job_id)
+            self.jobs.pop(job_id)
+            if re.fullmatch(r"[0-9a-f]{32}", job_id):
+                shutil.rmtree(self.output / job_id, ignore_errors=True)
+
+    def submit(self, payload, client="local"):
         if not isinstance(payload, dict) or set(payload) - {"sceneId", "points", "seed"}:
             raise ValueError("Expected sceneId, points, and optional seed.")
         scene_id = payload.get("sceneId")
@@ -42,18 +82,24 @@ class Application:
             raise ValueError("Seed must be an integer from 0 to 2147483647.")
         job_id = uuid.uuid4().hex
         job = {"jobId": job_id, "sceneId": scene_id, "status": "queued", "progress": 0,
-               "video": None, "poster": None, "manifest": None, "protocol": None, "error": None}
+               "video": None, "poster": None, "manifest": None, "protocol": None, "error": None,
+               "createdAt": time.time()}
         with self.lock:
             if self.pending.full():
                 raise queue.Full()
+            now = time.monotonic()
+            for key, entries in list(self.rate_history.items()):
+                while entries and now - entries[0] > 3600:
+                    entries.popleft()
+                if not entries:
+                    self.rate_history.pop(key)
+            history = self.rate_history.setdefault(client, deque())
+            if len(history) >= 20 or (history and now - history[-1] < 15) or sum(map(len, self.rate_history.values())) >= 120:
+                raise queue.Full()
+            history.append(now)
+            self.prune()
             self.jobs[job_id] = job
             self.recent.append(job_id)
-            while len(self.recent) > 100:
-                old = self.recent[0]
-                if self.jobs[old]["status"] in ("queued", "running"):
-                    break
-                self.recent.popleft()
-                self.jobs.pop(old)
             self.pending.put_nowait((job_id, scene_id, {"points": points, "seed": seed}))
         return job_id
 
@@ -67,15 +113,27 @@ class Application:
                 job.update(status="completed", progress=1, video=f"/api/media/{job_id}/prediction.mp4",
                            poster=f"/api/media/{job_id}/poster.webp", manifest=f"/api/media/{job_id}/manifest.json",
                            protocol=manifests[0]["protocol"])
+                for frame in (self.output / job_id).glob("[0-9][0-9][0-9].png"):
+                    frame.unlink()
             except Exception:
                 traceback.print_exc()
-                job.update(status="failed", error="Prediction failed. Check the local server log and try again.")
+                job.update(status="failed", error="Prediction failed. Please try again later.")
             finally:
                 self.pending.task_done()
+                with self.lock:
+                    self.prune()
 
 
 def handler_for(app):
     class Handler(SimpleHTTPRequestHandler):
+        def setup(self):
+            super().setup()
+            self.connection.settimeout(20)
+
+        def allowed_origin(self):
+            origin = self.headers.get("Origin")
+            return not origin or origin in app.allowed_origins or (not app.api_only and urlsplit(origin).netloc == self.headers.get("Host"))
+
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=str(WEBSITE), **kwargs)
 
@@ -90,9 +148,28 @@ def handler_for(app):
                 self.wfile.write(data)
 
         def end_headers(self):
+            origin = self.headers.get("Origin")
+            if origin and self.allowed_origin():
+                self.send_header("Access-Control-Allow-Origin", origin)
+                self.send_header("Vary", "Origin")
+                self.send_header("Access-Control-Expose-Headers", "Content-Length, Content-Range, Accept-Ranges")
+            self.send_header("X-Content-Type-Options", "nosniff")
             if getattr(self, "_accept_ranges", False):
                 self.send_header("Accept-Ranges", "bytes")
             super().end_headers()
+
+        def do_OPTIONS(self):
+            if urlsplit(self.path).path != "/api/predict" or not self.allowed_origin():
+                return self.json(403, {"error": "Origin or endpoint not allowed."})
+            requested_headers = {value.strip().lower() for value in self.headers.get("Access-Control-Request-Headers", "").split(",") if value.strip()}
+            if self.headers.get("Access-Control-Request-Method") != "POST" or requested_headers - {"content-type"}:
+                return self.json(403, {"error": "Request method or headers not allowed."})
+            self.send_response(204)
+            self.send_header("Access-Control-Allow-Methods", "POST, GET, HEAD, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self.send_header("Access-Control-Max-Age", "600")
+            self.send_header("Content-Length", "0")
+            self.end_headers()
 
         def range_head(self, target):
             """Return (handled, stream) for a single GET byte range.
@@ -194,8 +271,10 @@ def handler_for(app):
             self._accept_ranges = False
             self._range_length = None
             path = urlsplit(self.path).path
+            if not self.allowed_origin():
+                return self.json(403, {"error": "Origin not allowed."})
             if path == "/api/health":
-                return self.json(200, {"status": "ok", "live": True, "modelLoaded": app.predictor.loaded, "queueLength": app.pending.qsize(), "maxQueue": 3, "device": "cuda:0"})
+                return self.json(200, {"status": "ok", "live": True, "modelLoaded": app.predictor.loaded, "queueLength": app.pending.qsize(), "maxQueue": 3, "model": "OpenNWM", "sampler": "DDPM", "diffusionSteps": app.predictor.steps})
             if path == "/api/scenes":
                 return self.json(200, json.loads((WEBSITE / "content/playground.json").read_text()))
             if path.startswith("/api/jobs/"):
@@ -211,28 +290,29 @@ def handler_for(app):
                 if parts[4] == "manifest.json":
                     return self.json(200, public_manifest(json.loads(target.read_text())))
                 return self.media(target)
-            if path.startswith("/api/") or path.startswith("/server/"):
+            if app.api_only or path.startswith("/api/") or path.startswith("/server/"):
                 return self.json(404, {"error": "Not found."})
             return super().do_HEAD() if self.command == "HEAD" else super().do_GET()
 
         def do_POST(self):
             if urlsplit(self.path).path != "/api/predict":
                 return self.json(404, {"error": "Not found."})
-            # The service defaults to loopback. Refuse cross-origin browser writes.
-            origin = self.headers.get("Origin")
-            if origin and urlsplit(origin).netloc != self.headers.get("Host"):
-                return self.json(403, {"error": "Open the website served by this API to generate predictions."})
+            if not self.allowed_origin():
+                return self.json(403, {"error": "Origin not allowed."})
             try:
+                if self.headers.get("Transfer-Encoding"):
+                    raise ValueError("Use a fixed Content-Length.")
                 size = int(self.headers.get("Content-Length", "0"))
                 if not 0 < size <= 32768:
                     raise ValueError("Request body must be between 1 and 32768 bytes.")
                 if self.headers.get_content_type() != "application/json":
                     raise ValueError("Send application/json.")
                 payload = json.loads(self.rfile.read(size))
-                job_id = app.submit(payload)
+                client = self.headers.get("CF-Connecting-IP", self.client_address[0]) if self.client_address[0] == "127.0.0.1" else self.client_address[0]
+                job_id = app.submit(payload, client=client[:64])
                 return self.json(202, {"jobId": job_id})
             except queue.Full:
-                return self.json(429, {"error": "The GPU queue is full. Please try again later."})
+                return self.json(429, {"error": "The GPU is busy or the request limit was reached. Please try again later."})
             except (ValueError, TypeError, UnicodeDecodeError) as error:
                 return self.json(400, {"error": str(error)})
     return Handler
@@ -245,6 +325,8 @@ def main():
     parser.add_argument("--run-dir", default=DEFAULT_RUN)
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
     parser.add_argument("--steps", type=int, default=250)
+    parser.add_argument("--api-only", action="store_true", help="Expose only allowlisted API endpoints, with no static files.")
+    parser.add_argument("--allow-origin", action="append", default=[])
     args = parser.parse_args()
     app = Application(args)
     server = ThreadingHTTPServer((args.host, args.port), handler_for(app))

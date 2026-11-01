@@ -1,0 +1,10 @@
+{
+  "source": "method-overview-20261031.pdf",
+  "sourceSha256": "3ce5b82137e879b3e2e7d53b1a75f15ebcaab336df367925ee5510d848c7a1e6",
+  "page": 1,
+  "width": 1566,
+  "height": 460,
+  "file": "method-overview-20261031.svg",
+  "sha256": "62dd23f2b67c24929ee78ac4e789f112b386350923b5a89c62f9b871936d10dc",
+  "method": "Direct full-page PDF-to-SVG export using PyMuPDF. Text is outlined to preserve glyphs without external fonts; vector paths and embedded source images are retained. No cropping, recoloring, redrawing, or rasterization of the complete figure. Display on the original white background; link to the byte-identical source PDF for zooming."
+}

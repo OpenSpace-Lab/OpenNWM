@@ -31,9 +31,8 @@ DATASET_NAMES = {"recon": "RECON", "scand": "SCAND", "tartan_drive": "TartanDriv
 def attach_trajectories(manifest, archive):
     """Preserve every recorded position aligned with the exported video frames."""
     for item in manifest["demos"]:
-        # LuSNAR uses its own held-out inference and audited rover-body poses.
-        # Its paired media/trajectory are rebuilt by build_website_lunar_gallery.py.
-        if item.get("environment") == "lunar":
+        # Planetary samples have separate inference/provenance exporters.
+        if item.get("environment") in {"lunar", "mars"}:
             continue
         path = archive / item["sourceExample"] / "trajectory.json"
         source = json.loads(path.read_text())

@@ -79,7 +79,11 @@ class HttpTests(unittest.TestCase):
         cls.website_patch = patch("serve.WEBSITE", cls.website)
         cls.website_patch.start()
         cls.app = Application.__new__(Application)
-        cls.app.predictor = SimpleNamespace(loaded=False)
+        cls.app.predictor = SimpleNamespace(loaded=False, steps=50)
+        cls.app.allowed_origins = {"https://b0b8k1ng.github.io"}
+        cls.app.api_only = False
+        cls.app.rate_history = {}
+        cls.app.retention_seconds = 86400
         cls.app.output = cls.root / "jobs"
         output = cls.app.output / "test-media"
         output.mkdir(parents=True)
@@ -217,6 +221,43 @@ class HttpTests(unittest.TestCase):
         status, _ = self.request("/api/predict", {"sceneId": "indoor-huron", "points": PRESETS["forward"]}, "https://unrelated.example")
         self.assertEqual(status, 403)
 
+    def test_public_preflight_and_api_only_exposure(self):
+        headers = {"Origin": "https://b0b8k1ng.github.io", "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "content-type"}
+        status, response_headers, body = self.raw_request("/api/predict", "OPTIONS", headers)
+        self.assertEqual(status, 204)
+        self.assertEqual(response_headers["Access-Control-Allow-Origin"], headers["Origin"])
+        self.assertEqual(body, b"")
+        headers["Origin"] = "https://unrelated.example"
+        self.assertEqual(self.raw_request("/api/predict", "OPTIONS", headers)[0], 403)
+        self.assertEqual(self.raw_request("/api/health", headers={"Origin": headers["Origin"]})[0], 403)
+        with patch.object(self.app, "api_only", True):
+            for path in ("/", "/clip.mp4", "/../.env", "/%2e%2e/.env", "/server/serve.py"):
+                self.assertEqual(self.raw_request(path)[0], 404)
+            status, response_headers, _ = self.raw_request("/api/media/test-media/prediction.mp4", headers={"Origin": "https://b0b8k1ng.github.io", "Range": "bytes=0-15"})
+            self.assertEqual(status, 206)
+            self.assertEqual(response_headers["Access-Control-Allow-Origin"], "https://b0b8k1ng.github.io")
+
+    def test_rate_limit_and_retention(self):
+        isolated = Application.__new__(Application)
+        isolated.pending = queue.Queue(maxsize=3)
+        isolated.lock = threading.Lock()
+        isolated.recent = deque()
+        isolated.jobs = {}
+        isolated.rate_history = {}
+        isolated.output = self.root / "retention"
+        isolated.retention_seconds = 86400
+        payload = {"sceneId": "indoor-huron", "points": PRESETS["forward"]}
+        first = isolated.submit(payload, "client-a")
+        with self.assertRaises(queue.Full):
+            isolated.submit(payload, "client-a")
+        isolated.jobs[first].update(status="completed", createdAt=0)
+        directory = isolated.output / first
+        directory.mkdir(parents=True)
+        (directory / "prediction.mp4").write_bytes(b"test")
+        isolated.prune()
+        self.assertNotIn(first, isolated.jobs)
+        self.assertFalse(directory.exists())
+
     def test_private_server_files_blocked_after_url_normalization(self):
         paths = ("/server", "/%73erver/", "/server/private.py",
                  "/%73erver/private.py", "/server%2fprivate.py",
@@ -232,6 +273,7 @@ class HttpTests(unittest.TestCase):
 
     def test_queue_capacity_and_polling(self):
         for _ in range(3):
+            self.app.rate_history.clear()
             status, result = self.request("/api/predict", {"sceneId": "indoor-huron", "points": PRESETS["forward"], "seed": 0})
             self.assertEqual(status, 202)
             status, job = self.request(f"/api/jobs/{result['jobId']}")

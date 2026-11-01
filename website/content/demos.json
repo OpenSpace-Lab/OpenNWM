@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "defaultDemo": "tartan-drive-36",
   "note": "Precomputed model outputs, not live generation. Videos contain the shared initial frame followed by every predicted frame, without interpolation. Curated qualitative examples do not replace aggregate test results.",
-  "timingNote": "A shared initial frame and all future frames are encoded at 4 FPS. 16 s and nominal 4 s prediction horizons produce 16.25 s and 4.25 s media. LuSNAR uses nearest-source sampling; its original nonuniform capture offsets are retained in each sample.",
+  "timingNote": "A shared initial frame and all future frames are encoded at 4 FPS. 16 s and nominal 4 s prediction horizons produce 16.25 s and 4.25 s media. LuSNAR uses nearest-source sampling; its original nonuniform capture offsets are retained in each sample. MarsLab plays at 1× simulation time: 4 FPS, one shared observed anchor and sixteen future samples over 4 seconds; the final frame is held for 0.25 seconds.",
   "demos": [
     {
       "id": "tartan-drive-36",
@@ -3373,7 +3373,7 @@
       "domain": "held-out scene",
       "environment": "lunar",
       "fineTuned": true,
-      "sampleId": "lusnar_ft_Moon_7_cross_scene_test_window00_direct",
+      "sampleId": "lusnar_curved_Moon_7_grid0180_direct",
       "fps": 4,
       "duration": 4.25,
       "horizon": 4,
@@ -3390,11 +3390,11 @@
       "checkpoint": {
         "sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56"
       },
-      "sourceManifest": "assets/space/lusnar-finetuned/moon-7/manifest.json",
-      "sourceManifestSha256": "f3f95ae1aeba71de6c97a701d59b11381ecf4ad613a70af1c1be8ebad8361b94",
-      "sourceInferenceManifestSha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+      "sourceManifest": "assets/space/lusnar-curved-20261029/moon-7/manifest.json",
+      "sourceManifestSha256": "1d94d8f7a1c6cf1c7e66b3d00b5504bc9e401c1ce4e9916f20dc2a414664f16d",
+      "sourceInferenceManifestSha256": "56e5d19f7503860c5fbeca1797a3df97dcc9b2b5c868058176c38356719b3215",
       "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
-      "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+      "selection": "For each held-out Moon_7..9 scene, select the valid 20-frame window with the largest recorded future yaw range (degrees rounded to two decimals, tie: earliest anchor); require at least one meter of traveled future path, unique nearest source frames within 125 ms of the 4 Hz grid, and retain previous evaluation windows plus their 4 s exclusion buffer. Selection uses only recorded ground-truth poses, before new inference; no prediction image or prediction quality is used. Frozen anchors: Moon_7=180, Moon_8=39, Moon_9=713.",
       "training": {
         "steps": 1000,
         "windows": 30,
@@ -3407,7 +3407,13 @@
           "Moon_5"
         ]
       },
-      "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+      "limitations": [
+        "Qualitative ground-truth-curvature-selected held-out scenes; not a random benchmark.",
+        "Same original fine-tuned checkpoint; no extra training or test-based checkpoint selection.",
+        "Direct predictions share four observed context frames and do not form an autoregressive rollout.",
+        "Planar body poses omit height, roll, pitch and camera extrinsics; source capture intervals are nonuniform.",
+        "Ground-truth-curvature-selected qualitative examples; not a random benchmark or an accuracy improvement claim. No extra fine-tuning or prediction-based sample selection."
+      ],
       "conditioningTrajectory": {
         "positions": [
           [
@@ -3415,68 +3421,68 @@
             0
           ],
           [
-            3.275800064218861e-06,
-            2.008953119681929e-08
+            0.22119320649681617,
+            -0.02655589199512133
           ],
           [
-            5.331000026817501e-06,
-            8.382963187805092e-09
+            0.4823967172716762,
+            -0.0573444606349143
           ],
           [
-            5.1021000523850735e-06,
-            1.638369470648943e-08
+            0.7000750238920065,
+            -0.0832180925195965
           ],
           [
-            4.715900084664629e-06,
-            2.648492892457041e-08
+            1.1332126550894042,
+            -0.16246146726290167
           ],
           [
-            4.715900084664629e-06,
-            2.648492892457041e-08
+            1.3769927233337587,
+            -0.20487559612085654
           ],
           [
-            4.882800031613491e-06,
-            9.884395545552098e-09
+            1.648212500894845,
+            -0.27335334622784335
           ],
           [
-            0.05070039359521329,
-            -1.57882834027468e-06
+            1.8595674094729961,
+            -0.31694179217308305
           ],
           [
-            0.2688526941071908,
-            0.00015827580044211858
+            2.286579297799117,
+            -0.46012173919137644
           ],
           [
-            0.49192869459900096,
-            0.0003118119940619072
+            2.5693701786634078,
+            -0.5385498444853205
           ],
           [
-            0.765389695314349,
-            0.0005352150672760626
+            2.827928562017432,
+            -0.6101547493267809
           ],
           [
-            1.0451066960181796,
-            0.0007550041475626705
+            3.1055771349891534,
+            -0.7119239486297451
           ],
           [
-            1.4671866970838274,
-            0.0010877822641103595
+            3.551600241394602,
+            -0.8817762331372818
           ],
           [
-            1.7659966978635468,
-            0.0013312873269790049
+            3.8014935583836196,
+            -0.9997517819778314
           ],
           [
-            2.071426698635627,
-            0.0015723912336487356
+            4.076849006093773,
+            -1.1300439821140644
           ],
           [
-            2.380756699449008,
-            0.0018264126766966763
+            4.311902777995835,
+            -1.238154547345287
           ],
           [
-            2.8563267066407736,
-            0.004076032849868927
+            4.687873598918223,
+            -1.4482799903904895
           ]
         ],
         "sampleTimesSeconds": [
@@ -3500,47 +3506,47 @@
         ],
         "captureOffsetsSeconds": [
           0,
-          0.3333568,
-          0.558418432,
-          0.775082752,
-          1.108415232,
-          1.333415168,
-          1.550198784,
-          1.766799616,
-          2.1001216,
-          2.325136896,
-          2.541809664,
-          2.766796288,
-          3.100177664,
-          3.325141504,
-          3.550172416,
-          3.766811392,
-          4.100147968
+          0.21666048,
+          0.4417024,
+          0.658300672,
+          0.991660288,
+          1.216641536,
+          1.441651968,
+          1.658378752,
+          2.000076544,
+          2.216718592,
+          2.433381376,
+          2.65849216,
+          2.991811072,
+          3.216708352,
+          3.433427968,
+          3.65852544,
+          3.983533824
         ],
         "axes": "Forward and left in meters relative to the last observed rover-body pose.",
         "timeSemantics": "Frame 0 is the shared context anchor; frames 1–16 use the paired target pose. Playback is 4 FPS; nonuniform source capture offsets are retained separately.",
-        "sourceFile": "assets/space/lusnar-finetuned/moon-7/manifest.json",
-        "sourceSha256": "f3f95ae1aeba71de6c97a701d59b11381ecf4ad613a70af1c1be8ebad8361b94",
+        "sourceFile": "assets/space/lusnar-curved-20261029/moon-7/manifest.json",
+        "sourceSha256": "1d94d8f7a1c6cf1c7e66b3d00b5504bc9e401c1ce4e9916f20dc2a414664f16d",
         "poseSource": "LuSNAR/Moon_7/gt.txt",
         "poseSourceSha256": "3f889e9fd480afbdcad92e533cffb0655e21739037d3d4e05d4c21f4fbbea187"
       },
       "assetProvenance": {
         "gt": {
-          "sha256": "c580e0762bfde76fd5a2416460fda51e137e9fe8b1ea495eb6324e1c770f868e",
-          "sourceFramesSha256": "73cd6c2ebdb3ca284d81dfcce7db0d2963b0f5aa1b9c9b0714e06e8741389200",
+          "sha256": "b7b2e7dfb31b5ca47c40dd690c39d00c6a7da59ef2ee97dfb2b4ea7956fcb049",
+          "sourceFramesSha256": "cb61ba47a79da04eed09afe032dd8bb1e13e5a141700c813cc67e2fb6da1828d",
           "frameCount": 17
         },
         "prediction": {
-          "sha256": "cce9633d2d5ddc28a62179247581e4b3fe98c1c0819ea9364aadf67792212133",
-          "sourceFramesSha256": "7c106769b0902b5c540bb272e6e4216d93ab77cbb59ec9376f969403bdec9c00",
+          "sha256": "a9d0f36f0f0eeb019c3647613827e76f90d7ada86b0b364e1019ba3ee1088f94",
+          "sourceFramesSha256": "270fbedbdd74ef4225ff5611f85393c0267c37f5bf38a768655892da219b2447",
           "frameCount": 17
         }
       },
-      "gt": "assets/space/lusnar-finetuned/moon-7/slider-gt.mp4",
-      "gtPoster": "assets/space/lusnar-finetuned/moon-7/slider-gt.webp",
-      "prediction": "assets/space/lusnar-finetuned/moon-7/slider-prediction.mp4",
-      "predictionPoster": "assets/space/lusnar-finetuned/moon-7/slider-prediction.webp",
-      "poster": "assets/space/lusnar-finetuned/moon-7/slider-gt.webp"
+      "gt": "assets/space/lusnar-curved-20261029/moon-7/slider-gt.mp4",
+      "gtPoster": "assets/space/lusnar-curved-20261029/moon-7/slider-gt.webp",
+      "prediction": "assets/space/lusnar-curved-20261029/moon-7/slider-prediction.mp4",
+      "predictionPoster": "assets/space/lusnar-curved-20261029/moon-7/slider-prediction.webp",
+      "poster": "assets/space/lusnar-curved-20261029/moon-7/slider-gt.webp"
     },
     {
       "id": "lusnar-finetuned-moon-8",
@@ -3551,7 +3557,7 @@
       "domain": "held-out scene",
       "environment": "lunar",
       "fineTuned": true,
-      "sampleId": "lusnar_ft_Moon_8_cross_scene_test_window00_direct",
+      "sampleId": "lusnar_curved_Moon_8_grid0039_direct",
       "fps": 4,
       "duration": 4.25,
       "horizon": 4,
@@ -3568,11 +3574,11 @@
       "checkpoint": {
         "sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56"
       },
-      "sourceManifest": "assets/space/lusnar-finetuned/moon-8/manifest.json",
-      "sourceManifestSha256": "ac40176e951281e10a346a4da86feb800644d1ef66aec2304ad9c97f8c23eb7c",
-      "sourceInferenceManifestSha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+      "sourceManifest": "assets/space/lusnar-curved-20261029/moon-8/manifest.json",
+      "sourceManifestSha256": "3634492c3dfe19086dc23138274f0155fafc2ed27c04718b5cbbe01696279d1b",
+      "sourceInferenceManifestSha256": "56e5d19f7503860c5fbeca1797a3df97dcc9b2b5c868058176c38356719b3215",
       "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
-      "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+      "selection": "For each held-out Moon_7..9 scene, select the valid 20-frame window with the largest recorded future yaw range (degrees rounded to two decimals, tie: earliest anchor); require at least one meter of traveled future path, unique nearest source frames within 125 ms of the 4 Hz grid, and retain previous evaluation windows plus their 4 s exclusion buffer. Selection uses only recorded ground-truth poses, before new inference; no prediction image or prediction quality is used. Frozen anchors: Moon_7=180, Moon_8=39, Moon_9=713.",
       "training": {
         "steps": 1000,
         "windows": 30,
@@ -3585,7 +3591,13 @@
           "Moon_5"
         ]
       },
-      "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+      "limitations": [
+        "Qualitative ground-truth-curvature-selected held-out scenes; not a random benchmark.",
+        "Same original fine-tuned checkpoint; no extra training or test-based checkpoint selection.",
+        "Direct predictions share four observed context frames and do not form an autoregressive rollout.",
+        "Planar body poses omit height, roll, pitch and camera extrinsics; source capture intervals are nonuniform.",
+        "Ground-truth-curvature-selected qualitative examples; not a random benchmark or an accuracy improvement claim. No extra fine-tuning or prediction-based sample selection."
+      ],
       "conditioningTrajectory": {
         "positions": [
           [
@@ -3593,68 +3605,68 @@
             0
           ],
           [
-            0.0,
-            0.0
+            0.5133864700806048,
+            0.00043856376338841097
           ],
           [
-            -6.293999203228299e-07,
-            -1.1604322368027575e-08
+            1.0671469957261308,
+            0.07146921304095266
           ],
           [
-            -7.777199515661916e-06,
-            -7.055340947206428e-08
+            1.6762494982874818,
+            0.16146819622131892
           ],
           [
-            0.0013543774008285528,
-            -1.1599889109369577e-07
+            2.539674888841167,
+            0.3596390733632745
           ],
           [
-            0.0937173674088075,
-            -9.607013690913866e-07
+            3.0965121587682782,
+            0.5016265971818287
           ],
           [
-            0.39349386732805564,
-            1.1827296504057837e-05
+            3.599389783293963,
+            0.662598542723285
           ],
           [
-            0.9271968670383917,
-            5.583918316198859e-05
+            4.129007073585264,
+            0.8605579979773912
           ],
           [
-            1.4271378664484229,
-            0.0001434638872255607
+            4.814801097873927,
+            1.1014936996696854
           ],
           [
-            1.9134778658374298,
-            0.00023410339920376221
+            5.277229316472764,
+            1.2681289622748986
           ],
           [
-            2.460457865003069,
-            0.0003574767528937545
+            5.731346271950807,
+            1.5172152582595482
           ],
           [
-            3.294067863670597,
-            0.0005543665216227759
+            6.255831979604433,
+            1.8059758685703653
           ],
           [
-            3.835607862798105,
-            0.0006832735164254949
+            6.9173660388595986,
+            2.1590065879778706
           ],
           [
-            4.4095878618176005,
-            0.0008280202910621995
+            7.371382125111486,
+            2.402556393612198
           ],
           [
-            5.289947860223352,
-            0.001063189112726702
+            7.816165842426403,
+            2.715077467640052
           ],
           [
-            5.9132978567896135,
-            0.001565331932990685
+            8.460910472682487,
+            3.159131868987394
           ],
           [
-            6.560417851732759,
-            0.002303905992357068
+            8.841226646296722,
+            3.4569018274913166
           ]
         ],
         "sampleTimesSeconds": [
@@ -3678,47 +3690,47 @@
         ],
         "captureOffsetsSeconds": [
           0,
-          0.224954112,
-          0.441630464,
-          0.774980096,
-          0.991627776,
-          1.208292096,
-          1.433312512,
-          1.76683392,
-          1.991669504,
-          2.208342016,
-          2.433357824,
-          2.766725376,
-          2.983375104,
-          3.208361984,
-          3.533385472,
-          3.758395136,
-          3.9751232
+          0.216723712,
+          0.441670144,
+          0.65832704,
+          0.991675904,
+          1.216703744,
+          1.441681152,
+          1.658400512,
+          1.983394816,
+          2.208371712,
+          2.425093888,
+          2.650085888,
+          2.975095296,
+          3.200100096,
+          3.416793344,
+          3.750148096,
+          3.966820352
         ],
         "axes": "Forward and left in meters relative to the last observed rover-body pose.",
         "timeSemantics": "Frame 0 is the shared context anchor; frames 1–16 use the paired target pose. Playback is 4 FPS; nonuniform source capture offsets are retained separately.",
-        "sourceFile": "assets/space/lusnar-finetuned/moon-8/manifest.json",
-        "sourceSha256": "ac40176e951281e10a346a4da86feb800644d1ef66aec2304ad9c97f8c23eb7c",
+        "sourceFile": "assets/space/lusnar-curved-20261029/moon-8/manifest.json",
+        "sourceSha256": "3634492c3dfe19086dc23138274f0155fafc2ed27c04718b5cbbe01696279d1b",
         "poseSource": "LuSNAR/Moon_8/gt.txt",
         "poseSourceSha256": "3adf8e3ca4bd8ab3a84c19963bea1ea043d80b6d145993942d1296c538abbd44"
       },
       "assetProvenance": {
         "gt": {
-          "sha256": "4a7f43d615f0c48304af6e0f7f18841b8bf16c7ef74a3cd633ec76e209f2b74f",
-          "sourceFramesSha256": "d38467dce9c48b34abcd688c5de051655dfb48fe95e53f149fc763d9d03b07f9",
+          "sha256": "040662ce8fc60ab5d62d1773f49f447e63d184dce65b31330b4f5176782945a4",
+          "sourceFramesSha256": "64901eafc125c0ad5676cfddb96181a78b15361ddb6e9410f783875f0f52cc3e",
           "frameCount": 17
         },
         "prediction": {
-          "sha256": "41428f6587bfdebcb15478134b1fa85a2f4db7ccc06083e3fff769a51ea56c8b",
-          "sourceFramesSha256": "1e17657d95c12935b9aa6df530e3fb47430c557fdaaad93f8b619989ba164d3c",
+          "sha256": "7d0906016e86c83efd9f9164b4ef3c04a016cfcf24b00959eb1de048e7b6b269",
+          "sourceFramesSha256": "5fdf622ba5b9509ef1506f9101b53e6bc5646ea95f78de1c406b532b6962c1e2",
           "frameCount": 17
         }
       },
-      "gt": "assets/space/lusnar-finetuned/moon-8/slider-gt.mp4",
-      "gtPoster": "assets/space/lusnar-finetuned/moon-8/slider-gt.webp",
-      "prediction": "assets/space/lusnar-finetuned/moon-8/slider-prediction.mp4",
-      "predictionPoster": "assets/space/lusnar-finetuned/moon-8/slider-prediction.webp",
-      "poster": "assets/space/lusnar-finetuned/moon-8/slider-gt.webp"
+      "gt": "assets/space/lusnar-curved-20261029/moon-8/slider-gt.mp4",
+      "gtPoster": "assets/space/lusnar-curved-20261029/moon-8/slider-gt.webp",
+      "prediction": "assets/space/lusnar-curved-20261029/moon-8/slider-prediction.mp4",
+      "predictionPoster": "assets/space/lusnar-curved-20261029/moon-8/slider-prediction.webp",
+      "poster": "assets/space/lusnar-curved-20261029/moon-8/slider-gt.webp"
     },
     {
       "id": "lusnar-finetuned-moon-9",
@@ -3729,7 +3741,7 @@
       "domain": "held-out scene",
       "environment": "lunar",
       "fineTuned": true,
-      "sampleId": "lusnar_ft_Moon_9_cross_scene_test_window00_direct",
+      "sampleId": "lusnar_curved_Moon_9_grid0713_direct",
       "fps": 4,
       "duration": 4.25,
       "horizon": 4,
@@ -3746,11 +3758,11 @@
       "checkpoint": {
         "sha256": "1dbeb11d9d86915e18cbe9fa064f38f9f5e05c3e727244a7e026675a128a6b56"
       },
-      "sourceManifest": "assets/space/lusnar-finetuned/moon-9/manifest.json",
-      "sourceManifestSha256": "4b624c795b022a4548a58d52c3211486e0a7f991a9e7bd5a6e0e3feb6a8e40e2",
-      "sourceInferenceManifestSha256": "8f6fa3f05c91fd2d8c3ac4d04f6d7a48f1190ab4c11a565d114a01fc177a6b12",
+      "sourceManifest": "assets/space/lusnar-curved-20261029/moon-9/manifest.json",
+      "sourceManifestSha256": "67b6cd43094d19e1310f4392eb74b3f4884c03bbbcde524454176838dc4d4ad7",
+      "sourceInferenceManifestSha256": "56e5d19f7503860c5fbeca1797a3df97dcc9b2b5c868058176c38356719b3215",
       "protocol": "Each horizon is predicted from the same four observed context frames and anchor-relative target body pose.",
-      "selection": "First preselected held-out window in each of Moon_7, Moon_8 and Moon_9; not ranked by prediction quality.",
+      "selection": "For each held-out Moon_7..9 scene, select the valid 20-frame window with the largest recorded future yaw range (degrees rounded to two decimals, tie: earliest anchor); require at least one meter of traveled future path, unique nearest source frames within 125 ms of the 4 Hz grid, and retain previous evaluation windows plus their 4 s exclusion buffer. Selection uses only recorded ground-truth poses, before new inference; no prediction image or prediction quality is used. Frozen anchors: Moon_7=180, Moon_8=39, Moon_9=713.",
       "training": {
         "steps": 1000,
         "windows": 30,
@@ -3763,7 +3775,13 @@
           "Moon_5"
         ]
       },
-      "limitations": "Qualitative held-out simulated scenes; direct predictions are not a continuous autoregressive rollout. Geometry and long-rollout consistency remain imperfect. Not a validation of physical navigation.",
+      "limitations": [
+        "Qualitative ground-truth-curvature-selected held-out scenes; not a random benchmark.",
+        "Same original fine-tuned checkpoint; no extra training or test-based checkpoint selection.",
+        "Direct predictions share four observed context frames and do not form an autoregressive rollout.",
+        "Planar body poses omit height, roll, pitch and camera extrinsics; source capture intervals are nonuniform.",
+        "Ground-truth-curvature-selected qualitative examples; not a random benchmark or an accuracy improvement claim. No extra fine-tuning or prediction-based sample selection."
+      ],
       "conditioningTrajectory": {
         "positions": [
           [
@@ -3771,68 +3789,68 @@
             0
           ],
           [
-            1.6690266609665735e-05,
-            2.2069038262518107e-06
+            1.1310282167677737,
+            0.1612619387056466
           ],
           [
-            3.7102633905644927e-05,
-            4.407390618340654e-05
+            1.776025076566166,
+            0.2637756004792554
           ],
           [
-            5.1460503897286444e-05,
-            5.349641823185493e-05
+            2.364644769620643,
+            0.438895150925407
           ],
           [
-            6.372445185889508e-05,
-            6.155952212520459e-05
+            2.989800671533339,
+            0.6770234741120927
           ],
           [
-            7.92635694789529e-05,
-            7.51643759866043e-05
+            3.7931077701180596,
+            0.9612728459027731
           ],
           [
-            8.984132169991906e-05,
-            8.014688368372174e-05
+            4.314193119239381,
+            1.1832977520081729
           ],
           [
-            0.12343374887276266,
-            0.0003328702893632843
+            4.880494734582352,
+            1.531526815212177
           ],
           [
-            0.29046681153003373,
-            0.0004707184533682587
+            5.455482268835049,
+            1.8580866649396208
           ],
           [
-            0.745392619888715,
-            0.0008652944575450829
+            6.192102775525374,
+            2.3693754572314822
           ],
           [
-            1.0827914078346097,
-            0.001223662554976598
+            6.696032759270103,
+            2.742074493295517
           ],
           [
-            1.4126052987573081,
-            0.0010962857897392582
+            7.112204079987872,
+            3.0471538793772597
           ],
           [
-            1.6943021825942108,
-            0.0001938821571695771
+            7.675830240794745,
+            3.574750838100587
           ],
           [
-            2.214618585046209,
-            -0.04910145157289114
+            8.067863227969765,
+            3.963420539732506
           ],
           [
-            2.529647466175429,
-            -0.0682053529252794
+            8.365470223749643,
+            4.253785957891877
           ],
           [
-            2.833681600333348,
-            -0.08627587229260239
+            8.67712846191101,
+            4.637465697500522
           ],
           [
-            3.1749160655317206,
-            -0.10656561307533034
+            9.076210000449016,
+            5.167313718727488
           ]
         ],
         "sampleTimesSeconds": [
@@ -3856,47 +3874,530 @@
         ],
         "captureOffsetsSeconds": [
           0,
-          0.216687872,
-          0.547759104,
-          0.769749248,
-          0.989025024,
-          1.321155328,
-          1.542519296,
-          1.765391872,
-          1.97954944,
-          2.316112896,
-          2.53808896,
-          2.76042752,
-          2.975789568,
-          3.314718208,
-          3.535064576,
-          3.7543424,
-          3.977644544
+          0.335568128,
+          0.552280576,
+          0.776836864,
+          0.993043712,
+          1.326444544,
+          1.55241728,
+          1.769697024,
+          1.996883456,
+          2.32453504,
+          2.54240768,
+          2.769505024,
+          3.096931328,
+          3.322430976,
+          3.540760832,
+          3.76828672,
+          4.095412992
         ],
         "axes": "Forward and left in meters relative to the last observed rover-body pose.",
         "timeSemantics": "Frame 0 is the shared context anchor; frames 1–16 use the paired target pose. Playback is 4 FPS; nonuniform source capture offsets are retained separately.",
-        "sourceFile": "assets/space/lusnar-finetuned/moon-9/manifest.json",
-        "sourceSha256": "4b624c795b022a4548a58d52c3211486e0a7f991a9e7bd5a6e0e3feb6a8e40e2",
+        "sourceFile": "assets/space/lusnar-curved-20261029/moon-9/manifest.json",
+        "sourceSha256": "67b6cd43094d19e1310f4392eb74b3f4884c03bbbcde524454176838dc4d4ad7",
         "poseSource": "LuSNAR/Moon_9/gt.txt",
         "poseSourceSha256": "7b6f47fbc69a55c282154bc1979ced200982f7ceffcf6e60924dc61cf17d9688"
       },
       "assetProvenance": {
         "gt": {
-          "sha256": "0c429e59ff669bfe07df4f0cde32ee7b734fbd0d4b8f0c189bb2c45541e87646",
-          "sourceFramesSha256": "dbb29bb0d334db25cfbdb7968131bdf0b936285290c8d514c918f0858600622a",
+          "sha256": "0dce311fa2a39bc62a08b37c77e5f1bd8d402d26d6c39bf44d15674e73668f6f",
+          "sourceFramesSha256": "b3168c7c319627b5a2d9039eb0958a1c8272cddbf501c0b192fc4c0b3162adae",
           "frameCount": 17
         },
         "prediction": {
-          "sha256": "a916c2f3847e7985569f7f2f74b9792b9eaf1a28dac06dc537cf5e75a136a965",
-          "sourceFramesSha256": "61ce65d25b4936239ef5a0b555951c629b1b01c331e4340668f8b0abf9a878db",
+          "sha256": "fee0001a8ff5455a4e55e7beaf8b1f85c8b2eca242136941710f9cf23639b7b7",
+          "sourceFramesSha256": "361d3436f6a2b790da41ac040810554b72107b24089a23fe72231e94c9965178",
           "frameCount": 17
         }
       },
-      "gt": "assets/space/lusnar-finetuned/moon-9/slider-gt.mp4",
-      "gtPoster": "assets/space/lusnar-finetuned/moon-9/slider-gt.webp",
-      "prediction": "assets/space/lusnar-finetuned/moon-9/slider-prediction.mp4",
-      "predictionPoster": "assets/space/lusnar-finetuned/moon-9/slider-prediction.webp",
-      "poster": "assets/space/lusnar-finetuned/moon-9/slider-gt.webp"
+      "gt": "assets/space/lusnar-curved-20261029/moon-9/slider-gt.mp4",
+      "gtPoster": "assets/space/lusnar-curved-20261029/moon-9/slider-gt.webp",
+      "prediction": "assets/space/lusnar-curved-20261029/moon-9/slider-prediction.mp4",
+      "predictionPoster": "assets/space/lusnar-curved-20261029/moon-9/slider-prediction.webp",
+      "poster": "assets/space/lusnar-curved-20261029/moon-9/slider-gt.webp"
+    },
+    {
+      "id": "marslab-curves-20261029-marslab-test_00-0000",
+      "title": "Mars crater · left turn",
+      "titleZh": "火星陨石坑 · 左弯",
+      "dataset": "MarsLab",
+      "datasetId": "marslab",
+      "domain": "held-out trajectory · same terrain",
+      "environment": "mars",
+      "fineTuned": true,
+      "sampleId": "marslab-test_00-0000",
+      "fps": 4,
+      "duration": 4.25,
+      "frameCount": 17,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "posterTime": 1,
+      "labels": {
+        "gt": "Simulation reference",
+        "prediction": "OpenNWM"
+      },
+      "model": "OpenNWM · MarsLab few-shot fine-tuned EMA",
+      "checkpoint": {
+        "sha256": "194dcab1cbf2e0b1bb6c1c2ddde7f8b4ee7cc3c2ddab4261f19138977fdb1289"
+      },
+      "sourceManifest": "assets/space/marslab-curves-20261029/marslab-test_00-0000/manifest.json",
+      "sourceInferenceManifestSha256": "00e1e74837e4b3c433681ef79a18c38bab13b99522e3036ffad0f1056abd6b37",
+      "protocol": "Each of sixteen future views is predicted directly from the same four observed RGB frames and its anchor-relative realized PhysX body displacement. The future reference images are not model context. This is action-conditioned direct prediction, not an autoregressive rollout or a navigation success evaluation.",
+      "selection": "The first 20-frame window of test_00, test_01 and test_02, fixed before training; all six held-out windows are evaluated without ranking predictions. Independent held-out trajectories share the training terrain.",
+      "limitations": [
+        "Independent held-out trajectories share the main_crater terrain; this is not cross-scene generalization.",
+        "Actions are realized PhysX body displacements, not a claim that commanded velocity exactly equals traveled motion.",
+        "A single translation scale fitted only on training poses is shared by validation and test; metric poses and commands are retained.",
+        "The SE(2) action interface discards vertical motion, pitch, and roll.",
+        "MarsLab scene and rover assets are run with a minimal Isaac Sim 4.1 recorder, not the complete official Isaac Sim 5.x application."
+      ],
+      "training": {
+        "steps": 1000,
+        "windows": 30,
+        "targetPairs": 480,
+        "scenes": [
+          "main_crater"
+        ]
+      },
+      "conditioningTrajectory": {
+        "estimated": false,
+        "positions": [
+          [
+            0,
+            0
+          ],
+          [
+            0.1562168641127135,
+            0.0019848210653486548
+          ],
+          [
+            0.31298115510745983,
+            0.00892230743917577
+          ],
+          [
+            0.4780920435631889,
+            0.025380690335491063
+          ],
+          [
+            0.6428268596722817,
+            0.04022620846306968
+          ],
+          [
+            0.8083792248649143,
+            0.058687534375119144
+          ],
+          [
+            0.9675132490363172,
+            0.08331372857167957
+          ],
+          [
+            1.1298153464418998,
+            0.11351227681462084
+          ],
+          [
+            1.2928163784077285,
+            0.147020495178654
+          ],
+          [
+            1.457479515231796,
+            0.18579255317386534
+          ],
+          [
+            1.6211968327612056,
+            0.2286628584499557
+          ],
+          [
+            1.7785208059381588,
+            0.2732927362411235
+          ],
+          [
+            1.940026818320234,
+            0.3231430911136157
+          ],
+          [
+            2.1023791878177858,
+            0.37976388494699576
+          ],
+          [
+            2.2609515526568518,
+            0.4405845206142034
+          ],
+          [
+            2.416940725154933,
+            0.5036459542552775
+          ],
+          [
+            2.5698486572139507,
+            0.5683674537724765
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25000001303851604,
+          0.5000000260770321,
+          0.7500000391155481,
+          1.0000000521540642,
+          1.2500000651925802,
+          1.5000000782310963,
+          1.7500000912696123,
+          2.0000001043081284,
+          2.2500001173466444,
+          2.5000001303851604,
+          2.7500001434236765,
+          3.0000001564621925,
+          3.2500001695007086,
+          3.5000001825392246,
+          3.7500001955777407,
+          4.000000208616257
+        ],
+        "axes": "Forward and left displacement in meters, relative to the observed anchor.",
+        "timeSemantics": "Offsets from synchronized simulator camera/PhysX timestamps; 1× simulation time.",
+        "sourceFile": "assets/space/marslab-curves-20261029/marslab-test_00-0000/manifest.json",
+        "poseSource": "MarsLab / Isaac Sim PhysX body ground truth",
+        "poseSourceSha256": "b26b9027ec365d3c9af1d99c406318d06e9bb6c0edaa525881a2a4510af972bd",
+        "sourceSha256": "5541134b49d373ee81b3efd5780f45dc68ac44fe301b7bfd439714d0d12784d0"
+      },
+      "assetProvenance": {
+        "gt": {
+          "sha256": "45545797e14b13ef884ecb7435c19213ac53cbef648e2812290bacee0256f235",
+          "sourceFramesSha256": "0d6654fe5251f8e87d5cfcb63fa9491de7423c8b7677b01115405335e61a5644",
+          "frameCount": 17
+        },
+        "prediction": {
+          "sha256": "23e431c26e1fff07f197fc89856a08e463dde9de0eec51fdd6305a5bc8c139ad",
+          "sourceFramesSha256": "2920b26cfbb359f9e76966ba7f2daa5726782f71f6497d7a0c42bfc6fe70274c",
+          "frameCount": 17
+        }
+      },
+      "gt": "assets/space/marslab-curves-20261029/marslab-test_00-0000/slider-gt.mp4",
+      "gtPoster": "assets/space/marslab-curves-20261029/marslab-test_00-0000/slider-gt.webp",
+      "prediction": "assets/space/marslab-curves-20261029/marslab-test_00-0000/slider-prediction.mp4",
+      "predictionPoster": "assets/space/marslab-curves-20261029/marslab-test_00-0000/slider-prediction.webp",
+      "sourceManifestSha256": "5541134b49d373ee81b3efd5780f45dc68ac44fe301b7bfd439714d0d12784d0",
+      "poster": "assets/space/marslab-curves-20261029/marslab-test_00-0000/slider-gt.webp"
+    },
+    {
+      "id": "marslab-curves-20261029-marslab-test_01-0000",
+      "title": "Mars crater · right turn",
+      "titleZh": "火星陨石坑 · 右弯",
+      "dataset": "MarsLab",
+      "datasetId": "marslab",
+      "domain": "held-out trajectory · same terrain",
+      "environment": "mars",
+      "fineTuned": true,
+      "sampleId": "marslab-test_01-0000",
+      "fps": 4,
+      "duration": 4.25,
+      "frameCount": 17,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "posterTime": 1,
+      "labels": {
+        "gt": "Simulation reference",
+        "prediction": "OpenNWM"
+      },
+      "model": "OpenNWM · MarsLab few-shot fine-tuned EMA",
+      "checkpoint": {
+        "sha256": "194dcab1cbf2e0b1bb6c1c2ddde7f8b4ee7cc3c2ddab4261f19138977fdb1289"
+      },
+      "sourceManifest": "assets/space/marslab-curves-20261029/marslab-test_01-0000/manifest.json",
+      "sourceInferenceManifestSha256": "00e1e74837e4b3c433681ef79a18c38bab13b99522e3036ffad0f1056abd6b37",
+      "protocol": "Each of sixteen future views is predicted directly from the same four observed RGB frames and its anchor-relative realized PhysX body displacement. The future reference images are not model context. This is action-conditioned direct prediction, not an autoregressive rollout or a navigation success evaluation.",
+      "selection": "The first 20-frame window of test_00, test_01 and test_02, fixed before training; all six held-out windows are evaluated without ranking predictions. Independent held-out trajectories share the training terrain.",
+      "limitations": [
+        "Independent held-out trajectories share the main_crater terrain; this is not cross-scene generalization.",
+        "Actions are realized PhysX body displacements, not a claim that commanded velocity exactly equals traveled motion.",
+        "A single translation scale fitted only on training poses is shared by validation and test; metric poses and commands are retained.",
+        "The SE(2) action interface discards vertical motion, pitch, and roll.",
+        "MarsLab scene and rover assets are run with a minimal Isaac Sim 4.1 recorder, not the complete official Isaac Sim 5.x application."
+      ],
+      "training": {
+        "steps": 1000,
+        "windows": 30,
+        "targetPairs": 480,
+        "scenes": [
+          "main_crater"
+        ]
+      },
+      "conditioningTrajectory": {
+        "estimated": false,
+        "positions": [
+          [
+            0,
+            0
+          ],
+          [
+            0.16485073192909105,
+            -0.003075564909409717
+          ],
+          [
+            0.33416029555656346,
+            -0.010394857569660437
+          ],
+          [
+            0.5131909511988038,
+            -0.024850850976819383
+          ],
+          [
+            0.6923858586523839,
+            -0.041764304637308125
+          ],
+          [
+            0.8681811959164926,
+            -0.06514560093761251
+          ],
+          [
+            1.0451653580618938,
+            -0.09279462074864187
+          ],
+          [
+            1.2221295456574337,
+            -0.12623993806028333
+          ],
+          [
+            1.4018937928498967,
+            -0.16508850340191517
+          ],
+          [
+            1.5762088396019158,
+            -0.2102625251835557
+          ],
+          [
+            1.7488379889533703,
+            -0.2550791756936467
+          ],
+          [
+            1.9201878551056906,
+            -0.3071543165722703
+          ],
+          [
+            2.0911431211725287,
+            -0.362621683850484
+          ],
+          [
+            2.2604204439421256,
+            -0.4243709236988493
+          ],
+          [
+            2.4215579506687237,
+            -0.4880712903388037
+          ],
+          [
+            2.579446151542873,
+            -0.5569953365406848
+          ],
+          [
+            2.738430298622396,
+            -0.6293887711229962
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25000001303851604,
+          0.5000000260770321,
+          0.7500000391155481,
+          1.0000000521540642,
+          1.2500000651925802,
+          1.5000000782310963,
+          1.7500000912696123,
+          2.0000001043081284,
+          2.2500001173466444,
+          2.5000001303851604,
+          2.7500001434236765,
+          3.0000001564621925,
+          3.2500001695007086,
+          3.5000001825392246,
+          3.7500001955777407,
+          4.000000208616257
+        ],
+        "axes": "Forward and left displacement in meters, relative to the observed anchor.",
+        "timeSemantics": "Offsets from synchronized simulator camera/PhysX timestamps; 1× simulation time.",
+        "sourceFile": "assets/space/marslab-curves-20261029/marslab-test_01-0000/manifest.json",
+        "poseSource": "MarsLab / Isaac Sim PhysX body ground truth",
+        "poseSourceSha256": "a7da93b9c05e466dc8221d0d1dc7071aca61593fa14afa2eac03735fff4a8993",
+        "sourceSha256": "04de58c86966bf940e4a96a9d78be20820c5c8e5aca727d34c700b283f15beb8"
+      },
+      "assetProvenance": {
+        "gt": {
+          "sha256": "905d6a4d43b63e6a1c71e83745891acdc4ad64f652a42345c14b639df0345f4e",
+          "sourceFramesSha256": "90dcc759498ade29987a14a1fdd08c3b12db788193a9c3458d8bc1bc00dc7199",
+          "frameCount": 17
+        },
+        "prediction": {
+          "sha256": "8e6414ad670519c52779ddd89c2270027a9c40c2d55ae562e531fb8eb40654d0",
+          "sourceFramesSha256": "df5067cccaace5be18b2a3eb3b77140e90b1c63cadd0cb0d01ccd37188df15f1",
+          "frameCount": 17
+        }
+      },
+      "gt": "assets/space/marslab-curves-20261029/marslab-test_01-0000/slider-gt.mp4",
+      "gtPoster": "assets/space/marslab-curves-20261029/marslab-test_01-0000/slider-gt.webp",
+      "prediction": "assets/space/marslab-curves-20261029/marslab-test_01-0000/slider-prediction.mp4",
+      "predictionPoster": "assets/space/marslab-curves-20261029/marslab-test_01-0000/slider-prediction.webp",
+      "sourceManifestSha256": "04de58c86966bf940e4a96a9d78be20820c5c8e5aca727d34c700b283f15beb8",
+      "poster": "assets/space/marslab-curves-20261029/marslab-test_01-0000/slider-gt.webp"
+    },
+    {
+      "id": "marslab-curves-20261029-marslab-test_02-0000",
+      "title": "Mars crater · S-curve",
+      "titleZh": "火星陨石坑 · S 弯",
+      "dataset": "MarsLab",
+      "datasetId": "marslab",
+      "domain": "held-out trajectory · same terrain",
+      "environment": "mars",
+      "fineTuned": true,
+      "sampleId": "marslab-test_02-0000",
+      "fps": 4,
+      "duration": 4.25,
+      "frameCount": 17,
+      "width": 224,
+      "height": 224,
+      "includesInitialFrame": true,
+      "posterTime": 1,
+      "labels": {
+        "gt": "Simulation reference",
+        "prediction": "OpenNWM"
+      },
+      "model": "OpenNWM · MarsLab few-shot fine-tuned EMA",
+      "checkpoint": {
+        "sha256": "194dcab1cbf2e0b1bb6c1c2ddde7f8b4ee7cc3c2ddab4261f19138977fdb1289"
+      },
+      "sourceManifest": "assets/space/marslab-curves-20261029/marslab-test_02-0000/manifest.json",
+      "sourceInferenceManifestSha256": "00e1e74837e4b3c433681ef79a18c38bab13b99522e3036ffad0f1056abd6b37",
+      "protocol": "Each of sixteen future views is predicted directly from the same four observed RGB frames and its anchor-relative realized PhysX body displacement. The future reference images are not model context. This is action-conditioned direct prediction, not an autoregressive rollout or a navigation success evaluation.",
+      "selection": "The first 20-frame window of test_00, test_01 and test_02, fixed before training; all six held-out windows are evaluated without ranking predictions. Independent held-out trajectories share the training terrain.",
+      "limitations": [
+        "Independent held-out trajectories share the main_crater terrain; this is not cross-scene generalization.",
+        "Actions are realized PhysX body displacements, not a claim that commanded velocity exactly equals traveled motion.",
+        "A single translation scale fitted only on training poses is shared by validation and test; metric poses and commands are retained.",
+        "The SE(2) action interface discards vertical motion, pitch, and roll.",
+        "MarsLab scene and rover assets are run with a minimal Isaac Sim 4.1 recorder, not the complete official Isaac Sim 5.x application."
+      ],
+      "training": {
+        "steps": 1000,
+        "windows": 30,
+        "targetPairs": 480,
+        "scenes": [
+          "main_crater"
+        ]
+      },
+      "conditioningTrajectory": {
+        "estimated": false,
+        "positions": [
+          [
+            0,
+            0
+          ],
+          [
+            0.15345994020729697,
+            0.0020238047069417522
+          ],
+          [
+            0.31302751457725664,
+            0.010397563646220832
+          ],
+          [
+            0.47901306550030104,
+            0.0240356881861171
+          ],
+          [
+            0.6463788327393921,
+            0.039379450592140625
+          ],
+          [
+            0.8084549188941305,
+            0.0565369615720087
+          ],
+          [
+            0.9658709347568016,
+            0.08070883304897299
+          ],
+          [
+            1.1222585125001725,
+            0.11007388119289754
+          ],
+          [
+            1.2728868514835856,
+            0.14117394300342406
+          ],
+          [
+            1.4015055713104332,
+            0.16644847503062263
+          ],
+          [
+            1.5072518008391909,
+            0.18658371625651404
+          ],
+          [
+            1.614852611167224,
+            0.2055004471490994
+          ],
+          [
+            1.726055912792703,
+            0.22231711245392013
+          ],
+          [
+            1.842029859972615,
+            0.23979908298899172
+          ],
+          [
+            1.9629228428072147,
+            0.2545916572523421
+          ],
+          [
+            2.0903335464173134,
+            0.26838845420989976
+          ],
+          [
+            2.219233216954118,
+            0.27872136301060835
+          ]
+        ],
+        "sampleTimesSeconds": [
+          0.0,
+          0.25000001303851604,
+          0.5000000260770321,
+          0.7500000391155481,
+          1.0000000521540642,
+          1.2500000651925802,
+          1.5000000782310963,
+          1.7500000912696123,
+          2.0000001043081284,
+          2.2500001173466444,
+          2.5000001303851604,
+          2.7500001434236765,
+          3.0000001564621925,
+          3.2500001695007086,
+          3.5000001825392246,
+          3.7500001955777407,
+          4.000000208616257
+        ],
+        "axes": "Forward and left displacement in meters, relative to the observed anchor.",
+        "timeSemantics": "Offsets from synchronized simulator camera/PhysX timestamps; 1× simulation time.",
+        "sourceFile": "assets/space/marslab-curves-20261029/marslab-test_02-0000/manifest.json",
+        "poseSource": "MarsLab / Isaac Sim PhysX body ground truth",
+        "poseSourceSha256": "cf30c458e6fbd387fd95a6c0c89152a662719f96cb181beabb7ad99896b60ffd",
+        "sourceSha256": "1910555eed9865be686bc818846826513a0aae492f5da56e9c4a8e87583b6ac2"
+      },
+      "assetProvenance": {
+        "gt": {
+          "sha256": "dd03b05de043c25f93b6dc96b305738d2a1e8ef4e9223d7b503645871dec2902",
+          "sourceFramesSha256": "5546a9f22e7b0f70821d7b913022317768b73d0c72f9fc09f568855bbc54ab68",
+          "frameCount": 17
+        },
+        "prediction": {
+          "sha256": "0f7afecdee95a6234e88d737d107a8f58378bcb260f90222ad436367207e2fb5",
+          "sourceFramesSha256": "9b871f79a3e72e3e3d3f81b501a38ff0cda38e1c58b310f2c55345256a1f3a26",
+          "frameCount": 17
+        }
+      },
+      "gt": "assets/space/marslab-curves-20261029/marslab-test_02-0000/slider-gt.mp4",
+      "gtPoster": "assets/space/marslab-curves-20261029/marslab-test_02-0000/slider-gt.webp",
+      "prediction": "assets/space/marslab-curves-20261029/marslab-test_02-0000/slider-prediction.mp4",
+      "predictionPoster": "assets/space/marslab-curves-20261029/marslab-test_02-0000/slider-prediction.webp",
+      "sourceManifestSha256": "1910555eed9865be686bc818846826513a0aae492f5da56e9c4a8e87583b6ac2",
+      "poster": "assets/space/marslab-curves-20261029/marslab-test_02-0000/slider-gt.webp"
     }
   ]
 }

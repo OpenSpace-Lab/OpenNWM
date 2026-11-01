@@ -1,8 +1,11 @@
+import { registerMedia } from "./media-scheduler.js?v=texture-master-20261030-v6-inline1";
+import { mediaUrl as deliveryUrl, setMediaUrl } from "./media-delivery.js?v=texture-master-20261030-v6-inline1";
+
 const $ = (selector) => document.querySelector(selector);
 const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-export async function initCinematic(getLanguage) {
-  const t = (en, zh) => getLanguage() === "zh" ? zh || en : en;
+export async function initCinematic() {
+  const t = (en) => en;
   const hero = $("#hero-video");
   const heroScene = $("#hero-scene");
   const section = $(".cinematic-hero");
@@ -56,21 +59,15 @@ export async function initCinematic(getLanguage) {
   hero.addEventListener("play", () => { cancelAnimationFrame(frame); drawFrame(); });
   hero.addEventListener("pause", () => { cancelAnimationFrame(frame); frame = 0; updateHeroScene(); });
   ["timeupdate", "seeking", "seeked", "loadedmetadata", "emptied"].forEach((event) => hero.addEventListener(event, updateHeroScene));
-  seek.addEventListener("input", () => { hero.currentTime = Number(seek.value); updateHeroScene(); });
+  seek.addEventListener("input", () => seekTo(Number(seek.value)));
   function seekTo(time) {
     hero.currentTime = time;
     updateHeroScene();
+    hero.play().catch(() => {});
   }
   $("#journey-chapters").addEventListener("click", (event) => {
     const button = event.target.closest("[data-start]");
     if (button) seekTo(Number(button.dataset.start));
-  });
-  $("#watch-video-wall")?.addEventListener("click", () => {
-    const wall = chapters.find((chapter) => chapter.planet === "wall");
-    if (wall) {
-      seekTo(wall.start);
-      if (hero.paused) $("#hero-pause").click();
-    }
   });
   function renderNavigation() {
     const duration = filmDuration();
@@ -84,9 +81,8 @@ export async function initCinematic(getLanguage) {
 
   function render() {
     renderNavigation();
-    if (film?.counts) $("#mosaic-counts").textContent = t(`NAVANYWHERE / ${film.counts.sources} SOURCES / ${film.counts.clips} SEQUENCES`, `NAVANYWHERE / ${film.counts.sources} 个来源 / ${film.counts.clips} 段序列`);
   }
-  const response = await fetch("content/cinematic.json?v=main-figure-v8-20261010", { cache: "no-cache" }).catch(() => null);
+  const response = await fetch("content/cinematic-display.json?v=site-refresh-20261029-v2").catch(() => null);
   if (response?.ok) {
     film = await response.json();
     journeyScenes = (film.journeyScenes || film.journey?.scenes || []).map(normalizeScene).filter((scene) => Number.isFinite(scene.start)).sort((a, b) => a.start - b.start);
@@ -98,11 +94,18 @@ export async function initCinematic(getLanguage) {
         else chapters.push({ ...scene });
       }
     }
-    hero.poster = mediaUrl(film.journey?.poster || "assets/hero/journey-poster.webp");
-    hero.src = mediaUrl(film.journey?.src || "assets/hero/journey.mp4");
+    const poster = mediaUrl(film.journey?.poster || "assets/hero/journey-poster.webp");
+    const source = mediaUrl(film.journey?.src || "assets/hero/journey.mp4");
+    if (hero.poster !== deliveryUrl(poster)) setMediaUrl(hero, "poster", poster);
+    if (hero.src !== deliveryUrl(source)) setMediaUrl(hero, "src", source);
   } else {
-    hero.src = mediaUrl("assets/hero/journey.mp4");
+    if (!hero.getAttribute("src")) hero.src = mediaUrl("assets/hero/journey.mp4");
   }
+  registerMedia({
+    element: hero, videos: [hero], priority: 3, cost: 4,
+    sources: [mediaUrl(film?.journey?.src || "assets/hero/journey.mp4")],
+    posters: [mediaUrl(film?.journey?.poster || "assets/hero/journey-poster.webp")],
+  });
   render();
   return { render };
 }

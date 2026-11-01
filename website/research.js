@@ -1,107 +1,87 @@
-const escapeHTML = (value) =>
-  String(value).replace(
-    /[&<>"']/g,
-    (char) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-        char
-      ],
-  );
+const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+})[character]);
 
-export function initResearch(paper, getLanguage) {
-  const element = (id) => document.getElementById(id);
-  const method = element("method-overview");
-  const domainSelect = element("result-domain");
-  const metricTabs = element("metric-tabs");
-  const chart = element("result-chart");
-  const rows = paper.results.direct_prediction.rows;
-  const state = { domain: "id", idMetric: "lpips" };
-  const t = (en, zh) => (getLanguage().startsWith("zh") ? zh : en);
+export function initResearch(paper) {
+  const method = document.getElementById("method-overview");
+  const results = document.getElementById("paper-results");
+  const predictionMetrics = [
+    { key: "id_lpips", label: "In-domain · LPIPS ↓", direction: "lower", maximum: 0.5, ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5] },
+    { key: "ood_mean_psnr", label: "Out-of-domain · Mean PSNR (dB) ↑", direction: "higher", maximum: 14, ticks: [0, 3.5, 7, 10.5, 14] },
+  ];
+  const oodPredictionKeys = ["go_stanford_psnr", "tum_psnr", "planetary_rover_psnr", "office_go2_psnr"];
+  const navigationMetrics = [
+    { key: "recon_ate", label: "RECON · ATE (m) ↓", direction: "lower", maximum: 3.5, ticks: [0, 1, 2, 3, 3.5] },
+    { key: "office_go2_ate", label: "Office-Go2 · ATE (m) ↓", direction: "lower", maximum: 3.5, ticks: [0, 1, 2, 3, 3.5] },
+  ];
+
+  function renderChart(rows, metric, decimals, table) {
+    const rankings = [...new Set(rows.map((row) => row[metric.key]).filter(Number.isFinite))]
+      .sort((a, b) => metric.direction === "higher" ? b - a : a - b);
+    const chartId = `metric-${metric.key}`;
+    return `<figure class="result-chart" data-table="${table}" data-metric="${metric.key}" aria-labelledby="${chartId}">
+      <figcaption id="${chartId}">${escapeHTML(metric.label)}</figcaption>
+      <div class="result-chart-scroll" tabindex="0" role="region" aria-labelledby="${chartId}">
+      <div class="result-plot" style="--method-count:${rows.length}">
+      <div class="result-y-axis" aria-hidden="true">${metric.ticks.map((tick) => `<span style="bottom:${tick / metric.maximum * 100}%">${tick}</span>`).join("")}</div>
+      <div class="result-plot-area">
+      <div class="result-gridlines" aria-hidden="true">${metric.ticks.map((tick) => `<span style="bottom:${tick / metric.maximum * 100}%"></span>`).join("")}</div>
+      <ul class="result-bars">${rows.map((row) => {
+        const value = row[metric.key];
+        const reported = Number.isFinite(value);
+        const rank = reported && value === rankings[0] ? "best" : reported && value === rankings[1] ? "second" : "";
+        const number = reported ? value.toFixed(decimals) : "—";
+        const model = row.id === "garrido" ? "Garrido et al." : row.model;
+        const modelLabel = escapeHTML(model).replace("OpenNWM", "Open<wbr>NWM").replace("CompACT", "Comp<wbr>ACT");
+        const params = Number.isFinite(row.params_m) ? `${row.params_m.toLocaleString("en-US")}M` : "—";
+        return `<li class="result-bar-row${row.id === "opennwm" ? " result-ours" : ""}${reported ? "" : " result-missing"}" data-model="${row.id}" data-value="${reported ? value : ""}" data-rank="${rank}" style="--bar-height:${reported ? (value / metric.maximum * 100).toFixed(3) : 0}%">
+          <span class="result-track">
+            ${reported ? '<span class="result-bar" aria-hidden="true"></span>' : ""}
+            <span class="result-value"${reported ? "" : ' aria-label="Not reported"'}>${rank === "best" ? `<strong>${number}</strong>` : rank === "second" ? `<span class="result-second">${number}</span>` : number}</span>
+          </span>
+          <span class="result-model" title="${escapeHTML(row.model)} · ${params} parameters">${modelLabel}</span>
+        </li>`;
+      }).join("")}</ul>
+      </div></div></div>
+    </figure>`;
+  }
+
   function renderMethod() {
-    const label = t("Open the original method figure at full resolution", "查看完整尺寸的方法原图");
-    const alt = t(
-      "OpenNWM architecture from the paper: a latent action model learns motion from video, and a diffusion world model predicts future observations conditioned on actions and visual context.",
-      "论文中的 OpenNWM 架构原图：潜在动作模型从视频学习运动，扩散世界模型根据动作与视觉上下文预测未来观测。",
-    );
-    method.innerHTML = `<figure class="method-paper-figure"><a class="method-figure-link" href="assets/paper/figure-2-framework.png" target="_blank" rel="noopener" aria-label="${escapeHTML(label)}"><img src="assets/paper/figure-2-framework.png" width="2352" height="720" alt="${escapeHTML(alt)}" loading="lazy" decoding="async"></a></figure>`;
+    if (!method) return;
+    const figureLink = method.querySelector(".method-figure-link");
+    const figureImage = method.querySelector("img");
+    const figureSource = "assets/paper/method-overview-dark-20261031.svg";
+    figureLink.href = "assets/paper/method-overview-20261031.pdf";
+    figureImage.src = figureSource;
+    figureLink.setAttribute("aria-label",
+      "Open the original OpenNWM method figure PDF to zoom in");
+    figureImage.alt = "OpenNWM method: a latent action encoder and decoder infer actions from observations; a conditional diffusion transformer predicts future frames with frozen VAE encoding and decoding.";
   }
 
-  function domains() {
-    return [
-      ["id", t("In-domain average", "域内平均")],
-      ["go_stanford", t("Go Stanford · OOD", "Go Stanford · 域外")],
-      ["tum", t("TUM RGB-D · OOD", "TUM RGB-D · 域外")],
-      ["planetary_rover", t("Planetary Rover · OOD", "行星探测车 · 域外")],
-      ["office_go2", t("Office-Go2 · OOD", "Office-Go2 · 域外")],
-    ];
+  function renderMainResults() {
+    if (!results) return;
+    const prediction = paper.results.direct_prediction;
+    const navigation = paper.results.navigation;
+    const predictionRows = prediction.rows.map((row) => ({
+      ...row,
+      ood_mean_psnr: oodPredictionKeys.every((key) => Number.isFinite(row[key]))
+        ? oodPredictionKeys.reduce((sum, key) => sum + row[key], 0) / oodPredictionKeys.length
+        : null,
+    }));
+    results.innerHTML = `<section class="result-family" aria-labelledby="prediction-results-title">
+      <div class="result-family-heading"><h3 id="prediction-results-title">Prediction</h3><span>In-domain &amp; out-of-domain</span></div>
+      <div class="result-chart-grid">${predictionMetrics.map((metric) => renderChart(predictionRows, metric, 3, 1)).join("")}</div>
+      <p class="results-chart-note">In-domain: ${escapeHTML(prediction.id_datasets.join(", "))}. Out-of-domain: equal-weight mean across ${escapeHTML(prediction.ood_datasets.join(", "))}. NWM†: CDiT-XL + Ego4D.</p>
+    </section>
+    <section class="result-family" aria-labelledby="navigation-results-title">
+      <div class="result-family-heading"><h3 id="navigation-results-title">Navigation</h3><span>Lower is better</span></div>
+      <div class="result-chart-grid">${navigationMetrics.map((metric) => renderChart(navigation.rows, metric, 2, 2)).join("")}</div>
+      <p class="results-chart-note">RECON: in-domain. Office-Go2: out-of-domain. ATE: absolute trajectory error. —: not reported.</p>
+    </section>
+    <p class="results-ranking-note"><span class="results-color-key">OpenNWM</span><span>Bold: best · Underlined: second best</span></p>`;
   }
 
-  function renderResults() {
-    const isID = state.domain === "id";
-    const metric = isID ? state.idMetric : "psnr";
-    const metricName = { lpips: "LPIPS", dreamsim: "DreamSim", psnr: "PSNR" }[
-      metric
-    ];
-    const key = `${state.domain}_${metric}`;
-    const higher = metric === "psnr";
-    const label = domains().find(([id]) => id === state.domain)[1];
-    const values = rows.map((row) => row[key]);
-    const maximum = Math.max(...values);
-    const axisMaximum = higher
-      ? Math.ceil(maximum / 2) * 2
-      : Math.ceil(maximum * 10) / 10;
-    const best = higher ? maximum : Math.min(...values);
-    domainSelect.innerHTML = domains()
-      .map(
-        ([id, name]) =>
-          `<option value="${id}"${id === state.domain ? " selected" : ""}>${escapeHTML(name)}</option>`,
-      )
-      .join("");
-    domainSelect.setAttribute(
-      "aria-label",
-      t("Evaluation dataset", "评测数据集"),
-    );
-    metricTabs.setAttribute("aria-label", t("Prediction metric", "预测指标"));
-    metricTabs.querySelectorAll("[data-metric]").forEach((button) => {
-      const active = button.dataset.metric === metric;
-      button.hidden = !isID && button.dataset.metric !== "psnr";
-      button.disabled = button.hidden;
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-    chart.setAttribute("role", "list");
-    chart.setAttribute(
-      "aria-label",
-      `${label}: ${metricName}, ${t(higher ? "higher is better" : "lower is better", higher ? "越高越好" : "越低越好")}`,
-    );
-    chart.innerHTML = rows
-      .map((row) => {
-        const value = row[key];
-        const model = row.id === "nwm-xl-ego4d" ? "NWM†" : row.model;
-        const number = value.toFixed(3);
-        const accessible = `${model}: ${metricName} ${number}${higher ? " dB" : ""}${value === best ? t(", best reported", "，已报告最优") : ""}`;
-        return `<div class="chart-row${row.id === "opennwm" ? " ours" : ""}" role="listitem" aria-label="${escapeHTML(accessible)}"><span class="chart-model-label" aria-hidden="true">${escapeHTML(model)}</span><div class="chart-track" aria-hidden="true"><div class="chart-bar" style="--value:${(value / axisMaximum) * 100}%"></div></div><span class="chart-number" aria-hidden="true">${number}</span></div>`;
-      })
-      .join("");
-    element("chart-footnote").textContent = "NWM†: CDiT-XL + Ego4D";
-    element("chart-direction").textContent = higher
-      ? t("HIGHER IS BETTER ↑", "越高越好 ↑")
-      : t("LOWER IS BETTER ↓", "越低越好 ↓");
-  }
-
-  domainSelect.addEventListener("change", () => {
-    state.domain = domainSelect.value;
-    renderResults();
-  });
-  metricTabs.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-metric]");
-    if (!button || button.disabled || state.domain !== "id") return;
-    state.idMetric = button.dataset.metric;
-    renderResults();
-  });
-  const render = () => {
-    renderMethod();
-    renderResults();
-  };
+  const render = () => { renderMethod(); renderMainResults(); };
   render();
   return { render };
 }
