@@ -56,7 +56,40 @@ Replace `/data/navigation` and `/data/opennwm` with your data and work directori
 
 Download NavAnywhere from [Hugging Face](https://huggingface.co/datasets/LittleB0sS/NavAnywhere) or [ModelScope](https://modelscope.cn/datasets/LittleBoss/NavAnywhere) and extract it to `$NWM_DATA_ROOT`. The archives total **1.93 TB**; extraction requires `tar`, `zstd`, and additional disk space.
 
-See [DATA.md](DATA.md) for extraction and directory layout. **TartanDrive requires a separate download** for world model post-training and default LAM evaluation.
+<details>
+<summary>Download and extract with ModelScope</summary>
+
+```bash
+"$NWM_PYTHON" -m pip install modelscope
+conda run -n open-nwm ms-hub download LittleBoss/NavAnywhere --repo-type dataset \
+  --local-dir "$OPENNWM_WORK_ROOT/downloads/NavAnywhere" --max-workers 8
+(
+  cd "$OPENNWM_WORK_ROOT/downloads/NavAnywhere" || exit 1
+  mkdir -p "$NWM_DATA_ROOT"
+  find NavAnywhere -path '*/packs/*.tar.zst' -print0 \
+    | xargs -0 -r -I{} tar --use-compress-program=unzstd -xf '{}' -C "$NWM_DATA_ROOT"
+  for first in LAM-Data-{recon,scand,sacson}-*.tar.zst.part-00000; do
+    [ -f "$first" ] || continue
+    cat "${first%.part-00000}.part-"* \
+      | tar --use-compress-program=unzstd -xf - -C "$NWM_DATA_ROOT"
+  done
+)
+```
+
+The action-data archives retain their `LAM-Data-` filenames. Expected layout:
+
+```text
+$NWM_DATA_ROOT/
+├── recon/<trajectory>/{0.jpg,1.jpg,...,traj_data.pkl}
+├── sacson/<trajectory>/{0.jpg,1.jpg,...,traj_data.pkl}
+├── scand/<trajectory>/{0.jpg,1.jpg,...,traj_data.pkl}
+├── tartan/<trajectory>/{0.jpg,1.jpg,...,traj_data.pkl}
+└── NavAnywhere/<source>/<trajectory>/{0.jpg,1.jpg,...}
+```
+
+</details>
+
+The release includes RECON, HuRoN (`sacson`), SCAND, and NavAnywhere. **TartanDrive requires a separate download** for world model post-training and default LAM evaluation; follow the [NWM data instructions](https://github.com/facebookresearch/nwm#data) and place it in `tartan/` (split name: `tartan_drive`). `setup_paths.py` prepares the fixed train/validation/test lists and NavAnywhere recipe.
 
 ## Pretrained Models
 
@@ -67,6 +100,20 @@ Download from [Hugging Face](https://huggingface.co/LittleB0sS/OpenNWM) or [Mode
 | `lam-nav15-pixel-action-step60k.ckpt` | Latent action extraction |
 | `opennwm-nav15-stage1-pretrain60k.pth.tar` | World model pretraining checkpoint |
 | `opennwm-nav15-stage2-joint100k.pth.tar` | Physical-action prediction and planning |
+
+<details>
+<summary>Download and verify with ModelScope</summary>
+
+```bash
+"$NWM_PYTHON" -m pip install modelscope
+conda run -n open-nwm ms-hub download LittleBoss/OpenNWM --repo-type model \
+  --local-dir "$OPENNWM_WORK_ROOT/models/OpenNWM" --max-workers 4
+(cd "$OPENNWM_WORK_ROOT/models/OpenNWM" && sha256sum -c SHA256SUMS)
+```
+
+</details>
+
+NWM downloads [SD-VAE](https://huggingface.co/stabilityai/sd-vae-ft-ema) on first use; set `NWM_VAE_PATH` in `.env` to use a local copy. DINOv3 is needed only for LAM variant 3.
 
 ## Evaluation
 
@@ -82,11 +129,11 @@ After preparing test data, import the Stage 2 checkpoint and run prediction:
   prediction_dir="$OPENNWM_WORK_ROOT/eval/stage2/pred"
 ```
 
-Metrics, rollouts, and planning: [NWM evaluation](nwm/README.md#评测). Latent action reconstruction: [LAM evaluation](lam/README.md#正式评测).
+Metrics, rollouts, and planning: [NWM evaluation](nwm/README.md#evaluation). Latent action reconstruction: [LAM evaluation](lam/README.md#evaluation).
 
 ## Training
 
-Follow [LAM training](lam/README.md#训练与续跑) → [cache preparation](nwm/README.md#准备缓存) → [world model pretraining and adaptation](nwm/README.md#训练). Use the NavAnywhere 15-source profile and matching LAM checkpoints for caches.
+Follow [LAM training](lam/README.md#training-and-resume) → [cache preparation](nwm/README.md#cache-preparation) → [world model pretraining and adaptation](nwm/README.md#training). Use the NavAnywhere 15-source profile and matching LAM checkpoints for caches. For the released model, set `LAM_PIXEL_ACTION_CHECKPOINT` in `.env` to `$OPENNWM_WORK_ROOT/models/OpenNWM/lam-nav15-pixel-action-step60k.ckpt`.
 
 ## TODO List
 

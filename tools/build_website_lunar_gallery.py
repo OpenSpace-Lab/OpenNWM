@@ -204,7 +204,7 @@ def main():
             if ImageChops.difference(anchor.convert("RGB"), context.convert("RGB")).getbbox():
                 raise ValueError("Shared initial frame is not the last context frame")
         item = {
-            "id": f"lusnar-finetuned-moon-{number}", "title": f"Moon {number}", "titleZh": f"月面 {number}",
+            "id": f"lusnar-finetuned-moon-{number}", "title": f"Moon {number}", "titleZh": f"Moon {number}",
             "dataset": "LuSNAR", "datasetId": "lusnar", "domain": "held-out scene",
             "environment": "lunar", "fineTuned": True, "sampleId": sample["id"],
             "fps": 4, "duration": 4.25, "horizon": 4, "frameCount": 17,

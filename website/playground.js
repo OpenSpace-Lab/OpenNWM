@@ -67,7 +67,7 @@ export async function initPlayground() {
     $("#prediction-placeholder").hidden = false; $("#generation-overlay").hidden = true;
   }
   function renderStatus() {
-    $("#service-status").textContent = serviceChecking || !serviceChecked ? t("Checking live service…", "正在连接实时服务…") : live ? t("Live generation", "实时生成") : t("Preset videos", "预设视频");
+    $("#service-status").textContent = serviceChecking || !serviceChecked ? t("Checking live service…") : live ? t("Live generation") : t("Preset videos");
     $("#service-status").classList.toggle("connected", live);
     $("#service-retry").hidden = live;
     $("#service-retry").disabled = serviceChecking || busy;
@@ -75,35 +75,35 @@ export async function initPlayground() {
       $("#generate-path").disabled = true;
       return;
     }
-    $("#prediction-mode").textContent = mode === "live" ? t("LIVE MODEL OUTPUT", "实时模型预测") : mode === "preset" ? t("PRECOMPUTED", "预计算结果") : t("STARTING VIEW", "初始视野");
+    $("#prediction-mode").textContent = mode === "live" ? t("LIVE MODEL OUTPUT") : mode === "preset" ? t("PRECOMPUTED") : t("STARTING VIEW");
     $("#generate-path").disabled = !live || busy || drawing || !validPath();
     $("#path-clear").disabled = busy;
-    $("#playground-service-note").textContent = live ? t("Custom generation takes a few minutes.", "自定义生成需要几分钟。") : t("Connect the live service to generate a custom path.", "连接实时服务后可生成自定义路线。");
+    $("#playground-service-note").textContent = live ? t("Custom generation takes a few minutes.") : t("Connect the live service to generate a custom path.");
     const messages = {
-      ready: t("Choose a preset or draw your own route.", "选择预设，或绘制你自己的路线。"),
+      ready: t("Choose a preset or draw your own route."),
       custom: live
-        ? t("Custom path ready. Generate it with the live model.", "自定义路线已就绪，可调用实时模型生成。")
-        : t("Custom path ready.", "自定义路线已就绪。"),
-      cleared: t("Draw from the starting point, or choose a preset below.", "从起点开始绘制，或选择下方预设。"),
-      preset: t("Playing preset prediction.", "正在播放预设预测。"),
-      queued: t("Waiting to generate…", "正在等待生成…"),
-      running: t("OpenNWM is imagining your path…", "OpenNWM 正在预测这条路线的未来视野…"),
-      completed: t("Generated from your path with OpenNWM.", "OpenNWM 已根据你绘制的路线生成结果。"),
-      failed: t("Generation could not finish. Please try again.", "生成未能完成，请重试。"),
-      unavailable: t("Live generation is unavailable. Choose a preset to explore recorded results.", "实时生成服务不可用。可选择预设探索已有预测。"),
-      short: t("Draw a longer route from the starting point.", "请从起点画出一条稍长的路线。"),
-      long: t("This route is too long. Clear it and draw a shorter path.", "这条路线过长，请清除后绘制较短的路线。"),
+        ? t("Custom path ready. Generate it with the live model.")
+        : t("Custom path ready."),
+      cleared: t("Draw from the starting point, or choose a preset below."),
+      preset: t("Playing preset prediction."),
+      queued: t("Waiting to generate…"),
+      running: t("OpenNWM is imagining your path…"),
+      completed: t("Generated from your path with OpenNWM."),
+      failed: t("Generation could not finish. Please try again."),
+      unavailable: t("Live generation is unavailable. Choose a preset to explore recorded results."),
+      short: t("Draw a longer route from the starting point."),
+      long: t("This route is too long. Clear it and draw a shorter path."),
     };
     $("#playground-status").textContent = (messages[message] || messages.ready) + (message === "failed" && errorDetail ? ` ${errorDetail}` : "");
-    $("#generation-title").textContent = message === "queued" ? t("Waiting for the GPU…", "等待 GPU…") : t("Imagining your path…", "正在想象前方…");
+    $("#generation-title").textContent = message === "queued" ? t("Waiting for the GPU…") : t("Imagining your path…");
     $("#generation-progress").value = progress;
     document.querySelectorAll("[data-path]").forEach((button) => { button.classList.toggle("active", button.dataset.path === preset); button.setAttribute("aria-pressed", String(button.dataset.path === preset)); button.disabled = busy; });
   }
   function render() {
     if (!scene) return;
-    $("#playground-scenes").innerHTML = data.scenes.map((item) => `<button type="button" data-scene="${escape(item.id)}" class="${item.id === scene.id ? "active" : ""}" aria-pressed="${item.id === scene.id}">${escape(t(item.title, item.titleZh))}</button>`).join("");
-    $("#playground-scene-name").textContent = t(scene.title, scene.titleZh);
-    canvas.setAttribute("aria-label", t("Draw a route on a top-down plane, or choose a preset route below", "在俯视平面上绘制路线，或选择下方预设路线"));
+    $("#playground-scenes").innerHTML = data.scenes.map((item) => `<button type="button" data-scene="${escape(item.id)}" class="${item.id === scene.id ? "active" : ""}" aria-pressed="${item.id === scene.id}">${escape(t(item.title))}</button>`).join("");
+    $("#playground-scene-name").textContent = t(scene.title);
+    canvas.setAttribute("aria-label", t("Draw a route on a top-down plane, or choose a preset route below"));
     renderStatus(); draw();
   }
   function selectPath(id) {
@@ -118,7 +118,7 @@ export async function initPlayground() {
   function selectScene(id) {
     resetOutput(); scene = data.scenes.find((item) => item.id === id) || data.scenes[0];
     setMediaUrl($("#playground-initial"), "src", scene.poster || scene.image);
-    $("#playground-initial").alt = t(`${scene.title} — initial observation`, `${scene.titleZh || scene.title} — 初始观测`);
+    $("#playground-initial").alt = t(`${scene.title} — initial observation`);
     selectPath("forward"); render();
   }
   $("#playground-scenes").addEventListener("click", (event) => {
@@ -181,16 +181,16 @@ export async function initPlayground() {
     if (version !== currentVersion) return;
     try {
       const response = await fetch(apiUrl(`api/jobs/${encodeURIComponent(jobId)}`), { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15000)]), cache: "no-store" });
-      if (!response.ok) throw new Error(t("Could not retrieve the generation status.", "无法获取生成状态。"));
+      if (!response.ok) throw new Error(t("Could not retrieve the generation status."));
       const job = await response.json();
       pollFailures = 0;
       if (version !== currentVersion) return;
       progress = Math.max(0, Math.min(1, Number(job.progress) || 0));
       if (job.status === "completed") {
-        if (!job.video) throw new Error(t("The service returned no video.", "服务未返回视频。"));
+        if (!job.video) throw new Error(t("The service returned no video."));
         busy = false; message = "completed"; showVideo(apiUrl(job.video), job.poster ? apiUrl(job.poster) : "", "live"); return;
       }
-      if (job.status === "failed") throw new Error(job.error || t("The model reported an error.", "模型运行失败。"));
+      if (job.status === "failed") throw new Error(job.error || t("The model reported an error."));
       message = job.status === "queued" ? "queued" : "running"; renderStatus();
       pollTimer = setTimeout(() => poll(jobId, currentVersion), 1800);
     } catch (error) {
@@ -213,7 +213,7 @@ export async function initPlayground() {
       const response = await fetch(apiUrl("api/predict"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sceneId: scene.id, points, seed: 0 }), signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]) });
       const job = await response.json();
       if (version !== currentVersion) return;
-      if (!response.ok || !job.jobId) throw new Error(job.error || job.detail || t("The service could not start this request.", "服务无法启动该请求。"));
+      if (!response.ok || !job.jobId) throw new Error(job.error || job.detail || t("The service could not start this request."));
       poll(job.jobId, currentVersion);
     } catch (error) {
       if (version !== currentVersion || error.name === "AbortError") return;
@@ -223,7 +223,7 @@ export async function initPlayground() {
   });
   video.addEventListener("error", () => {
     if (!video.getAttribute("src")) return;
-    message = "failed"; errorDetail = t("The prediction video could not load.", "预测视频加载失败。"); renderStatus();
+    message = "failed"; errorDetail = t("The prediction video could not load."); renderStatus();
   });
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden && !busy) health();
@@ -236,7 +236,7 @@ export async function initPlayground() {
     if (!data.scenes?.length) throw new Error("No scenes available");
     selectScene(data.defaultScene || data.scenes[0].id);
   } catch {
-    $("#playground-status").textContent = t("Demo scenes could not load. Please reload the page.", "演示场景加载失败，请刷新页面。");
+    $("#playground-status").textContent = t("Demo scenes could not load. Please reload the page.");
   }
   await configureService();
   await health();

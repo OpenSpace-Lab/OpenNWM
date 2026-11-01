@@ -36,7 +36,6 @@ def card(name, results):
 license: cc-by-nc-4.0
 language:
 - en
-- zh
 tags:
 - navigation
 - world-model
@@ -164,11 +163,6 @@ referenced DMD2 method, not upstream SDXL weights. External VAE and datasets
 retain their respective terms. Teacher/source hashes and the original local
 student checksum are recorded in `manifest.json`.
 
-## 中文说明
-
-这是 200 次学生更新的小规模四步蒸馏权重，尚未收敛，不能视为无损加速。
-实测速度明显提高，但纹理更模糊、LPIPS 变差。必须使用附带的四步采样器；
-不能仅把原 DDPM 推理步数设为 4。权重张量保持原样，公开包已移除本机路径。
 '''
 
 

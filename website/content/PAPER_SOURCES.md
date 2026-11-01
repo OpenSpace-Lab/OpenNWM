@@ -32,12 +32,9 @@ the concise reader-facing text lives in `paper.json`.
 
 ## Metadata and citation
 
-The manuscript names **Anonymous authors** and states **Paper under double-blind
-review** and **Under review as a conference paper at ICLR 2027**. It does not state
-real author names, affiliations, acceptance, a publication year, a DOI, or an
-arXiv URL. Those fields must not be inferred from local directory names or PDF
-creation timestamps. `citation.bibtex` is a provisional `@unpublished` entry
-that preserves the anonymous review status and omits an unsupported year.
+Current author names and the BibTeX entry are maintained in `paper.json` and
+shown on the project page. The manuscript is under review as a conference paper
+at ICLR 2027; no acceptance, DOI or arXiv identifier is claimed.
 
 ## Statistical and experimental interpretation
 

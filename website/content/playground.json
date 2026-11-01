@@ -24,30 +24,30 @@
     "canvasUnitsToWaypointUnits": 12
   },
   "note": "Presets are genuine OpenNWM predictions conditioned on the displayed path. Draw a new path with the local GPU service to generate a new prediction.",
-  "noteZh": "预设视频由 OpenNWM 根据所示轨迹真实预测；连接本地 GPU 服务后可绘制任意轨迹进行新预测。",
+  "noteZh": "Presets are genuine OpenNWM predictions conditioned on the displayed path. Draw a new path with the local GPU service to generate a new prediction.",
   "planetaryNote": "Moon and Mars start from real mission images. The 4-second horizon describes 16 model steps at 4 FPS; mission capture intervals are irregular.",
-  "planetaryNoteZh": "月球和火星使用真实任务影像作为起始帧。4 秒表示按 4 FPS 展示 16 个模型预测步；原任务拍摄间隔不规则。",
+  "planetaryNoteZh": "Moon and Mars start from real mission images. The 4-second horizon describes 16 model steps at 4 FPS; mission capture intervals are irregular.",
   "scenes": [
     {
       "id": "outdoor-tartan",
       "title": "Gravel trail",
-      "titleZh": "野外小径",
+      "titleZh": "Gravel trail",
       "dataset": "TartanDrive",
       "domain": "ID",
       "description": "An off-road view across uneven terrain.",
-      "descriptionZh": "在崎岖的户外地形中前进。",
+      "descriptionZh": "An off-road view across uneven terrain.",
       "planetary": false,
       "simulated": false,
       "qualityNote": "",
       "qualityNoteZh": "",
       "predictionMode": "autoregressive",
       "protocol": "Autoregressive prediction; each generated view becomes the next observation.",
-      "protocolZh": "自回归预测，每次生成的图像作为下一步观测。",
+      "protocolZh": "Autoregressive prediction; each generated view becomes the next observation.",
       "presets": [
         {
           "id": "forward",
           "label": "Forward",
-          "labelZh": "直行",
+          "labelZh": "Forward",
           "points": [
             [
               0,
@@ -68,7 +68,7 @@
         {
           "id": "left",
           "label": "Turn left",
-          "labelZh": "左转",
+          "labelZh": "Turn left",
           "points": [
             [
               0,
@@ -105,7 +105,7 @@
         {
           "id": "right",
           "label": "Turn right",
-          "labelZh": "右转",
+          "labelZh": "Turn right",
           "points": [
             [
               0,
@@ -146,23 +146,23 @@
     {
       "id": "garden-recon",
       "title": "Garden path",
-      "titleZh": "花园小径",
+      "titleZh": "Garden path",
       "dataset": "RECON",
       "domain": "ID",
       "description": "A ground robot moving through a sunlit garden.",
-      "descriptionZh": "地面机器人穿行于阳光下的花园。",
+      "descriptionZh": "A ground robot moving through a sunlit garden.",
       "planetary": false,
       "simulated": false,
       "qualityNote": "",
       "qualityNoteZh": "",
       "predictionMode": "autoregressive",
       "protocol": "Autoregressive prediction; each generated view becomes the next observation.",
-      "protocolZh": "自回归预测，每次生成的图像作为下一步观测。",
+      "protocolZh": "Autoregressive prediction; each generated view becomes the next observation.",
       "presets": [
         {
           "id": "forward",
           "label": "Forward",
-          "labelZh": "直行",
+          "labelZh": "Forward",
           "points": [
             [
               0,
@@ -183,7 +183,7 @@
         {
           "id": "left",
           "label": "Turn left",
-          "labelZh": "左转",
+          "labelZh": "Turn left",
           "points": [
             [
               0,
@@ -220,7 +220,7 @@
         {
           "id": "right",
           "label": "Turn right",
-          "labelZh": "右转",
+          "labelZh": "Turn right",
           "points": [
             [
               0,
@@ -261,23 +261,23 @@
     {
       "id": "hall-huron",
       "title": "Coral hallway",
-      "titleZh": "珊瑚色走廊",
+      "titleZh": "Coral hallway",
       "dataset": "HuRoN",
       "domain": "ID",
       "description": "A wheeled robot approaching a colorful hallway.",
-      "descriptionZh": "轮式机器人驶向彩色廊道。",
+      "descriptionZh": "A wheeled robot approaching a colorful hallway.",
       "planetary": false,
       "simulated": false,
       "qualityNote": "",
       "qualityNoteZh": "",
       "predictionMode": "autoregressive",
       "protocol": "Autoregressive prediction; each generated view becomes the next observation.",
-      "protocolZh": "自回归预测，每次生成的图像作为下一步观测。",
+      "protocolZh": "Autoregressive prediction; each generated view becomes the next observation.",
       "presets": [
         {
           "id": "forward",
           "label": "Forward",
-          "labelZh": "直行",
+          "labelZh": "Forward",
           "points": [
             [
               0,
@@ -298,7 +298,7 @@
         {
           "id": "left",
           "label": "Turn left",
-          "labelZh": "左转",
+          "labelZh": "Turn left",
           "points": [
             [
               0,
@@ -335,7 +335,7 @@
         {
           "id": "right",
           "label": "Turn right",
-          "labelZh": "右转",
+          "labelZh": "Turn right",
           "points": [
             [
               0,

@@ -34,13 +34,13 @@ export async function initCinematic() {
       if (candidate.start > time + 0.001) break;
       scene = candidate;
     }
-    const label = scene ? t(scene.labelEn, scene.labelZh) : "NavAnywhere";
+    const label = scene ? t(scene.labelEn) : "NavAnywhere";
     const planet = scene?.planet || "wall";
     if (heroScene.textContent !== (planet === "wall" ? "" : label)) heroScene.textContent = planet === "wall" ? "" : label;
     section.dataset.planet = planet;
     seek.max = duration;
     seek.value = time;
-    seek.setAttribute("aria-valuetext", `${label}, ${clock(time)} ${t("of", "/")} ${clock(duration)}`);
+    seek.setAttribute("aria-valuetext", `${label}, ${clock(time)} ${t("of")} ${clock(duration)}`);
     $("#journey-rover").style.left = `${progress * 100}%`;
     $("#journey-progress").style.width = `${progress * 100}%`;
     const timeText = `${clock(time)} / ${clock(duration)}`;
@@ -71,11 +71,11 @@ export async function initCinematic() {
   });
   function renderNavigation() {
     const duration = filmDuration();
-    const planetNames = { moon: t("MOON", "月球"), mars: t("MARS", "火星"), wall: t("DATASET", "数据集") };
-    $("#journey-chapters").innerHTML = chapters.map((chapter, i) => `<button type="button" data-start="${chapter.start}" data-planet="${escape(chapter.planet)}" style="--chapter-span:${Math.max(.01, chapter.end - chapter.start)}" aria-label="${escape(t("Go to ", "跳转到 ") + (planetNames[chapter.planet] || chapter.labelEn))}"><span class="chapter-dot"></span><span>${escape(planetNames[chapter.planet] || t(chapter.labelEn, chapter.labelZh))}</span><span class="chapter-order">${String(i + 1).padStart(2, "0")}</span></button>`).join("");
+    const planetNames = { moon: t("MOON"), mars: t("MARS"), wall: t("DATASET") };
+    $("#journey-chapters").innerHTML = chapters.map((chapter, i) => `<button type="button" data-start="${chapter.start}" data-planet="${escape(chapter.planet)}" style="--chapter-span:${Math.max(.01, chapter.end - chapter.start)}" aria-label="${escape(t("Go to ") + (planetNames[chapter.planet] || chapter.labelEn))}"><span class="chapter-dot"></span><span>${escape(planetNames[chapter.planet] || t(chapter.labelEn))}</span><span class="chapter-order">${String(i + 1).padStart(2, "0")}</span></button>`).join("");
     $("#journey-stops").innerHTML = journeyScenes.slice(1).map((scene) => `<i class="journey-stop planet-stop" style="left:${scene.start / duration * 100}%"></i>`).join("");
-    seek.setAttribute("aria-label", t("Seek through the video wall, Moon and Mars", "跳转视频墙、月球与火星"));
-    $(".journey-navigation").setAttribute("aria-label", t("Opening film navigation", "开场影片导航"));
+    seek.setAttribute("aria-label", t("Seek through the video wall, Moon and Mars"));
+    $(".journey-navigation").setAttribute("aria-label", t("Opening film navigation"));
     updateHeroScene();
   }
 

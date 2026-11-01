@@ -230,18 +230,18 @@ def export_finetuned(direct_path, autoregressive_path):
             prefix = public_directory.relative_to(SITE).as_posix()
             scenes.append({
                 "id": FINETUNED_PREFIX + f"moon-{number}", "title": f"Moon {number} · fine-tuned",
-                "titleZh": f"月面 {number} · 微调后", "tag": "LUSNAR · FINETUNED", "tagZh": "LUSNAR · 微调后",
+                "titleZh": f"Moon {number} · fine-tuned", "tag": "LUSNAR · FINETUNED", "tagZh": "LUSNAR · FINETUNED",
                 "description": "An unseen simulated lunar scene after small-sample adaptation. Each future view is predicted from four observed frames and the recorded target pose.",
-                "descriptionZh": "少样本微调后的未见仿真月面场景。每个未来视野均由四帧真实观测和记录的目标位姿直接预测。",
+                "descriptionZh": "An unseen simulated lunar scene after small-sample adaptation. Each future view is predicted from four observed frames and the recorded target pose.",
                 "initial": f"{prefix}/initial.webp", "poster": f"{prefix}/initial.webp", "video": f"{prefix}/direct.mp4",
                 "groundTruth": f"{prefix}/ground-truth.mp4", "comparison": f"{prefix}/comparison.mp4",
                 "autoregressive": f"{prefix}/autoregressive.mp4", "trajectory": f"{prefix}/trajectory.svg",
                 "manifest": f"{prefix}/manifest.json", "predictionLabel": "FINETUNED · DIRECT PREDICTION",
-                "predictionLabelZh": "微调后 · 直接预测", "comparisonLabel": "Recorded reference / direct prediction",
-                "comparisonLabelZh": "真实参考 / 直接预测", "autoregressiveLabel": "Recorded reference / autoregressive rollout",
-                "autoregressiveLabelZh": "真实参考 / 自回归预测",
+                "predictionLabelZh": "FINETUNED · DIRECT PREDICTION", "comparisonLabel": "Recorded reference / direct prediction",
+                "comparisonLabelZh": "Recorded reference / direct prediction", "autoregressiveLabel": "Recorded reference / autoregressive rollout",
+                "autoregressiveLabelZh": "Recorded reference / autoregressive rollout",
                 "provenance": "OpenNWM Nav15 Stage 2, fine-tuned for 1,000 steps on 30 LuSNAR windows (480 target pairs). Moon 7–9 were held out. Four observed context frames; direct horizons 1–16; DDPM 250, seed 0, VAE posterior means. All 16 predictions play at 4 FPS without interpolation. Recorded capture offsets are retained in the manifest. Lunar appearance improves, but geometry and autoregressive consistency remain imperfect; this is not a physical-navigation result.",
-                "provenanceZh": "OpenNWM Nav15 Stage 2，使用 30 个 LuSNAR 窗口（480 个目标对）微调 1,000 步；月面 7–9 未参与训练。四帧真实上下文，直接预测第 1–16 步；DDPM 250、seed 0、VAE 后验均值。完整 16 帧按 4 FPS 播放，无插帧；真实采集时间差保存在样例记录中。月面外观有所改善，但几何与自回归一致性仍有偏差，不能作为真实导航能力的证明。",
+                "provenanceZh": "OpenNWM Nav15 Stage 2, fine-tuned for 1,000 steps on 30 LuSNAR windows (480 target pairs). Moon 7–9 were held out. Four observed context frames; direct horizons 1–16; DDPM 250, seed 0, VAE posterior means. All 16 predictions play at 4 FPS without interpolation. Recorded capture offsets are retained in the manifest. Lunar appearance improves, but geometry and autoregressive consistency remain imperfect; this is not a physical-navigation result.",
             })
     catalog_path = SITE / "content/space.json"
     catalog = read_json(catalog_path)
@@ -297,10 +297,10 @@ def export_model_comparisons(direct_path, autoregressive_path, nwm_path, nwm_ar_
             scene.update({"fineTuned": True, "modelComparison": f"{prefix}/model-comparison.mp4",
                           "modelComparisonPoster": f"{prefix}/model-comparison.webp",
                           "modelComparisonLabel": "Reference / OpenNWM / NWM · fine-tuned direct predictions",
-                          "modelComparisonLabelZh": "真实参考 / OpenNWM / NWM · 微调后直接预测",
+                          "modelComparisonLabelZh": "Reference / OpenNWM / NWM · fine-tuned direct predictions",
                           "arModelComparison": f"{prefix}/ar-model-comparison.mp4",
                           "arModelComparisonLabel": "Reference / OpenNWM / NWM · fine-tuned autoregressive rollouts",
-                          "arModelComparisonLabelZh": "真实参考 / OpenNWM / NWM · 微调后自回归预测"})
+                          "arModelComparisonLabelZh": "Reference / OpenNWM / NWM · fine-tuned autoregressive rollouts"})
         export_single_image_comparisons(single, nwm, single_path, nwm_path, models, scenes, temporary)
     write_json(catalog_path, catalog)
     print("Published fine-tuned OpenNWM / NWM comparisons for all five lunar examples.")
@@ -359,22 +359,20 @@ def export_single_image_comparisons(single, nwm, single_path, nwm_path, models, 
         simulated = scene_id == "moon-lusnar"
         domain_note = ("Moon_1 was a fine-tuning scene, so this is a qualitative example rather than a held-out benchmark."
                        if simulated else "The real Yutu-2 image tests transfer from fine-tuning on simulated LuSNAR only.")
-        domain_note_zh = ("Moon_1 属于微调训练场景，本例仅作定性展示，不属于留出基准。"
-                          if simulated else "以玉兔二号真实月面图像，检验仅在 LuSNAR 仿真数据上微调后的外观迁移。")
         scene = scenes[scene_id]
         scene.update({
             "fineTuned": True, "tag": "LUSNAR · FINETUNED" if simulated else "YUTU-2 · FINETUNED",
-            "tagZh": "LUSNAR · 微调后" if simulated else "玉兔二号 · 微调后",
+            "tagZh": "LUSNAR · FINETUNED" if simulated else "YUTU-2 · FINETUNED",
             "description": f"Fine-tuned OpenNWM and NWM share the same initial image and forward controls. {domain_note}",
-            "descriptionZh": f"微调后的 OpenNWM 与 NWM 使用相同初始图像和直行控制。{domain_note_zh}",
+            "descriptionZh": f"Fine-tuned OpenNWM and NWM share the same initial image and forward controls. {domain_note}",
             "initial": f"{prefix}/initial.webp", "poster": f"{prefix}/initial.webp", "video": f"{prefix}/opennwm.mp4",
             "modelComparison": f"{prefix}/model-comparison.mp4", "modelComparisonPoster": f"{prefix}/model-comparison.webp",
             "trajectory": f"{prefix}/trajectory.svg", "manifest": f"{prefix}/manifest.json",
-            "predictionLabel": "FINETUNED · AUTOREGRESSIVE", "predictionLabelZh": "微调后 · 自回归预测",
+            "predictionLabel": "FINETUNED · AUTOREGRESSIVE", "predictionLabelZh": "FINETUNED · AUTOREGRESSIVE",
             "modelComparisonLabel": "OpenNWM / NWM · fine-tuned autoregressive rollouts",
-            "modelComparisonLabelZh": "OpenNWM / NWM · 微调后自回归预测",
+            "modelComparisonLabelZh": "OpenNWM / NWM · fine-tuned autoregressive rollouts",
             "provenance": f"Both models were fine-tuned for 1,000 steps on the same 30 LuSNAR windows (480 target pairs). {domain_note} A single image is repeated into four context frames; synthetic forward action 0.75 per step, 16 autoregressive steps, DDPM 250, seed 0, VAE posterior means. Videos play at 4 FPS without interpolation. There is no paired future reference or calibrated distance/time. Appearance and geometry may drift; this is not a physical-navigation result.",
-            "provenanceZh": f"两模型均使用相同的 30 个 LuSNAR 窗口（480 个目标对）微调 1,000 步。{domain_note_zh}单图复制为四帧上下文；每步输入 0.75 的合成直行控制，自回归预测 16 步；DDPM 250、seed 0、VAE 后验均值。按 4 FPS 播放，无插帧；没有配对未来参考，也没有标定的实际距离或时间。外观与几何可能漂移，不能作为真实导航能力的证明。",
+            "provenanceZh": f"Both models were fine-tuned for 1,000 steps on the same 30 LuSNAR windows (480 target pairs). {domain_note} A single image is repeated into four context frames; synthetic forward action 0.75 per step, 16 autoregressive steps, DDPM 250, seed 0, VAE posterior means. Videos play at 4 FPS without interpolation. There is no paired future reference or calibrated distance/time. Appearance and geometry may drift; this is not a physical-navigation result.",
         })
 
 
@@ -417,9 +415,9 @@ def main():
     scenes = [scene for scene in previous.values()
               if scene["id"].startswith(FINETUNED_PREFIX)] if catalog_path.exists() else []
     definitions = [
-        ("moon-yutu2", "The Moon", "月球", "YUTU-2 · REAL MISSION", "玉兔二号 · 真实任务", "A real lunar observation from Chang’e-4 / Yutu-2, conditioned on a forward path.", "以嫦娥四号／玉兔二号真实月面图像为起始观测，输入直行轨迹。"),
-        ("mars-zhurong", "Mars", "火星", "ZHURONG · REAL MISSION", "祝融号 · 真实任务", "A real Martian observation from Tianwen-1 / Zhurong, conditioned on a forward path.", "以天问一号／祝融号真实火星图像为起始观测，输入直行轨迹。"),
-        ("moon-lusnar", "A simulated Moon", "仿真月球", "LUSNAR · SIMULATION", "LUSNAR · 仿真", "A simulated lunar landscape from LuSNAR, evaluated with the same checkpoint.", "LuSNAR 仿真月面场景，使用相同模型权重测试。"),
+        ("moon-yutu2", "The Moon", "The Moon", "YUTU-2 · REAL MISSION", "YUTU-2 · REAL MISSION", "A real lunar observation from Chang’e-4 / Yutu-2, conditioned on a forward path.", "A real lunar observation from Chang’e-4 / Yutu-2, conditioned on a forward path."),
+        ("mars-zhurong", "Mars", "Mars", "ZHURONG · REAL MISSION", "ZHURONG · REAL MISSION", "A real Martian observation from Tianwen-1 / Zhurong, conditioned on a forward path.", "A real Martian observation from Tianwen-1 / Zhurong, conditioned on a forward path."),
+        ("moon-lusnar", "A simulated Moon", "A simulated Moon", "LUSNAR · SIMULATION", "LUSNAR · SIMULATION", "A simulated lunar landscape from LuSNAR, evaluated with the same checkpoint.", "A simulated lunar landscape from LuSNAR, evaluated with the same checkpoint."),
     ]
     for scene_id, title, title_zh, tag, tag_zh, description, description_zh in definitions:
         if previous.get(scene_id, {}).get("fineTuned"):
@@ -433,14 +431,12 @@ def main():
         trajectory_svg(manifest["points"], OUT / f"{scene_id}-trajectory.svg")
         direct = manifest.get("mode") == "direct"
         protocol = "Each future frame is predicted directly from the fixed initial observation and its target pose." if direct else "Autoregressive prediction feeds each generated image back into the model. Severe appearance drift was observed in these planetary rollouts."
-        protocol_zh = "每个未来帧均根据固定初始观测及目标位姿直接预测。" if direct else "自回归预测将生成图像作为后续输入；这些行星场景中观察到了严重外观漂移。"
         timing = "16 model steps are displayed at 4 FPS; this simulation uses normalized planar controls, without metric calibration." if scene_id == "moon-lusnar" else "16 model steps are displayed at 4 FPS; real mission capture intervals are irregular."
-        timing_zh = "16 个模型步按 4 FPS 展示；仿真输入使用归一化平面控制，没有米制标定。" if scene_id == "moon-lusnar" else "16 个模型步按 4 FPS 展示；真实任务的拍摄间隔不规则。"
         scenes.append(dict(id=scene_id, title=title, titleZh=title_zh, tag=tag, tagZh=tag_zh,
             description=description, descriptionZh=description_zh, initial=f"{prefix}/initial.webp", poster=f"{prefix}/initial.webp", video=f"{prefix}/forward.mp4", trajectory=f"assets/space/{scene_id}-trajectory.svg", manifest=f"{prefix}/forward.json",
             provenance=f"OpenNWM · Nav15 Stage 2 joint100k · DDPM 250 · seed 0 · VAE posterior mean. {protocol} These are qualitative stress tests, not proof of arbitrary-scene or physical navigation capability. {timing}",
-            provenanceZh=f"OpenNWM · Nav15 Stage 2 joint100k · DDPM 250 · seed 0 · VAE 后验均值。{protocol_zh}这些是定性压力测试，不代表已验证任意场景或真实导航能力。{timing_zh}"))
-    scenes.append(dict(id="mars-recorded", title="Recorded-path stress test", titleZh="实测轨迹压力测试", tag="MARS · AUTOREGRESSIVE", tagZh="火星 · 自回归", description="Conditioned on the recorded rover path, appearance drifts away from the Martian scene. Open the recorded reference to inspect the failure.", descriptionZh="输入记录的行星车轨迹后，预测外观仍偏离火星场景。展开真实参考可查看这一失败案例。", initial="assets/space/mars-archive-initial.webp", poster="assets/space/mars-archive-initial.webp", video="assets/space/mars-archive-prediction.mp4", groundTruth="assets/space/mars-archive-gt.mp4", trajectory="assets/space/mars-archive-trajectory.svg", provenance="Archived inference · 24 September 2026 · sample 4 · joint100k · DDPM 250 · seed 0. All 16 predictions are shown, without interpolation. Source intervals are irregular; playback is not real mission time.", provenanceZh="推理归档 · 2026 年 9 月 24 日 · 样例 4 · joint100k · DDPM 250 · seed 0。完整展示 16 个预测帧，无插帧。原始拍摄间隔不规则，播放时间不代表真实任务时间。", manifest="assets/space/mars-archive-source.json"))
+            provenanceZh=f"OpenNWM · Nav15 Stage 2 joint100k · DDPM 250 · seed 0 · VAE posterior mean. {protocol} These are qualitative stress tests, not proof of arbitrary-scene or physical navigation capability. {timing}"))
+    scenes.append(dict(id="mars-recorded", title="Recorded-path stress test", titleZh="Recorded-path stress test", tag="MARS · AUTOREGRESSIVE", tagZh="MARS · AUTOREGRESSIVE", description="Conditioned on the recorded rover path, appearance drifts away from the Martian scene. Open the recorded reference to inspect the failure.", descriptionZh="Conditioned on the recorded rover path, appearance drifts away from the Martian scene. Open the recorded reference to inspect the failure.", initial="assets/space/mars-archive-initial.webp", poster="assets/space/mars-archive-initial.webp", video="assets/space/mars-archive-prediction.mp4", groundTruth="assets/space/mars-archive-gt.mp4", trajectory="assets/space/mars-archive-trajectory.svg", provenance="Archived inference · 24 September 2026 · sample 4 · joint100k · DDPM 250 · seed 0. All 16 predictions are shown, without interpolation. Source intervals are irregular; playback is not real mission time.", provenanceZh="Archived inference · 24 September 2026 · sample 4 · joint100k · DDPM 250 · seed 0. All 16 predictions are shown, without interpolation. Source intervals are irregular; playback is not real mission time.", manifest="assets/space/mars-archive-source.json"))
     (SITE / "content/space.json").write_text(json.dumps({"schemaVersion": 1, "scenes": scenes}, ensure_ascii=False, indent=2) + "\n")
     print(f"Published {len(scenes)} traceable planetary examples.")
 

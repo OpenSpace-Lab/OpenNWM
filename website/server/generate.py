@@ -25,10 +25,10 @@ def main():
     catalog = {"schemaVersion": 1, "model": "OpenNWM · Nav15 Stage 2 joint100k", "defaultScene": DEFAULT_SCENE, "fps": 4, "duration": 4,
         "coordinateSystem": {"x": "right", "y": "forward", "origin": [0, 0], "bounds": {"x": [-1, 1], "y": [-.25, 1.5]}, "canvasUnitsToWaypointUnits": 12},
         "note": "Presets are genuine OpenNWM predictions conditioned on the displayed path. Draw a new path with the local GPU service to generate a new prediction.",
-        "noteZh": "预设视频由 OpenNWM 根据所示轨迹真实预测；连接本地 GPU 服务后可绘制任意轨迹进行新预测。",
+        "noteZh": "Presets are genuine OpenNWM predictions conditioned on the displayed path. Draw a new path with the local GPU service to generate a new prediction.",
         "planetaryNote": "Moon and Mars start from real mission images. The 4-second horizon describes 16 model steps at 4 FPS; mission capture intervals are irregular.",
-        "planetaryNoteZh": "月球和火星使用真实任务影像作为起始帧。4 秒表示按 4 FPS 展示 16 个模型预测步；原任务拍摄间隔不规则。", "scenes": []}
-    labels = {"forward": ("Forward", "直行"), "left": ("Turn left", "左转"), "right": ("Turn right", "右转")}
+        "planetaryNoteZh": "Moon and Mars start from real mission images. The 4-second horizon describes 16 model steps at 4 FPS; mission capture intervals are irregular.", "scenes": []}
+    labels = {"forward": ("Forward", "Forward"), "left": ("Turn left", "Turn left"), "right": ("Turn right", "Turn right")}
     for scene in SCENES:
         if args.scenes and scene["id"] not in args.scenes:
             continue
@@ -63,7 +63,7 @@ def main():
         public["qualityNoteZh"] = scene.get("qualityNoteZh", "")
         public["predictionMode"] = prediction_mode
         public["protocol"] = ("Fixed initial observation; direct prediction at each future path endpoint." if prediction_mode == "direct" else "Autoregressive prediction; each generated view becomes the next observation.")
-        public["protocolZh"] = ("固定初始观测，分别直接预测轨迹各未来终点。" if prediction_mode == "direct" else "自回归预测，每次生成的图像作为下一步观测。")
+        public["protocolZh"] = ("Fixed initial observation; direct prediction at each future path endpoint." if prediction_mode == "direct" else "Autoregressive prediction; each generated view becomes the next observation.")
         public["presets"] = []
         destination = WEBSITE / "assets/playground" / scene["id"]
         destination.mkdir(parents=True, exist_ok=True)

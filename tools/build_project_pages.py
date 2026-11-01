@@ -26,16 +26,15 @@ motion-gallery.js navigation.css navigation.js playground.js reference-theme.css
 research.js results.css space-trajectories.js space-trajectory.css style.css
 """.split())
 CONTENT_FILES = frozenset("content/" + name for name in """
-GO2_MANIFEST.md LUNAR_CURVES_20261029_VALIDATION.md MARSLAB_20261029_VALIDATION.md
-MARSLAB_CURVES_20261029_VALIDATION.md METHOD_FIGURES.md PAPER_SOURCES.md
-SYNMARS_20261029_VALIDATION.md cinematic-display.json cinematic.json datasets.json
+GO2_MANIFEST.md PLANETARY_EVALUATION.md METHOD_FIGURES.md PAPER_SOURCES.md
+cinematic-display.json cinematic.json datasets.json
 demos.json go2-selection.json go2.json live-service.json media-delivery.json
 navigation.json paper.json playground.json space.json
 """.split())
 ASSET_DIRECTORIES = frozenset("space playground demos datasets navigation paper hero fonts".split())
 ASSET_SUFFIXES = frozenset(".webp .mp4 .json .csv .svg .pdf .png .txt .ttf .md".split())
 ROOT_ASSETS = frozenset("assets/" + name for name in (
-    "mark.svg", "opennwm-logo.pdf", "opennwm-logo.svg", "opennwm-logo.zip"))
+    "mark.svg", "opennwm-logo.pdf", "opennwm-logo.svg"))
 REVIEW = "assets/go2/privacy-review.json"
 MAX_BYTES = 950_000_000
 

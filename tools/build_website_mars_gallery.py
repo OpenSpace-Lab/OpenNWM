@@ -303,7 +303,7 @@ def export_gallery(direct_path, training_path, data_path, site=SITE):
             }
             item = {
                 "id": f"synmars-finetuned-{identity}", "title": f"Mars route 9 · clip {index}",
-                "titleZh": f"火星路线 9 · 片段 {index}", "dataset": "SynMars-TW", "datasetId": "synmars",
+                "titleZh": f"Mars route 9 · clip {index}", "dataset": "SynMars-TW", "datasetId": "synmars",
                 "domain": "held-out route", "environment": "mars", "fineTuned": True,
                 "sampleId": identity, "fps": 4, "duration": 4.25, "frameCount": 17,
                 "width": 224, "height": 224, "includesInitialFrame": True, "posterTime": 1,

@@ -332,7 +332,7 @@ def timeline(scenes: list[dict], start: float = 0.) -> float:
 
 
 def wall_scene() -> dict:
-    return {'id': 'video-wall', 'planet': 'wall', 'labelEn': 'Dataset', 'labelZh': '数据集',
+    return {'id': 'video-wall', 'planet': 'wall', 'labelEn': 'Dataset', 'labelZh': 'Dataset',
             'kind': 'video_mosaic', 'start_seconds': 0., 'startSeconds': 0.,
             'endSeconds': MOSAIC_DURATION, 'duration_seconds': MOSAIC_DURATION}
 
@@ -425,7 +425,7 @@ def write_manifest(scenes: list[dict], records: list[dict] | None = None) -> Non
     sources = [{'name': name, 'collection': 'NavAnywhere', 'clip_count': sum(r['source'] == name for r in records)}
                for name in dict.fromkeys(r['source'] for r in records)]
     chapters = []
-    labels = {'moon': ('Moon', '月球'), 'mars': ('Mars', '火星'), 'wall': ('Dataset', '数据集')}
+    labels = {'moon': ('Moon', 'Moon'), 'mars': ('Mars', 'Mars'), 'wall': ('Dataset', 'Dataset')}
     for planet in ['wall', 'moon', 'mars']:
         members = [r for r in scenes if r['planet'] == planet]
         end = next((r['startSeconds'] for r in scenes if r['startSeconds'] > members[-1]['startSeconds']), duration)
@@ -445,7 +445,7 @@ def write_manifest(scenes: list[dict], records: list[dict] | None = None) -> Non
            'chapters': chapters,
            'description': 'One continuous film opens with a fixed, fully visible 225-video dataset wall for three seconds, then travels through two Moon scenes and two Mars scenes.',
            'disclosure': 'Source-data showcase, not model predictions. Moon: LuSNAR simulation. Mars: SynMars-TW synthetic rover views from contiguous left-camera route frames. Playback speed is editorial; original camera timing and action ground truth are not implied.',
-           'disclosureZh': '数据源展示，非模型预测。月球来自LuSNAR仿真；火星使用SynMars-TW同一路线左目连续帧。播放速度经编辑调整，不代表原始采集时间或真实动作标注。',
+           'disclosureZh': 'Source-data showcase, not model predictions. Moon: LuSNAR simulation. Mars: SynMars-TW synthetic rover views from contiguous left-camera route frames. Playback speed is editorial; original camera timing and action ground truth are not implied.',
            'processing': ['Source frames are center-cropped to 16:9 and resized; presentation speed differs from capture timing.',
                           'Journey scenes remain first-person in Moon, Mars order, using nearest original source frames within each scene and brief cross-dissolves only between planetary scenes. Visual selection does not establish matched ground-truth actions.',
                           'The 15 by 15 wall contains 225 distinct trajectories from all 15 NavAnywhere sources. Short clips play forward then backward to soften loops.',

@@ -115,28 +115,28 @@
     {
       "planet": "wall",
       "labelEn": "Dataset",
-      "labelZh": "数据集",
+      "labelZh": "Dataset",
       "startSeconds": 0.0,
       "endSeconds": 3.0
     },
     {
       "planet": "moon",
       "labelEn": "Moon",
-      "labelZh": "月球",
+      "labelZh": "Moon",
       "startSeconds": 3.0,
       "endSeconds": 13.44
     },
     {
       "planet": "mars",
       "labelEn": "Mars",
-      "labelZh": "火星",
+      "labelZh": "Mars",
       "startSeconds": 13.44,
       "endSeconds": 25.25
     }
   ],
   "description": "One continuous film opens with a fixed, fully visible 225-video dataset wall for three seconds, then travels through two Moon scenes and two Mars scenes.",
   "disclosure": "Source-data showcase, not model predictions. Moon: LuSNAR simulation. Mars: SynMars-TW synthetic rover views from contiguous left-camera route frames. Playback speed is editorial; original camera timing and action ground truth are not implied.",
-  "disclosureZh": "数据源展示，非模型预测。月球来自LuSNAR仿真；火星使用SynMars-TW同一路线左目连续帧。播放速度经编辑调整，不代表原始采集时间或真实动作标注。",
+  "disclosureZh": "Source-data showcase, not model predictions. Moon: LuSNAR simulation. Mars: SynMars-TW synthetic rover views from contiguous left-camera route frames. Playback speed is editorial; original camera timing and action ground truth are not implied.",
   "processing": [
     "Source frames are center-cropped to 16:9 and resized; presentation speed differs from capture timing.",
     "Journey scenes remain first-person in Moon, Mars order, using nearest original source frames within each scene and brief cross-dissolves only between planetary scenes. Visual selection does not establish matched ground-truth actions.",
@@ -150,7 +150,7 @@
       "id": "video-wall",
       "planet": "wall",
       "labelEn": "Dataset",
-      "labelZh": "数据集",
+      "labelZh": "Dataset",
       "kind": "video_mosaic",
       "start_seconds": 0.0,
       "startSeconds": 0.0,
@@ -171,7 +171,7 @@
       "kind": "simulation_sequence",
       "duration_seconds": 5.4,
       "labelEn": "Lunar plain",
-      "labelZh": "月面平原",
+      "labelZh": "Lunar plain",
       "frame_names": [
         "1693274779508780032.png",
         "1693274779617142784.png",
@@ -245,7 +245,7 @@
       "trajectory": "Moon_2",
       "planet": "moon",
       "labelEn": "Crater rim",
-      "labelZh": "环形山脊",
+      "labelZh": "Crater rim",
       "editorial_note": "LuSNAR lunar simulation; not a model prediction.",
       "kind": "simulation_sequence",
       "frame_names": [
@@ -401,7 +401,7 @@
       ],
       "planet": "mars",
       "labelEn": "Martian rocks",
-      "labelZh": "火星岩原",
+      "labelZh": "Martian rocks",
       "editorial_note": "Synthetic rover imagery: contiguous ordered left-camera frames from one route. Editorial playback rate; no action ground truth inferred.",
       "kind": "simulation_sequence",
       "first_frame": "forward_9_0001_l.png",
@@ -497,7 +497,7 @@
       ],
       "planet": "mars",
       "labelEn": "Red valley",
-      "labelZh": "红色峡谷",
+      "labelZh": "Red valley",
       "editorial_note": "Synthetic rover imagery: contiguous ordered left-camera frames from one route. Editorial playback rate; no action ground truth inferred.",
       "kind": "simulation_sequence",
       "first_frame": "forward_9_0142_l.png",
@@ -524,7 +524,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Glass-fronted block",
-      "labelZh": "玻璃幕墙街区",
+      "labelZh": "Glass-fronted block",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -608,7 +608,7 @@
       "first_frame": "2574.jpg",
       "last_frame": "2669.jpg",
       "labelEn": "Cycle-rack junction",
-      "labelZh": "自行车架路口",
+      "labelZh": "Cycle-rack junction",
       "kind": "dataset_sequence",
       "frame_names": [
         "2574.jpg",
@@ -723,7 +723,7 @@
       "first_frame": "0.jpg",
       "last_frame": "19.jpg",
       "labelEn": "Blue-carpet study",
-      "labelZh": "蓝毯书房",
+      "labelZh": "Blue-carpet study",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -762,7 +762,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Basketball court",
-      "labelZh": "篮球场",
+      "labelZh": "Basketball court",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -846,7 +846,7 @@
       "first_frame": "0.jpg",
       "last_frame": "17.jpg",
       "labelEn": "Blue dining room",
-      "labelZh": "蓝色餐厅",
+      "labelZh": "Blue dining room",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -883,7 +883,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Residential green",
-      "labelZh": "住宅绿地",
+      "labelZh": "Residential green",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -967,7 +967,7 @@
       "first_frame": "533.jpg",
       "last_frame": "628.jpg",
       "labelEn": "Thawing snowfield",
-      "labelZh": "融雪旷地",
+      "labelZh": "Thawing snowfield",
       "kind": "dataset_sequence",
       "frame_names": [
         "533.jpg",
@@ -1084,7 +1084,7 @@
       "grid_index": 7,
       "playback_fps": 12.0,
       "labelEn": "Broad city crossing",
-      "labelZh": "宽阔城市路口",
+      "labelZh": "Broad city crossing",
       "kind": "dataset_sequence",
       "frame_names": [
         "1832.jpg",
@@ -1247,7 +1247,7 @@
       "grid_index": 8,
       "playback_fps": 5.5,
       "labelEn": "Banquet room",
-      "labelZh": "宴会厅",
+      "labelZh": "Banquet room",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -1297,7 +1297,7 @@
       "first_frame": "22.jpg",
       "last_frame": "116.jpg",
       "labelEn": "Modern city plaza",
-      "labelZh": "现代城市广场",
+      "labelZh": "Modern city plaza",
       "kind": "dataset_sequence",
       "frame_names": [
         "22.jpg",
@@ -1411,7 +1411,7 @@
       "first_frame": "8704.jpg",
       "last_frame": "8799.jpg",
       "labelEn": "Busy railing walkway",
-      "labelZh": "繁忙栏杆步道",
+      "labelZh": "Busy railing walkway",
       "kind": "dataset_sequence",
       "frame_names": [
         "8704.jpg",
@@ -1523,7 +1523,7 @@
       "frame_count": 60,
       "first_frame": "20.jpg",
       "labelEn": "Pavilion path",
-      "labelZh": "展馆步道",
+      "labelZh": "Pavilion path",
       "grid_index": 11,
       "kind": "dataset_sequence",
       "frame_names": [
@@ -1607,7 +1607,7 @@
       "grid_index": 12,
       "playback_fps": 12.0,
       "labelEn": "Park entrance",
-      "labelZh": "公园入口",
+      "labelZh": "Park entrance",
       "kind": "dataset_sequence",
       "frame_names": [
         "33.jpg",
@@ -1753,7 +1753,7 @@
       "first_frame": "788.jpg",
       "last_frame": "883.jpg",
       "labelEn": "Garden shelter",
-      "labelZh": "花园遮棚",
+      "labelZh": "Garden shelter",
       "kind": "dataset_sequence",
       "frame_names": [
         "788.jpg",
@@ -1868,7 +1868,7 @@
       "first_frame": "258.jpg",
       "last_frame": "353.jpg",
       "labelEn": "Autumn transit stop",
-      "labelZh": "秋树公交站",
+      "labelZh": "Autumn transit stop",
       "kind": "dataset_sequence",
       "frame_names": [
         "258.jpg",
@@ -1983,7 +1983,7 @@
       "first_frame": "2385.jpg",
       "last_frame": "2480.jpg",
       "labelEn": "Covered sidewalk",
-      "labelZh": "遮棚人行道",
+      "labelZh": "Covered sidewalk",
       "kind": "dataset_sequence",
       "frame_names": [
         "2385.jpg",
@@ -2098,7 +2098,7 @@
       "first_frame": "791.jpg",
       "last_frame": "886.jpg",
       "labelEn": "Lamp-lit grass court",
-      "labelZh": "灯光草地庭院",
+      "labelZh": "Lamp-lit grass court",
       "kind": "dataset_sequence",
       "frame_names": [
         "791.jpg",
@@ -2215,7 +2215,7 @@
       "grid_index": 17,
       "playback_fps": 12.0,
       "labelEn": "Palm-side roadway",
-      "labelZh": "棕榈树旁车道",
+      "labelZh": "Palm-side roadway",
       "kind": "dataset_sequence",
       "frame_names": [
         "3706.jpg",
@@ -2412,7 +2412,7 @@
       "first_frame": "137.jpg",
       "last_frame": "232.jpg",
       "labelEn": "Shopping forecourt",
-      "labelZh": "商场前庭",
+      "labelZh": "Shopping forecourt",
       "kind": "dataset_sequence",
       "frame_names": [
         "137.jpg",
@@ -2527,7 +2527,7 @@
       "first_frame": "3677.jpg",
       "last_frame": "3772.jpg",
       "labelEn": "Grassy tire ruts",
-      "labelZh": "草地轮迹",
+      "labelZh": "Grassy tire ruts",
       "kind": "dataset_sequence",
       "frame_names": [
         "3677.jpg",
@@ -2644,7 +2644,7 @@
       "grid_index": 20,
       "playback_fps": 12.0,
       "labelEn": "Noticeboard corridor",
-      "labelZh": "公告栏走廊",
+      "labelZh": "Noticeboard corridor",
       "kind": "dataset_sequence",
       "frame_names": [
         "188.jpg",
@@ -2841,7 +2841,7 @@
       "first_frame": "0.jpg",
       "last_frame": "32.jpg",
       "labelEn": "Equipment garage",
-      "labelZh": "工具车库",
+      "labelZh": "Equipment garage",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -2893,7 +2893,7 @@
       "first_frame": "0.jpg",
       "last_frame": "39.jpg",
       "labelEn": "Suburban bend",
-      "labelZh": "郊区弯道",
+      "labelZh": "Suburban bend",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -2952,7 +2952,7 @@
       "first_frame": "827.jpg",
       "last_frame": "922.jpg",
       "labelEn": "Snowy campus rise",
-      "labelZh": "校园积雪缓坡",
+      "labelZh": "Snowy campus rise",
       "kind": "dataset_sequence",
       "frame_names": [
         "827.jpg",
@@ -3069,7 +3069,7 @@
       "grid_index": 24,
       "playback_fps": 6.667,
       "labelEn": "Rainy city walk",
-      "labelZh": "雨天城市步行",
+      "labelZh": "Rainy city walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -3126,7 +3126,7 @@
       "first_frame": "495.jpg",
       "last_frame": "590.jpg",
       "labelEn": "Corner restaurant",
-      "labelZh": "街角餐馆",
+      "labelZh": "Corner restaurant",
       "kind": "dataset_sequence",
       "frame_names": [
         "495.jpg",
@@ -3241,7 +3241,7 @@
       "first_frame": "22.jpg",
       "last_frame": "116.jpg",
       "labelEn": "Leafless woodland",
-      "labelZh": "落叶树林",
+      "labelZh": "Leafless woodland",
       "kind": "dataset_sequence",
       "frame_names": [
         "22.jpg",
@@ -3357,7 +3357,7 @@
       "grid_index": 27,
       "playback_fps": 5.333,
       "labelEn": "Colorful tableware",
-      "labelZh": "彩色餐具陈列",
+      "labelZh": "Colorful tableware",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -3406,7 +3406,7 @@
       "first_frame": "739.jpg",
       "last_frame": "834.jpg",
       "labelEn": "Wet brick-wall walk",
-      "labelZh": "雨后砖墙步道",
+      "labelZh": "Wet brick-wall walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "739.jpg",
@@ -3521,7 +3521,7 @@
       "first_frame": "71.jpg",
       "last_frame": "166.jpg",
       "labelEn": "Planter square",
-      "labelZh": "花箱广场",
+      "labelZh": "Planter square",
       "kind": "dataset_sequence",
       "frame_names": [
         "71.jpg",
@@ -3638,7 +3638,7 @@
       "grid_index": 30,
       "playback_fps": 12.0,
       "labelEn": "Garden junction",
-      "labelZh": "园路岔口",
+      "labelZh": "Garden junction",
       "kind": "dataset_sequence",
       "frame_names": [
         "3326.jpg",
@@ -3837,7 +3837,7 @@
       "grid_index": 31,
       "playback_fps": 12.0,
       "labelEn": "Garden service road",
-      "labelZh": "园区车行道",
+      "labelZh": "Garden service road",
       "kind": "dataset_sequence",
       "frame_names": [
         "829.jpg",
@@ -4034,7 +4034,7 @@
       "first_frame": "1573.jpg",
       "last_frame": "1668.jpg",
       "labelEn": "Dusk paved yard",
-      "labelZh": "暮色铺装院地",
+      "labelZh": "Dusk paved yard",
       "kind": "dataset_sequence",
       "frame_names": [
         "1573.jpg",
@@ -4151,7 +4151,7 @@
       "grid_index": 33,
       "playback_fps": 4.5,
       "labelEn": "Plaid-armchair lounge",
-      "labelZh": "格纹扶手椅客厅",
+      "labelZh": "Plaid-armchair lounge",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -4195,7 +4195,7 @@
       "first_frame": "25.jpg",
       "last_frame": "120.jpg",
       "labelEn": "Bus-stop approach",
-      "labelZh": "公交站前路段",
+      "labelZh": "Bus-stop approach",
       "kind": "dataset_sequence",
       "frame_names": [
         "25.jpg",
@@ -4310,7 +4310,7 @@
       "first_frame": "901.jpg",
       "last_frame": "996.jpg",
       "labelEn": "Ivy-wall sidewalk",
-      "labelZh": "常春藤墙步道",
+      "labelZh": "Ivy-wall sidewalk",
       "kind": "dataset_sequence",
       "frame_names": [
         "901.jpg",
@@ -4425,7 +4425,7 @@
       "first_frame": "980.jpg",
       "last_frame": "1075.jpg",
       "labelEn": "Denim display",
-      "labelZh": "牛仔服陈列",
+      "labelZh": "Denim display",
       "kind": "dataset_sequence",
       "frame_names": [
         "980.jpg",
@@ -4540,7 +4540,7 @@
       "first_frame": "387.jpg",
       "last_frame": "482.jpg",
       "labelEn": "Metro entrance stairs",
-      "labelZh": "地铁入口阶梯",
+      "labelZh": "Metro entrance stairs",
       "kind": "dataset_sequence",
       "frame_names": [
         "387.jpg",
@@ -4655,7 +4655,7 @@
       "first_frame": "5661.jpg",
       "last_frame": "5756.jpg",
       "labelEn": "Gravel forest edge",
-      "labelZh": "林缘碎石路",
+      "labelZh": "Gravel forest edge",
       "kind": "dataset_sequence",
       "frame_names": [
         "5661.jpg",
@@ -4772,7 +4772,7 @@
       "grid_index": 39,
       "playback_fps": 12.0,
       "labelEn": "Red restaurant frontage",
-      "labelZh": "红门餐馆街面",
+      "labelZh": "Red restaurant frontage",
       "kind": "dataset_sequence",
       "frame_names": [
         "8124.jpg",
@@ -4969,7 +4969,7 @@
       "first_frame": "228.jpg",
       "last_frame": "323.jpg",
       "labelEn": "Carpeted sitting room",
-      "labelZh": "地毯客厅",
+      "labelZh": "Carpeted sitting room",
       "kind": "dataset_sequence",
       "frame_names": [
         "228.jpg",
@@ -5084,7 +5084,7 @@
       "first_frame": "0.jpg",
       "last_frame": "23.jpg",
       "labelEn": "Kitchen island",
-      "labelZh": "厨房中岛",
+      "labelZh": "Kitchen island",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -5129,7 +5129,7 @@
       "grid_index": 42,
       "playback_fps": 10.833,
       "labelEn": "Luggage store",
-      "labelZh": "箱包店",
+      "labelZh": "Luggage store",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -5213,7 +5213,7 @@
       "grid_index": 43,
       "playback_fps": 12.0,
       "labelEn": "Apartment garden",
-      "labelZh": "住宅花园",
+      "labelZh": "Apartment garden",
       "kind": "dataset_sequence",
       "frame_names": [
         "808.jpg",
@@ -5410,7 +5410,7 @@
       "first_frame": "0.jpg",
       "last_frame": "25.jpg",
       "labelEn": "Backyard deck",
-      "labelZh": "后院露台",
+      "labelZh": "Backyard deck",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -5455,7 +5455,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Tropical greenhouse",
-      "labelZh": "热带温室",
+      "labelZh": "Tropical greenhouse",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -5539,7 +5539,7 @@
       "first_frame": "304.jpg",
       "last_frame": "399.jpg",
       "labelEn": "Flag-lined pub",
-      "labelZh": "旗帜酒馆",
+      "labelZh": "Flag-lined pub",
       "kind": "dataset_sequence",
       "frame_names": [
         "304.jpg",
@@ -5654,7 +5654,7 @@
       "first_frame": "284.jpg",
       "last_frame": "379.jpg",
       "labelEn": "Tree-lined avenue",
-      "labelZh": "林荫大道",
+      "labelZh": "Tree-lined avenue",
       "kind": "dataset_sequence",
       "frame_names": [
         "284.jpg",
@@ -5769,7 +5769,7 @@
       "first_frame": "2838.jpg",
       "last_frame": "2933.jpg",
       "labelEn": "Long brick frontage",
-      "labelZh": "长砖楼街面",
+      "labelZh": "Long brick frontage",
       "kind": "dataset_sequence",
       "frame_names": [
         "2838.jpg",
@@ -5884,7 +5884,7 @@
       "first_frame": "792.jpg",
       "last_frame": "887.jpg",
       "labelEn": "Tall-grass courtyard",
-      "labelZh": "高草庭院",
+      "labelZh": "Tall-grass courtyard",
       "kind": "dataset_sequence",
       "frame_names": [
         "792.jpg",
@@ -5999,7 +5999,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Gallery wall",
-      "labelZh": "画廊展墙",
+      "labelZh": "Gallery wall",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -6085,7 +6085,7 @@
       "grid_index": 51,
       "playback_fps": 12.0,
       "labelEn": "Checkout counter",
-      "labelZh": "商店收银台",
+      "labelZh": "Checkout counter",
       "kind": "dataset_sequence",
       "frame_names": [
         "2845.jpg",
@@ -6246,7 +6246,7 @@
       "first_frame": "587.jpg",
       "last_frame": "682.jpg",
       "labelEn": "Cracked sidewalk",
-      "labelZh": "裂纹人行道",
+      "labelZh": "Cracked sidewalk",
       "kind": "dataset_sequence",
       "frame_names": [
         "587.jpg",
@@ -6363,7 +6363,7 @@
       "grid_index": 53,
       "playback_fps": 12.0,
       "labelEn": "Bench-lined city court",
-      "labelZh": "长椅城市院落",
+      "labelZh": "Bench-lined city court",
       "kind": "dataset_sequence",
       "frame_names": [
         "2530.jpg",
@@ -6560,7 +6560,7 @@
       "first_frame": "2844.jpg",
       "last_frame": "2939.jpg",
       "labelEn": "Indoor climbing wall",
-      "labelZh": "室内攀岩墙",
+      "labelZh": "Indoor climbing wall",
       "kind": "dataset_sequence",
       "frame_names": [
         "2844.jpg",
@@ -6677,7 +6677,7 @@
       "grid_index": 55,
       "playback_fps": 12.0,
       "labelEn": "Winter field",
-      "labelZh": "冬日旷野",
+      "labelZh": "Winter field",
       "kind": "dataset_sequence",
       "frame_names": [
         "777.jpg",
@@ -6874,7 +6874,7 @@
       "first_frame": "1113.jpg",
       "last_frame": "1208.jpg",
       "labelEn": "Sunny neighborhood",
-      "labelZh": "晴日社区路口",
+      "labelZh": "Sunny neighborhood",
       "kind": "dataset_sequence",
       "frame_names": [
         "1113.jpg",
@@ -6989,7 +6989,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Communal seating",
-      "labelZh": "公共休息区",
+      "labelZh": "Communal seating",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -7073,7 +7073,7 @@
       "first_frame": "24.jpg",
       "last_frame": "119.jpg",
       "labelEn": "Blue-railing lane",
-      "labelZh": "蓝栏杆小路",
+      "labelZh": "Blue-railing lane",
       "kind": "dataset_sequence",
       "frame_names": [
         "24.jpg",
@@ -7190,7 +7190,7 @@
       "grid_index": 59,
       "playback_fps": 12.0,
       "labelEn": "Sunset forest edge",
-      "labelZh": "日落林缘",
+      "labelZh": "Sunset forest edge",
       "kind": "dataset_sequence",
       "frame_names": [
         "1570.jpg",
@@ -7387,7 +7387,7 @@
       "first_frame": "21.jpg",
       "last_frame": "113.jpg",
       "labelEn": "Market intersection",
-      "labelZh": "市场十字路口",
+      "labelZh": "Market intersection",
       "kind": "dataset_sequence",
       "frame_names": [
         "21.jpg",
@@ -7499,7 +7499,7 @@
       "first_frame": "1221.jpg",
       "last_frame": "1316.jpg",
       "labelEn": "Shirt racks",
-      "labelZh": "衬衫货架",
+      "labelZh": "Shirt racks",
       "kind": "dataset_sequence",
       "frame_names": [
         "1221.jpg",
@@ -7614,7 +7614,7 @@
       "first_frame": "0.jpg",
       "last_frame": "39.jpg",
       "labelEn": "Night bus street",
-      "labelZh": "夜间公交街道",
+      "labelZh": "Night bus street",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -7673,7 +7673,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Lumber racks",
-      "labelZh": "木材货架",
+      "labelZh": "Lumber racks",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -7757,7 +7757,7 @@
       "first_frame": "4.jpg",
       "last_frame": "80.jpg",
       "labelEn": "High-rise parkland",
-      "labelZh": "高楼旁绿地",
+      "labelZh": "High-rise parkland",
       "kind": "dataset_sequence",
       "frame_names": [
         "4.jpg",
@@ -7853,7 +7853,7 @@
       "first_frame": "1573.jpg",
       "last_frame": "1668.jpg",
       "labelEn": "Frosty woodland exit",
-      "labelZh": "霜林出口",
+      "labelZh": "Frosty woodland exit",
       "kind": "dataset_sequence",
       "frame_names": [
         "1573.jpg",
@@ -7968,7 +7968,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Waterfront exercise",
-      "labelZh": "滨水健身区",
+      "labelZh": "Waterfront exercise",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -8052,7 +8052,7 @@
       "first_frame": "3002.jpg",
       "last_frame": "3097.jpg",
       "labelEn": "Stone-walled drive",
-      "labelZh": "石墙边车道",
+      "labelZh": "Stone-walled drive",
       "kind": "dataset_sequence",
       "frame_names": [
         "3002.jpg",
@@ -8169,7 +8169,7 @@
       "grid_index": 68,
       "playback_fps": 12.0,
       "labelEn": "Garage exit",
-      "labelZh": "车库出口",
+      "labelZh": "Garage exit",
       "kind": "dataset_sequence",
       "frame_names": [
         "2227.jpg",
@@ -8368,7 +8368,7 @@
       "grid_index": 69,
       "playback_fps": 12.0,
       "labelEn": "Woodland footpath",
-      "labelZh": "林间步行道",
+      "labelZh": "Woodland footpath",
       "kind": "dataset_sequence",
       "frame_names": [
         "1160.jpg",
@@ -8567,7 +8567,7 @@
       "grid_index": 70,
       "playback_fps": 12.0,
       "labelEn": "Arched underpass",
-      "labelZh": "拱形地下通道",
+      "labelZh": "Arched underpass",
       "kind": "dataset_sequence",
       "frame_names": [
         "11.jpg",
@@ -8693,7 +8693,7 @@
       "grid_index": 71,
       "playback_fps": 12.0,
       "labelEn": "Glass-store corner",
-      "labelZh": "玻璃店面转角",
+      "labelZh": "Glass-store corner",
       "kind": "dataset_sequence",
       "frame_names": [
         "1854.jpg",
@@ -8892,7 +8892,7 @@
       "grid_index": 72,
       "playback_fps": 12.0,
       "labelEn": "Snowy open yard",
-      "labelZh": "积雪空地",
+      "labelZh": "Snowy open yard",
       "kind": "dataset_sequence",
       "frame_names": [
         "431.jpg",
@@ -9089,7 +9089,7 @@
       "first_frame": "3142.jpg",
       "last_frame": "3237.jpg",
       "labelEn": "Arched shopping frontage",
-      "labelZh": "拱廊商业街面",
+      "labelZh": "Arched shopping frontage",
       "kind": "dataset_sequence",
       "frame_names": [
         "3142.jpg",
@@ -9206,7 +9206,7 @@
       "grid_index": 74,
       "playback_fps": 12.0,
       "labelEn": "Leafy roadside",
-      "labelZh": "绿植路边",
+      "labelZh": "Leafy roadside",
       "kind": "dataset_sequence",
       "frame_names": [
         "157.jpg",
@@ -9403,7 +9403,7 @@
       "first_frame": "890.jpg",
       "last_frame": "985.jpg",
       "labelEn": "Wildflower lawn",
-      "labelZh": "野花草坪",
+      "labelZh": "Wildflower lawn",
       "kind": "dataset_sequence",
       "frame_names": [
         "890.jpg",
@@ -9518,7 +9518,7 @@
       "first_frame": "332.jpg",
       "last_frame": "427.jpg",
       "labelEn": "Parked-car street",
-      "labelZh": "路边停车街道",
+      "labelZh": "Parked-car street",
       "kind": "dataset_sequence",
       "frame_names": [
         "332.jpg",
@@ -9633,7 +9633,7 @@
       "first_frame": "2555.jpg",
       "last_frame": "2650.jpg",
       "labelEn": "Double-decker street",
-      "labelZh": "双层公交街景",
+      "labelZh": "Double-decker street",
       "kind": "dataset_sequence",
       "frame_names": [
         "2555.jpg",
@@ -9748,7 +9748,7 @@
       "first_frame": "1477.jpg",
       "last_frame": "1572.jpg",
       "labelEn": "Sunlit open lawn",
-      "labelZh": "日照开阔草坪",
+      "labelZh": "Sunlit open lawn",
       "kind": "dataset_sequence",
       "frame_names": [
         "1477.jpg",
@@ -9863,7 +9863,7 @@
       "first_frame": "357.jpg",
       "last_frame": "452.jpg",
       "labelEn": "Stone-wall sidewalk",
-      "labelZh": "石墙旁人行道",
+      "labelZh": "Stone-wall sidewalk",
       "kind": "dataset_sequence",
       "frame_names": [
         "357.jpg",
@@ -9978,7 +9978,7 @@
       "first_frame": "0.jpg",
       "last_frame": "22.jpg",
       "labelEn": "Wine cellar",
-      "labelZh": "葡萄酒窖",
+      "labelZh": "Wine cellar",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -10020,7 +10020,7 @@
       "first_frame": "620.jpg",
       "last_frame": "715.jpg",
       "labelEn": "Blue-hour tree lawn",
-      "labelZh": "蓝调时刻树下草坪",
+      "labelZh": "Blue-hour tree lawn",
       "kind": "dataset_sequence",
       "frame_names": [
         "620.jpg",
@@ -10135,7 +10135,7 @@
       "first_frame": "0.jpg",
       "last_frame": "63.jpg",
       "labelEn": "Urban gathering",
-      "labelZh": "城市行人聚点",
+      "labelZh": "Urban gathering",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -10218,7 +10218,7 @@
       "first_frame": "215.jpg",
       "last_frame": "310.jpg",
       "labelEn": "Skylit shopping walk",
-      "labelZh": "天窗购物长廊",
+      "labelZh": "Skylit shopping walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "215.jpg",
@@ -10335,7 +10335,7 @@
       "grid_index": 84,
       "playback_fps": 12.0,
       "labelEn": "Mesh-railed footbridge",
-      "labelZh": "网栏人行桥",
+      "labelZh": "Mesh-railed footbridge",
       "kind": "dataset_sequence",
       "frame_names": [
         "483.jpg",
@@ -10532,7 +10532,7 @@
       "first_frame": "0.jpg",
       "last_frame": "16.jpg",
       "labelEn": "Carved timber staircase",
-      "labelZh": "雕木楼梯",
+      "labelZh": "Carved timber staircase",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -10570,7 +10570,7 @@
       "grid_index": 86,
       "playback_fps": 12.0,
       "labelEn": "Overgrown field",
-      "labelZh": "杂草田地",
+      "labelZh": "Overgrown field",
       "kind": "dataset_sequence",
       "frame_names": [
         "2196.jpg",
@@ -10767,7 +10767,7 @@
       "first_frame": "3972.jpg",
       "last_frame": "4067.jpg",
       "labelEn": "Sunlit forest floor",
-      "labelZh": "阳光下的林地",
+      "labelZh": "Sunlit forest floor",
       "kind": "dataset_sequence",
       "frame_names": [
         "3972.jpg",
@@ -10882,7 +10882,7 @@
       "first_frame": "0.jpg",
       "last_frame": "25.jpg",
       "labelEn": "Glazed sunroom",
-      "labelZh": "玻璃阳光房",
+      "labelZh": "Glazed sunroom",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -10929,7 +10929,7 @@
       "grid_index": 89,
       "playback_fps": 12.0,
       "labelEn": "Fenced sports court",
-      "labelZh": "围栏运动场",
+      "labelZh": "Fenced sports court",
       "kind": "dataset_sequence",
       "frame_names": [
         "505.jpg",
@@ -11128,7 +11128,7 @@
       "grid_index": 90,
       "playback_fps": 12.0,
       "labelEn": "Brick side entrance",
-      "labelZh": "砖楼侧门",
+      "labelZh": "Brick side entrance",
       "kind": "dataset_sequence",
       "frame_names": [
         "678.jpg",
@@ -11325,7 +11325,7 @@
       "first_frame": "1394.jpg",
       "last_frame": "1489.jpg",
       "labelEn": "Palm-lined boat display",
-      "labelZh": "棕榈旁船艇陈列",
+      "labelZh": "Palm-lined boat display",
       "kind": "dataset_sequence",
       "frame_names": [
         "1394.jpg",
@@ -11442,7 +11442,7 @@
       "grid_index": 92,
       "playback_fps": 5.333,
       "labelEn": "Chess-table living room",
-      "labelZh": "棋桌客厅",
+      "labelZh": "Chess-table living room",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -11491,7 +11491,7 @@
       "first_frame": "0.jpg",
       "last_frame": "20.jpg",
       "labelEn": "Skylit family lounge",
-      "labelZh": "天窗家庭起居室",
+      "labelZh": "Skylit family lounge",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -11533,7 +11533,7 @@
       "grid_index": 94,
       "playback_fps": 12.0,
       "labelEn": "Tram tracks",
-      "labelZh": "有轨电车轨道",
+      "labelZh": "Tram tracks",
       "kind": "dataset_sequence",
       "frame_names": [
         "17.jpg",
@@ -11642,7 +11642,7 @@
       "grid_index": 95,
       "playback_fps": 12.0,
       "labelEn": "Glass-court meadow",
-      "labelZh": "玻璃楼庭草地",
+      "labelZh": "Glass-court meadow",
       "kind": "dataset_sequence",
       "frame_names": [
         "795.jpg",
@@ -11839,7 +11839,7 @@
       "first_frame": "792.jpg",
       "last_frame": "887.jpg",
       "labelEn": "Quiet cross street",
-      "labelZh": "安静横街",
+      "labelZh": "Quiet cross street",
       "kind": "dataset_sequence",
       "frame_names": [
         "792.jpg",
@@ -11954,7 +11954,7 @@
       "first_frame": "656.jpg",
       "last_frame": "751.jpg",
       "labelEn": "Snowy house yard",
-      "labelZh": "雪中屋前院",
+      "labelZh": "Snowy house yard",
       "kind": "dataset_sequence",
       "frame_names": [
         "656.jpg",
@@ -12069,7 +12069,7 @@
       "first_frame": "2766.jpg",
       "last_frame": "2861.jpg",
       "labelEn": "Campus access road",
-      "labelZh": "园区通行路",
+      "labelZh": "Campus access road",
       "kind": "dataset_sequence",
       "frame_names": [
         "2766.jpg",
@@ -12184,7 +12184,7 @@
       "first_frame": "2113.jpg",
       "last_frame": "2208.jpg",
       "labelEn": "Green forest track",
-      "labelZh": "青绿森林车辙",
+      "labelZh": "Green forest track",
       "kind": "dataset_sequence",
       "frame_names": [
         "2113.jpg",
@@ -12299,7 +12299,7 @@
       "first_frame": "98.jpg",
       "last_frame": "193.jpg",
       "labelEn": "Dim kitchen interior",
-      "labelZh": "暗光厨房",
+      "labelZh": "Dim kitchen interior",
       "kind": "dataset_sequence",
       "frame_names": [
         "98.jpg",
@@ -12416,7 +12416,7 @@
       "grid_index": 101,
       "playback_fps": 12.0,
       "labelEn": "Supermarket aisle",
-      "labelZh": "超市过道",
+      "labelZh": "Supermarket aisle",
       "kind": "dataset_sequence",
       "frame_names": [
         "457.jpg",
@@ -12613,7 +12613,7 @@
       "first_frame": "698.jpg",
       "last_frame": "793.jpg",
       "labelEn": "Corner bedroom",
-      "labelZh": "转角卧室",
+      "labelZh": "Corner bedroom",
       "kind": "dataset_sequence",
       "frame_names": [
         "698.jpg",
@@ -12728,7 +12728,7 @@
       "first_frame": "755.jpg",
       "last_frame": "850.jpg",
       "labelEn": "Twilight treeline",
-      "labelZh": "暮色林梢",
+      "labelZh": "Twilight treeline",
       "kind": "dataset_sequence",
       "frame_names": [
         "755.jpg",
@@ -12845,7 +12845,7 @@
       "grid_index": 104,
       "playback_fps": 12.0,
       "labelEn": "Tropical roadside",
-      "labelZh": "热带街边",
+      "labelZh": "Tropical roadside",
       "kind": "dataset_sequence",
       "frame_names": [
         "8114.jpg",
@@ -13039,7 +13039,7 @@
       "frame_count": 60,
       "first_frame": "20.jpg",
       "labelEn": "Wildflower border",
-      "labelZh": "野花边道",
+      "labelZh": "Wildflower border",
       "grid_index": 105,
       "kind": "dataset_sequence",
       "frame_names": [
@@ -13123,7 +13123,7 @@
       "grid_index": 106,
       "playback_fps": 12.0,
       "labelEn": "Hedge-lined trail",
-      "labelZh": "灌木小径",
+      "labelZh": "Hedge-lined trail",
       "kind": "dataset_sequence",
       "frame_names": [
         "1093.jpg",
@@ -13320,7 +13320,7 @@
       "first_frame": "2892.jpg",
       "last_frame": "2987.jpg",
       "labelEn": "Shaded snowy grove",
-      "labelZh": "树荫积雪林",
+      "labelZh": "Shaded snowy grove",
       "kind": "dataset_sequence",
       "frame_names": [
         "2892.jpg",
@@ -13437,7 +13437,7 @@
       "grid_index": 108,
       "playback_fps": 12.0,
       "labelEn": "Garden fence corner",
-      "labelZh": "花园围栏角",
+      "labelZh": "Garden fence corner",
       "kind": "dataset_sequence",
       "frame_names": [
         "617.jpg",
@@ -13636,7 +13636,7 @@
       "grid_index": 109,
       "playback_fps": 12.0,
       "labelEn": "Red-paved path",
-      "labelZh": "红色铺装小径",
+      "labelZh": "Red-paved path",
       "kind": "dataset_sequence",
       "frame_names": [
         "536.jpg",
@@ -13833,7 +13833,7 @@
       "first_frame": "10009.jpg",
       "last_frame": "10104.jpg",
       "labelEn": "Woodland leopard view",
-      "labelZh": "林地豹影",
+      "labelZh": "Woodland leopard view",
       "kind": "dataset_sequence",
       "frame_names": [
         "10009.jpg",
@@ -13948,7 +13948,7 @@
       "first_frame": "0.jpg",
       "last_frame": "19.jpg",
       "labelEn": "Sunset sidewalk",
-      "labelZh": "夕照人行道",
+      "labelZh": "Sunset sidewalk",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -13987,7 +13987,7 @@
       "first_frame": "122.jpg",
       "last_frame": "217.jpg",
       "labelEn": "Atrium steps",
-      "labelZh": "中庭台阶",
+      "labelZh": "Atrium steps",
       "kind": "dataset_sequence",
       "frame_names": [
         "122.jpg",
@@ -14102,7 +14102,7 @@
       "first_frame": "1919.jpg",
       "last_frame": "2014.jpg",
       "labelEn": "Recessed entryway",
-      "labelZh": "内凹门廊",
+      "labelZh": "Recessed entryway",
       "kind": "dataset_sequence",
       "frame_names": [
         "1919.jpg",
@@ -14219,7 +14219,7 @@
       "grid_index": 114,
       "playback_fps": 12.0,
       "labelEn": "Curbside crossing",
-      "labelZh": "路缘过街处",
+      "labelZh": "Curbside crossing",
       "kind": "dataset_sequence",
       "frame_names": [
         "721.jpg",
@@ -14416,7 +14416,7 @@
       "first_frame": "13164.jpg",
       "last_frame": "13259.jpg",
       "labelEn": "Grand arcade square",
-      "labelZh": "宏伟拱廊广场",
+      "labelZh": "Grand arcade square",
       "kind": "dataset_sequence",
       "frame_names": [
         "13164.jpg",
@@ -14531,7 +14531,7 @@
       "first_frame": "716.jpg",
       "last_frame": "811.jpg",
       "labelEn": "Tower-lined avenue",
-      "labelZh": "远塔大道",
+      "labelZh": "Tower-lined avenue",
       "kind": "dataset_sequence",
       "frame_names": [
         "716.jpg",
@@ -14646,7 +14646,7 @@
       "first_frame": "1814.jpg",
       "last_frame": "1909.jpg",
       "labelEn": "Shed-side gravel path",
-      "labelZh": "棚屋碎石路",
+      "labelZh": "Shed-side gravel path",
       "kind": "dataset_sequence",
       "frame_names": [
         "1814.jpg",
@@ -14763,7 +14763,7 @@
       "grid_index": 118,
       "playback_fps": 5.333,
       "labelEn": "Dark-bed bedroom",
-      "labelZh": "深色床卧室",
+      "labelZh": "Dark-bed bedroom",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -14812,7 +14812,7 @@
       "first_frame": "116.jpg",
       "last_frame": "211.jpg",
       "labelEn": "Underground concourse",
-      "labelZh": "地下大厅",
+      "labelZh": "Underground concourse",
       "kind": "dataset_sequence",
       "frame_names": [
         "116.jpg",
@@ -14929,7 +14929,7 @@
       "grid_index": 120,
       "playback_fps": 12.0,
       "labelEn": "Retaining-wall grass",
-      "labelZh": "挡土墙边草地",
+      "labelZh": "Retaining-wall grass",
       "kind": "dataset_sequence",
       "frame_names": [
         "2029.jpg",
@@ -15126,7 +15126,7 @@
       "first_frame": "0.jpg",
       "last_frame": "31.jpg",
       "labelEn": "Hardware shop",
-      "labelZh": "五金商店",
+      "labelZh": "Hardware shop",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -15177,7 +15177,7 @@
       "first_frame": "70.jpg",
       "last_frame": "165.jpg",
       "labelEn": "Zebra crossing",
-      "labelZh": "斑马线",
+      "labelZh": "Zebra crossing",
       "kind": "dataset_sequence",
       "frame_names": [
         "70.jpg",
@@ -15294,7 +15294,7 @@
       "grid_index": 123,
       "playback_fps": 12.0,
       "labelEn": "Long winter shadows",
-      "labelZh": "冬林长影",
+      "labelZh": "Long winter shadows",
       "kind": "dataset_sequence",
       "frame_names": [
         "2796.jpg",
@@ -15491,7 +15491,7 @@
       "first_frame": "830.jpg",
       "last_frame": "925.jpg",
       "labelEn": "Ceiling-fan bedroom",
-      "labelZh": "吊扇卧室",
+      "labelZh": "Ceiling-fan bedroom",
       "kind": "dataset_sequence",
       "frame_names": [
         "830.jpg",
@@ -15606,7 +15606,7 @@
       "first_frame": "1380.jpg",
       "last_frame": "1475.jpg",
       "labelEn": "Autumn walled field",
-      "labelZh": "秋树围墙草地",
+      "labelZh": "Autumn walled field",
       "kind": "dataset_sequence",
       "frame_names": [
         "1380.jpg",
@@ -15723,7 +15723,7 @@
       "grid_index": 126,
       "playback_fps": 12.0,
       "labelEn": "Curb-ramp approach",
-      "labelZh": "路缘坡道前行",
+      "labelZh": "Curb-ramp approach",
       "kind": "dataset_sequence",
       "frame_names": [
         "4474.jpg",
@@ -15920,7 +15920,7 @@
       "first_frame": "520.jpg",
       "last_frame": "615.jpg",
       "labelEn": "Bright mall atrium",
-      "labelZh": "明亮商场中庭",
+      "labelZh": "Bright mall atrium",
       "kind": "dataset_sequence",
       "frame_names": [
         "520.jpg",
@@ -16035,7 +16035,7 @@
       "first_frame": "2460.jpg",
       "last_frame": "2555.jpg",
       "labelEn": "Tree-shaded bend",
-      "labelZh": "树荫弯道",
+      "labelZh": "Tree-shaded bend",
       "kind": "dataset_sequence",
       "frame_names": [
         "2460.jpg",
@@ -16152,7 +16152,7 @@
       "grid_index": 129,
       "playback_fps": 12.0,
       "labelEn": "Narrow pavement",
-      "labelZh": "窄人行道",
+      "labelZh": "Narrow pavement",
       "kind": "dataset_sequence",
       "frame_names": [
         "400.jpg",
@@ -16349,7 +16349,7 @@
       "first_frame": "854.jpg",
       "last_frame": "949.jpg",
       "labelEn": "Open-plan living",
-      "labelZh": "开放式起居区",
+      "labelZh": "Open-plan living",
       "kind": "dataset_sequence",
       "frame_names": [
         "854.jpg",
@@ -16466,7 +16466,7 @@
       "grid_index": 131,
       "playback_fps": 12.0,
       "labelEn": "Rainy evening square",
-      "labelZh": "雨夜广场",
+      "labelZh": "Rainy evening square",
       "kind": "dataset_sequence",
       "frame_names": [
         "7943.jpg",
@@ -16660,7 +16660,7 @@
       "frame_count": 60,
       "first_frame": "20.jpg",
       "labelEn": "Sunlit snowfield",
-      "labelZh": "阳光雪原",
+      "labelZh": "Sunlit snowfield",
       "grid_index": 132,
       "kind": "dataset_sequence",
       "frame_names": [
@@ -16742,7 +16742,7 @@
       "first_frame": "462.jpg",
       "last_frame": "557.jpg",
       "labelEn": "Sliding-door entry",
-      "labelZh": "移门玄关",
+      "labelZh": "Sliding-door entry",
       "kind": "dataset_sequence",
       "frame_names": [
         "462.jpg",
@@ -16857,7 +16857,7 @@
       "first_frame": "203.jpg",
       "last_frame": "298.jpg",
       "labelEn": "Facade-side path",
-      "labelZh": "建筑外墙小道",
+      "labelZh": "Facade-side path",
       "kind": "dataset_sequence",
       "frame_names": [
         "203.jpg",
@@ -16972,7 +16972,7 @@
       "first_frame": "1495.jpg",
       "last_frame": "1590.jpg",
       "labelEn": "Shaded campus square",
-      "labelZh": "树荫校园广场",
+      "labelZh": "Shaded campus square",
       "kind": "dataset_sequence",
       "frame_names": [
         "1495.jpg",
@@ -17087,7 +17087,7 @@
       "first_frame": "305.jpg",
       "last_frame": "400.jpg",
       "labelEn": "Tiled mall passage",
-      "labelZh": "瓷砖商场通道",
+      "labelZh": "Tiled mall passage",
       "kind": "dataset_sequence",
       "frame_names": [
         "305.jpg",
@@ -17204,7 +17204,7 @@
       "grid_index": 137,
       "playback_fps": 10.833,
       "labelEn": "Garden tool yard",
-      "labelZh": "园艺工具场",
+      "labelZh": "Garden tool yard",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -17286,7 +17286,7 @@
       "first_frame": "1638.jpg",
       "last_frame": "1733.jpg",
       "labelEn": "Tree-lined bus shelter",
-      "labelZh": "林荫公交候车亭",
+      "labelZh": "Tree-lined bus shelter",
       "kind": "dataset_sequence",
       "frame_names": [
         "1638.jpg",
@@ -17403,7 +17403,7 @@
       "grid_index": 139,
       "playback_fps": 3.167,
       "labelEn": "Spacious bedroom",
-      "labelZh": "宽敞卧室",
+      "labelZh": "Spacious bedroom",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -17439,7 +17439,7 @@
       "first_frame": "788.jpg",
       "last_frame": "883.jpg",
       "labelEn": "Galley kitchen",
-      "labelZh": "狭长厨房",
+      "labelZh": "Galley kitchen",
       "kind": "dataset_sequence",
       "frame_names": [
         "788.jpg",
@@ -17554,7 +17554,7 @@
       "first_frame": "0.jpg",
       "last_frame": "18.jpg",
       "labelEn": "Reading nook",
-      "labelZh": "阅读角",
+      "labelZh": "Reading nook",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -17592,7 +17592,7 @@
       "first_frame": "302.jpg",
       "last_frame": "397.jpg",
       "labelEn": "Bathroom doorway",
-      "labelZh": "浴室门口",
+      "labelZh": "Bathroom doorway",
       "kind": "dataset_sequence",
       "frame_names": [
         "302.jpg",
@@ -17707,7 +17707,7 @@
       "first_frame": "2198.jpg",
       "last_frame": "2293.jpg",
       "labelEn": "Leaf-strewn footway",
-      "labelZh": "落叶人行小道",
+      "labelZh": "Leaf-strewn footway",
       "kind": "dataset_sequence",
       "frame_names": [
         "2198.jpg",
@@ -17824,7 +17824,7 @@
       "grid_index": 144,
       "playback_fps": 12.0,
       "labelEn": "Street-vendor walk",
-      "labelZh": "街头摊贩步道",
+      "labelZh": "Street-vendor walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "20964.jpg",
@@ -18023,7 +18023,7 @@
       "grid_index": 145,
       "playback_fps": 12.0,
       "labelEn": "Curving stone walk",
-      "labelZh": "弧形石板路",
+      "labelZh": "Curving stone walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "1001.jpg",
@@ -18222,7 +18222,7 @@
       "grid_index": 146,
       "playback_fps": 12.0,
       "labelEn": "Narrow grass trail",
-      "labelZh": "狭窄草径",
+      "labelZh": "Narrow grass trail",
       "kind": "dataset_sequence",
       "frame_names": [
         "1641.jpg",
@@ -18419,7 +18419,7 @@
       "first_frame": "23.jpg",
       "last_frame": "118.jpg",
       "labelEn": "Bare-tree park",
-      "labelZh": "落叶林公园",
+      "labelZh": "Bare-tree park",
       "kind": "dataset_sequence",
       "frame_names": [
         "23.jpg",
@@ -18536,7 +18536,7 @@
       "grid_index": 148,
       "playback_fps": 12.0,
       "labelEn": "Lawn-side pavement",
-      "labelZh": "草坪边人行道",
+      "labelZh": "Lawn-side pavement",
       "kind": "dataset_sequence",
       "frame_names": [
         "3824.jpg",
@@ -18735,7 +18735,7 @@
       "grid_index": 149,
       "playback_fps": 12.0,
       "labelEn": "Wet theater junction",
-      "labelZh": "剧院前湿路口",
+      "labelZh": "Wet theater junction",
       "kind": "dataset_sequence",
       "frame_names": [
         "1225.jpg",
@@ -18934,7 +18934,7 @@
       "grid_index": 150,
       "playback_fps": 12.0,
       "labelEn": "Snow-covered trail",
-      "labelZh": "积雪林道",
+      "labelZh": "Snow-covered trail",
       "kind": "dataset_sequence",
       "frame_names": [
         "1547.jpg",
@@ -19131,7 +19131,7 @@
       "first_frame": "2544.jpg",
       "last_frame": "2639.jpg",
       "labelEn": "Brick residence court",
-      "labelZh": "砖楼住宅院落",
+      "labelZh": "Brick residence court",
       "kind": "dataset_sequence",
       "frame_names": [
         "2544.jpg",
@@ -19246,7 +19246,7 @@
       "first_frame": "748.jpg",
       "last_frame": "843.jpg",
       "labelEn": "Hedge-side office lawn",
-      "labelZh": "办公楼绿篱草坪",
+      "labelZh": "Hedge-side office lawn",
       "kind": "dataset_sequence",
       "frame_names": [
         "748.jpg",
@@ -19363,7 +19363,7 @@
       "grid_index": 153,
       "playback_fps": 12.0,
       "labelEn": "Cloudy lawn path",
-      "labelZh": "阴天草坪小路",
+      "labelZh": "Cloudy lawn path",
       "kind": "dataset_sequence",
       "frame_names": [
         "1899.jpg",
@@ -19562,7 +19562,7 @@
       "grid_index": 154,
       "playback_fps": 12.0,
       "labelEn": "Stadium lights",
-      "labelZh": "体育场夜灯",
+      "labelZh": "Stadium lights",
       "kind": "dataset_sequence",
       "frame_names": [
         "202.jpg",
@@ -19759,7 +19759,7 @@
       "first_frame": "742.jpg",
       "last_frame": "837.jpg",
       "labelEn": "Sunlit lounge",
-      "labelZh": "向阳休息厅",
+      "labelZh": "Sunlit lounge",
       "kind": "dataset_sequence",
       "frame_names": [
         "742.jpg",
@@ -19874,7 +19874,7 @@
       "first_frame": "640.jpg",
       "last_frame": "735.jpg",
       "labelEn": "Stairwell interior",
-      "labelZh": "室内楼梯间",
+      "labelZh": "Stairwell interior",
       "kind": "dataset_sequence",
       "frame_names": [
         "640.jpg",
@@ -19989,7 +19989,7 @@
       "first_frame": "970.jpg",
       "last_frame": "1065.jpg",
       "labelEn": "Fashion boutique",
-      "labelZh": "时装店",
+      "labelZh": "Fashion boutique",
       "kind": "dataset_sequence",
       "frame_names": [
         "970.jpg",
@@ -20106,7 +20106,7 @@
       "grid_index": 158,
       "playback_fps": 4.0,
       "labelEn": "Garden-view bay window",
-      "labelZh": "园景凸窗",
+      "labelZh": "Garden-view bay window",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -20149,7 +20149,7 @@
       "grid_index": 159,
       "playback_fps": 12.0,
       "labelEn": "Tram plaza",
-      "labelZh": "有轨电车广场",
+      "labelZh": "Tram plaza",
       "kind": "dataset_sequence",
       "frame_names": [
         "73.jpg",
@@ -20314,7 +20314,7 @@
       "grid_index": 160,
       "playback_fps": 12.0,
       "labelEn": "Twin-tower church",
-      "labelZh": "双塔教堂",
+      "labelZh": "Twin-tower church",
       "kind": "dataset_sequence",
       "frame_names": [
         "9789.jpg",
@@ -20513,7 +20513,7 @@
       "grid_index": 161,
       "playback_fps": 12.0,
       "labelEn": "Scaffolded loading lane",
-      "labelZh": "脚手架装卸道",
+      "labelZh": "Scaffolded loading lane",
       "kind": "dataset_sequence",
       "frame_names": [
         "4429.jpg",
@@ -20710,7 +20710,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Tree-garden walk",
-      "labelZh": "树木园步道",
+      "labelZh": "Tree-garden walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -20794,7 +20794,7 @@
       "first_frame": "776.jpg",
       "last_frame": "871.jpg",
       "labelEn": "Skylit landing",
-      "labelZh": "天窗楼廊",
+      "labelZh": "Skylit landing",
       "kind": "dataset_sequence",
       "frame_names": [
         "776.jpg",
@@ -20909,7 +20909,7 @@
       "first_frame": "0.jpg",
       "last_frame": "39.jpg",
       "labelEn": "Palm-lined dusk",
-      "labelZh": "棕榈街道暮色",
+      "labelZh": "Palm-lined dusk",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -20968,7 +20968,7 @@
       "first_frame": "1433.jpg",
       "last_frame": "1528.jpg",
       "labelEn": "Colorful playroom",
-      "labelZh": "彩色游戏室",
+      "labelZh": "Colorful playroom",
       "kind": "dataset_sequence",
       "frame_names": [
         "1433.jpg",
@@ -21085,7 +21085,7 @@
       "grid_index": 166,
       "playback_fps": 12.0,
       "labelEn": "Building-side parking",
-      "labelZh": "楼旁停车区",
+      "labelZh": "Building-side parking",
       "kind": "dataset_sequence",
       "frame_names": [
         "3013.jpg",
@@ -21282,7 +21282,7 @@
       "first_frame": "763.jpg",
       "last_frame": "858.jpg",
       "labelEn": "Hedge trimming",
-      "labelZh": "绿篱修剪处",
+      "labelZh": "Hedge trimming",
       "kind": "dataset_sequence",
       "frame_names": [
         "763.jpg",
@@ -21399,7 +21399,7 @@
       "grid_index": 168,
       "playback_fps": 12.0,
       "labelEn": "Sunlit shopping street",
-      "labelZh": "日照商业街",
+      "labelZh": "Sunlit shopping street",
       "kind": "dataset_sequence",
       "frame_names": [
         "3676.jpg",
@@ -21596,7 +21596,7 @@
       "first_frame": "4213.jpg",
       "last_frame": "4308.jpg",
       "labelEn": "Night traffic",
-      "labelZh": "夜间车流",
+      "labelZh": "Night traffic",
       "kind": "dataset_sequence",
       "frame_names": [
         "4213.jpg",
@@ -21711,7 +21711,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Ceramics exhibit",
-      "labelZh": "陶器展厅",
+      "labelZh": "Ceramics exhibit",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -21797,7 +21797,7 @@
       "grid_index": 171,
       "playback_fps": 12.0,
       "labelEn": "Underground car park",
-      "labelZh": "地下停车场",
+      "labelZh": "Underground car park",
       "kind": "dataset_sequence",
       "frame_names": [
         "2412.jpg",
@@ -21994,7 +21994,7 @@
       "first_frame": "2571.jpg",
       "last_frame": "2666.jpg",
       "labelEn": "Scaffold tunnel",
-      "labelZh": "脚手架通道",
+      "labelZh": "Scaffold tunnel",
       "kind": "dataset_sequence",
       "frame_names": [
         "2571.jpg",
@@ -22111,7 +22111,7 @@
       "grid_index": 173,
       "playback_fps": 12.0,
       "labelEn": "Sunlit garden path",
-      "labelZh": "日照园间小路",
+      "labelZh": "Sunlit garden path",
       "kind": "dataset_sequence",
       "frame_names": [
         "1259.jpg",
@@ -22308,7 +22308,7 @@
       "first_frame": "2616.jpg",
       "last_frame": "2711.jpg",
       "labelEn": "Outdoor running track",
-      "labelZh": "室外跑道",
+      "labelZh": "Outdoor running track",
       "kind": "dataset_sequence",
       "frame_names": [
         "2616.jpg",
@@ -22425,7 +22425,7 @@
       "grid_index": 175,
       "playback_fps": 12.0,
       "labelEn": "Downtown towers",
-      "labelZh": "市中心高楼",
+      "labelZh": "Downtown towers",
       "kind": "dataset_sequence",
       "frame_names": [
         "36.jpg",
@@ -22550,7 +22550,7 @@
       "first_frame": "24.jpg",
       "last_frame": "119.jpg",
       "labelEn": "Dappled park walk",
-      "labelZh": "树影公园步道",
+      "labelZh": "Dappled park walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "24.jpg",
@@ -22667,7 +22667,7 @@
       "grid_index": 177,
       "playback_fps": 12.0,
       "labelEn": "Plain indoor corridor",
-      "labelZh": "素墙内廊",
+      "labelZh": "Plain indoor corridor",
       "kind": "dataset_sequence",
       "frame_names": [
         "2687.jpg",
@@ -22866,7 +22866,7 @@
       "grid_index": 178,
       "playback_fps": 12.0,
       "labelEn": "Concrete-wall footway",
-      "labelZh": "水泥墙步道",
+      "labelZh": "Concrete-wall footway",
       "kind": "dataset_sequence",
       "frame_names": [
         "3056.jpg",
@@ -23063,7 +23063,7 @@
       "first_frame": "13.jpg",
       "last_frame": "97.jpg",
       "labelEn": "Snow-lined sidewalk",
-      "labelZh": "积雪路边步道",
+      "labelZh": "Snow-lined sidewalk",
       "kind": "dataset_sequence",
       "frame_names": [
         "13.jpg",
@@ -23167,7 +23167,7 @@
       "first_frame": "1841.jpg",
       "last_frame": "1936.jpg",
       "labelEn": "Snow-dusted meadow",
-      "labelZh": "薄雪草甸",
+      "labelZh": "Snow-dusted meadow",
       "kind": "dataset_sequence",
       "frame_names": [
         "1841.jpg",
@@ -23282,7 +23282,7 @@
       "first_frame": "21.jpg",
       "last_frame": "113.jpg",
       "labelEn": "Busy shopping walk",
-      "labelZh": "繁忙购物街",
+      "labelZh": "Busy shopping walk",
       "kind": "dataset_sequence",
       "frame_names": [
         "21.jpg",
@@ -23396,7 +23396,7 @@
       "grid_index": 182,
       "playback_fps": 12.0,
       "labelEn": "Residential courtyard",
-      "labelZh": "住宅庭院",
+      "labelZh": "Residential courtyard",
       "kind": "dataset_sequence",
       "frame_names": [
         "702.jpg",
@@ -23593,7 +23593,7 @@
       "first_frame": "2304.jpg",
       "last_frame": "2399.jpg",
       "labelEn": "Golden sunset",
-      "labelZh": "金色日落",
+      "labelZh": "Golden sunset",
       "kind": "dataset_sequence",
       "frame_names": [
         "2304.jpg",
@@ -23710,7 +23710,7 @@
       "grid_index": 184,
       "playback_fps": 12.0,
       "labelEn": "Wooded boulder path",
-      "labelZh": "林间岩石小路",
+      "labelZh": "Wooded boulder path",
       "kind": "dataset_sequence",
       "frame_names": [
         "15.jpg",
@@ -23839,7 +23839,7 @@
       "first_frame": "406.jpg",
       "last_frame": "501.jpg",
       "labelEn": "Fenced frontage",
-      "labelZh": "围栏入口",
+      "labelZh": "Fenced frontage",
       "kind": "dataset_sequence",
       "frame_names": [
         "406.jpg",
@@ -23954,7 +23954,7 @@
       "first_frame": "11564.jpg",
       "last_frame": "11659.jpg",
       "labelEn": "White townhouse garden",
-      "labelZh": "白色联排屋花园",
+      "labelZh": "White townhouse garden",
       "kind": "dataset_sequence",
       "frame_names": [
         "11564.jpg",
@@ -24071,7 +24071,7 @@
       "grid_index": 187,
       "playback_fps": 12.0,
       "labelEn": "Palace forecourt",
-      "labelZh": "宫殿前庭",
+      "labelZh": "Palace forecourt",
       "kind": "dataset_sequence",
       "frame_names": [
         "409.jpg",
@@ -24270,7 +24270,7 @@
       "grid_index": 188,
       "playback_fps": 12.0,
       "labelEn": "Upstairs landing",
-      "labelZh": "楼上平台",
+      "labelZh": "Upstairs landing",
       "kind": "dataset_sequence",
       "frame_names": [
         "630.jpg",
@@ -24469,7 +24469,7 @@
       "grid_index": 189,
       "playback_fps": 10.833,
       "labelEn": "Cushioned TV lounge",
-      "labelZh": "软垫电视休息室",
+      "labelZh": "Cushioned TV lounge",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -24551,7 +24551,7 @@
       "first_frame": "2647.jpg",
       "last_frame": "2742.jpg",
       "labelEn": "Garage speed bump",
-      "labelZh": "车库减速带",
+      "labelZh": "Garage speed bump",
       "kind": "dataset_sequence",
       "frame_names": [
         "2647.jpg",
@@ -24668,7 +24668,7 @@
       "grid_index": 191,
       "playback_fps": 10.833,
       "labelEn": "Fruit market",
-      "labelZh": "水果市场",
+      "labelZh": "Fruit market",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -24750,7 +24750,7 @@
       "first_frame": "1934.jpg",
       "last_frame": "2029.jpg",
       "labelEn": "Stone church crossing",
-      "labelZh": "石教堂路口",
+      "labelZh": "Stone church crossing",
       "kind": "dataset_sequence",
       "frame_names": [
         "1934.jpg",
@@ -24865,7 +24865,7 @@
       "first_frame": "2663.jpg",
       "last_frame": "2758.jpg",
       "labelEn": "Tree-lined apartments",
-      "labelZh": "林荫公寓前",
+      "labelZh": "Tree-lined apartments",
       "kind": "dataset_sequence",
       "frame_names": [
         "2663.jpg",
@@ -24982,7 +24982,7 @@
       "grid_index": 194,
       "playback_fps": 12.0,
       "labelEn": "Storefront squeeze",
-      "labelZh": "店铺外窄道",
+      "labelZh": "Storefront squeeze",
       "kind": "dataset_sequence",
       "frame_names": [
         "816.jpg",
@@ -25179,7 +25179,7 @@
       "first_frame": "24.jpg",
       "last_frame": "119.jpg",
       "labelEn": "Window-side footway",
-      "labelZh": "临窗步行道",
+      "labelZh": "Window-side footway",
       "kind": "dataset_sequence",
       "frame_names": [
         "24.jpg",
@@ -25294,7 +25294,7 @@
       "first_frame": "392.jpg",
       "last_frame": "487.jpg",
       "labelEn": "Kitchen threshold",
-      "labelZh": "厨房入口",
+      "labelZh": "Kitchen threshold",
       "kind": "dataset_sequence",
       "frame_names": [
         "392.jpg",
@@ -25409,7 +25409,7 @@
       "first_frame": "3704.jpg",
       "last_frame": "3799.jpg",
       "labelEn": "Winding green trail",
-      "labelZh": "绿林曲径",
+      "labelZh": "Winding green trail",
       "kind": "dataset_sequence",
       "frame_names": [
         "3704.jpg",
@@ -25526,7 +25526,7 @@
       "grid_index": 198,
       "playback_fps": 12.0,
       "labelEn": "Roadside trees",
-      "labelZh": "行道树街景",
+      "labelZh": "Roadside trees",
       "kind": "dataset_sequence",
       "frame_names": [
         "24.jpg",
@@ -25639,7 +25639,7 @@
       "first_frame": "0.jpg",
       "last_frame": "64.jpg",
       "labelEn": "Library aisle",
-      "labelZh": "图书馆书架间",
+      "labelZh": "Library aisle",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -25723,7 +25723,7 @@
       "first_frame": "964.jpg",
       "last_frame": "1059.jpg",
       "labelEn": "Modern family room",
-      "labelZh": "现代家庭客厅",
+      "labelZh": "Modern family room",
       "kind": "dataset_sequence",
       "frame_names": [
         "964.jpg",
@@ -25838,7 +25838,7 @@
       "first_frame": "0.jpg",
       "last_frame": "22.jpg",
       "labelEn": "Forest tennis court",
-      "labelZh": "林中网球场",
+      "labelZh": "Forest tennis court",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -25880,7 +25880,7 @@
       "first_frame": "24.jpg",
       "last_frame": "119.jpg",
       "labelEn": "Lawn-side walkway",
-      "labelZh": "草坪旁步道",
+      "labelZh": "Lawn-side walkway",
       "kind": "dataset_sequence",
       "frame_names": [
         "24.jpg",
@@ -25997,7 +25997,7 @@
       "grid_index": 203,
       "playback_fps": 12.0,
       "labelEn": "Exhibition hall",
-      "labelZh": "展览大厅",
+      "labelZh": "Exhibition hall",
       "kind": "dataset_sequence",
       "frame_names": [
         "241.jpg",
@@ -26158,7 +26158,7 @@
       "first_frame": "2898.jpg",
       "last_frame": "2993.jpg",
       "labelEn": "Waterside road",
-      "labelZh": "水畔道路",
+      "labelZh": "Waterside road",
       "kind": "dataset_sequence",
       "frame_names": [
         "2898.jpg",
@@ -26275,7 +26275,7 @@
       "grid_index": 205,
       "playback_fps": 12.0,
       "labelEn": "Scooter parking",
-      "labelZh": "电动车停车区",
+      "labelZh": "Scooter parking",
       "kind": "dataset_sequence",
       "frame_names": [
         "2452.jpg",
@@ -26472,7 +26472,7 @@
       "first_frame": "85.jpg",
       "last_frame": "180.jpg",
       "labelEn": "Modern campus court",
-      "labelZh": "现代校园庭院",
+      "labelZh": "Modern campus court",
       "kind": "dataset_sequence",
       "frame_names": [
         "85.jpg",
@@ -26587,7 +26587,7 @@
       "first_frame": "167.jpg",
       "last_frame": "262.jpg",
       "labelEn": "Metro platform",
-      "labelZh": "地铁站台",
+      "labelZh": "Metro platform",
       "kind": "dataset_sequence",
       "frame_names": [
         "167.jpg",
@@ -26704,7 +26704,7 @@
       "grid_index": 208,
       "playback_fps": 12.0,
       "labelEn": "Night grass verge",
-      "labelZh": "夜间草地边缘",
+      "labelZh": "Night grass verge",
       "kind": "dataset_sequence",
       "frame_names": [
         "1369.jpg",
@@ -26901,7 +26901,7 @@
       "first_frame": "0.jpg",
       "last_frame": "39.jpg",
       "labelEn": "Quiet shopfront",
-      "labelZh": "安静店铺门前",
+      "labelZh": "Quiet shopfront",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -26960,7 +26960,7 @@
       "first_frame": "1566.jpg",
       "last_frame": "1661.jpg",
       "labelEn": "Backpackers pavement",
-      "labelZh": "背包行人步道",
+      "labelZh": "Backpackers pavement",
       "kind": "dataset_sequence",
       "frame_names": [
         "1566.jpg",
@@ -27075,7 +27075,7 @@
       "first_frame": "1139.jpg",
       "last_frame": "1234.jpg",
       "labelEn": "Row-house footway",
-      "labelZh": "联排住宅步道",
+      "labelZh": "Row-house footway",
       "kind": "dataset_sequence",
       "frame_names": [
         "1139.jpg",
@@ -27190,7 +27190,7 @@
       "first_frame": "3048.jpg",
       "last_frame": "3143.jpg",
       "labelEn": "Shoe-shop doorway",
-      "labelZh": "鞋店门口",
+      "labelZh": "Shoe-shop doorway",
       "kind": "dataset_sequence",
       "frame_names": [
         "3048.jpg",
@@ -27305,7 +27305,7 @@
       "first_frame": "0.jpg",
       "last_frame": "18.jpg",
       "labelEn": "Cream-sofa lounge",
-      "labelZh": "米色沙发客厅",
+      "labelZh": "Cream-sofa lounge",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -27345,7 +27345,7 @@
       "grid_index": 214,
       "playback_fps": 12.0,
       "labelEn": "Snack shelves",
-      "labelZh": "零食货架",
+      "labelZh": "Snack shelves",
       "kind": "dataset_sequence",
       "frame_names": [
         "2148.jpg",
@@ -27542,7 +27542,7 @@
       "first_frame": "382.jpg",
       "last_frame": "477.jpg",
       "labelEn": "Covered glass walkway",
-      "labelZh": "玻璃连廊",
+      "labelZh": "Covered glass walkway",
       "kind": "dataset_sequence",
       "frame_names": [
         "382.jpg",
@@ -27659,7 +27659,7 @@
       "grid_index": 216,
       "playback_fps": 12.0,
       "labelEn": "White hallway",
-      "labelZh": "白墙走廊",
+      "labelZh": "White hallway",
       "kind": "dataset_sequence",
       "frame_names": [
         "977.jpg",
@@ -27856,7 +27856,7 @@
       "first_frame": "3007.jpg",
       "last_frame": "3102.jpg",
       "labelEn": "Overgrown passage",
-      "labelZh": "草木夹道",
+      "labelZh": "Overgrown passage",
       "kind": "dataset_sequence",
       "frame_names": [
         "3007.jpg",
@@ -27971,7 +27971,7 @@
       "first_frame": "0.jpg",
       "last_frame": "18.jpg",
       "labelEn": "Home gym",
-      "labelZh": "家庭健身房",
+      "labelZh": "Home gym",
       "kind": "dataset_sequence",
       "frame_names": [
         "0.jpg",
@@ -28011,7 +28011,7 @@
       "grid_index": 219,
       "playback_fps": 12.0,
       "labelEn": "Office reception",
-      "labelZh": "办公室接待区",
+      "labelZh": "Office reception",
       "kind": "dataset_sequence",
       "frame_names": [
         "2300.jpg",
@@ -28208,7 +28208,7 @@
       "first_frame": "2220.jpg",
       "last_frame": "2315.jpg",
       "labelEn": "Blue-sky city block",
-      "labelZh": "蓝天下的街区",
+      "labelZh": "Blue-sky city block",
       "kind": "dataset_sequence",
       "frame_names": [
         "2220.jpg",
@@ -28323,7 +28323,7 @@
       "first_frame": "964.jpg",
       "last_frame": "1059.jpg",
       "labelEn": "Window nook",
-      "labelZh": "窗边角落",
+      "labelZh": "Window nook",
       "kind": "dataset_sequence",
       "frame_names": [
         "964.jpg",
@@ -28438,7 +28438,7 @@
       "first_frame": "1512.jpg",
       "last_frame": "1607.jpg",
       "labelEn": "Straight woodland road",
-      "labelZh": "笔直林间道路",
+      "labelZh": "Straight woodland road",
       "kind": "dataset_sequence",
       "frame_names": [
         "1512.jpg",
@@ -28550,7 +28550,7 @@
       "frame_count": 60,
       "first_frame": "20.jpg",
       "labelEn": "Brownstone lane",
-      "labelZh": "红砖巷道",
+      "labelZh": "Brownstone lane",
       "grid_index": 223,
       "kind": "dataset_sequence",
       "frame_names": [
@@ -28632,7 +28632,7 @@
       "first_frame": "1247.jpg",
       "last_frame": "1342.jpg",
       "labelEn": "Evergreen yard",
-      "labelZh": "常青树庭院",
+      "labelZh": "Evergreen yard",
       "kind": "dataset_sequence",
       "frame_names": [
         "1247.jpg",

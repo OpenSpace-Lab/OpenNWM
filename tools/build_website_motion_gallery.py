@@ -17,13 +17,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "website"
 DEFAULT_ARCHIVE = Path("/file_system/nas/algorithm/dujun.nie/nwm/results/nwm_benchmark/opennwm_pixel_corrected_20260924")
 SELECTION = [
-    ("recon", 25, "Open meadow", "开阔草地", "Grass and sky remain coherent during the turn; tree positions and terrain details drift."),
-    ("scand", 133, "Campus path", "校园步道", "Preserves the tree-lined paved setting; the recorded pedestrians and canopy are not reconstructed precisely."),
-    ("tartan_drive", 99, "Hillside trail", "山坡小径", "Preserves a vegetated hillside and visible motion; the path and camera pitch diverge over the long rollout."),
-    ("recon", 55, "Garden path", "花园小径", "Retains the grass, path and small buildings; exact building geometry and motion differ."),
-    ("scand", 5, "Shaded plaza", "林荫广场", "Preserves brick paving and tree cover with continuous motion; shadows and scene details change."),
-    ("recon", 100, "Country buildings", "乡间建筑", "Maintains an outdoor building scene through the turn; view timing and building positions drift."),
-    ("recon", 10, "Overcast field", "阴天田野", "Maintains the overcast field and tree silhouettes; the final building and plant geometry differ."),
+    ("recon", 25, "Open meadow", "Open meadow", "Grass and sky remain coherent during the turn; tree positions and terrain details drift."),
+    ("scand", 133, "Campus path", "Campus path", "Preserves the tree-lined paved setting; the recorded pedestrians and canopy are not reconstructed precisely."),
+    ("tartan_drive", 99, "Hillside trail", "Hillside trail", "Preserves a vegetated hillside and visible motion; the path and camera pitch diverge over the long rollout."),
+    ("recon", 55, "Garden path", "Garden path", "Retains the grass, path and small buildings; exact building geometry and motion differ."),
+    ("scand", 5, "Shaded plaza", "Shaded plaza", "Preserves brick paving and tree cover with continuous motion; shadows and scene details change."),
+    ("recon", 100, "Country buildings", "Country buildings", "Maintains an outdoor building scene through the turn; view timing and building positions drift."),
+    ("recon", 10, "Overcast field", "Overcast field", "Maintains the overcast field and tree silhouettes; the final building and plant geometry differ."),
 ]
 DATASET_NAMES = {"recon": "RECON", "scand": "SCAND", "tartan_drive": "TartanDrive"}
 
@@ -95,8 +95,8 @@ def main():
         return
     template = copy.deepcopy(next(item for item in manifest["demos"] if item["id"] == "tartan-drive-36"))
     existing = {item["id"]: item for item in manifest["demos"]}
-    existing["tartan-drive-36"]["titleZh"] = "碎石小径"
-    existing["unitree-go2-81"]["titleZh"] = "办公室漫步"
+    existing["tartan-drive-36"]["titleZh"] = "Gravel path"
+    existing["unitree-go2-81"]["titleZh"] = "Office walk"
     out = SITE / "assets/demos"
     out.mkdir(exist_ok=True, parents=True)
     new_ids = []

@@ -66,14 +66,14 @@ def dataset_card(source, repo_id, modelscope_repo):
     body = body.replace('LittleBoss/LAM-Data', modelscope_repo)
     body = body.replace('/path/to/LAM-Data', '/path/to/NavAnywhere')
     introduction = (
-        '\nNavAnywhere 是 OpenNWM 使用的导航视频数据发布。此仓库镜像原 ModelScope '
-        'LAM-Data 的完整已发布文件，包括 NavAnywhere 快照与历史动作数据。'
-        '压缩包名称、包内路径和数据校验值保持原样。\n\n'
-        f'- ModelScope：[源仓库](https://modelscope.cn/datasets/{modelscope_repo})\n'
-        '- 代码：[OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM)\n\n'
-        '### Hugging Face 下载\n\n```bash\n'
+        '\nNavAnywhere provides navigation videos for OpenNWM. This repository mirrors the full original ModelScope '
+        'LAM-Data release, including NavAnywhere snapshots and historical action data. '
+        'Archive names, internal paths and checksums are unchanged.\n\n'
+        f'- ModelScope: [Source repository](https://modelscope.cn/datasets/{modelscope_repo})\n'
+        '- Code: [OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM)\n\n'
+        '### Hugging Face download\n\n```bash\n'
         f'hf download {repo_id} --repo-type dataset --local-dir /path/to/NavAnywhere\n'
-        '```\n\n中断后重跑同一命令即可续传。数据以归档文件发布，请按下方说明解压。\n'
+        '```\n\nRerun the command to resume interrupted downloads. Extract the archives as described below.\n'
     )
     body = body.replace('# NavAnywhere\n', '# NavAnywhere\n' + introduction, 1)
     return ('---\nlicense: other\nlicense_name: source-specific-terms\n'

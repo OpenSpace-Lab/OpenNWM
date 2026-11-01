@@ -94,7 +94,6 @@ def model_card(repo_id, rows):
 license: cc-by-nc-4.0
 language:
 - en
-- zh
 tags:
 - OpenNWM
 - navigation
@@ -185,12 +184,6 @@ prediction. They are not a complete robot controller; predictions can drift
 outside the training distribution. No new benchmark scores or deployment
 claims are introduced by this release.
 
-## 中文说明
-
-本仓库发布 Nav15 Pixel+Action 的最终 LAM、Stage 1 和 Stage 2 权重。
-真实动作导航预测与规划使用 Stage 2 的 EMA 权重。所有 checkpoint 保留原始
-字节和训练状态；请传入本仓库提供的可迁移 YAML 配置，避免使用 checkpoint
-中历史机器路径。完整使用方法见代码仓库，文件完整性由 SHA256SUMS 校验。
 '''
 
 

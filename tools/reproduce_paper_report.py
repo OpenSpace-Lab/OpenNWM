@@ -37,7 +37,7 @@ ID_DATASETS = ('recon', 'scand', 'huron', 'tartan_drive')
 LATER_SHARED_DATASETS = ('recon', 'scand', 'tartan_drive', 'go_stanford', 'tum_rgbd', 'unitree_go2')
 PROTOCOLS = ('paper_historical', 'corrected', 'l20_batch32')
 RESULT_PROTOCOLS = ('paper_historical', 'l20_batch32')
-PROTOCOL_LABELS = {'paper_historical': '论文历史口径', 'l20_batch32': 'L20 后续口径（HuRoN batch32）'}
+PROTOCOL_LABELS = {'paper_historical': 'Historical paper protocol', 'l20_batch32': 'Later L20 protocol (HuRoN batch32)'}
 OOD_FIELDS = {'go_stanford_psnr': 'go_stanford', 'tum_psnr': 'tum_rgbd',
               'planetary_rover_psnr': 'planetary_rover', 'office_go2_psnr': 'unitree_go2'}
 NAV_DATASETS = {'recon': 'recon', 'scand': 'scand', 'office_go2': 'unitree_go2'}
@@ -46,7 +46,7 @@ TABLE2_FIELDS = tuple(f'{dataset}_{metric}' for dataset in NAV_DATASETS for metr
 LABELS = {'recon': 'RECON', 'scand': 'SCAND', 'huron': 'HuRoN',
           'tartan_drive': 'TartanDrive', 'go_stanford': 'Go Stanford',
           'tum_rgbd': 'TUM RGB-D', 'planetary_rover': 'Planetary Rover',
-          'unitree_go2': 'Office-Go2', 'uzh_fpv': 'UZH FPV（主表外）'}
+          'unitree_go2': 'Office-Go2', 'uzh_fpv': 'UZH FPV (outside main tables)'}
 
 
 def read_json(path):
@@ -259,10 +259,10 @@ def comparison_tables(ref):
     def measurement(protocol, model, table, dataset, metric):
         entry = normalized.get((protocol, model, table, dataset))
         if entry is None:
-            return None, '待运行/待评分'
+            return None, 'Pending inference/scoring'
         if not entry['complete']:
-            return None, f"未完整（{entry['count']}/{entry['expected_count']}）"
-        return entry['metrics'][metric], '已评分，复现核验另列'
+            return None, f"Incomplete ({entry['count']}/{entry['expected_count']})"
+        return entry['metrics'][metric], 'Scored; reproduction checks reported separately'
 
     paper1 = next(row for row in ref['paper_targets']['table1']['rows'] if row['id'] == 'opennwm')
     paper2 = next(row for row in ref['paper_targets']['table2']['rows'] if row['id'] == 'opennwm')
@@ -278,7 +278,7 @@ def comparison_tables(ref):
                     values = [measurement(protocol, model, 1, d, metric) for d in ID_DATASETS]
                     available = [v for v, _ in values if v is not None]
                     value = sum(available) / 4 if len(available) == 4 else None
-                    status = '已评分，复现核验另列' if value is not None else f'待完整评分（ID {len(available)}/4 数据集）'
+                    status = 'Scored; reproduction checks reported separately' if value is not None else f'Pending complete scoring (ID {len(available)}/4 datasets)'
                 else:
                     value, status = measurement(protocol, model, 1, OOD_FIELDS[field], 'psnr')
                 row[f'{model}_fresh'] = value
@@ -634,100 +634,100 @@ def table2_pilot_notes(ref):
     timing, verification = mapping['pilot_timing'], mapping['strict_verification']
     count = len(mapping['windows'])
     same = sum(window['all_four_metrics_exact'] is True for window in mapping['windows'])
-    validity = lambda value: '通过' if value else '未通过'
+    validity = lambda value: 'Passed' if value else 'Failed'
     return [
-        '**Table 2 存档来源：**后续报告中的 RECON 100 窗口为混合来源：'
-        '窗口 0–15 复用早期 L20 `navigation_largebatch_20260921`，窗口 16–99 来自后续 A800 运行。'
-        '不能把该汇总统称为纯 A800 实测。pilot 窗口 0 与存档精确一致、窗口 16 有差异；'
-        '窗口 16 新旧均为逻辑 CUDA0、seed58，导航 split 与 planner 源码相同。'
-        '硬件、环境和首窗口编译状态没有被独立控制，这两个窗口不能证明 GPU 型号是差异原因。',
-        f"**Table 2 pilot 核验：**来源核验（provenance）{validity(verification['provenance_valid'])}，"
-        f"窗口覆盖核验（coverage）{validity(verification['coverage_valid'])}；"
-        f"四项保存指标精确相等 {same}/{count}，有差异 {verification['metric_difference_sample_count']}/{count}。"
-        f"严格逐项相等核验状态为 `{verification['state']}`、退出码 {verification['exit_code']}，"
-        '精确复现核验未通过。该结果只覆盖 pilot 两窗口，完整 Table 2 指标仍须各模型每数据集 100 窗口完成后汇总。',
-        f"**Table 2 pilot 耗时与显存：**窗口 0 为 {timing['window_0_seconds']:.4f} 秒；"
-        f"窗口 16 为 {timing['window_16_seconds_inferred']:.4f} 秒（由日志滚动均值差分，文件时间交叉核验）。"
-        f"pilot 结束时尚余 {timing['remaining_new_windows_after_pilot']} 个新窗口，按该两窗口初估约 "
-        f"{timing['remaining_598_gpu_hours_using_window_16']:.2f}–{timing['remaining_598_gpu_hours_using_two_window_mean']:.2f} GPU 小时，"
-        '约 5–5.5 天单 L20；未计各组启动/编译和 HuRoN 前置等待，RECON 基线速度不能代表其他数据集或 DINO。'
-        f"PyTorch 分配峰值 {timing['pytorch_max_memory_mib']} MiB，"
-        f"nvidia-smi 观测设备已用峰值 {timing['nvidia_smi_max_observed_used_mib']} MiB。",
-        f"[Table 2 pilot 来源、指标与耗时证据]({ref['sources']['table2_pilot_archive_mapping']['path']})",
+        '**Table 2 archive provenance:** The later report combines two sources for its 100 RECON windows: '
+        'windows 0–15 reuse the earlier L20 `navigation_largebatch_20260921` run; windows 16–99 come from a later A800 run. '
+        'The aggregate is not an A800-only measurement. Pilot window 0 matches the archive exactly; window 16 differs. '
+        'Both window 16 runs used logical CUDA0, seed58, the same navigation split and planner source. '
+        'Hardware, environment and first-window compilation were not independently controlled, so these two windows cannot establish GPU type as the cause.',
+        f"**Table 2 pilot verification:** provenance {validity(verification['provenance_valid'])}; "
+        f"coverage {validity(verification['coverage_valid'])}; "
+        f"all four saved metrics match in {same}/{count} windows and differ in {verification['metric_difference_sample_count']}/{count}. "
+        f"Strict equality check: `{verification['state']}`, exit code {verification['exit_code']}. "
+        'Exact reproduction failed. These checks cover only two pilot windows; full Table 2 aggregates require 100 windows per model and dataset.',
+        f"**Table 2 pilot time and memory:** window 0: {timing['window_0_seconds']:.4f} seconds; "
+        f"window 16: {timing['window_16_seconds_inferred']:.4f} seconds (inferred from rolling log means and checked against file timestamps). "
+        f"The pilot left {timing['remaining_new_windows_after_pilot']} new windows, roughly "
+        f"{timing['remaining_598_gpu_hours_using_window_16']:.2f}–{timing['remaining_598_gpu_hours_using_two_window_mean']:.2f} GPU hours "
+        '(5–5.5 days on one L20), excluding startup, compilation and HuRoN prerequisites. RECON baseline timing does not represent other datasets or DINO. '
+        f"Peak PyTorch allocation: {timing['pytorch_max_memory_mib']} MiB; "
+        f"peak device usage observed by nvidia-smi: {timing['nvidia_smi_max_observed_used_mib']} MiB.",
+        f"[Table 2 pilot provenance, metrics and timing]({ref['sources']['table2_pilot_archive_mapping']['path']})",
     ]
 
 
 def results_markdown(ref, output):
     summary = ref['result_summary']
-    status_labels = {'evaluation_in_progress': '评测进行中',
-                     'reference_audit_only_measurements_pending': '参考核验已准备，实测待完成',
-                     'measurements_complete_reproduction_checks_pending': '全部评分已完成，复现核验待完成',
-                     'evaluation_complete_with_documented_protocol_differences': '评测及差异核验已完成（含已注明的协议变化与存档差异）'}
+    status_labels = {'evaluation_in_progress': 'Evaluation in progress',
+                     'reference_audit_only_measurements_pending': 'Reference audit ready; measurements pending',
+                     'measurements_complete_reproduction_checks_pending': 'Scoring complete; reproduction checks pending',
+                     'evaluation_complete_with_documented_protocol_differences': 'Evaluation and difference audit complete, with documented protocol changes and archive differences'}
     labels = {'id_lpips': 'ID LPIPS↓', 'id_dreamsim': 'ID DreamSim↓', 'id_psnr': 'ID PSNR↑',
               'go_stanford_psnr': 'Go Stanford PSNR↑', 'tum_psnr': 'TUM RGB-D PSNR↑',
               'planetary_rover_psnr': 'Rover PSNR↑', 'office_go2_psnr': 'Office-Go2 PSNR↑'}
     for name, dataset in NAV_DATASETS.items():
         labels.update({f'{name}_ate': f'{LABELS[dataset]} ATE↓', f'{name}_rpe': f'{LABELS[dataset]} RPE↓'})
     def cell(value, signed=False):
-        return '待完成' if value is None else format(value, '+.6f' if signed else '.6f')
+        return 'Pending' if value is None else format(value, '+.6f' if signed else '.6f')
     def metric_table(protocol, table):
         data = ref['comparisons'][protocol][f'table{table}']
-        return md_table(['指标', '论文', '存档', 'OpenNWM 实测', 'DINO 实测', 'Δ DINO−OpenNWM', 'Δ OpenNWM−存档'],
+        return md_table(['Metric', 'Paper', 'Archive', 'OpenNWM measured', 'DINO measured', 'Δ DINO−OpenNWM', 'Δ OpenNWM−archive'],
                         [[labels[r['field']], fmt(r['paper'], 3 if table == 1 else 2), fmt(r['archive'], 6),
                           cell(r['baseline_fresh']), cell(r['dino_fresh']), cell(r['delta_dino_minus_baseline'], True),
                           cell(r['delta_baseline_minus_archive'], True)] for r in data])
-    sections = ['# OpenNWM / DINO 主表评测结果',
-                f"**{status_labels[ref['status']]}**。更新：{ref['generated_at']}（Asia/Taipei）。",
-                'DINO：NWM Stage 2 joint 100k。空缺均标为“待完成”；存档列是参考值，未替代任何实测。'
-                'LPIPS、DreamSim、ATE、RPE 越低越好，PSNR 越高越好。',
-                '## 完成度（完整评分的数据集/主表指标）',
-                md_table(['视图/表', '模型', '数据集', '主表指标', '已完整评分样本'],
-                         [[('共用 Table 2' if p['table'] == 2 else PROTOCOL_LABELS[p['protocol']] + ' / Table 1'),
+    sections = ['# OpenNWM / DINO main-table evaluation results',
+                f"**{status_labels[ref['status']]}**. Updated: {ref['generated_at']} (Asia/Taipei).",
+                'DINO: NWM Stage 2 joint 100k. Missing results are marked Pending; archive columns are references and never replace measurements. '
+                'Lower LPIPS, DreamSim, ATE and RPE are better; higher PSNR is better.',
+                '## Progress (fully scored datasets and main-table metrics)',
+                md_table(['View/table', 'Model', 'Dataset', 'Main-table metrics', 'Fully scored samples'],
+                         [[('Shared Table 2' if p['table'] == 2 else PROTOCOL_LABELS[p['protocol']] + ' / Table 1'),
                            'OpenNWM' if p['model'] == 'baseline' else 'DINO',
                            f"{p['complete_datasets']}/{p['expected_datasets']}",
                            f"{p['complete_metrics']}/{p['expected_metrics']}",
                            f"{p['complete_samples']}/{p['expected_samples']}"]
                           for p in summary['progress'] if p['table'] == 1 or p['protocol'] == 'paper_historical']),
-                'Table 1 的 ID 指标须 RECON、SCAND、HuRoN、TartanDrive 全部完成后等权宏平均；部分分片不计为完整评分。'
-                '样本数按每模型、每视图列出，共享结果不代表重复运行。']
+                'Table 1 ID metrics require complete RECON, SCAND, HuRoN and TartanDrive results, then an equal-weight macro average. Partial shards are incomplete. '
+                'Sample counts are listed by model and view; shared results do not imply repeated runs.']
     for protocol in RESULT_PROTOCOLS:
-        sections.extend([f'## Table 1：{PROTOCOL_LABELS[protocol]}', metric_table(protocol, 1)])
-    sections.extend(['L20 后续口径：HuRoN 独立使用 329 样本、batch32（A800 存档为 batch128）；'
-                     '六个不变数据集共享同模型完整历史实测，Rover 使用后续 horizons 的 L20 实测。'
-                     '该视图用于同配置模型对比，不能称为 A800 精确复现。',
-                     '## Table 2：两视图共用同一批 L20 实测',
-                     '保持 CEM80、candidate microbatch80，每数据集每模型 100 个窗口；此表只展示一次。'
-                     '与历史存档的差值保留，运行完成不等于精确复现。', metric_table('paper_historical', 2)])
+        sections.extend([f'## Table 1: {PROTOCOL_LABELS[protocol]}', metric_table(protocol, 1)])
+    sections.extend(['Later L20 protocol: HuRoN uses an independent 329-sample batch32 run (the A800 archive used batch128); '
+                     'six unchanged datasets share complete historical-protocol measurements for the same model, while Rover uses later-horizon L20 measurements. '
+                     'This view compares models under the same configuration; it is not exact A800 reproduction.',
+                     '## Table 2: shared L20 measurements for both views',
+                     'CEM80, candidate microbatch80, 100 windows per dataset and model; this table appears once. '
+                     'Differences from the historical archive remain visible. Completing a run does not establish exact reproduction.', metric_table('paper_historical', 2)])
     sections.extend(table2_pilot_notes(ref))
-    sections.append('## 历史复现证据与存档差异')
+    sections.append('## Historical reproduction evidence and archive differences')
     evidence = ref['current_run']['baseline_table1_pixel_evidence']
-    sections.append(md_table(['历史 Table 1 / OpenNWM', '已验证像素相同', '完整像素重放'],
+    sections.append(md_table(['Historical Table 1 / OpenNWM', 'Verified identical pixels', 'Complete pixel replay'],
                              [[LABELS[d], f"{e['verified_count']}/{e['expected_count']}",
-                               '通过' if e['complete_pixel_replay'] else '待完成'] for d, e in evidence.items()]))
-    sections.append('历史存档的 Table 1 七项汇总与论文三位小数一致；本次是否复现由上面的新推理证据与实测差值分别判断。')
-    nav_labels = {'pending': '待完成', 'not_checked': '待核验',
-                  'not established by aggregate means alone': '待完整逐窗口核验',
-                  'replay_metrics_differ_from_archive': '全量已核验，与历史存档有差异',
-                  'all_four_saved_metrics_exactly_equal_on_all_100_windows': '100 窗口四项保存指标精确相等'}
-    sections.append(md_table(['Table 2 / OpenNWM', '与历史存档逐窗口核验'],
+                               'Passed' if e['complete_pixel_replay'] else 'Pending'] for d, e in evidence.items()]))
+    sections.append('The seven historical Table 1 aggregates match the paper at three decimals. Current reproduction is assessed from fresh inference evidence and measurement differences above.')
+    nav_labels = {'pending': 'Pending', 'not_checked': 'Verification pending',
+                  'not established by aggregate means alone': 'Complete per-window verification pending',
+                  'replay_metrics_differ_from_archive': 'Fully checked; differs from the historical archive',
+                  'all_four_saved_metrics_exactly_equal_on_all_100_windows': 'All four saved metrics match exactly in all 100 windows'}
+    sections.append(md_table(['Table 2 / OpenNWM', 'Per-window historical archive comparison'],
                              [[LABELS[d], nav_labels.get(state, state)]
                               for d, state in summary['table2_archive_reproduction_by_dataset'].items()]))
     diag = ref['current_run']['historical_table1_rank1_diagnostics']
     if diag.get('controlled_first_batch_result_verified'):
         rank1_verified = all(any(s['rank'] == 1 for s in evidence[d]['shards'])
                              for d in (*ID_DATASETS, 'go_stanford', 'tum_rgbd', 'unitree_go2'))
-        sections.append('历史 rank1 控制实验：同 GPU 恢复逻辑 cuda:1 后，首批 32/32 与存档字节及像素一致；'
-                        '输入、VAE latent 和 RNG hash 不变。' +
-                        ('随后完整 rank1 的主表相关 7 组均通过 125/125 像素核验；其他 rank 以全量覆盖表为准。'
-                         if rank1_verified else '完整 rank1 仍以正式分片核验为准。') +
-                        '旧 cuda:0 尝试已隔离，不计入实测。此证据与后续 Rover 的 A800/L20 差异分别记录。')
-    sections.extend(['## 必要说明',
-                     '- Table 2 论文 RECON/SCAND RPE 为 0.35/0.27；存档原值 0.35580294906679705/0.277794077525373，'
-                     '常规四舍五入为 0.36/0.28，论文显示与截断一致。保留原值，不改指标。\n'
-                     '- 训练条件不同：OpenNWM 为 Nav15 Pixel+Action，60k 预训练 + 3k warmup + 100k joint；'
-                     'DINO 为 NavAnywhere v1，200k + 10k + 100k。结果是系统对比，不能把差异全部归因于 DINO 目标。',
-                     f'[原始精度 CSV]({output / "comparison.csv"}) · [完整证据 JSON]({output / "reference.json"}) · '
-                     f'[详细审计报告]({output / "preflight.md"})'])
+        sections.append('Historical rank1 control: restoring logical cuda:1 on the same GPU produced 32/32 byte- and pixel-identical first-batch samples; '
+                        'inputs, VAE latents and RNG hashes were unchanged. ' +
+                        ('All seven relevant rank1 groups subsequently passed 125/125 pixel checks; see the full coverage table for other ranks. '
+                         if rank1_verified else 'Complete rank1 coverage remains subject to formal shard verification. ') +
+                        'The earlier cuda:0 attempt is isolated and excluded from measurements. This evidence is separate from the later Rover A800/L20 difference.')
+    sections.extend(['## Notes',
+                     '- Table 2 paper RECON/SCAND RPE is 0.35/0.27; archive values are 0.35580294906679705/0.277794077525373. '
+                     'Normal rounding gives 0.36/0.28; the paper matches truncation. Raw metrics are preserved.\n'
+                     '- Training conditions differ: OpenNWM uses Nav15 Pixel+Action, 60k pretraining + 3k warmup + 100k joint; '
+                     'DINO uses NavAnywhere v1, 200k + 10k + 100k. This is a system comparison; differences cannot be attributed solely to the DINO objective.',
+                     f'[Full-precision CSV]({output / "comparison.csv"}) · [Complete evidence JSON]({output / "reference.json"}) · '
+                     f'[Detailed audit]({output / "preflight.md"})'])
     return '\n\n'.join(sections) + '\n'
 
 
@@ -850,34 +850,34 @@ def fresh_cell(row, model):
 
 
 def fresh_tables(ref):
-    sections = ['## 本次 OpenNWM / DINO 完整对比表（随评分更新）',
-                'Δ = DINO 新测 − OpenNWM 新测；PSNR 越高越好，其他指标越低越好。'
-                '只有完整样本评分才填入数值；待运行、部分样本和未评分保留显式状态。'
-                '新测评分数值与“复现通过”是两项独立结论。']
-    for protocol, label in (('paper_historical', '论文历史口径'), ('corrected', '后续存档协议（HuRoN batch128）'),
-                            ('l20_batch32', 'L20 后续口径（HuRoN batch32 新协议）')):
+    sections = ['## Current OpenNWM / DINO comparison (updated as scoring completes)',
+                'Δ = fresh DINO − fresh OpenNWM; higher PSNR and lower other metrics are better. '
+                'Values appear only after complete scoring; pending, partial and unscored results retain explicit status. '
+                'Fresh measurements and successful reproduction are separate conclusions.']
+    for protocol, label in (('paper_historical', 'Historical paper protocol'), ('corrected', 'Later archive protocol (HuRoN batch128)'),
+                            ('l20_batch32', 'Later L20 protocol (new HuRoN batch32 protocol)')):
         for table in (1, 2):
             sections.append(f'### {label} / Table {table}')
-            sections.append(md_table(['指标', '论文 OpenNWM', '对应 archive', '本次 OpenNWM',
-                                      '本次 DINO', 'Δ DINO−OpenNWM', 'Δ 新测OpenNWM−archive'],
+            sections.append(md_table(['Metric', 'Paper OpenNWM', 'Matching archive', 'Fresh OpenNWM',
+                                      'Fresh DINO', 'Δ DINO−OpenNWM', 'Δ fresh OpenNWM−archive'],
                                      [[r['field'], fmt(r['paper'], 3 if table == 1 else 2),
                                        fmt(r['archive'], 9), fresh_cell(r, 'baseline'), fresh_cell(r, 'dino'),
-                                       '待两模型完整' if r['delta_dino_minus_baseline'] is None else f"{r['delta_dino_minus_baseline']:+.9f}",
-                                       '待OpenNWM完整' if r['delta_baseline_minus_archive'] is None else f"{r['delta_baseline_minus_archive']:+.9f}"]
+                                       'Both models incomplete' if r['delta_dino_minus_baseline'] is None else f"{r['delta_dino_minus_baseline']:+.9f}",
+                                       'OpenNWM incomplete' if r['delta_baseline_minus_archive'] is None else f"{r['delta_baseline_minus_archive']:+.9f}"]
                                       for r in ref['comparisons'][protocol][f'table{table}']]))
-    sections.append('L20 后续口径：六个不变数据集共享同模型完整的历史口径新测；Rover 共享已完成的 L20 后续新测，'
-                    '其 OpenNWM 结果尚未匹配 A800 存档；HuRoN 必须完成独立 batch32 的 329 个样本评分。'
-                    '此视图是用户授权的新协议比较，不能称作 A800 精确复现。')
-    sections.append('Table 2 各视图透明共用同一批 L20 新测，保持 CEM80、candidate microbatch=80。'
-                    '新测与历史存档的差异逐项另列；RECON 存档混合早期 L20 与后续 A800 来源，'
-                    '小样本允许继续运行不表示精确复现通过。')
+    sections.append('Later L20 protocol: six unchanged datasets share complete fresh historical-protocol results for the same model; Rover shares completed later L20 measurements, '
+                    'whose OpenNWM results do not yet match the A800 archive. HuRoN requires independent scoring of all 329 batch32 samples. '
+                    'This authorized protocol comparison is not exact A800 reproduction.')
+    sections.append('Table 2 views share the same fresh L20 measurements with CEM80 and candidate microbatch=80. '
+                    'Fresh/archive differences are listed separately. The RECON archive combines earlier L20 and later A800 runs; '
+                    'permission to continue after a small pilot does not establish exact reproduction.')
     entries = ref['comparisons']['fresh_per_dataset']
     if entries:
-        equivalence_labels = {'full_dataset_archive_pixels_identical': '全量像素与历史存档一致（指标另核验）',
-                              'not_checked': '尚无对应的完整等价核验'}
-        sections.append(md_table(['口径', '表', '模型', '数据集', '覆盖', '评分完整', '历史等价核验'],
+        equivalence_labels = {'full_dataset_archive_pixels_identical': 'All pixels match the historical archive (metrics checked separately)',
+                              'not_checked': 'Complete equivalence check unavailable'}
+        sections.append(md_table(['Protocol', 'Table', 'Model', 'Dataset', 'Coverage', 'Scoring complete', 'Historical equivalence check'],
                                  [[e['protocol'], e['table'], e['model'], LABELS.get(e['dataset'], e['dataset']),
-                                   f"{e['count']}/{e['expected_count']}", '是' if e['complete'] else '否',
+                                   f"{e['count']}/{e['expected_count']}", 'Yes' if e['complete'] else 'No',
                                    equivalence_labels.get(e['historical_equivalence'], e['historical_equivalence'])]
                                   for e in entries]))
     return sections
@@ -889,177 +889,177 @@ def markdown(ref):
     nav = ref['archive']['table2']
     current = ref['current_run']
     sections = [
-        '# OpenNWM / DINO 主表评测：运行前审计与参考值',
-        f"生成时间：{ref['generated_at']}（Asia/Taipei）。",
-        '**本文件首先记录论文目标和历史归档核验；归档指标不代表本次重新推理已完成。** '
-        '本次复现完成与否必须根据新推理、样本覆盖、协议及指标核验判断。',
-        '已确认范围：仓库 OpenNWM.pdf 第 7 页 Table 1 和 Table 2；DINO 版本 NWM Stage 2 的 joint 100k；'
-        '同时做论文历史口径复现核验、后续口径（此前称“修正口径”）OpenNWM/DINO 对比。'
-        '后续口径包含不同的采样窗口和随机数消费顺序，不代表已证明论文口径有错。',
-        f"DINO checkpoint：`{DINO}`。\n\n论文 SHA256：`{PDF_SHA}`。",
-        '## 论文 Table 1 目标（3 位小数）',
-        md_table(['模型', 'ID LPIPS↓', 'ID DreamSim↓', 'ID PSNR↑', 'Go Stanford PSNR↑',
+        '# OpenNWM / DINO main-table evaluation: preflight audit and references',
+        f"Generated: {ref['generated_at']} (Asia/Taipei).",
+        '**This report records paper targets and historical archive checks; archive metrics do not establish completed fresh inference.** '
+        'Reproduction requires fresh inference, sample coverage, protocol and metric verification.',
+        'Scope: Tables 1 and 2 on page 7 of the repository OpenNWM.pdf; DINO NWM Stage 2 joint 100k; '
+        'historical paper-protocol reproduction checks and a later-protocol (previously called corrected) OpenNWM/DINO comparison. '
+        'The later protocol changes sampled windows and RNG consumption order; this does not establish an error in the paper protocol.',
+        f"DINO checkpoint: `{DINO}`.\n\nPaper SHA256: `{PDF_SHA}`.",
+        '## Paper Table 1 targets (three decimals)',
+        md_table(['Model', 'ID LPIPS↓', 'ID DreamSim↓', 'ID PSNR↑', 'Go Stanford PSNR↑',
                   'TUM PSNR↑', 'Rover PSNR↑', 'Office-Go2 PSNR↑'],
                  [[row['model'], *(fmt(row[f]) for f in TABLE1_FIELDS)]
                   for row in ref['paper_targets']['table1']['rows']]),
-        'ID 是 RECON、SCAND、HuRoN、TartanDrive 四个数据集等权宏平均。每个数据集 PSNR 为逐样本 dB 的算术平均。'
-        'Rover 的论文栏头为 4s；后续口径按 16 个观测帧标注，物理秒数不能由索引单独确认。',
-        '## OpenNWM Table 1：归档原值与论文核验',
-        md_table(['指标', '论文', '论文历史 archive 原值', '常规 round 一致', '后续 archive 原值'],
+        'ID is an equal-weight macro average of RECON, SCAND, HuRoN and TartanDrive. Dataset PSNR is the arithmetic mean of per-sample dB values. '
+        'The paper labels Rover as 4s; the later protocol labels 16 observed frames. Frame indices alone do not establish physical seconds.',
+        '## OpenNWM Table 1: raw archive values and paper checks',
+        md_table(['Metric', 'Paper', 'Historical raw archive', 'Normal rounding matches', 'Later raw archive'],
                  [[field, fmt(v['paper']), f"{v['archive_raw']:.12f}",
-                   '是' if v['matches_round_half_up'] else '否', f"{later['summary'][field]:.12f}"]
+                   'Yes' if v['matches_round_half_up'] else 'No', f"{later['summary'][field]:.12f}"]
                   for field, v in old['paper_display_checks'].items()]),
-        '历史 archive 的 7 项汇总指标均在常规三位小数显示下与论文一致。'
-        '这建立了论文数字与历史结果的对应关系；不是本次新测结果。',
-        md_table(['数据集', '历史样本数', '历史 LPIPS', '历史 DreamSim', '历史 PSNR',
-                  '后续样本数', '后续 LPIPS', '后续 DreamSim', '后续 PSNR'],
+        'All seven historical archive aggregates match the paper when normally rounded to three decimals. '
+        'This links the paper numbers to historical results; these are not fresh measurements.',
+        md_table(['Dataset', 'Historical samples', 'Historical LPIPS', 'Historical DreamSim', 'Historical PSNR',
+                  'Later samples', 'Later LPIPS', 'Later DreamSim', 'Later PSNR'],
                  [[LABELS[d], v['metrics']['sample_count'],
                    *(fmt(v['metrics'][k], 9) for k in ('lpips_alex', 'dreamsim', 'psnr')),
                    later['datasets'][d]['metrics']['sample_count'],
                    *(fmt(later['datasets'][d]['metrics'][k], 9) for k in ('lpips_alex', 'dreamsim', 'psnr'))]
                   for d, v in old['datasets'].items() if d in later['datasets']]),
-        '## 论文 Table 2 目标（2 位小数）',
-        md_table(['模型', 'RECON ATE↓', 'RECON RPE↓', 'SCAND ATE↓', 'SCAND RPE↓',
+        '## Paper Table 2 targets (two decimals)',
+        md_table(['Model', 'RECON ATE↓', 'RECON RPE↓', 'SCAND ATE↓', 'SCAND RPE↓',
                   'Office-Go2 ATE↓', 'Office-Go2 RPE↓'],
                  [[row['model'], *(fmt(row[f], 2) for f in TABLE2_FIELDS)]
                   for row in ref['paper_targets']['table2']['rows']]),
-        '网站 JSON 中的 TartanDrive 导航属于附录 Table 10，未混入 Table 2。',
-        '## OpenNWM Table 2：归档原值与显示差异',
-        md_table(['指标', '论文', 'archive 原值', '常规 round', '截断', '常规 round 一致'],
+        'TartanDrive navigation in the website JSON belongs to Appendix Table 10 and is excluded from Table 2.',
+        '## OpenNWM Table 2: raw archive values and display differences',
+        md_table(['Metric', 'Paper', 'Raw archive', 'Normal rounding', 'Truncation', 'Normal rounding matches'],
                  [[field, fmt(v['paper'], 2), f"{v['archive_raw']:.12f}", fmt(v['round_half_up'], 2),
-                   fmt(v['truncate'], 2), '是' if v['matches_round_half_up'] else '否']
+                   fmt(v['truncate'], 2), 'Yes' if v['matches_round_half_up'] else 'No']
                   for field, v in nav['paper_display_checks'].items()]),
-        '各数据集 100 个样本。RECON RPE=0.35580294906679705、SCAND RPE=0.277794077525373；'
-        '正常四舍五入显示为 0.36/0.28，论文 0.35/0.27 与截断一致。此处保留真实原值，不为了匹配论文改动指标。',
-        '## 两套口径的边界',
-        '- HuRoN：论文采用 refreshed 500 窗口，SHA256 `d285d1b93967b992380f90b6e92edc2742577b251a863e88638e1f22d3ecfe6d`；'
-        '后续从另一个 original 500 窗口过滤为 329，SHA256 `9d1c5239dfbf0f73d4aaee29c5abda31f28e97bbaf02f5bfc76cfd4f7f63953e`。'
-        '新旧不是同一批窗口，不能据此说论文 500 样本原本无效。历史 sweep 的全局 protocol registry 仍写 original SHA，需以运行级证据识别实际 split。\n'
-        '- Rover：两套比较的 10 个 GT endpoint 相同；历史只请求 horizons=[4]，后续请求 [1,2,4]，'
-        '存档 PSNR 为 12.574183369 vs 12.968571091。horizon 配置及 VAE 随机数流需分别核验；'
-        '仅设置后续 horizons 并不足以证明已重放后续存档。\n'
-        '- 宏平均：后续口径仍按四个 ID 数据集等权，不将 HuRoN 329 与其余 500 混成逐样本加权平均。\n'
-        '- 六组共享新测：RECON、SCAND、TartanDrive、Go Stanford、TUM RGB-D、Office-Go2 的每组 500 张 GT '
-        '字节/像素及 manifest hash 一致，后续 archive 的 endpoint 链接指向历史源。审计证据完整时，'
-        '后续与 L20 视图引用同模型完整的本次历史口径预测和指标，记录 shared_between_protocol_views 与 reuse_evidence；'
-        '不借用 archive 数值。若另有独立后续口径新测，优先采用独立新测。\n'
-        '- 训练条件：论文 OpenNWM 使用 Nav15 Pixel+Action、60k 预训练 + 3k warmup + 100k joint；'
-        'DINO 使用 NavAnywhere v1、200k 预训练 + 10k warmup + 100k joint。数据和 schedule 并未完全控制，'
-        '只能解释为系统对比，不能把全部差异归因于 DINO 目标。',
-        '## 设备选择与协议变化',
-        '后续 HuRoN 历史推理 batch=128，记录的峰值显存约 56.5 GiB，当前 L20 无法原样容纳。'
-        '要保持原协议，需要足够显存的设备；改小 batch 会改变随机 VAE 的随机数消费，必须作为新协议另列。'
-        '用户已授权使用 L20：HuRoN 两模型使用独立 batch32 新协议，Table 2 保持 candidate microbatch80。'
-        '新测与对应历史存档差异另列，不能把这项授权写成精确复现通过，也不能用 archive 代替 DINO 新测。'
-        + (' 用户决定记录已另附 `evaluation_decisions.json`，以下述记录为准：' +
+        'Each dataset has 100 samples. RECON RPE=0.35580294906679705; SCAND RPE=0.277794077525373. '
+        'Normal rounding gives 0.36/0.28; the paper values 0.35/0.27 match truncation. Raw values are preserved without adjusting metrics to match the paper.',
+        '## Protocol boundaries',
+        '- HuRoN: the paper uses refreshed 500 windows, SHA256 `d285d1b93967b992380f90b6e92edc2742577b251a863e88638e1f22d3ecfe6d`; '
+        'the later protocol filters a different original 500-window split to 329, SHA256 `9d1c5239dfbf0f73d4aaee29c5abda31f28e97bbaf02f5bfc76cfd4f7f63953e`. '
+        'These are different populations, so this does not invalidate the paper samples. The historical sweep registry still records the original SHA; run-level evidence identifies the actual split.\n'
+        '- Rover: both comparisons use the same 10 GT endpoints. Historical requests use horizons=[4], later requests use [1,2,4]; '
+        'archive PSNR is 12.574183369 vs 12.968571091. Horizon settings and VAE RNG streams require separate checks; '
+        'matching later horizons alone does not prove replay of the later archive.\n'
+        '- Macro averaging: the later protocol retains equal weights for four ID datasets, without sample-weighting HuRoN 329 against the other 500-sample datasets.\n'
+        '- Six shared measurements: the 500 GT images in each of RECON, SCAND, TartanDrive, Go Stanford, TUM RGB-D and Office-Go2 '
+        'have identical bytes/pixels and manifest hashes; later archive endpoint links point to historical sources. With complete audit evidence, '
+        'later and L20 views reuse the same model\'s complete fresh historical-protocol predictions and metrics, recording shared_between_protocol_views and reuse_evidence. '
+        'Archive values are never substituted. Independent fresh later-protocol measurements take precedence when available.\n'
+        '- Training: paper OpenNWM uses Nav15 Pixel+Action, 60k pretraining + 3k warmup + 100k joint; '
+        'DINO uses NavAnywhere v1, 200k pretraining + 10k warmup + 100k joint. Data and schedules are not fully controlled; '
+        'this is a system comparison and differences cannot be attributed solely to the DINO objective.',
+        '## Hardware and protocol changes',
+        'Later historical HuRoN inference used batch128 with roughly 56.5 GiB peak memory, exceeding the current L20 capacity. '
+        'Preserving that protocol requires sufficient device memory. Reducing the batch changes stochastic VAE RNG consumption and requires a separate protocol. '
+        'The authorized L20 runs use independent batch32 HuRoN evaluation for both models; Table 2 retains candidate microbatch80. '
+        'Differences from matching archives are reported separately. Authorization does not establish exact reproduction, and archive values cannot replace fresh DINO measurements.'
+        + (' User decisions are recorded separately in `evaluation_decisions.json`: ' +
            json.dumps(ref['operational_limits']['user_decisions'], ensure_ascii=False)
            if 'user_decisions' in ref['operational_limits'] else ''),
-        '## 本次执行证据（与 archive 分开）',
-        f"已发现 archive 重评分文件 {len(current['archive_rescore'])} 个；显式提供的新推理结果记录 {len(current['fresh_inference'])} 个。",
+        '## Current execution evidence (separate from archives)',
+        f"Found {len(current['archive_rescore'])} archive rescoring files and {len(current['fresh_inference'])} explicitly supplied fresh inference records.",
     ]
     if not current['fresh_inference']:
-        sections.append('**新测结果待运行/纳入：目前没有可据以发布 DINO 对比的本次完整结果。**')
+        sections.append('**Fresh results pending: no complete current results support publishing the DINO comparison yet.**')
     if current['archive_rescore_checks']:
-        sections.append(md_table(['重评分口径', '数据集', '样本数一致', 'ΔLPIPS', 'ΔDreamSim', 'ΔPSNR', '三项完全相等'],
-                                 [[r['protocol'], LABELS[r['dataset']], '是' if r['count_matches'] else '否',
+        sections.append(md_table(['Rescoring protocol', 'Dataset', 'Sample counts match', 'ΔLPIPS', 'ΔDreamSim', 'ΔPSNR', 'All three exactly equal'],
+                                 [[r['protocol'], LABELS[r['dataset']], 'Yes' if r['count_matches'] else 'No',
                                    *(f"{r['delta_from_archive'][k]:+.12g}" for k in ('lpips_alex', 'dreamsim', 'psnr')),
-                                   '是' if r['all_three_exactly_equal'] else '否']
+                                   'Yes' if r['all_three_exactly_equal'] else 'No']
                                   for r in current['archive_rescore_checks']]))
     if current['baseline_table1_archive_pixel_checks']:
-        sections.append(md_table(['本次OpenNWM重新推理像素核验', '已比较', '像素完全相同', '完整目标数'],
+        sections.append(md_table(['Fresh OpenNWM pixel comparison', 'Compared', 'Pixel-identical', 'Expected total'],
                                  [[LABELS[d], v['compared'], v['pixel_identical'], 10 if d == 'planetary_rover' else 500]
                                   for d, v in current['baseline_table1_pixel_coverage'].items()]))
-        sections.append('全部 Table 1 主表样本像素级重放已完成：' +
-                        ('是' if current['baseline_table1_complete_pixel_replay'] else '否；当前为部分证据') + '。')
+        sections.append('Pixel replay complete for all Table 1 main-table samples: ' +
+                        ('Yes' if current['baseline_table1_complete_pixel_replay'] else 'No; partial evidence only') + '. ')
     historical_diagnostics = current['historical_table1_rank1_diagnostics']
     if historical_diagnostics:
-        sections.append('### 历史 Table 1 rank1：逻辑 CUDA index 控制实验')
+        sections.append('### Historical Table 1 rank1: logical CUDA index control')
         if historical_diagnostics['controlled_first_batch_result_verified']:
             gpu = historical_diagnostics['selected_physical_gpus'][0]
-            sections.append(f'同一物理 L20 GPU{gpu}、相同 rank seed=1 的首批 32 个样本：'
-                            '使用逻辑 cuda:0 时与存档 0/32 相同，恢复历史逻辑 cuda:1 后 32/32 像素及 PNG 字节完全相同。'
-                            '两次输入观测、action、VAE 输入与 latent，以及 VAE 前后的 CUDA RNG hash 均一致；'
-                            '差异出现在 VAE 编码之后，并依赖逻辑设备编号。精确编译内核机制尚未证实，不能归因于 VAE seed。')
+            sections.append(f'First 32 samples on physical L20 GPU{gpu}, with rank seed=1: '
+                            'logical cuda:0 matched 0/32 archive samples; restoring historical logical cuda:1 matched 32/32 pixels and PNG bytes. '
+                            'Input observations, actions, VAE inputs/latents and CUDA RNG hashes before/after the VAE were identical; '
+                            'the difference appears after VAE encoding and depends on logical device index. The exact compiled-kernel mechanism is unconfirmed and cannot be attributed to the VAE seed.')
         else:
-            sections.append('控制实验记录尚不足以确认预期的 0/32→32/32 结果；见下列逐项证据。')
-        sections.append('控制实验本身仅覆盖 rank1 首批 32 张；正式重放的覆盖范围以上面的分片像素核验为准，'
-                        '不能由首批结果推断整个主表已完整重放。该诊断独立于后续 Rover 的 A800/L20 差异。')
+            sections.append('The control records do not yet confirm the expected 0/32→32/32 result; see the evidence below.')
+        sections.append('The control covers only the first 32 rank1 images. Formal replay coverage follows the shard checks above; '
+                        'the first batch cannot establish full-table replay. This diagnosis is separate from the later Rover A800/L20 difference.')
         relocation = historical_diagnostics['relocation']
-        sections.append(f"旧 cuda:0 尝试迁移状态：{relocation.get('state', '待记录')}；"
-                        f"归档目录：`{relocation.get('relocated_directory', '待记录')}`。"
-                        '旧尝试与诊断输出不计入 canonical fresh 结果。旧 metadata 保留原路径，'
-                        '应按迁移清单和已记录 SHA256 定位旧文件；本报告仅记录证据文件的 hash，不重新计算迁移清单中全部文件的 hash。')
-        sections.append(md_table(['历史 rank1 诊断证据', '路径', 'SHA256'],
+        sections.append(f"Earlier cuda:0 attempt relocation: {relocation.get('state', 'Unrecorded')}; "
+                        f"archive directory: `{relocation.get('relocated_directory', 'Unrecorded')}`. "
+                        'Earlier attempts and diagnostic outputs are excluded from canonical fresh results. Historical metadata retains original paths; '
+                        'use the relocation manifest and recorded SHA256 to locate files. This report hashes evidence files, not every file in the relocation manifest.')
+        sections.append(md_table(['Historical rank1 diagnostic evidence', 'Path', 'SHA256'],
                                  [[name, historical_diagnostics[key]['path'], historical_diagnostics[key].get('sha256', '—')]
-                                  for name, key in (('控制实验 JSON', 'source'), ('控制实验说明', 'markdown_source'),
-                                                    ('旧尝试迁移记录', 'relocation_source'))]))
+                                  for name, key in (('Control JSON', 'source'), ('Control notes', 'markdown_source'),
+                                                    ('Attempt relocation record', 'relocation_source'))]))
     if current['baseline_table1_later_archive_pixel_checks']:
-        sections.append(md_table(['后续口径 OpenNWM 像素核验', 'horizon', '已比较', '像素完全相同'],
+        sections.append(md_table(['Later-protocol OpenNWM pixel comparison', 'horizon', 'Compared', 'Pixel-identical'],
                                  [[LABELS[item['dataset']], horizon, values['compared'], values['pixel_identical']]
                                   for item in current['baseline_table1_later_archive_pixel_checks']
                                   for horizon, values in item['data']['counts_by_horizon'].items()]))
         failed = [LABELS[item['dataset']] for item in current['baseline_table1_later_archive_pixel_checks']
                   if not item['data']['all_pixels_identical']]
         if failed:
-            sections.append('**后续口径重新推理尚未匹配存档：' + '、'.join(failed) +
-                            '。下表新测数值可用于本次相同运行配置下的模型对比；不能据此宣称后续存档已复现一致。**')
+            sections.append('**Later-protocol fresh inference does not yet match the archive: ' + ', '.join(failed) +
+                            '. Fresh values below support model comparison under the same current configuration; they do not establish reproduction of the later archive.**')
     diagnostics = current['later_rover_diagnostics']
     if 'rover_native_comparison' in diagnostics:
         comparison = diagnostics['rover_native_comparison']['data']
-        sections.append(md_table(['Rover 原入口诊断比较对象', 'horizon', '图像数', '字节完全相同'],
+        sections.append(md_table(['Rover native-entry diagnostic target', 'horizon', 'Images', 'Byte-identical'],
                                  [[target, horizon, values['compared'], values['byte_identical']]
                                   for target, row in comparison.items()
                                   for horizon, values in row['by_horizon'].items()]))
         run = diagnostics.get('rover_native_run', {}).get('data', {})
         checkpoint = diagnostics.get('baseline_checkpoint_hash', {}).get('data', {})
-        sections.append(f"原入口诊断退出码：{run.get('exit_code', '待记录')}；"
-                        f"checkpoint 完整 SHA256 匹配存档：{checkpoint.get('matches_archive', '待记录')}。"
-                        '原入口与本次封装输出相同，说明此次差异不来自封装入口或复制 split。')
+        sections.append(f"Native-entry diagnostic exit code: {run.get('exit_code', 'Unrecorded')}; "
+                        f"full checkpoint SHA256 matches archive: {checkpoint.get('matches_archive', 'Unrecorded')}. "
+                        'The native entry and current wrapper produce identical output, ruling out the wrapper entry or copied split as the cause of this difference.')
     if 'cuda_noise_launch_policy' in diagnostics:
-        sections.append('CUDA 随机数源码证据表明，大张量 randn 的线程排列依赖设备属性；'
-                        '实测 L20 的 grid=552，按 A800 参考属性推算为 864。A800 属性不是该历史运行的直接观测，'
-                        '这是一项具体机制候选；尚未分别量化它与 BF16、TF32、编译内核数值差异对指标的影响。'
-                        '后续存档严格复现宜使用原 A800 环境，不能把当前 L20 结果声明为已经一致。')
+        sections.append('CUDA RNG source shows that large-tensor randn thread layout depends on device properties; '
+                        'the observed L20 grid is 552, versus 864 inferred from reference A800 properties. Those A800 properties were not directly observed in the historical run. '
+                        'This is a candidate mechanism; its contribution relative to BF16, TF32 and compiled-kernel numerical differences has not been quantified. '
+                        'Use the original A800 environment for strict later-archive reproduction; current L20 results are not established as identical.')
     if diagnostics:
-        sections.append(md_table(['诊断证据', '路径', 'SHA256'],
+        sections.append(md_table(['Diagnostic evidence', 'Path', 'SHA256'],
                                  [[name, item['source']['path'], item['source']['sha256']]
                                   for name, item in diagnostics.items()]))
-    sections.append('### Table 2 小样本验证状态')
+    sections.append('### Table 2 subset verification')
     sections.extend(table2_pilot_notes(ref))
-    sections.append('仅核验请求的窗口及四项保存指标（ATE、RPE、位置差、角度差），不代表每个数据集 100 窗口的全量复现。')
-    sections.append(md_table(['模型/数据集', '策略', '请求窗口', '已核验数', '执行状态', '四项 all_metrics_exact', 'provenance_valid', '核验结论'],
+    sections.append('Checks cover only requested windows and four saved metrics (ATE, RPE, position and angle differences), not all 100 windows per dataset.')
+    sections.append(md_table(['Model/dataset', 'Policy', 'Requested windows', 'Checked', 'Execution status', 'Four-metric all_metrics_exact', 'provenance_valid', 'Verification outcome'],
                              [[f"{item['data'].get('model', item.get('model', 'baseline'))}/{item['data'].get('dataset', item.get('dataset', 'recon'))}",
                                item['verification_policy'],
-                               item['data'].get('requested_indices', item.get('requested_indices_spec', '待记录')),
+                               item['data'].get('requested_indices', item.get('requested_indices_spec', 'Unrecorded')),
                                item['data'].get('count', 0), item['data']['state'],
-                               item['data'].get('all_metrics_exact', '待验证'), item['data'].get('provenance_valid', '待验证'),
-                               item['data'].get('verification_outcome', '逐项精确性见 all_metrics_exact')]
+                               item['data'].get('all_metrics_exact', 'Unverified'), item['data'].get('provenance_valid', 'Unverified'),
+                               item['data'].get('verification_outcome', 'See all_metrics_exact for individual equality')]
                               for item in current['table2_subset_verifications']]))
-    sections.append('L20 允许指标差异的核验即使执行状态 completed，也只表示来源、覆盖及继续运行条件通过；'
-                    '是否与存档精确相等仍以 all_metrics_exact 为准。strict 与 L20 核验文件独立保留。')
+    sections.append('An L20 check allowing metric differences can complete after provenance, coverage and continuation checks pass; '
+                    'archive equality still depends on all_metrics_exact. Strict and L20 verification records are retained separately.')
     for item in current['table2_subset_verifications']:
         if item['data'].get('error'):
-            sections.append('小样本验证未通过：' + item['data']['error'])
+            sections.append('Subset verification failed: ' + item['data']['error'])
     sections.extend(fresh_tables(ref))
     for category in ('archive_rescore', 'fresh_inference'):
         if current[category]:
-            sections.append(md_table(['来源分类', '路径', 'SHA256'],
+            sections.append(md_table(['Source category', 'Path', 'SHA256'],
                                      [[category, item['source']['path'], item['source'].get('sha256', '—')]
                                       for item in current[category]]))
     sections += [
-        '本脚本仅收录新证据，不自动宣称复现通过。需要继续核对：checkpoint、split/有效样本映射、'
-        'horizon、batch/rank/seed、VAE 随机数消费、完整样本数、像素/指标差异。'
-        '历史预测重评分只能验证评分路径，不能代替重新推理。',
-        '## 可追溯来源',
-        md_table(['来源', '绝对路径', 'SHA256'],
+        'This script records fresh evidence without automatically declaring reproduction. Check checkpoint, split/effective mapping, '
+        'horizon, batch/rank/seed, VAE RNG consumption, full sample counts and pixel/metric differences. '
+        'Rescoring historical predictions validates scoring, not fresh inference.',
+        '## Sources',
+        md_table(['Source', 'Absolute path', 'SHA256'],
                  [[name, value['path'], value.get('sha256', '—')]
                   for name, value in ref['sources'].items() if isinstance(value, dict) and 'path' in value]),
-        f"当前代码 HEAD：`{ref['sources']['repo_head']}`。"
-        + ('本次单独的 checkpoint_runtime_identity.json 已重新计算两个 checkpoint SHA256；'
-           f"baseline 与 archive 一致={ref['models']['baseline']['recomputed_sha256_matches_archive']}。"
+        f"Current code HEAD: `{ref['sources']['repo_head']}`. "
+        + ('The separate checkpoint_runtime_identity.json recomputed both checkpoint SHA256 hashes; '
+           f"baseline matches archive={ref['models']['baseline']['recomputed_sha256_matches_archive']}. "
            if 'checkpoint_runtime_identity' in ref['sources'] else
-           'checkpoint 本审计只记录路径/大小/时间，baseline 已有 archive SHA256；尚未纳入本次重算记录。') +
-        '完整原始数值、每个 metrics/source_audit 的文件 hash、导航逐样本来源及新增证据见 `reference.json`。',
+           'This audit records checkpoint path/size/time and the existing baseline archive SHA256; recomputed hashes have not yet been included. ') +
+        'See `reference.json` for full-precision values, metrics/source_audit file hashes, per-window navigation provenance and fresh evidence.',
     ]
     return '\n\n'.join(sections) + '\n'
 

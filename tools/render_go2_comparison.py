@@ -33,13 +33,13 @@ BLUE = '#87b8ff'
 MODELS = ('opennwm', 'nwm')
 COLORS = {'gt': GT, 'opennwm': GREEN, 'nwm': BLUE}
 CLIPS = [
-    ('clip_01_office_exit', 16, 'Leaving the office', '离开办公室'),
-    ('clip_02_corridor', 40, 'Along the corridor', '沿走廊前进'),
-    ('clip_03_corner', 58, 'Around the corner', '转过拐角'),
-    ('clip_04_foyer_exit', 76, 'Leaving the foyer', '离开门厅'),
-    ('clip_05_glass_door', 110, 'At the glass door', '经过玻璃门'),
-    ('clip_06_turnaround', 132, 'Turning back', '转身返回'),
-    ('clip_07_return', 156, 'Returning to the office', '返回办公室'),
+    ('clip_01_office_exit', 16, 'Leaving the office', 'Leaving the office'),
+    ('clip_02_corridor', 40, 'Along the corridor', 'Along the corridor'),
+    ('clip_03_corner', 58, 'Around the corner', 'Around the corner'),
+    ('clip_04_foyer_exit', 76, 'Leaving the foyer', 'Leaving the foyer'),
+    ('clip_05_glass_door', 110, 'At the glass door', 'At the glass door'),
+    ('clip_06_turnaround', 132, 'Turning back', 'Turning back'),
+    ('clip_07_return', 156, 'Returning to the office', 'Returning to the office'),
 ]
 
 
@@ -354,13 +354,13 @@ def publish_assets(args, composer, output):
     poster.save(output / 'poster_full.webp', quality=88)
     metrics, ids = composer.metric_summary(0, composer.duration)
     manifest = dict(version=1, status='ready', recorded_date='2026-10-26', episode_id='episode_20261026T091121_148a01b5',
-        full=dict(id='full', title='Full comparison', title_zh='完整对比', description=f'{len(ids)} visual goals across the recorded route. Both models receive the same context, goal images and CEM budget.',
-                  description_zh=f'沿完整路线评估 {len(ids)} 个视觉目标。两个模型使用相同的历史观测、目标图像与 CEM 预算。', duration_s=duration,
+        full=dict(id='full', title='Full comparison', title_zh='Full comparison', description=f'{len(ids)} visual goals across the recorded route. Both models receive the same context, goal images and CEM budget.',
+                  description_zh=f'{len(ids)} visual goals across the recorded route. Both models receive the same context, goal images and CEM budget.', duration_s=duration,
                   video='assets/go2/comparison_full.mp4', poster='assets/go2/poster_full.webp'),
         clips=[], summary=dict(metrics=metrics, evaluated_goal_count=len(ids)),
-        protocol=dict(evaluation='Offline visual-goal navigation', evaluation_zh='离线视觉目标导航', goal_interval_s=2, planner='CEM',
+        protocol=dict(evaluation='Offline visual-goal navigation', evaluation_zh='Offline visual-goal navigation', goal_interval_s=2, planner='CEM',
             note='Independent 2 s plans reset to recorded context; predicted paths were not executed on the robot. GT uses onboard odometry; cameras are approximately aligned. ATE/RPE are mean errors in meters, using the paper definitions. This recording uses 32 CEM candidates, 5 elites, 2 updates and 50-step DDPM: a practical budget, not an exact rerun of the paper benchmark.',
-            note_zh='每段 2 秒规划均从真实记录的历史观测重新开始，预测轨迹未在机器人上执行。GT 来自机载里程计，双相机为近似对齐。ATE/RPE 沿用论文定义，以米制均值汇总。本次使用 32 个 CEM 候选、5 个精英、2 次更新与 50 步 DDPM；推理预算不同于论文基准，并非原表格的精确复现。'),
+            note_zh='Independent 2 s plans reset to recorded context; predicted paths were not executed on the robot. GT uses onboard odometry; cameras are approximately aligned. ATE/RPE are mean errors in meters, using the paper definitions. This recording uses 32 CEM candidates, 5 elites, 2 updates and 50-step DDPM: a practical budget, not an exact rerun of the paper benchmark.'),
         report='assets/go2/report.json')
     for clip_id, start, title, title_zh in CLIPS:
         if start + 8 > duration:
@@ -375,7 +375,7 @@ def publish_assets(args, composer, output):
         prefix = f'assets/go2/{clip_id}'
         manifest['clips'].append(dict(id=clip_id, title=title, title_zh=title_zh, duration_s=8, start_time_s=start,
             description=f'{timecode(start)}–{timecode(start + 8)} · {len(clip_ids)} consecutive visual goals. Recorded motion and both model futures share one timeline.',
-            description_zh=f'{timecode(start)}–{timecode(start + 8)} · 连续 {len(clip_ids)} 个视觉目标。真实运动与两个模型的预测共用同一时间轴。',
+            description_zh=f'{timecode(start)}–{timecode(start + 8)} · {len(clip_ids)} consecutive visual goals. Recorded motion and both model futures share one timeline.',
             video=f'{prefix}/comparison.mp4', poster=f'{prefix}/poster.webp', metrics=clip_metrics, evaluated_goal_ids=clip_ids,
             downloads=dict(ego=f'{prefix}/gt_ego.mp4', third_person=f'{prefix}/gt_third_person.mp4', opennwm=f'{prefix}/opennwm.mp4', nwm=f'{prefix}/nwm.mp4')))
     reports = []

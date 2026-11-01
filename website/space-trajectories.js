@@ -41,12 +41,12 @@ export async function loadSpaceTrajectories(scenes) {
 }
 
 export function spaceTrajectoryMarkup(scene, trajectory, t) {
-  const label = t("Actual trajectory", "实际轨迹");
+  const label = t("Actual trajectory");
   if (!trajectory) return `<figure class="space-recorded-trajectory"><figcaption>${label}</figcaption><img src="${escape(scene.trajectory)}" alt="${label}" loading="lazy" width="224" height="224"></figure>`;
   const { points, scale, scaleMeters, fps, poseSource } = trajectory;
   const coords = (values) => values.map((point) => point.join(",")).join(" ");
   const [start, first] = points, end = points.at(-1);
-  return `<figure class="space-recorded-trajectory"><figcaption>${label}</figcaption><svg viewBox="0 0 360 166" role="img" aria-label="${escape(t("Recorded LuSNAR rover path, equal scale in meters; forward is up", "LuSNAR 实际记录轨迹，等比例米制坐标，前方朝上"))}" data-points="${escape(JSON.stringify(points))}" data-fps="${fps}" data-pose-source="${escape(poseSource)}" data-frame="0" data-point="1">
+  return `<figure class="space-recorded-trajectory"><figcaption>${label}</figcaption><svg viewBox="0 0 360 166" role="img" aria-label="${escape(t("Recorded LuSNAR rover path, equal scale in meters; forward is up"))}" data-points="${escape(JSON.stringify(points))}" data-fps="${fps}" data-pose-source="${escape(poseSource)}" data-frame="0" data-point="1">
     <path class="space-trajectory-grid" d="M36 16V136M84 16V136M132 16V136M180 16V136M228 16V136M276 16V136M324 16V136M36 16H324M36 56H324M36 96H324M36 136H324"/>
     <polyline class="space-trajectory-full" points="${coords(points)}"/>
     <polyline class="space-trajectory-progress" points="${coords(points.slice(0, 2))}"/>

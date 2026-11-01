@@ -16,12 +16,12 @@ from PIL import Image
 WEBSITE = Path(__file__).resolve().parents[1] / "website"
 ARCHIVE = Path("/file_system/nas/algorithm/dujun.nie/nwm/results/nwm_benchmark/opennwm_navigation_gallery_20260924")
 SELECTION = [
-    ("recon", 3, "Residential garden", "住宅花园", "RECON"),
-    ("scand", 23, "Campus walkway", "校园步道", "SCAND"),
-    ("tartan_drive", 1, "Woodland road", "林间道路", "TartanDrive"),
-    ("recon", 0, "Across the lawn", "穿过草坪", "RECON"),
-    ("scand", 27, "Pedestrian plaza", "行人广场", "SCAND"),
-    ("huron", 54, "Indoor corridor", "室内走廊", "HuRoN"),
+    ("recon", 3, "Residential garden", "Residential garden", "RECON"),
+    ("scand", 23, "Campus walkway", "Campus walkway", "SCAND"),
+    ("tartan_drive", 1, "Woodland road", "Woodland road", "TartanDrive"),
+    ("recon", 0, "Across the lawn", "Across the lawn", "RECON"),
+    ("scand", 27, "Pedestrian plaza", "Pedestrian plaza", "SCAND"),
+    ("huron", 54, "Indoor corridor", "Indoor corridor", "HuRoN"),
 ]
 
 

@@ -258,46 +258,46 @@ def snapshot(root, previous, watch):
 
 
 def markdown(data, root):
-    lines = ['# OpenNWM 评测运行状态', f"按需快照更新：{data['updated_at']}（Asia/Taipei）；无有意义变化时保留更新时间。",
-             '本页观察现有进程与输出，不启动、中止或重试实验。每个完整窗口包含四项已保存指标；窗口计数不等于完整 100 窗口主表汇总，也不等于精确复现。',
-             '## Table 1', '| 口径 | 模型 | 完整评分数据集 | 状态 |', '| --- | --- | --- | --- |']
+    lines = ['# OpenNWM evaluation status', f"Snapshot updated on request: {data['updated_at']} (Asia/Taipei); unchanged snapshots retain their timestamp.",
+             'This page observes existing processes and outputs without starting, stopping or retrying experiments. A complete window has four saved metrics; window counts do not establish a full 100-window aggregate or exact reproduction.',
+             '## Table 1', '| Protocol | Model | Fully scored datasets | Status |', '| --- | --- | --- | --- |']
     for row in data['table1']['progress']:
-        lines.append(f"| {row['view']} | {row['model']} | {len(row['complete_datasets'])}/8 | {'完成' if row['complete'] else '待完成：' + ', '.join(row['pending_datasets'])} |")
-    lines.append('历史 OpenNWM 七项指标原值与存档精确相等核验：' + ('通过' if data['table1']['historical_baseline_seven_metrics_exact_archive_verified'] else '待核验') + '。')
-    lines.extend(['## Table 2', '| 模型 | 数据集 | 已写出完整窗口 | 完整 100 窗口汇总 |', '| --- | --- | --- | --- |'])
+        lines.append(f"| {row['view']} | {row['model']} | {len(row['complete_datasets'])}/8 | {'Complete' if row['complete'] else 'Pending: ' + ', '.join(row['pending_datasets'])} |")
+    lines.append('Historical OpenNWM seven-metric exact archive equality: ' + ('Passed' if data['table1']['historical_baseline_seven_metrics_exact_archive_verified'] else 'Verification pending') + '. ')
+    lines.extend(['## Table 2', '| Model | Dataset | Complete saved windows | Full 100-window aggregate |', '| --- | --- | --- | --- |'])
     for row in data['table2']:
-        lines.append(f"| {row['model']} | {row['dataset']} | {row['complete_saved_windows']}/100 | {'完成' if row['full_100_window_aggregate_complete'] else '待完成'} |")
+        lines.append(f"| {row['model']} | {row['dataset']} | {row['complete_saved_windows']}/100 | {'Complete' if row['full_100_window_aggregate_complete'] else 'Pending'} |")
         if row['invalid_sample_files']:
-            lines.append('读取到不完整或异常 JSON：' + ', '.join(row['invalid_sample_files']))
-    lines.extend(['pilot 结束时尚余 598 窗口，按两个 RECON 基线窗口粗估 121–130 GPU 小时，约 5–5.5 天单 L20；'
-                  '这不是实时完成日期。未计各组启动/编译与 HuRoN 前置等待，两个窗口不能代表全部数据集或 DINO 速度。',
-                  'RECON 存档混合早期 L20 窗口 0–15 与后续 A800 窗口 16–99；pilot 严格指标相等核验失败（1/2 窗口有差异），不能据此确认硬件因果。',
-                  '## 两条受观察队列'])
+            lines.append('Incomplete or invalid JSON: ' + ', '.join(row['invalid_sample_files']))
+    lines.extend(['The pilot left 598 windows, roughly 121–130 GPU hours (5–5.5 days on one L20) based on two RECON baseline windows. '
+                  'This is not a live completion estimate. It excludes startup, compilation and HuRoN prerequisites; two windows do not represent all datasets or DINO timing.',
+                  'The RECON archive combines earlier L20 windows 0–15 and later A800 windows 16–99. The strict pilot equality check failed (1/2 windows differed), which does not establish hardware causality.',
+                  '## Observed queues'])
     for q in data['queues']:
         p = q.get('process', {})
         observed = q.get('invocation') or {}
         lines.extend([f"### {q['name']}",
-                      f"状态：`{q['effective_status']}`；记录状态 `{q['recorded_status']}`；PID {q.get('queue_pid')}；"
-                      f"当前进程身份核验：{'活跃且 argv 匹配' if p.get('identity_matches') else '未确认活跃'}；退出码 {q.get('exit_code')}。",
-                      f"工作目录：`{observed.get('cwd', '未捕获')}`；队列日志：[查看]({q.get('queue_log', '')})。",
-                      f"精确队列 argv（证据：{observed.get('evidence', '未捕获')}）：\n\n```sh\n" + (shlex.join(observed.get('argv', [])) or '未捕获；不推测命令') + '\n```'])
+                      f"Status: `{q['effective_status']}`; recorded status `{q['recorded_status']}`; PID {q.get('queue_pid')}; "
+                      f"process identity: {'active with matching argv' if p.get('identity_matches') else 'activity unconfirmed'}; exit code {q.get('exit_code')}. ",
+                      f"Working directory: `{observed.get('cwd', 'Not captured')}`; queue log: [view]({q.get('queue_log', '')}). ",
+                      f"Exact queue argv (evidence: {observed.get('evidence', 'Not captured')}): \n\n```sh\n" + (shlex.join(observed.get('argv', [])) or 'Not captured; command not inferred') + '\n```'])
         if q.get('error') or q.get('issues'):
-            lines.append('异常：' + str(q.get('error') or '') + '；'.join(q.get('issues', [])))
+            lines.append('Error: ' + str(q.get('error') or '') + '; '.join(q.get('issues', [])))
         active = [j for j in q['jobs'] if j['status'] not in ('completed', 'pending')]
         for j in active:
-            lines.extend([f"当前任务 `{j['id']}`：{j['status']}；PID {j['pid']}；退出码 {j['exit_code']}。",
-                          f"cwd：`{j['cwd']}`；日志：[查看]({j['log']})。",
-                          '准确任务 argv（队列 specification）：\n\n```sh\n' + shlex.join(j['argv']) + '\n```'])
+            lines.extend([f"Current job `{j['id']}`: {j['status']}; PID {j['pid']}; exit code {j['exit_code']}. ",
+                          f"cwd: `{j['cwd']}`; log: [view]({j['log']}). ",
+                          'Exact job argv (queue specification): \n\n```sh\n' + shlex.join(j['argv']) + '\n```'])
             if j.get('prerequisites'):
-                lines.append('前置条件：\n\n' + '\n'.join(f"- `{m['path']}`：{m['state']}，exit={m.get('exit_code')}" for m in j['prerequisites']))
+                lines.append('Prerequisites: \n\n' + '\n'.join(f"- `{m['path']}`: {m['state']}, exit={m.get('exit_code')}" for m in j['prerequisites']))
             if j.get('error'):
-                lines.append('任务错误：' + str(j['error']))
-        lines.append(f"队列任务完成：{sum(j['status'] == 'completed' for j in q['jobs'])}/{len(q['jobs'])}。")
+                lines.append('Job error: ' + str(j['error']))
+        lines.append(f"Queue jobs completed: {sum(j['status'] == 'completed' for j in q['jobs'])}/{len(q['jobs'])}. ")
     if data['read_errors']:
-        lines.append('读取错误（不能视为成功）：\n\n' + '\n'.join(f"- {e['path']}：{e['error']}" for e in data['read_errors']))
+        lines.append('Read errors (not success): \n\n' + '\n'.join(f"- {e['path']}: {e['error']}" for e in data['read_errors']))
     if data.get('report_refresh'):
-        lines.append('最近 CPU 报告刷新：退出码 ' + str(data['report_refresh']['exit_code']) + '；[日志](' + data['report_refresh']['log'] + ')。')
-    lines.append(f'[主表结果]({root / "audit/RESULTS.md"}) · [完整状态 JSON]({root / "audit/queue_snapshot.json"})')
+        lines.append('Latest CPU report refresh: exit code ' + str(data['report_refresh']['exit_code']) + '; [log](' + data['report_refresh']['log'] + '). ')
+    lines.append(f'[Main-table results]({root / "audit/RESULTS.md"}) · [Full status JSON]({root / "audit/queue_snapshot.json"})')
     blocks = []
     for line in lines:
         if line.startswith('|') and blocks and blocks[-1].startswith('|'):

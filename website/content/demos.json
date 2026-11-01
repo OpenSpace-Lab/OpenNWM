@@ -52,7 +52,7 @@
       "selection": "Qualitative example selected from the archived candidate set after visual review; not a representative aggregate evaluation.",
       "scope": "Extended 16-second qualitative rollout.",
       "limitations": "The generated view retains the outdoor scene but terrain geometry and the precise path drift over time.",
-      "titleZh": "碎石小径",
+      "titleZh": "Gravel trail",
       "conditioningTrajectory": {
         "positions": [
           [
@@ -438,7 +438,7 @@
       "selection": "Qualitative example selected from the archived candidate set after visual review; not a representative aggregate evaluation.",
       "scope": "4-second qualitative rollout.",
       "limitations": "Door, window and wall details differ from the real office corridor.",
-      "titleZh": "办公室漫步",
+      "titleZh": "Office walk",
       "conditioningTrajectory": {
         "positions": [
           [
@@ -584,7 +584,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Grass and sky remain coherent during the turn; tree positions and terrain details drift.",
-      "titleZh": "开阔草地",
+      "titleZh": "Open meadow",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -988,7 +988,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Preserves the tree-lined paved setting; the recorded pedestrians and canopy are not reconstructed precisely.",
-      "titleZh": "校园步道",
+      "titleZh": "Campus path",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -1392,7 +1392,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Preserves a vegetated hillside and visible motion; the path and camera pitch diverge over the long rollout.",
-      "titleZh": "山坡小径",
+      "titleZh": "Hillside trail",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -1796,7 +1796,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Retains the grass, path and small buildings; exact building geometry and motion differ.",
-      "titleZh": "花园小径",
+      "titleZh": "Garden path",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -2200,7 +2200,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Preserves brick paving and tree cover with continuous motion; shadows and scene details change.",
-      "titleZh": "林荫广场",
+      "titleZh": "Shaded plaza",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -2604,7 +2604,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Maintains an outdoor building scene through the turn; view timing and building positions drift.",
-      "titleZh": "乡间建筑",
+      "titleZh": "Country buildings",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -3008,7 +3008,7 @@
       "selection": "Selected for scene diversity and visually coherent motion after reviewing the archived rollout. This is not an aggregate evaluation or a claim of superiority for every sample.",
       "scope": "Full 16-second qualitative rollout.",
       "limitations": "Maintains the overcast field and tree silhouettes; the final building and plant geometry differ.",
-      "titleZh": "阴天田野",
+      "titleZh": "Overcast field",
       "visualReviewDate": "2026-10-08",
       "assetProvenance": {
         "gt": {
@@ -3367,7 +3367,7 @@
     {
       "id": "lusnar-finetuned-moon-7",
       "title": "Moon 7",
-      "titleZh": "月面 7",
+      "titleZh": "Moon 7",
       "dataset": "LuSNAR",
       "datasetId": "lusnar",
       "domain": "held-out scene",
@@ -3551,7 +3551,7 @@
     {
       "id": "lusnar-finetuned-moon-8",
       "title": "Moon 8",
-      "titleZh": "月面 8",
+      "titleZh": "Moon 8",
       "dataset": "LuSNAR",
       "datasetId": "lusnar",
       "domain": "held-out scene",
@@ -3735,7 +3735,7 @@
     {
       "id": "lusnar-finetuned-moon-9",
       "title": "Moon 9",
-      "titleZh": "月面 9",
+      "titleZh": "Moon 9",
       "dataset": "LuSNAR",
       "datasetId": "lusnar",
       "domain": "held-out scene",
@@ -3919,7 +3919,7 @@
     {
       "id": "marslab-curves-20261029-marslab-test_00-0000",
       "title": "Mars crater · left turn",
-      "titleZh": "火星陨石坑 · 左弯",
+      "titleZh": "Mars crater · left turn",
       "dataset": "MarsLab",
       "datasetId": "marslab",
       "domain": "held-out trajectory · same terrain",
@@ -4080,7 +4080,7 @@
     {
       "id": "marslab-curves-20261029-marslab-test_01-0000",
       "title": "Mars crater · right turn",
-      "titleZh": "火星陨石坑 · 右弯",
+      "titleZh": "Mars crater · right turn",
       "dataset": "MarsLab",
       "datasetId": "marslab",
       "domain": "held-out trajectory · same terrain",
@@ -4241,7 +4241,7 @@
     {
       "id": "marslab-curves-20261029-marslab-test_02-0000",
       "title": "Mars crater · S-curve",
-      "titleZh": "火星陨石坑 · S 弯",
+      "titleZh": "Mars crater · S-curve",
       "dataset": "MarsLab",
       "datasetId": "marslab",
       "domain": "held-out trajectory · same terrain",

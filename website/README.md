@@ -1,137 +1,21 @@
-# OpenNWM 项目网站
+# OpenNWM website
 
-原生 HTML、CSS 和 JavaScript 学术主页，无前端构建步骤。正式地址：
-[OpenNWM](https://openspace-lab.github.io/OpenNWM/)。此目录也可独立作为静态站部署；
-论文、字体、图片和视频均保留在 `assets/`，模型服务不属于静态站依赖。
+The [project page](https://openspace-lab.github.io/OpenNWM/) uses plain HTML, CSS and JavaScript. All public media and fonts live in `assets/`; the optional GPU service is separate.
 
-## 页面结构
+## Preview and publish
 
-当前页面按以下顺序展示：
-
-1. 首页背景影片、OpenSpace Lab 标识，以及论文、代码、模型、Demo 和数据集入口。
-2. 作者与单位。
-3. 方法图使用 2026-10-31 提供的 `method.pdf`，直接导出为矢量 SVG，网页使用 `assets/paper/method-overview-dark-20261031.svg`：透明底与页面 `--paper` 背景一致，文字、箭头和模块使用深色主题配色。保留原始结构、公式轮廓和照片字节；仅对公式位图、Logo 文字和阴影应用 SVG 颜色滤镜。文字矢量轮廓放大时保持清晰且不依赖字体；点击打开逐字节保留的原始 PDF。原始导出 `method-overview-20261031.svg` 一并保留，来源和配色映射记录在各自同名 JSON 中。绿色 N 的独立矢量文件为 `assets/opennwm-logo.svg` 和 `assets/opennwm-logo.pdf`，均为透明背景、无嵌入位图。
-4. 论文 Table 1 的未来预测结果、Table 2 的导航结果，以纵向排列的 Prediction / Navigation 竖柱图展示精简指标，方法名置于横轴；预测和导航采用一致的双列绘图区，保留全部模型对比。
-5. 真机导航：按完整记录分组，所有子片段直接平铺；每个场景至少 4 段，实际就绪内容及筛选记录以 `content/go2.json` 为准。
-6. Visualization：地球、月面、火星的未来预测对照，以及离线导航可视化。
-7. Demo：选择场景、绘制轨迹、提交真实模型推理并查看返回视频。
-8. NavAnywhere Dataset：桌面端每行五个视频，全部来源直接排列。
-
-论文结果取自 `content/paper.json`，保留原始数值、优劣方向、并列和缺失值；
-精选视频不改变论文汇总分数。数据集的 17.5M visual observations、15 pretraining
-sources、70.8K navigation sequences 放在数据集介绍中。数据集卡片包括 15 个
-预训练来源和 4 个额外有动作标注的来源，后者不计入 NavAnywhere 的 15 个来源。
-
-真机视频以第三人称为主体，同屏展示对齐的第一人称 GT、OpenNWM/NWM rollout 和参考/规划
-轨迹，每条记录的全部片段直接展示，桌面端两列、手机端一列，无需切换。
-视频使用清晰的 1080p 无音轨导出。右下角 ATE/RPE 使用该片段全部完整
-一秒规划窗口的算术平均值，整段保持不变，数值旁的向下箭头表示越低越好。
-
-当前画廊按已有评测结果选片，每条完整录制作为一个场景，各展示 4 段，共 11 个
-场景、44 段。其中 41 段（93.2%）的 OpenNWM ATE 与 RPE 均低于 NWM。
-部分片段根据连续规划窗口裁短，并重新计算该时段指标、渲染视频中的数值；未重新
-运行或改动模型预测。原始记录、完整候选评测与选片依据继续保留。这是经成绩筛选的
-定性展示，与论文汇总基准分别记录；完整协议见[真机画廊说明](content/GO2_MANIFEST.md)。
-
-火星对照使用 MarsLab 的 main_crater 地形与 Perseverance 资产，通过 Isaac Sim 4.1
-兼容录制器运行物理仿真，采用简化照明。RGB 与车体真值位姿以 4 Hz 同步记录；动作
-由实际平面位移和转角计算，米制位姿及控制命令另行保留。使用 6 条训练轨迹的
-30 个片段（480 个目标对）微调 OpenNWM 1,000 步，1 条轨迹用于验证，3 条用于测试。
-网页固定展示三条测试轨迹各自的第一个片段，分别为左弯、右弯和 S 弯，按 1× 仿真时间播放。这是同一地形上的
-留出轨迹测试，不代表跨地形泛化。协议、全部测试结果与限制见
-[火星弯道验证记录](content/MARSLAB_CURVES_20261029_VALIDATION.md)。
-
-Moon 7–9 是 LuSNAR 的仿真场景编号。月面模型使用 Moon 1–5 的 30 个片段微调
-1,000 步，Moon 6 用于验证，Moon 7–9 仅用于测试。当前三个片段在推理前按真实转弯
-幅度选定，沿用原微调权重；详情见[月球选样说明](content/LUNAR_CURVES_20261029_VALIDATION.md)。
-画廊下方提供简短的英文训练与测试划分说明；完整协议保留在验证记录中。
-
-## 媒体加载与播放
-
-影片、真机和数据集视频静音自动播放，不提供开始/暂停按钮；首页保留进度展示。
-浏览器仍决定自动播放资格。`media-scheduler.js` 统一调度可见视频及同步视频组，
-优先加载可见画面；当前视频有约 2 秒缓冲后，桌面最多为两个邻近项目、手机最多为一个
-邻近项目预缓冲视频帧。离屏或隐藏标签页时暂停并释放不需要的传输和解码资源，回到
-可见区域恢复进度，包括同步视频组。它不降低视频分辨率、码率或帧率。
-
-数据集预览保留现有视频与实际播放参数，页面不显示视频速度、帧率或时间依据标注。
-各来源的采样时间和导出参数仍保留在 `content/datasets.json` 中用于溯源。
-
-`content/media-delivery.json` 指定经过校验的 ModelScope 媒体镜像，当前固定版本为：
-
-```text
-https://modelscope.cn/models/LittleBoss/OpenNWM-Website/resolve/site-20261031-v7/
-```
-
-`index.html` 的 `media-delivery-config` 内联同一份配置，使首次加载无需额外网络请求。
-更新镜像时需同步两处配置，发布流程会检查一致性；缺少有效内联配置时才读取 JSON 文件。
-
-镜像保持 `assets/...` 路径，文件与网站副本逐字节相同，支持视频 Range 请求和
-跨域加载。`media-delivery.js` 在配置缺失时使用本站路径，并在单个镜像资源失败时
-回退到本站副本或固定提交的同字节源码归档；本次页面访问会记住失败 URL，滚回视频时不会重新请求同一失败镜像。
-源素材和本站文件没有被替换为低清版本。方法图的 SVG 和原始 PDF 直接由本站提供，不依赖视频镜像。
-公开校验清单为镜像根目录的 `media-manifest.json`。
-该版本包含当前展示的 44 个真机片段、19 个重新定时的数据集视频以及月球/火星曲线素材，
-各文件的远端大小与 SHA256 均已校验。小 MP4 也通过 LFS 分发，保持上传文件字节，
-使数据集、真机和月球/火星视频都支持标准 HTTP 206 首段与尾段请求。
-`localAssetPrefixes` 为空。Garden paths 和 Autumn grove 的 8 段视频使用原始 CRF18
-母版，移除了 CRF23 网页二次压缩，保持 1080p、24 fps、时长及预测内容。
-为控制 Pages 站点体积，这 8 段视频的同画质备用源由固定 Git 提交的源码归档提供
-（`content/go2.json` 中的 `fallback_video`）；其他资源保留本站副本。
-这 8 段母版以 4 秒为自动播放启动缓冲目标；浏览器停止预加载或准备超过 10 秒且
-已有可播放帧时允许启动。`media-cache-worker.js` 在流式播放的同时保存完整原始字节，
-后续循环的 Range 请求复用本地缓存。缓存不可用时继续普通网络播放；不重新编码视频。
-
-真机画廊的 44 段视频均已进行人脸复核。有人脸的片段采用局部、随时间移动的马赛克，
-第一视角 GT、OpenNWM 和 NWM 使用相同遮罩区域；预览图同步更新。
-选段、时长、帧数、轨迹及评分不变，OpenNWM 仍在 41/44 段中同时取得更低的 ATE/RPE。
-核验记录见 `assets/go2/privacy-review.json`。Pages 只部署当前清单选中的真机视频和
-预览图，排除已被替换的版本。
-
-## 本地预览与部署
-
-进入包含 `index.html` 的目录。源代码仓库中是 `website/`，独立网站仓库中是根目录：
+From the repository root:
 
 ```bash
-cd /path/to/site
-conda run --no-capture-output -n base python -m http.server 8000 --bind 127.0.0.1
+conda run --no-capture-output -n nwm python -m http.server 8000 \
+  --directory website --bind 127.0.0.1
 ```
 
-打开 <http://127.0.0.1:8000/>；按 `Ctrl+C` 停止。可用 Python 3 的绝对路径替换上方
-`conda run`。页面通过 HTTP 读取 JSON，请通过服务器预览。
+Open <http://127.0.0.1:8000/>. Use HTTP because the page loads JSON manifests.
 
-源码保留在 private 的 [OpenSpace-Lab/OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM)，
-公开网站文件由 [OpenSpace-Lab/OpenNWM-site](https://github.com/OpenSpace-Lab/OpenNWM-site)
-保存。源码仓库的 `.github/workflows/pages.yml` 先测试、打包 `website/` 中的公开静态内容，
-排除推理服务、开发文件和未选中的真机媒体，配置发布密钥后再同步到公开网站仓库的 `main` 分支。
-同步会清理过期网站文件，保留公开仓库的 `.github/` 和部署说明 `README.md`。
-工作流使用仅有公开网站仓库写权限的 SSH deploy key；私钥存放在源码仓库的 Actions
-secret `OPENNWM_SITE_DEPLOY_KEY` 中。提交作者和提交者均为 `B0B8K1ng`。
-目前组织策略禁止 deploy keys，自动同步密钥尚未配置；缺少密钥时工作流仍测试和上传
-静态产物，并明确提示跳过同步。首次公开文件已通过本机的 `B0B8K1ng` SSH 账号推送。
-启用自动同步需组织所有者先允许 deploy keys，再配置仅限 `OpenNWM-site` 的写入密钥及上述 secret。
+`.github/workflows/pages.yml` tests and packages the static site, then synchronizes it to [OpenNWM-site](https://github.com/OpenSpace-Lab/OpenNWM-site) when `OPENNWM_SITE_DEPLOY_KEY` is configured. The organization Pages workflow publishes those files under `/OpenNWM/`.
 
-目标地址保持为 `https://openspace-lab.github.io/OpenNWM/`。为同时保留私有源码仓库名称
-和这个网址，组织网站 `OpenSpace-Lab/openspace-lab.github.io` 的 Pages 工作流会读取
-公开网站仓库，将其静态文件放在发布产物的 `OpenNWM/` 子目录。公开网站仓库本身
-不启用项目 Pages，以免生成 `/OpenNWM-site/` 地址。源码仓库不再直接发布 Pages。
-
-首次启用需要组织所有者将**仅用于网站的** `openspace-lab.github.io` 仓库设为 public，
-并授予 `B0B8K1ng` 写入和 Pages 管理权限，或由所有者自行安装公开网站仓库中的
-`.github/organization-pages.yml` 模板到组织网站仓库的 `.github/workflows/` 目录。
-随后在组织网站仓库的 **Settings → Pages → Build and deployment → Source**
-选择 **GitHub Actions**。组织 Free 套餐支持 public 仓库的 Pages；源码仓库继续保持
-private，工作流不会修改任何仓库的可见性。
-
-发布密钥配置完成后，推送到源码 `main` 分支的网站及发布流程改动会自动同步公开文件，
-也可在源码仓库的 **Actions → Build and publish public OpenNWM website → Run workflow**
-手动同步。组织网站的
-发布工作流支持手动运行，并每小时检查一次公开网站仓库，因此文件同步完成后，网页
-更新可能需要等待下一次定时发布；GitHub 的定时任务也可能延迟。
-详见 [GitHub Pages 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)。
-
-本地可在源码仓库根目录用 Python 3.11 或以上版本生成与 Actions 相同的静态产物；
-输出目录应位于源码之外，且尚不存在：
+To build the same artifact locally with Python 3.11 or newer, choose an output directory outside the repository that does not yet exist:
 
 ```bash
 conda run --no-capture-output -n base python tools/build_project_pages.py \
@@ -139,47 +23,30 @@ conda run --no-capture-output -n base python tools/build_project_pages.py \
   --report /path/to/output/opennwm-site-build.json
 ```
 
-保持所有相对路径和目录层级即可迁移到其他静态服务器。页面仅提供英文。
-推送前检查桌面/手机布局、媒体回退以及 Demo 的在线/离线状态。
+## Content
 
-## 自定义轨迹推理
-
-网页读取 `content/live-service.json` 中的 HTTPS API 地址，提交绘制的轨迹、轮询状态，
-完成后自动展示真实返回视频。当前服务使用单张本机 GPU、OpenNWM Stage 2 joint100k
-原始 DDPM 模型和 50 个扩散步，不使用 DMD2。输出 16 帧，以 4 FPS 展示；返回的
-manifest 记录轨迹、动作、权重校验值和实际采样配置。历史预计算场景使用 250 步
-DDPM，其协议与实时请求分别保存。
-
-当前公网连接使用 Cloudflare quick tunnel，GPU 服务和隧道进程必须持续运行。
-重建隧道后地址可能改变，需要更新并发布 `content/live-service.json`。API 离线时
-仍可查看真实预计算结果；自绘轨迹不会被替换成预设结果。静态 Pages 本身不执行模型。
-
-部署、GPU 选择、队列与接口说明见源代码仓库的
-[推理服务文档](https://github.com/OpenSpace-Lab/OpenNWM/blob/main/website/server/README.md)。
-服务代码和运行环境由源代码仓库管理，独立静态网站无需包含 `server/`。
-
-## 内容维护与溯源
-
-| 文件 | 内容 |
+| Files | Purpose |
 | --- | --- |
-| `index.html`、`reference-theme.css` | 页面结构、作者单位、英文固定文案与主题 |
-| `research.js`、`results.css`、`content/paper.json` | 论文结果柱状图及原始数值 |
-| `content/go2.json`、`go2.js` | 当前精选真机片段与显示顺序 |
-| `content/demos.json`、`content/navigation.json` | 预测/离线规划视频、轨迹和推理来源 |
-| `content/playground.json`、`content/live-service.json` | Demo 场景、预计算结果及实时 API 地址 |
-| `content/datasets.json`、`content/cinematic.json` | 数据集视频及首页影片来源 |
-| `media-scheduler.js`、`media-delivery.js` | 可见区域播放调度、镜像加载与本站回退 |
-| `assets/` | 公开媒体、论文、本地字体和对应许可 |
+| `index.html`, `reference-theme.css` | Layout, authors and theme |
+| `research.js`, `results.css`, `content/paper.json` | Paper results and citation |
+| `content/go2.json`, `go2.js` | Selected robot navigation clips |
+| `content/demos.json`, `content/navigation.json` | Prediction and offline planning examples |
+| `content/playground.json`, `content/live-service.json` | Demo scenes, presets and API address |
+| `content/datasets.json`, `content/cinematic.json` | Dataset previews and opening film |
+| `media-scheduler.js`, `media-delivery.js` | Playback, mirror selection and fallback |
 
-新增或替换媒体时，同步更新清单中的路径、稳定 ID、实际时长、采样协议和校验值。
-先检查 GPU 与磁盘容量，再运行需要推理或大规模输出的源仓库工具；源视频、完整对齐
-视频、模型输出和内部审计保留在 NAS，网站只使用最终展示素材及可公开的溯源信息。
+Keep paths, source IDs, timing, sampling protocols and hashes consistent when replacing media. The page is English only. Legacy `Zh` fields contain English for catalog compatibility.
 
-论文来源见 [PAPER_SOURCES.md](content/PAPER_SOURCES.md)，真机数据约定见
-[GO2_MANIFEST.md](content/GO2_MANIFEST.md)。历史方法与媒体审阅分别保留在
-[主图记录](content/MAIN_FIGURE_20261010_VALIDATION.md)、
-[预测记录](content/PREDICTION_20261010_VALIDATION.md)、
-[导航记录](content/REFINEMENT_20261010_VALIDATION.md)、
-[火星记录](content/SYNMARS_20261029_VALIDATION.md) 和
-[同步验证](content/REVISION_20261009_VALIDATION.md) 中；其中历史页面布局及部署状态
-不是当前页面规范。
+The current method figure is the vector export documented in [METHOD_FIGURES.md](content/METHOD_FIGURES.md). Paper statistics and qualitative media are separate: see [paper sources](content/PAPER_SOURCES.md), the [Go2 gallery protocol](content/GO2_MANIFEST.md) and [planetary evaluation](content/PLANETARY_EVALUATION.md).
+
+## Media delivery
+
+`content/media-delivery.json` and the `media-delivery-config` block in `index.html` must match. The ModelScope mirror serves the original media bytes with HTTP Range support; failed requests fall back to local assets or the pinned source archive recorded in the manifest. Keep the original resolution, timing and prediction content.
+
+`media-scheduler.js` loads visible videos first and pauses offscreen groups. `media-cache-worker.js` caches complete video bytes for repeated playback. The Go2 manifest selects reviewed videos and posters; superseded files are excluded from deployment.
+
+## Live demo
+
+The HTTPS endpoint in `content/live-service.json` accepts custom trajectories. The service uses the OpenNWM Stage 2 checkpoint with 50 DDPM steps and returns 16 frames at 4 FPS. Preset results retain their own sampling protocol. When the API is offline, preset videos remain available.
+
+See the [inference service guide](server/README.md) for GPU setup, queues and API details. Static hosting does not execute the model. If the tunnel address changes, update and publish `content/live-service.json`.

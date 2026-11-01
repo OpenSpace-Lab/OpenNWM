@@ -33,7 +33,7 @@ export function initMotionGallery(demos) {
   function updateWipe(item) {
     const value = Number(item.slider.value);
     item.comparison.style.setProperty("--wipe", `${value}%`);
-    item.slider.setAttribute("aria-valuetext", t(`Ground truth ${value}%, OpenNWM ${100 - value}%`, `真实画面 ${value}%，OpenNWM ${100 - value}%`));
+    item.slider.setAttribute("aria-valuetext", t(`Ground truth ${value}%, OpenNWM ${100 - value}%`));
   }
   function pause(item) {
     item.generation++;
@@ -208,26 +208,26 @@ export function initMotionGallery(demos) {
       marsFootnote.textContent = "MarsLab simulation: fine-tuned on six trajectories, validated on one, and tested on three held-out trajectories.";
     }
     items.forEach((item) => {
-      const title = t(item.demo.title, item.demo.titleZh);
+      const title = t(item.demo.title);
       const isMars = item.demo.environment === "mars";
       const estimated = item.demo.conditioningTrajectory?.estimated === true;
       item.card.querySelector("h3").textContent = title;
-      item.card.querySelector(".motion-label-gt").textContent = t("Ground truth", "真实画面");
-      item.card.querySelector("figcaption").textContent = estimated ? t("Estimated path", "估计轨迹") : t("Given path", "给定轨迹");
+      item.card.querySelector(".motion-label-gt").textContent = t("Ground truth");
+      item.card.querySelector("figcaption").textContent = estimated ? t("Estimated path") : t("Given path");
       item.card.querySelector(".motion-trajectory svg").setAttribute("aria-label", estimated
-        ? t(`Visually estimated path for ${title}, with relative scale. The dot follows the current video frame.`, `${title}的视觉估计轨迹，采用相对尺度，圆点对应当前视频帧。`)
-        : t(`Given path for ${title}. The dot follows the current video frame.`, `${title}的给定轨迹，圆点对应当前视频帧。`));
+        ? t(`Visually estimated path for ${title}, with relative scale. The dot follows the current video frame.`)
+        : t(`Given path for ${title}. The dot follows the current video frame.`));
       const adaptation = item.card.querySelector(".motion-adaptation-label");
       if (adaptation) {
-        adaptation.textContent = isMars ? t("Held-out · fine-tuned", "留出测试 · 微调") : t("Lightly fine-tuned", "少量微调");
+        adaptation.textContent = isMars ? t("Held-out · fine-tuned") : t("Lightly fine-tuned");
         if (isMars) adaptation.title = estimated
-          ? t("OpenNWM predicts each future frame from four fixed observed frames and estimated actions. Offline pose estimation uses future reference frames to label those actions; they are not recorded controls.", "OpenNWM 使用固定的四帧观测和估计动作预测各未来帧。动作由包含未来参考帧的完整视频离线估计，并非记录的控制指令。")
-          : t("OpenNWM predicts each future frame from four fixed observed frames and planar actions measured from simulator ground-truth body poses. Test trajectories were excluded from fine-tuning.", "OpenNWM 使用固定的四帧观测，以及仿真器真实车体位姿计算的平面动作，预测各未来帧。测试轨迹未参与微调。");
+          ? t("OpenNWM predicts each future frame from four fixed observed frames and estimated actions. Offline pose estimation uses future reference frames to label those actions; they are not recorded controls.")
+          : t("OpenNWM predicts each future frame from four fixed observed frames and planar actions measured from simulator ground-truth body poses. Test trajectories were excluded from fine-tuning.");
       }
       const note = item.card.querySelector(".motion-card-note");
-      if (note) note.textContent = item.demo.note ? t(item.demo.note, item.demo.noteZh) : t("Actions estimated offline from full clips; relative scale.", "动作由完整视频离线估计；尺度为相对值。");
-      item.slider.setAttribute("aria-label", t(`Compare Ground truth and OpenNWM: ${title}`, `滑动对比真实画面与 OpenNWM：${title}`));
-      item.videos.forEach((element) => element.setAttribute("aria-label", `${title} · ${element.dataset.model === "gt" ? t("Ground truth", "真实画面") : "OpenNWM"}`));
+      if (note) note.textContent = item.demo.note ? t(item.demo.note) : t("Actions estimated offline from full clips; relative scale.");
+      item.slider.setAttribute("aria-label", t(`Compare Ground truth and OpenNWM: ${title}`));
+      item.videos.forEach((element) => element.setAttribute("aria-label", `${title} · ${element.dataset.model === "gt" ? t("Ground truth") : "OpenNWM"}`));
       updateWipe(item);
     });
   }

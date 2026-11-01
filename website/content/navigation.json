@@ -426,7 +426,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Across the courtyard",
-        "zh": "穿过庭院"
+        "zh": "Across the courtyard"
       },
       "start": "assets/navigation/curved-recon-059/start.webp",
       "goal": "assets/navigation/curved-recon-059/goal.webp",
@@ -858,7 +858,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Across the garden",
-        "zh": "花园曲径"
+        "zh": "Across the garden"
       },
       "start": "assets/navigation/curved-recon-088/start.webp",
       "goal": "assets/navigation/curved-recon-088/goal.webp",
@@ -1290,7 +1290,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Between the buildings",
-        "zh": "楼间小径"
+        "zh": "Between the buildings"
       },
       "start": "assets/navigation/curved-recon-046/start.webp",
       "goal": "assets/navigation/curved-recon-046/goal.webp",
@@ -1721,7 +1721,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Past the garden sheds",
-        "zh": "绕过花园棚屋"
+        "zh": "Past the garden sheds"
       },
       "start": "assets/navigation/curved-recon-025/start.webp",
       "goal": "assets/navigation/curved-recon-025/goal.webp",
@@ -2153,7 +2153,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Around the cottage",
-        "zh": "绕行小屋"
+        "zh": "Around the cottage"
       },
       "start": "assets/navigation/curved-recon-085/start.webp",
       "goal": "assets/navigation/curved-recon-085/goal.webp",
@@ -2584,7 +2584,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Through the tall grass",
-        "zh": "穿过高草"
+        "zh": "Through the tall grass"
       },
       "start": "assets/navigation/curved-recon-074/start.webp",
       "goal": "assets/navigation/curved-recon-074/goal.webp",
@@ -3015,7 +3015,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Past the courtyard",
-        "zh": "庭院转弯"
+        "zh": "Past the courtyard"
       },
       "start": "assets/navigation/curved-recon-061/start.webp",
       "goal": "assets/navigation/curved-recon-061/goal.webp",
@@ -3447,7 +3447,7 @@
       "dataset": "RECON",
       "title": {
         "en": "Garden bend",
-        "zh": "花园转弯"
+        "zh": "Garden bend"
       },
       "start": "assets/navigation/curved-recon-078/start.webp",
       "goal": "assets/navigation/curved-recon-078/goal.webp",

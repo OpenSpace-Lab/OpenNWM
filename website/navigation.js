@@ -40,7 +40,7 @@ function trajectoryGraphic(sample, t) {
   const goal = point(sample.reference_xy_m.at(-1));
   const length = maxX - minX;
   const barMeters = 10 ** Math.floor(Math.log10(Math.max(length / 3, 0.01)));
-  return `<svg class="navigation-path" viewBox="0 0 360 174" role="img" data-points="${escapeHTML(JSON.stringify(sample.planned_xy_m.map(point)))}" aria-label="${escapeHTML(t("OpenNWM planned path and recorded reference, equal scale in meters", "OpenNWM 规划轨迹与记录参考轨迹，等比例米制坐标"))}">
+  return `<svg class="navigation-path" viewBox="0 0 360 174" role="img" data-points="${escapeHTML(JSON.stringify(sample.planned_xy_m.map(point)))}" aria-label="${escapeHTML(t("OpenNWM planned path and recorded reference, equal scale in meters"))}">
     <polyline class="navigation-reference" points="${points(sample.reference_xy_m)}"/>
     <polyline class="navigation-planned" points="${points(sample.planned_xy_m)}"/>
     <polyline class="navigation-progress" points="${points(sample.planned_xy_m.slice(0, 1))}"/>
@@ -69,7 +69,7 @@ export async function initNavigation(paper) {
     return [
       ["recon", "RECON"],
       ["scand", "SCAND"],
-      ["office_go2", t("Office-Go2 · OOD", "Office-Go2 · 域外")],
+      ["office_go2", t("Office-Go2 · OOD")],
       ["tartan_drive", "TartanDrive"],
     ];
   }
@@ -95,14 +95,11 @@ export async function initNavigation(paper) {
       .join("");
     domainSelect.setAttribute(
       "aria-label",
-      t("Navigation evaluation dataset", "导航评测数据集"),
+      t("Navigation evaluation dataset"),
     );
-    benchmarks.querySelector("#navigation-chart-title").textContent = t(
-      "Navigation benchmark",
-      "导航基准",
-    );
+    benchmarks.querySelector("#navigation-chart-title").textContent = t("Navigation benchmark");
     const tabs = benchmarks.querySelector("#navigation-metric-tabs");
-    tabs.setAttribute("aria-label", t("Navigation metric", "导航指标"));
+    tabs.setAttribute("aria-label", t("Navigation metric"));
     tabs.querySelectorAll("[data-metric]").forEach((button) => {
       const active = button.dataset.metric === metric;
       button.classList.toggle("active", active);
@@ -110,31 +107,25 @@ export async function initNavigation(paper) {
       button.setAttribute(
         "aria-label",
         button.dataset.metric === "ate"
-          ? t(
-              "Absolute trajectory error, lower is better",
-              "绝对轨迹误差，越低越好",
-            )
-          : t("Relative pose error, lower is better", "相对位姿误差，越低越好"),
+          ? t("Absolute trajectory error, lower is better")
+          : t("Relative pose error, lower is better"),
       );
     });
     const chart = benchmarks.querySelector("#navigation-result-chart");
     const label = benchmarkDomains().find(([id]) => id === domain)[1];
     chart.setAttribute(
       "aria-label",
-      `${label}: ${metricName}, ${t("lower is better", "越低越好")}`,
+      `${label}: ${metricName}, ${t("lower is better")}`,
     );
     chart.innerHTML = rows
       .map((row) => {
         const value = row[key];
         const number = value.toFixed(2);
-        const accessible = `${row.model}: ${metricName} ${number}${value === best ? t(", best reported", "，已报告最优") : ""}`;
+        const accessible = `${row.model}: ${metricName} ${number}${value === best ? t(", best reported") : ""}`;
         return `<div class="chart-row${row.id === "opennwm" ? " ours" : ""}" role="listitem" aria-label="${escapeHTML(accessible)}"><span class="chart-model-label" aria-hidden="true">${escapeHTML(row.model)}</span><div class="chart-track" aria-hidden="true"><div class="chart-bar" style="--value:${(value / axisMaximum) * 100}%"></div></div><span class="chart-number" aria-hidden="true">${number}</span></div>`;
       })
       .join("");
-    benchmarks.querySelector("#navigation-chart-direction").textContent = t(
-      "LOWER IS BETTER ↓",
-      "越低越好 ↓",
-    );
+    benchmarks.querySelector("#navigation-chart-direction").textContent = t("LOWER IS BETTER ↓");
   }
 
   function renderBenchmarks() {
@@ -165,7 +156,7 @@ export async function initNavigation(paper) {
   function render() {
     mediaHandles.forEach((handle) => handle.unregister());
     mediaHandles = [];
-    root.innerHTML = `<div class="navigation-gallery-heading"><span>${t("Selected offline local plans", "精选离线局部规划")}</span><div class="navigation-legend"><span><i class="navigation-legend-plan"></i>OpenNWM</span><span><i class="navigation-legend-reference"></i>${t("Reference path", "参考轨迹")}</span></div></div>
+    root.innerHTML = `<div class="navigation-gallery-heading"><span>${t("Selected offline local plans")}</span><div class="navigation-legend"><span><i class="navigation-legend-plan"></i>OpenNWM</span><span><i class="navigation-legend-reference"></i>${t("Reference path")}</span></div></div>
       <div class="navigation-examples">${manifest.samples
         .map(
           (
@@ -173,9 +164,9 @@ export async function initNavigation(paper) {
           ) => `<article class="navigation-example" data-sample-id="${escapeHTML(sample.id)}" data-fps="${sample.fps || manifest.media.fps}">
         <header><h3>${escapeHTML(sample.title.en)}</h3><span>${escapeHTML(sample.dataset)}</span></header>
         <div class="navigation-media">
-          <figure><img data-src="${sample.start}" loading="lazy" decoding="async" width="224" height="224" alt="${escapeHTML(t(`${sample.title.en}: recorded start`, `${sample.title.zh}：起点观测`))}"><figcaption>${t("Start", "起点")}</figcaption></figure>
-          <figure><video data-src="${sample.video}" data-poster="${sample.poster}" width="224" height="224" preload="none" muted loop playsinline aria-label="${escapeHTML(t(`${sample.title.en}: OpenNWM imagined local plan`, `${sample.title.zh}：OpenNWM 规划预测`))}"></video><figcaption>OpenNWM</figcaption></figure>
-          <figure><img data-src="${sample.goal}" loading="lazy" decoding="async" width="224" height="224" alt="${escapeHTML(t(`${sample.title.en}: goal image`, `${sample.title.zh}：目标图像`))}"><figcaption>${t("Goal", "目标")}</figcaption></figure>
+          <figure><img data-src="${sample.start}" loading="lazy" decoding="async" width="224" height="224" alt="${escapeHTML(t(`${sample.title.en}: recorded start`))}"><figcaption>${t("Start")}</figcaption></figure>
+          <figure><video data-src="${sample.video}" data-poster="${sample.poster}" width="224" height="224" preload="none" muted loop playsinline aria-label="${escapeHTML(t(`${sample.title.en}: OpenNWM imagined local plan`))}"></video><figcaption>OpenNWM</figcaption></figure>
+          <figure><img data-src="${sample.goal}" loading="lazy" decoding="async" width="224" height="224" alt="${escapeHTML(t(`${sample.title.en}: goal image`))}"><figcaption>${t("Goal")}</figcaption></figure>
         </div>
         <div class="navigation-path-row">${trajectoryGraphic(sample, t)}</div>
       </article>`,

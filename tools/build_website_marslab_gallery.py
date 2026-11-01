@@ -412,7 +412,7 @@ def export_gallery(direct_path, training_path, data_path, site=SITE,
             }
             item = {
                 "id": f"{asset_group}-{identity}", "title": f"Mars crater · route {index}",
-                "titleZh": f"火星陨石坑 · 路线 {index}", "dataset": "MarsLab", "datasetId": "marslab",
+                "titleZh": f"Mars crater · route {index}", "dataset": "MarsLab", "datasetId": "marslab",
                 "domain": "held-out trajectory · same terrain", "environment": "mars", "fineTuned": True,
                 "sampleId": identity, "fps": 4, "duration": 4.25, "frameCount": 17,
                 "width": 224, "height": 224, "includesInitialFrame": True, "posterTime": 1,
@@ -421,7 +421,7 @@ def export_gallery(direct_path, training_path, data_path, site=SITE,
                 "sourceManifest": f"{prefix}/manifest.json", "sourceInferenceManifestSha256": inference_hash,
                 "protocol": PROTOCOL, "selection": SELECTION, "limitations": data["limitations"],
                 "note": "Held-out trajectories on the same terrain, with simulator ground-truth poses. Fine-tuned on 30 clips for 1,000 updates; playback at 1× simulation time.",
-                "noteZh": "同一地形上未参与训练的独立轨迹，动作来自仿真器真实物理位姿；用 30 个片段微调 1,000 步，按 1× 仿真时间播放。",
+                "noteZh": "Held-out trajectories on the same terrain, with simulator ground-truth poses. Fine-tuned on 30 clips for 1,000 updates; playback at 1× simulation time.",
                 "training": {"steps": 1000, "windows": 30, "targetPairs": 480, "scenes": ["main_crater"]},
                 "conditioningTrajectory": {
                     "estimated": False, "positions": [[0, 0]] + [a[:2] for a in sample["actions_meters_radians"]],
