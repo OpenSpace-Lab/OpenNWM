@@ -30,7 +30,7 @@ def main():
             raise ValueError(f'Source size mismatch: {name}')
         if row['bytes'] < 100_000_000 and digest(path) != row['sha256']:
             raise ValueError(f'Source checksum mismatch: {name}')
-        if name in ('README.md', 'SHA256SUMS'):
+        if name in ('README.md', 'SHA256SUMS', 'manifest.json'):
             continue
         dst = folder / name
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -41,7 +41,14 @@ def main():
             raise ValueError(f'Unexpected file: {name}')
         else:
             dst.symlink_to(path.resolve())
+    public_manifest = json.loads((source / 'manifest.json').read_text())
+    public_manifest['source_code'] = 'https://github.com/OpenSpace-Lab/OpenNWM'
+    # Replace an older staging symlink without writing through it into the source release.
+    write_json(folder / 'manifest.json', public_manifest)
+    manifest['manifest.json'] = {'bytes': (folder / 'manifest.json').stat().st_size,
+                                 'sha256': digest(folder / 'manifest.json')}
     card = (source / 'README.md').read_text()
+    card = card.replace('B0B8K1ng/OpenNWM', 'OpenSpace-Lab/OpenNWM')
     card = card.replace('frameworks:\n- pytorch', 'library_name: pytorch')
     card = card.replace('- Repository:', '- ModelScope mirror:')
     card = card.replace('https://modelscope.cn/datasets/LittleBoss/NavAnywhere',

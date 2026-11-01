@@ -232,6 +232,7 @@ def stage(args, api):
         temporary.replace(target)
     expected = {**base, **changes}
     manifest['release'] = TAG
+    manifest['website'] = f'{ORIGIN}/OpenNWM/'
     manifest['real_world_clips'] = [clip['id'] for clip in go2['clips']]
     manifest['encoding'] = ('Changed assets are copied byte-for-byte from the reviewed website '
                             'sources. Other assets retain their site-20261030-v6 bytes.')
