@@ -100,9 +100,31 @@ conda run --no-capture-output -n base python -m http.server 8000 --bind 127.0.0.
 打开 <http://127.0.0.1:8000/>；按 `Ctrl+C` 停止。可用 Python 3 的绝对路径替换上方
 `conda run`。页面通过 HTTP 读取 JSON，请通过服务器预览。
 
-公开站由 [网站仓库](https://github.com/OpenSpace-Lab/openspace-lab.github.io) 的 GitHub Pages
-工作流部署到 `/OpenNWM/`。保持所有相对路径和目录层级即可迁移到其他静态服务器。
-页面仅提供英文。推送前检查桌面/手机布局、媒体回退以及 Demo 的在线/离线状态。
+项目站直接由 [OpenSpace-Lab/OpenNWM](https://github.com/OpenSpace-Lab/OpenNWM) 的
+`.github/workflows/pages.yml` 发布，地址为 `https://openspace-lab.github.io/OpenNWM/`，
+无需创建或修改 `openspace-lab.github.io` 仓库。工作流仅打包 `website/` 中的公开静态内容，
+排除推理服务、开发文件和未选中的真机媒体；发布产物根目录直接包含 `index.html`，
+由 GitHub Pages 提供 `/OpenNWM/` 路径，不在产物中重复创建这一层目录。
+
+首次发布需要仓库管理员或维护者在 **Settings → Pages → Build and deployment → Source**
+选择 **GitHub Actions**。之后推送到 `main` 的网站及发布流程改动会自动部署，也可在
+**Actions → Deploy OpenNWM project site → Run workflow** 手动发布。
+组织名下的 private 仓库需要 GitHub Team 或 Enterprise 套餐才能使用 Pages；Free 套餐
+仅支持 public 仓库。源码保持 private 时，应由组织所有者升级套餐后启用 Pages。
+网站公开访问与源码仓库的可见性分别配置，部署工作流不会修改仓库可见性。
+详见 [GitHub Pages 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)。
+
+本地可在源码仓库根目录用 Python 3.11 或以上版本生成与 Actions 相同的静态产物；
+输出目录应位于源码之外，且尚不存在：
+
+```bash
+conda run --no-capture-output -n base python tools/build_project_pages.py \
+  --output-dir /path/to/output/opennwm-site \
+  --report /path/to/output/opennwm-site-build.json
+```
+
+保持所有相对路径和目录层级即可迁移到其他静态服务器。页面仅提供英文。
+推送前检查桌面/手机布局、媒体回退以及 Demo 的在线/离线状态。
 
 ## 自定义轨迹推理
 

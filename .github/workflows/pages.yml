@@ -1,0 +1,51 @@
+name: Deploy OpenNWM project site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - website/**
+      - tools/build_project_pages.py
+      - tools/publish_website_refinement_20261031.py
+      - tests/test_build_project_pages.py
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Test the public artifact boundary
+        run: python3 -m unittest discover -s tests -p test_build_project_pages.py
+      - name: Build reviewed static files
+        run: python3 tools/build_project_pages.py --output-dir _site
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy project site
+        id: deployment
+        uses: actions/deploy-pages@v4
