@@ -10,7 +10,9 @@
   <a href="https://openspace-lab.github.io/OpenNWM/"><img src="https://img.shields.io/badge/Project_Page-2463EB?style=flat-square&logo=githubpages&logoColor=white" alt="Project Page"></a>
   <a href="https://openspace-lab.github.io/OpenNWM/assets/paper/OpenNWM.pdf"><img src="https://img.shields.io/badge/Paper-B31B1B?style=flat-square&logo=readthedocs&logoColor=white" alt="Paper"></a>
   <a href="https://huggingface.co/LittleB0sS/OpenNWM"><img src="https://img.shields.io/badge/Models-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Models"></a>
+  <a href="https://modelscope.cn/models/LittleBoss/OpenNWM"><img src="https://img.shields.io/badge/ModelScope-Models-624AFF?style=flat-square" alt="ModelScope Models"></a>
   <a href="https://huggingface.co/datasets/LittleB0sS/NavAnywhere"><img src="https://img.shields.io/badge/Data-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Data"></a>
+  <a href="https://modelscope.cn/datasets/LittleBoss/NavAnywhere"><img src="https://img.shields.io/badge/ModelScope-Data-624AFF?style=flat-square" alt="ModelScope Data"></a>
 </p>
 
 <a href="website/assets/paper/method-overview-20261031.pdf">
