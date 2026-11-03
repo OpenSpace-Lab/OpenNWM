@@ -8,7 +8,7 @@
 
 <p>
   <a href="https://openspace-lab.github.io/OpenNWM/"><img src="https://img.shields.io/badge/Project_Page-2463EB?style=flat-square&logo=githubpages&logoColor=white" alt="Project Page"></a>
-  <a href="https://openspace-lab.github.io/OpenNWM/assets/paper/OpenNWM.pdf"><img src="https://img.shields.io/badge/Paper-B31B1B?style=flat-square&logo=readthedocs&logoColor=white" alt="Paper"></a>
+  <a href="https://arxiv.org/abs/2611.01844"><img src="https://img.shields.io/badge/arXiv-2611.01844-B31B1B?style=flat-square&logo=arxiv&logoColor=white" alt="arXiv:2611.01844"></a>
   <a href="https://huggingface.co/LittleB0sS/OpenNWM"><img src="https://img.shields.io/badge/Models-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Models"></a>
   <a href="https://modelscope.cn/models/LittleBoss/OpenNWM"><img src="https://img.shields.io/badge/ModelScope-Models-624AFF?style=flat-square" alt="ModelScope Models"></a>
   <a href="https://huggingface.co/datasets/LittleB0sS/NavAnywhere"><img src="https://img.shields.io/badge/Data-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Data"></a>
@@ -27,6 +27,7 @@
 
 ## News
 
+- **2026-11-03** — The paper is available on [arXiv](https://arxiv.org/abs/2611.01844).
 - **2026-11-01** — Updated the paper figure and documentation. Code, models, and NavAnywhere data are available.
 
 ## Environment Setup
@@ -149,10 +150,14 @@ We thank [NWM](https://github.com/facebookresearch/nwm#bibtex), [CompACT](https:
 If you use OpenNWM, please cite:
 
 ```bibtex
-@unpublished{opennwm,
-  title = {OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},
-  author = {Nie, Dujun and Song, Ruiqi and Wang, Zixuan and Wang, Hanqing and Han, Yifan and Ding, Baiyong and Zheng, Wenzhao and Wu, Hangbin and Chen, Long},
-  note = {Under review as a conference paper at ICLR 2027}
+@misc{nie2026opennwmgeneralistnavigationworld,
+      title={OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},
+      author={Dujun Nie and Ruiqi Song and Zixuan Wang and Hanqing Wang and Yifan Han and Baiyong Ding and Wenzhao Zheng and Hangbin Wu and Long Chen},
+      year={2026},
+      eprint={2611.01844},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2611.01844},
 }
 ```
 

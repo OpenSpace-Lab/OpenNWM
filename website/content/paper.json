@@ -14,16 +14,17 @@
       "Hangbin Wu",
       "Long Chen"
     ],
-    "publication_status": "Under review as a conference paper at ICLR 2027",
-    "review_status": "The downloadable PDF is the anonymized review version.",
-    "publication_year": null,
+    "publication_status": "arXiv preprint",
+    "review_status": null,
+    "publication_year": 2026,
     "venue": null,
-    "doi": null,
-    "arxiv_url": null,
+    "doi": "10.48550/arXiv.2611.01844",
+    "arxiv_url": "https://arxiv.org/abs/2611.01844",
     "source": {
-      "page": 1
+      "page": 1,
+      "url": "https://arxiv.org/abs/2611.01844"
     },
-    "note": "Author order and contribution markers follow the author-supplied title-page image. Affiliations incorporate the authors’ corrections. The downloadable PDF does not state an accepted venue, DOI, arXiv URL, or publication year.",
+    "note": "Title, author order, publication year, and permanent identifiers follow the arXiv record. Contribution markers follow the author-supplied title-page image. Affiliations incorporate the authors’ corrections.",
     "affiliations": {
       "1": "CASIA",
       "2": "UCAS",
@@ -1089,10 +1090,10 @@
     }
   },
   "citation": {
-    "bibtex": "@unpublished{opennwm,\n  title = {OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},\n  author = {Nie, Dujun and Song, Ruiqi and Wang, Zixuan and Wang, Hanqing and Han, Yifan and Ding, Baiyong and Zheng, Wenzhao and Wu, Hangbin and Chen, Long},\n  note = {Under review as a conference paper at ICLR 2027}\n}",
-    "note": "Author names follow the author-supplied title-page image. Publication status follows the supplied manuscript; no publication year or permanent identifier is stated.",
+    "bibtex": "@misc{nie2026opennwmgeneralistnavigationworld,\n      title={OpenNWM: A Generalist Navigation World Model with Latent Action Pretraining},\n      author={Dujun Nie and Ruiqi Song and Zixuan Wang and Hanqing Wang and Yifan Han and Baiyong Ding and Wenzhao Zheng and Hangbin Wu and Long Chen},\n      year={2026},\n      eprint={2611.01844},\n      archivePrefix={arXiv},\n      primaryClass={cs.RO},\n      url={https://arxiv.org/abs/2611.01844},\n}",
+    "note": "BibTeX exported directly from arXiv; only trailing whitespace is removed.",
     "source": {
-      "page": 1
+      "url": "https://arxiv.org/bibtex/2611.01844"
     }
   }
 }
