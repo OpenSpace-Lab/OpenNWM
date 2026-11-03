@@ -13,7 +13,11 @@ conda run --no-capture-output -n nwm python -m http.server 8000 \
 
 Open <http://127.0.0.1:8000/>. Use HTTP because the page loads JSON manifests.
 
-`.github/workflows/pages.yml` tests and packages the static site, then synchronizes it to [OpenNWM-site](https://github.com/OpenSpace-Lab/OpenNWM-site) when `OPENNWM_SITE_DEPLOY_KEY` is configured. The organization Pages workflow publishes those files under `/OpenNWM/`.
+`.github/workflows/pages.yml` tests and packages the static site, then deploys the artifact directly from the public `OpenSpace-Lab/OpenNWM` repository to <https://openspace-lab.github.io/OpenNWM/>. Deployment is skipped while the repository is private.
+
+For initial setup, a repository administrator must make `OpenSpace-Lab/OpenNWM` public and select **Settings → Pages → Build and deployment → Source → GitHub Actions**. Allow the `github-pages` environment to deploy from `main`, then run **Build and publish public OpenNWM website** from the Actions tab. Making the repository public alone does not enable Pages. Later changes to website files on `main` trigger deployment automatically.
+
+The workflow can also synchronize the artifact to [OpenNWM-site](https://github.com/OpenSpace-Lab/OpenNWM-site) when `OPENNWM_SITE_DEPLOY_KEY` is configured. This optional mirror is not required for the project page.
 
 To build the same artifact locally with Python 3.11 or newer, choose an output directory outside the repository that does not yet exist:
 

@@ -59,8 +59,25 @@ jobs:
           fi
           git -C public-site commit -m "Publish website from OpenNWM ${GITHUB_SHA}"
           git -C public-site push origin HEAD:main
-      - name: Report pending automatic publication setup
+      - name: Report optional public-repository sync
         if: env.PUBLIC_SITE_PUBLISH_ENABLED != 'true'
         run: |
-          echo '::warning::Website built successfully; automatic public-repository sync is not configured.'
-          echo 'The reviewed website artifact is available. Public-repository sync was skipped because OPENNWM_SITE_DEPLOY_KEY is missing. An organization owner must permit deploy keys before a scoped publishing key can be configured. The existing public website files were not changed by this run.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Website artifact built. Optional public-repository sync is not configured.'
+          echo 'The reviewed website artifact is ready. Optional OpenNWM-site synchronization was skipped because OPENNWM_SITE_DEPLOY_KEY is not configured. The separate GitHub Pages deployment job runs only for public repositories.' >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    needs: publish
+    if: ${{ github.ref == 'refs/heads/main' && !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy the reviewed website to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
